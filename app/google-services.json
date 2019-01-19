@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1038530395665",
+    "firebase_url": "https://nordoscio.firebaseio.com",
+    "project_id": "nordoscio",
+    "storage_bucket": "nordoscio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1038530395665:android:fcce5390117a872e",
+        "android_client_info": {
+          "package_name": "com.nordokod.scio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1038530395665-bjr2bl69mt9m7mlep7rq2h7ac7lhipcd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nordokod.scio",
+            "certificate_hash": "474d1ef29e4be5815ffd7264fccffa70fb44feb7"
+          }
+        },
+        {
+          "client_id": "1038530395665-l41078qthki82d8tfuhej3o3c2j4hqak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_gdkBX1nmQdQw_IVJhZwHOt-9ib9spn8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1038530395665-l41078qthki82d8tfuhej3o3c2j4hqak.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
