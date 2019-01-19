@@ -1,2 +1,7 @@
 <resources>
+    <!-- Medidas para uso general -->
+    <dimen name="activity_margin">25dp</dimen>
+    <dimen name="espaciado_min">8dp</dimen>
+    <dimen name="espaciado_med">16dp</dimen>
+    <dimen name="espaciado_max">32dp</dimen>
 </resources>
