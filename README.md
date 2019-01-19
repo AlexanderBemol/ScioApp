@@ -8,4 +8,4 @@ Rama actual **DES-3** (Actualizar conforme se cree una nueva).
 
 
 # Asana
-[https://app.asana.com/0/994194906355846/list](url)
+[https://app.asana.com/0/994194906355846/994194906355846](url)
