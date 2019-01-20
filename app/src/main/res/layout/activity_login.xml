@@ -9,6 +9,7 @@
     android:padding="@dimen/activity_margin"
     tools:context=".LoginActivity"
     >
+
     <!-- IMAGEN -->
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/imgLogo"
@@ -21,76 +22,90 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/editUsuario"
         />
-    <!-- EDITTEXT USUARIO -->
+
+    <!-- EDIT TEXT USUARIO -->
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/editUsuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorAccent"
-        android:hint="Usuario"
-        android:singleLine="true"
+        android:hint="@string/hint_editUsuario"
         android:textColor="@color/colorAccent"
-        android:textColorHighlight="@color/colorAccent"
+        android:textColorHighlight="@color/colorPrimary"
         android:textColorHint="@color/colorAccent"
         android:layout_marginBottom="@dimen/espaciado_med"
+        android:singleLine="true"
+        android:textSize="@dimen/texto_standar"
+        android:padding="10dp"
+        android:textAlignment="center"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/editContraseña"
         />
-    <!-- EDITTEXT CONTRASEÑA -->
+
+    <!-- EDIT TEXT CONTRASEÑA -->
     <android.support.v7.widget.AppCompatEditText
         android:id="@+id/editContraseña"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/colorAccent"
-        android:hint="Contraseña"
+        android:hint="@string/hint_editContraseña"
         android:textColor="@color/colorAccent"
         android:textColorHighlight="@color/colorAccent"
         android:textColorHint="@color/colorAccent"
         android:inputType="textPassword"
+        android:singleLine="true"
+        android:textSize="@dimen/texto_standar"
+        android:padding="10dp"
+        android:textAlignment="center"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/txtRecuperar"
         />
+
     <!-- TEXTO RECUPERAR CONTRASEÑA -->
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/txtRecuperar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¿Olvidaste tu contraseña?"
+        android:text="@string/txt_recuperar"
         android:textColor="@color/colorAccent"
         android:layout_marginBottom="@dimen/espaciado_max"
 
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btnSesion"
         />
+
     <!-- BOTÓN INICIAR SESIÓN -->
-    <Button
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/btnSesion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="iniciar sesión"
+        android:text="@string/txt_btnSesion"
         android:textColor="@color/colorPrimary"
         android:background="@drawable/boton_redondo_solido"
         android:layout_marginBottom="@dimen/espaciado_med"
+        android:textSize="@dimen/texto_boton"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btnRegistrar"
+        app:layout_constraintBottom_toTopOf="@id/btnRegistrarse"
 
         style="?android:attr/borderlessButtonStyle"
         />
+
     <!-- BOTÓN REGISTRARSE -->
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/btnRegistrar"
+        android:id="@+id/btnRegistrarse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="registrarse"
+        android:text="@string/txt_btnRegistrarse"
         android:textColor="@color/colorAccent"
         android:background="@drawable/boton_redondo_vacio"
         android:layout_marginBottom="@dimen/espaciado_med"
+        android:textSize="@dimen/texto_boton"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -98,12 +113,13 @@
 
         style="?android:attr/borderlessButtonStyle"
         />
+
     <!-- TEXTO OPCIONES -->
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/txtConectar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="o conéctate con"
+        android:text="@string/txt_opciones"
         android:textColor="@color/colorAccent"
         android:layout_marginBottom="@dimen/espaciado_min"
 
@@ -111,6 +127,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/cajaRedesSociales"
         />
+
     <android.support.v7.widget.LinearLayoutCompat
         android:id="@+id/cajaRedesSociales"
         android:layout_width="match_parent"
@@ -119,6 +136,7 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         >
+
         <!-- OPCIÓN FACEBOOK -->
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/btnFacebook"
@@ -131,6 +149,7 @@
             android:gravity="center"
             android:layout_marginRight="10dp"
             />
+
         <!-- OPCIÓN GOOGLE -->
         <android.support.v7.widget.AppCompatImageButton
             android:id="@+id/btnGoogle"
