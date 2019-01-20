@@ -4,4 +4,6 @@
     <dimen name="espaciado_min">8dp</dimen>
     <dimen name="espaciado_med">16dp</dimen>
     <dimen name="espaciado_max">32dp</dimen>
+    <dimen name="texto_standar">18sp</dimen>
+    <dimen name="texto_boton">16sp</dimen>
 </resources>
