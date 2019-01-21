@@ -3,5 +3,11 @@
     <color name="colorPrimary">#009BDB</color>
     <color name="colorPrimaryDark">#009BDB</color>
     <color name="colorAccent">#ffffff</color>
+
+    <color name="colorScio">#009BDB</color>
     <color name="colorNordokod">#655498</color>
+    <color name="colorStars">#EBD800</color>
+    <color name="colorCorrect">#4BC520</color>
+    <color name="colorError">#D30202</color>
+    <color name="colorBackground">#F2F2F2</color>
 </resources>

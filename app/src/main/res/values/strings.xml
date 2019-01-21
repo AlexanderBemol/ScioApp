@@ -9,6 +9,7 @@
     <string name="txt_recuperar">¿Olvidaste tu contraseña?</string>
     <string name="txt_opciones">o conéctate con</string>
 
+
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
