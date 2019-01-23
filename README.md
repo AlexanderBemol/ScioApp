@@ -7,5 +7,9 @@ Rama actual **DES-3** (Actualizar conforme se cree una nueva).
 * Al final de cada día que hayan estado trabajando hay que hacer `git commit` y `git push` para que no nos pase lo que a Javi :v
 
 
+
 # Zeldas importantes
 [Asana](https://app.asana.com/0/994194906355846/994194906355846)
+
+nordokod@gmail.com
+Y19xyzA0
