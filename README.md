@@ -1,4 +1,4 @@
-Rama actual **DES-3** (Actualizar conforme se cree una nueva). 
+# Rama actual: **DES-3**
 
 * Las ramas deben ser creadas desde **desarrollo** con el nombre **DES-** seguido del número sucesivo a la última rama creada.
 
