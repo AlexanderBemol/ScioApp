@@ -9,7 +9,6 @@
 
 
 # Zeldas importantes
-[Asana](https://app.asana.com/0/994194906355846/994194906355846)
-
-[nordokod@gmail.com](https://gmail.com)
-Y19xyzA0
+* [Asana](https://app.asana.com/0/994194906355846/994194906355846)
+* [Firebase](https://xvideos.com) <--Falta agregar el link xd
+* [nordokod@gmail.com](https://gmail.com) Y19xyzA0
