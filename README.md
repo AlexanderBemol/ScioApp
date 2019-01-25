@@ -11,5 +11,5 @@
 # Zeldas importantes
 [Asana](https://app.asana.com/0/994194906355846/994194906355846)
 
-[nordokod@gmail.com](gmail.com)
+[nordokod@gmail.com](https://gmail.com)
 Y19xyzA0
