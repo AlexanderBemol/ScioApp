@@ -14,12 +14,12 @@
         android:theme="@style/DefaultTheme"
         android:appCategory="productivity">
         <activity
-            android:name=".SplashActivity"
+            android:name=".View.SplashActivity"
             android:theme="@style/SplashTheme">
 
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".View.LoginActivity"
             android:theme="@style/LoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
