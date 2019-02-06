@@ -31,6 +31,7 @@
         android:hint="@string/hint_editUsuario"
         android:textColorHighlight="@color/colorPrimary"
         android:textColorHint="@color/colorAccent"
+        android:textColor="@color/colorAccent"
         android:layout_marginBottom="@dimen/espaciado_med"
         android:singleLine="true"
         android:textAlignment="center"
@@ -51,11 +52,10 @@
         android:hint="@string/hint_editContraseña"
         android:textColorHighlight="@color/colorAccent"
         android:textColorHint="@color/colorAccent"
+        android:textColor="@color/colorAccent"
         android:inputType="textPassword"
         android:singleLine="true"
         android:textAlignment="center"
-
-
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/txtRecuperar"
@@ -98,7 +98,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/txt_btnRegistrarse"
-        android:background="@drawable/boton_redondo_vacio"
+        android:background="@drawable/contorno_redondo"
         android:layout_marginBottom="@dimen/espaciado_med"
         android:textSize="@dimen/texto_boton"
 

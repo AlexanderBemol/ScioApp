@@ -16,16 +16,16 @@
         <activity
             android:name=".View.SplashActivity"
             android:theme="@style/SplashTheme">
-
-        </activity>
-        <activity
-            android:name=".View.LoginActivity"
-            android:theme="@style/LoginTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".View.LoginActivity"
+            android:theme="@style/LoginTheme">
+
         </activity>
 
     </application>
