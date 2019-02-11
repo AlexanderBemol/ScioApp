@@ -9,6 +9,9 @@ import android.support.v7.widget.AppCompatTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.nordokod.scio.Controller.LoginController;
+import com.nordokod.scio.R;
+
 public class LoginActivity extends AppCompatActivity {
     // Botones de Inicio de Sesion y Registrarse
     AppCompatButton btnSesion, btnRegistrarse;
@@ -25,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         initComponents();
+
     }
 
     private void initComponents(){

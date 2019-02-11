@@ -1,4 +1,7 @@
 package com.nordokod.scio.Controller;
 
-public class LoginController {
+import com.nordokod.scio.Model.LoginModel;
+
+public class LoginController extends LoginModel {
+
 }

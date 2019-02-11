@@ -3,7 +3,6 @@ package com.nordokod.scio.Model;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -17,7 +16,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.nordokod.scio.R;
 
-
 public class LoginModel {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListner;
@@ -28,10 +26,15 @@ public class LoginModel {
     public void setCurrentActivity(Activity currentActivity) {
         this.currentActivity = currentActivity;
     }
-    public FirebaseAuth getmAuth() { return mAuth; }
-
     public void setCurrentContext(Context currentContext) {
         this.currentContext = currentContext;
+    }
+    public FirebaseAuth getmAuth() {
+        return mAuth;
+    }
+
+    public FirebaseUser getCurrentUser() {
+        return currentUser;
     }
 
     public boolean userIsLogged(){ //El usuario tiene sesión activa?
@@ -40,7 +43,7 @@ public class LoginModel {
         return (currentUser!=null);
     }
 
-    public GoogleSignInClient ConfigLogWithGoogle(){
+    public GoogleSignInClient ConfigLogWithGoogle(){ //regresa el google signin client
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(currentContext.getString(R.string.default_web_client_id))//google console
                 .requestEmail()
@@ -48,16 +51,17 @@ public class LoginModel {
 
         return GoogleSignIn.getClient(currentContext, gso);
     }
-    private Boolean firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    private Boolean firebaseAuthWithGoogle(GoogleSignInAccount acct) { //exitosa o no
         final Boolean[] b = new Boolean[1];
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(currentActivity, new OnCompleteListener<AuthResult>() {
-                   @Override
+                    @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                       b[0]=task.isSuccessful();
+                        b[0] = task.isSuccessful();
                     }
                 });
         return b[0];
     }
+
 }
