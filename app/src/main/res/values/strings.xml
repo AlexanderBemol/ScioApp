@@ -16,4 +16,8 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."
     </string>
+
+    <!-- Credenciales y pedos así -->
+
+    <string name="default_web_client_id">"463473439719-g3mpshul9p0ntdu3394n83mulm87jmn6.apps.googleusercontent.com"</string>
 </resources>
