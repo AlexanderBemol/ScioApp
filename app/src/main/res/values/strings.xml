@@ -18,6 +18,6 @@
     </string>
 
     <!-- Credenciales y pedos así -->
-
-    <string name="default_web_client_id">"463473439719-g3mpshul9p0ntdu3394n83mulm87jmn6.apps.googleusercontent.com"</string>
+    <string name="facebook_app_id">342632009679209</string>
+    <string name="fb_login_protocol_scheme">fb342632009679209</string>
 </resources>

@@ -137,7 +137,7 @@
         >
 
         <!-- OPCIÓN FACEBOOK -->
-        <android.support.v7.widget.AppCompatImageButton
+        <com.facebook.login.widget.LoginButton
             android:id="@+id/btnFacebook"
             android:layout_width="40dp"
             android:layout_height="40dp"
