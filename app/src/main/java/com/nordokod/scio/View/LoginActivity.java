@@ -19,7 +19,7 @@ public class LoginActivity extends AppCompatActivity {
     // Botones de Inicio de Sesion y Registrarse
     AppCompatButton btnSesion, btnRegistrarse;
     // Botones de Facebook y Google
-    AppCompatImageButton  btnGoogle;
+    AppCompatImageButton  btnGoogle,btnFB;
     LoginButton btnFacebook;
     // TextoVies para recuperar la contraseña
     AppCompatTextView txtRecuperar;
@@ -40,13 +40,15 @@ public class LoginActivity extends AppCompatActivity {
         btnSesion       = (AppCompatButton)         findViewById(R.id.btnSesion);
         btnRegistrarse  = (AppCompatButton)         findViewById(R.id.btnRegistrarse);
 
-        btnFacebook     =  findViewById(R.id.btnFacebook);
+        btnFB     =  findViewById(R.id.btnFacebook);
         btnGoogle       = (AppCompatImageButton)    findViewById(R.id.btnGoogle);
 
         txtRecuperar    = (AppCompatTextView)       findViewById(R.id.txtRecuperar);
 
         editUsuario     = (AppCompatEditText)       findViewById(R.id.editUsuario);
         editContraseña  = (AppCompatEditText)       findViewById(R.id.editContraseña);
+
+        btnFacebook     = new LoginButton(this);
 
         mCallbackManager= CallbackManager.Factory.create();
 
@@ -71,7 +73,12 @@ public class LoginActivity extends AppCompatActivity {
                 logController.signinGoogle();
             }
         });
-
+        btnFB.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                btnFacebook.callOnClick();
+            }
+        });
 
     }
 
