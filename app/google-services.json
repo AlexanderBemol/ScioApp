@@ -31,6 +31,22 @@
           }
         },
         {
+          "client_id": "1038530395665-nc4e8bfg7oa53vtht8p35o513pjbslnl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nordokod.scio",
+            "certificate_hash": "8e346a87ff4602bec6dcc29c15d3229bd1901426"
+          }
+        },
+        {
+          "client_id": "1038530395665-bdifgm9hfucv5et33mqbktq21dkpn9g7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nordokod.scio",
+            "certificate_hash": "851ae20778ab8a8e179240c3540a446f0381f6c2"
+          }
+        },
+        {
           "client_id": "1038530395665-l41078qthki82d8tfuhej3o3c2j4hqak.apps.googleusercontent.com",
           "client_type": 3
         }
