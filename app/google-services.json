@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "1038530395665-8touuemang4bu15mlg10muqltvdrkp08.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nordokod.scio",
+            "certificate_hash": "3d33ac49c9df38daba6c81c04c97ef41d3e6b02f"
+          }
+        },
+        {
           "client_id": "1038530395665-l41078qthki82d8tfuhej3o3c2j4hqak.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -16,4 +16,8 @@
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."
     </string>
+
+    <!-- Credenciales y pedos así -->
+    <string name="facebook_app_id">342632009679209</string>
+    <string name="fb_login_protocol_scheme">fb342632009679209</string>
 </resources>
