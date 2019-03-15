@@ -87,7 +87,7 @@ public class LoginModel {
 
         mGoogleSignInClient = GoogleSignIn.getClient(currentContext, gso);
     }
-    public void signinGoogle(){
+    public void signinGoogle(){//llamar intent de google
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         currentActivity.startActivityForResult(signInIntent, 123); //RC-SIGNIN
     }
@@ -124,7 +124,7 @@ public class LoginModel {
         }
     }
 
-    public void signinWithMail(User user){
+    public void signinWithMail(User user){//iniciarSesionConMail
         mAuth.signInWithEmailAndPassword(user.getEmail(),user.getPassword())
                 .addOnCompleteListener(currentActivity, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -161,7 +161,7 @@ public class LoginModel {
             }
         });
     }
-    private void handleFacebookAccessToken(AccessToken token) {
+    private void handleFacebookAccessToken(AccessToken token) {//método necesario para fb
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(currentActivity, new OnCompleteListener<AuthResult>() {
