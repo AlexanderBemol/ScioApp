@@ -60,6 +60,12 @@
 
 * [Spotlight (Apache Licence V2)](https://github.com/TakuSemba/Spotlight)
 
+* [CircleImageView (Apache Licence V2)](https://github.com/hdodenhof/CircleImageView)
+
+* [ShineButton (MIT)](https://github.com/ChadCSong/ShineButton)
+
+* [Newton Cradle loading](https://github.com/yankai-victor/Loading/wiki/NewtonCradleLoading)
+
 En este repositorio van a encontrar más librerias, hay más que nos pueden servir: 
 [Librerias](https://github.com/wasabeef/awesome-android-ui)
 
