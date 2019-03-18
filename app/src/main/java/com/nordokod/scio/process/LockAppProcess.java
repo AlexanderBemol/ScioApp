@@ -1,4 +1,4 @@
-package com.nordokod.scio.Process;
+package com.nordokod.scio.process;
 
 import android.app.Service;
 import android.app.usage.UsageStats;
@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.nordokod.scio.Entidad.ConfigurationApp;
 
@@ -27,6 +27,7 @@ public class LockAppProcess extends Service {
         confApp=new ConfigurationApp();
         SystemWriteProcess swp = new SystemWriteProcess(this);
         confApp=swp.readUserConfig();
+        Log.d("testeo","creado");
     }
 
     @Override
@@ -36,6 +37,7 @@ public class LockAppProcess extends Service {
             @Override
             public void run() {
                 handler.postDelayed(this, 1000);
+                Log.d("testeo","working");
                 String fgApp=getForegroundApp();
                 if(confApp.getLockedApps().contains(fgApp)){//está bloqueada..
                     //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -52,6 +54,7 @@ public class LockAppProcess extends Service {
 
     @Override
     public void onDestroy() {
+        Log.d("testeo","Stoped");
         super.onDestroy();
     }
 

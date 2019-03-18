@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -79,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                 btnFacebook.callOnClick();
             }
         });
-
+        Log.d("testeo","login");
     }
 
     public void errorUsuario(String error){
