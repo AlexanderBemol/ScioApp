@@ -54,7 +54,21 @@
 	</tr>
 </table>
 
+<h3 align="center">Librerias Open Source</h3>
+
+* [Konfetti (ISC)](https://github.com/DanielMartinus/konfetti)
+
+* [Spotlight (Apache Licence V2)](https://github.com/TakuSemba/Spotlight)
+
+En este repositorio van a encontrar más librerias, hay más que nos pueden servir: 
+[Librerias](https://github.com/wasabeef/awesome-android-ui)
+
+Las licencias que podemos usar son:
+*  ISC
+*  Apache License V2
+*  MIT
+
 <h3 align="center">Archivos</h3>
 En este documento podremos especificar cuales caracteristicas tendrán o no tendrán la versión FREE y PREMIUM, también qué categorias habrá y cuál será su color:
 
-* [Categorias y Verisones](https://docs.google.com/document/d/1hL3w2boLS-jKNIpPk_PpA0v3Q2RoGQVAI5t3Sxo1Xoc/edit?usp=sharing)
+* [Categorias y Versiones](https://docs.google.com/document/d/1hL3w2boLS-jKNIpPk_PpA0v3Q2RoGQVAI5t3Sxo1Xoc/edit?usp=sharing)
