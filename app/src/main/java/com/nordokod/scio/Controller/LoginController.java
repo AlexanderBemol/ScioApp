@@ -11,15 +11,17 @@ import com.nordokod.scio.Model.LoginModel;
 import com.nordokod.scio.View.LoginActivity;
 
 public class LoginController{
-    LoginModel logModel;
-    LoginActivity logActivity;
-    User user;
-    Activity currentActivity;
-    Context currentContext;
+    private LoginModel logModel;
+    private LoginActivity logActivity;
+    private User user;
+    private Activity currentActivity;
+    private Context currentContext;
+
     public LoginController() {
-        logModel=new LoginModel(this);
-        user=new User();
+        logModel    =   new LoginModel(this);
+        user        =   new User();
     }
+
     public void configController(Activity activity,Context context,LoginActivity logActivity){//dar los datos necesarios al controller
         currentActivity=activity;
         currentContext=context;
@@ -27,47 +29,49 @@ public class LoginController{
         logModel.setCurrentContext(currentContext);
         logModel.setCurrentActivity(currentActivity);
     }
+
     public void initializeFirebase(){
         logModel.initMAuth();
     }
-    public void signinWithMail(String mail,String password){
-        if (mail.length()!=0&&password.length()!=0){
+
+    public void loginWithMail(String mail, String password){
+        if (mail.length() != 0 && password.length() != 0){
             user.setPassword(password);
             user.setEmail(mail);
-            logModel.signinWithMail(user);
+
+            logModel.loginWithMail(user);
         }else {
-            logActivity.camposIncompletos();
+            logActivity.showEmptyFieldsDialog();
         }
     }
-    public void signinResult(Boolean result,String error){ //con error
+
+    public void signinResult(Boolean result, String error){ //con error
         if (result){
-            logActivity.correctoUsuario();
-            //todobien
+            logActivity.showLoginSuccessDialog();
         }
         else {
-            logActivity.errorUsuario(error);
-            //falló
+            logActivity.showErrorDialog(error);
         }
     }
-    public void signinResult(Boolean result){//sin error
+
+    public void signinResult(Boolean result){ //sin error
         if (result){
-            logActivity.correctoUsuario();
-            //todobien
-        }
-        else{
-            logActivity.errorUsuario("Error al iniciar sesión");
-            //falló
+            logActivity.showLoginSuccessDialog();
         }
     }
+
     public void confGoogle(){
         logModel.ConfigLogWithGoogle();
     }
-    public void signinGoogle(){
-        logModel.signinGoogle();
+
+    public void loginGoogle(){
+        logModel.loginGoogle();
     }
+
     public void onResult(int requestCode, int resultCode, Intent data){
         logModel.onResult(requestCode,resultCode,data);
     }
+
     public void confFB(CallbackManager cb, LoginButton lb){
         logModel.setLoginButton(lb);
         logModel.setmCallbackManager(cb);

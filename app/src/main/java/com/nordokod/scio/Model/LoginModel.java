@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -19,7 +18,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
@@ -28,7 +26,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.nordokod.scio.Controller.LoginController;
 import com.nordokod.scio.Entidad.*;
-import com.nordokod.scio.R;
 
 public class LoginModel {
     private FirebaseAuth mAuth;
@@ -36,26 +33,31 @@ public class LoginModel {
     private FirebaseUser currentUser;
     private Context currentContext;
     private Activity currentActivity;
-    private LoginController logController;
+    private LoginController loginController;
     private GoogleSignInClient mGoogleSignInClient;
     private LoginButton loginButton;
     private CallbackManager mCallbackManager;
 
-    public LoginModel(LoginController logController){
-        this.logController=logController;
+    public LoginModel(LoginController loginController){
+        this.loginController = loginController;
     }
+
     public void setCurrentActivity(Activity currentActivity) {
         this.currentActivity = currentActivity;
     }
+
     public void setCurrentContext(Context currentContext) {
         this.currentContext = currentContext;
     }
+
     public void setLoginButton(LoginButton lb){
         this.loginButton=lb;
     }
+
     public  void setmCallbackManager(CallbackManager cm){
         this.mCallbackManager=cm;
     }
+
     public FirebaseAuth getmAuth() {
         return mAuth;
     }
@@ -70,6 +72,7 @@ public class LoginModel {
         };
         mAuth.addAuthStateListener(mAuthListner);
     }
+
     public FirebaseUser getCurrentUser(){
         return currentUser;
     }
@@ -87,7 +90,8 @@ public class LoginModel {
 
         mGoogleSignInClient = GoogleSignIn.getClient(currentContext, gso);
     }
-    public void signinGoogle(){
+
+    public void loginGoogle(){
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         currentActivity.startActivityForResult(signInIntent, 123); //RC-SIGNIN
     }
@@ -98,12 +102,12 @@ public class LoginModel {
                 .addOnCompleteListener(currentActivity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.getException()!=null) {
-                            logController.signinResult(task.isSuccessful(), task.getException().getMessage());
+                        if (task.getException() != null) {
+                            loginController.signinResult(task.isSuccessful(), "GOOGLE");
                             Log.d("prueba", "error en google: " + task.getException().toString());
                         }
                             else{
-                            logController.signinResult(task.isSuccessful());
+                            loginController.signinResult(task.isSuccessful());
                         }
                     }
                 });
@@ -116,7 +120,7 @@ public class LoginModel {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 AuthResultGoogle(account);
             } catch (Exception e) {
-                logController.signinResult(false,e.getMessage());
+                loginController.signinResult(false,e.getMessage());
                 Log.d("prueba","error en result: "+e.toString());
             }
         }else{
@@ -124,22 +128,22 @@ public class LoginModel {
         }
     }
 
-    public void signinWithMail(User user){
-        mAuth.signInWithEmailAndPassword(user.getEmail(),user.getPassword())
-                .addOnCompleteListener(currentActivity, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.getException()!=null)
-                            logController.signinResult(task.isSuccessful(),task.getException().getMessage());
-                        else{
-                            logController.signinResult(task.isSuccessful());
-                        }
+    public void loginWithMail(User user){
+        mAuth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
+            .addOnCompleteListener(currentActivity, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.getException() != null)
+                        loginController.signinResult(task.isSuccessful(), "MAIL");
+                    else{
+                        loginController.signinResult(task.isSuccessful());
                     }
-                });
+                }
+            });
 
     }
 
-    //facebook
+    //Facebook
     public void registerCallback(){
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
@@ -161,6 +165,7 @@ public class LoginModel {
             }
         });
     }
+
     private void handleFacebookAccessToken(AccessToken token) {
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential)
@@ -168,9 +173,9 @@ public class LoginModel {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.getException()!=null)
-                            logController.signinResult(task.isSuccessful(),task.getException().getMessage());
+                            loginController.signinResult(task.isSuccessful(), "FACEBOOK");
                         else{
-                            logController.signinResult(task.isSuccessful());
+                            loginController.signinResult(task.isSuccessful());
                         }
                     }
                 });

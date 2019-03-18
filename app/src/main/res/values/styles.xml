@@ -21,4 +21,9 @@
         <item name="android:navigationBarColor">@color/colorNordokod</item>
         <item name="android:background">@color/colorNordokod</item>
     </style>
+
+    <style name="NoticeDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/down_to_up</item>
+        <item name="android:windowExitAnimation">@anim/up_to_down</item>
+    </style>
 </resources>
