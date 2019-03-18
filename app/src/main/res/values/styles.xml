@@ -4,7 +4,7 @@
         <!-- Customize your theme here. -->
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:navigationBarColor">@color/colorBackground</item>
-        <item name="android:textSize">@dimen/texto_estandar</item>
+        <item name="android:textSize">@dimen/normal_text</item>
     </style>
 
     <!-- Tema usado para la pantalla del Login -->
