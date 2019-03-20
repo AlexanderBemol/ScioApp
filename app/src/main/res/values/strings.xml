@@ -5,10 +5,15 @@
     <string name="hint_editUser">Usuario</string>
     <string name="hint_editPassword">Contraseña</string>
     <string name="txt_btnLogin">Iniciar Sesión</string>
-    <string name="txt_success_btnLogin">Bienvenido</string>
     <string name="txt_btnSignin">Registrarse</string>
     <string name="txt_recover">¿Olvidaste tu contraseña?</string>
     <string name="txt_options">o conéctate con</string>
+
+    <!-- Strings relacionados con activity_first_configuration -->
+    <string name="txt_btnSkip">Omitir</string>
+    <string name="txt_btnNext">Siguiente</string>
+    <string name="txt_btnStart">Comenzar</string>
+    <string name="txt_btnDone">Listo</string>
 
     <!-- Login Errors -->
     <string name="title_error" translatable="false">¡Grrr!</string>
@@ -16,7 +21,7 @@
     <string name="error_facebook">Parece que hubo un problema al intentar iniciar sesión con Facebook.</string>
     <string name="error_google">Parece que hubo un problema al intentar iniciar sesión con Google.</string>
 
-    <!-- General Task Errors -->
+    <!-- General messages for NoticeDialog -->
     <string name="message_emptyfields_error">¡Alto ahí, vaquero!\nNo puedes dejar campos vacíos.</string>
     <string name="message_login_success">Bienvenido</string>
 
