@@ -1,4 +1,3 @@
-<h3 align="center">Rama Actual: DES-3</h3>
 
 * Las ramas deben ser creadas desde **desarrollo** con el nombre **DES-** seguido del número sucesivo a la última rama creada.
 
@@ -64,7 +63,9 @@
 
 * [ShineButton (MIT)](https://github.com/ChadCSong/ShineButton)
 
-* [Newton Cradle loading](https://github.com/yankai-victor/Loading/wiki/NewtonCradleLoading)
+* [Newton Cradle loading (Apache Licence V2)](https://github.com/yankai-victor/Loading)
+
+* [AutoFitTextView (Apache Licence V2)](https://github.com/grantland/android-autofittextview)
 
 En este repositorio van a encontrar más librerias, hay más que nos pueden servir: 
 [Librerias](https://github.com/wasabeef/awesome-android-ui)
