@@ -12,8 +12,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/DefaultTheme">
-        <activity android:name=".View.FirstConfigurationActivity"></activity>
+        android:theme="@style/FirstConfigurationTheme">
+        <activity android:name=".View.FirstConfigurationActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity
             android:name=".View.SplashActivity"
             android:theme="@style/SplashTheme">

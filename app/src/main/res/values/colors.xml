@@ -12,5 +12,23 @@
     <color name="colorError">#D30202</color>
     <color name="colorErrorDark">#B71C1C</color>
     <color name="colorBackground">#F2F2F2</color>
+    <color name="colorBackgroundDark">#9F9F9F</color>
     <color name="colorErrorBackground">#EF5350</color>
+    <color name="colorText">#646464</color>
+    <color name="colorIconNormal">#646464</color>
+    <color name="colorIconFocused">#009BDB</color>
+    <color name="colorBlack">#000000</color>
+
+    <color name="colorPurple">#7E57C2</color>
+    <color name="colorPurpleDark">#512DA8</color>
+    <color name="colorBlue">#2196F3</color>
+    <color name="colorBlueDark">#1565C0</color>
+    <color name="colorYellow">#FFB300</color>
+    <color name="colorYellowDark">#C99908</color>
+    <color name="colorGreen">#43A047</color>
+    <color name="colorGreenDark">#1B5E32</color>
+    <color name="colorOrange">#F57C00</color>
+    <color name="colorOrangeDark">#F57C00</color>
+    <color name="colorRed">#EF5350</color>
+    <color name="colorRedDark">#D32F2F</color>
 </resources>

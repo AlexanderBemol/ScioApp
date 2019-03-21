@@ -148,6 +148,7 @@ public class LoginModel {
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                loginController.signinResult(true, "FACEBOOK");
                 Log.d("prueba", "facebook:onSuccess:" + loginResult);
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
@@ -160,6 +161,7 @@ public class LoginModel {
 
             @Override
             public void onError(FacebookException error) {
+                loginController.signinResult(false, "FACEBOOK");
                 Log.d("prueba", "facebook:onError", error);
                 // ...
             }

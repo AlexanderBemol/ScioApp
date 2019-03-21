@@ -1,6 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_padding"
+    android:background="@color/colorOrange"
+    >
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/title"
+        style="@style/title_first_configuration"
+        android:text="@string/title_appblock_first_configuration"
+        android:layout_marginTop="@dimen/max_space"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/description"
+        style="@style/description_first_configuration"
+        android:text="@string/description_appblock_first_configuration"
+        android:layout_marginTop="@dimen/med_space"
+
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <view class="android.support.v7.app.AlertController$RecycleListView"
+        android:id="@+id/listApps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cardview_appblock"
+        android:layout_marginTop="@dimen/max_space"
+        android:layout_marginBottom="@dimen/first_configuration_max_space"
+
+        app:layout_constraintTop_toBottomOf="@+id/description"
+        >
+
+    </view>
+
 
 </android.support.constraint.ConstraintLayout>

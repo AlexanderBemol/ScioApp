@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    android:padding="@dimen/activity_margin"
+    android:padding="@dimen/activity_padding"
     tools:context=".View.LoginActivity">
 
     <!-- IMAGEN -->
@@ -70,7 +70,7 @@
         android:id="@+id/txtRecuperar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/txt_recover"
+        android:text="@string/txt_recover_password"
         android:textColor="@color/colorAccent"
         android:layout_marginBottom="@dimen/max_space"
 
@@ -83,9 +83,9 @@
         android:id="@+id/btnSesion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txt_btnLogin"
+        android:text="@string/txt_login"
         android:textColor="@color/colorPrimary"
-        android:background="@drawable/boton_redondo_solido"
+        android:background="@drawable/component_background_solid_radious"
         android:layout_marginBottom="@dimen/med_space"
         android:textSize="@dimen/button_text"
 
@@ -101,9 +101,9 @@
         android:id="@+id/btnRegistrarse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txt_btnSignin"
+        android:text="@string/txt_signup"
         android:textColor="@color/colorAccent"
-        android:background="@drawable/contorno_redondo"
+        android:background="@drawable/component_stroke_radious"
         android:layout_marginBottom="@dimen/med_space"
         android:textSize="@dimen/button_text"
 
@@ -142,7 +142,7 @@
             android:id="@+id/btnFacebook"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/boton_redondo_solido"
+            android:background="@drawable/component_background_solid_radious"
             android:src="@drawable/facebook_icon"
             android:scaleType="fitCenter"
             android:padding="6dp"
@@ -155,7 +155,7 @@
             android:id="@+id/btnGoogle"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/boton_redondo_solido"
+            android:background="@drawable/component_background_solid_radious"
             android:src="@drawable/google_icon"
             android:scaleType="fitCenter"
             android:padding="6dp"

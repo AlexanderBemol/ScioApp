@@ -13,7 +13,7 @@
         android:id="@+id/txtMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_margin"
+        android:layout_margin="@dimen/activity_padding"
         android:textColor="@color/colorAccent"
         android:textAlignment="center"
         android:textSize="@dimen/normal_text"

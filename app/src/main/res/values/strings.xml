@@ -1,20 +1,61 @@
 <resources>
     <string name="app_name" translatable="false">Scio</string>
-    <string name="title_activity_login">Iniciar Sesión</string>
+    <!-- ======================================================================================= -->
+    <!-- Strings generales -->
+    <!-- ======================================================================================= -->
+    <string name="txt_save">Guardar</string>
+    <string name="txt_cancel">Cancelar</string>
+    <string name="txt_next">Siguiente</string>
+    <string name="txt_skip">Omitir</string>
+    <string name="txt_start">Comenzar</string>
+    <string name="txt_">x</string>
+    <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_login -->
+    <!-- ======================================================================================= -->
     <string name="hint_editUser">Usuario</string>
     <string name="hint_editPassword">Contraseña</string>
-    <string name="txt_btnLogin">Iniciar Sesión</string>
-    <string name="txt_btnSignin">Registrarse</string>
-    <string name="txt_recover">¿Olvidaste tu contraseña?</string>
+    <string name="txt_login">Iniciar Sesión</string>
+    <string name="txt_signup">Registrarse</string>
+    <string name="txt_recover_password">¿Olvidaste tu contraseña?</string>
     <string name="txt_options">o conéctate con</string>
+    <!-- ======================================================================================= -->
+    <!-- Strings relacionados con activity_signup -->
+    <!-- ======================================================================================= -->
 
+    <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_first_configuration -->
+    <!-- ======================================================================================= -->
     <string name="txt_btnSkip">Omitir</string>
     <string name="txt_btnNext">Siguiente</string>
     <string name="txt_btnStart">Comenzar</string>
     <string name="txt_btnDone">Listo</string>
-
+    <!-- Permisos -->
+    <string name="title_permission_first_configuration">Elige un nombre para que las personas te vean</string>
+    <string name="description_permission_first_configuration">Puedes dejar el nombre de tus redes o cambiarlo.</string>
+    <!-- Foto -->
+    <string name="title_photo_first_configuration">Los reflectores son tuyos</string>
+    <string name="description_photo_first_configuration">Puedes elegir una foto o cambiarla en el\nmomento que quieras.</string>
+    <!-- Nombre -->
+    <string name="hint_name_edittext">Scio Balboa...</string>
+    <string name="title_name_first_configuration">Elige un nombre para que\nlas personas te vean</string>
+    <string name="description_name_first_configuration">Puedes dejar el nombre de tus redes\no cambiarlo.</string>
+    <!-- Cumpleaños -->
+    <string name="hint_birthday_edittext">Sí naciste, ¿verdad?...</string>
+    <string name="title_birthday_first_configuration">¿Cuándo naciste?</string>
+    <string name="description_birthday_first_configuration">Los cumpleaños son muy especiales para nosotros.</string>
+    <!-- Escuela -->
+    <string name="hint_school_edittext">Elige un nivel</string>
+    <string name="title_school_first_configuration">¿En qué nivel de estudios\nte encuentras?</string>
+    <string name="description_school_first_configuration">x</string>
+    <!-- Apps Bloqueadas -->
+    <string name="title_appblock_first_configuration">Elige las apps que más usas\ny te distraen cuando estudias</string>
+    <string name="description_appblock_first_configuration">Puedes elegirlas o cambiarlas cuando\nquieras.</string>
+    <!-- Finalizar -->
+    <string name="title_done_first_configuration">¡Perfecto!</string>
+    <string name="description_done_first_configuration">Ahora estás listo para utilizar la app,\ny no olvides que:\n¡Esto es Sciooooo!</string>
+    <!-- ======================================================================================= -->
+    <!--  -->
+    <!-- ======================================================================================= -->
     <!-- Login Errors -->
     <string name="title_error" translatable="false">¡Grrr!</string>
     <string name="error_mail">Parece que hubo un problema al intentar iniciar sesión.</string>

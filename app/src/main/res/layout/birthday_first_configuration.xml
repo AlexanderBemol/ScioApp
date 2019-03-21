@@ -1,6 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_padding"
+    android:background="@color/colorGreen"
+    >
+
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/first_configuration_img_size"
+        android:tint="@color/colorAccent"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/title"
+        app:srcCompat="@drawable/birthday_cake"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/title"
+        style="@style/title_first_configuration"
+        android:text="@string/title_birthday_first_configuration"
+        android:layout_marginBottom="@dimen/med_space"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/description"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/description"
+        style="@style/description_first_configuration"
+        android:text="@string/description_birthday_first_configuration"
+        android:layout_marginBottom="@dimen/max_space"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtBirthday"
+        />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/txtBirthday"
+        style="@style/edittext_first_configuration"
+        android:hint="@string/hint_birthday_edittext"
+        android:textColor="@color/colorGreen"
+        android:textColorHint="@color/colorGreen"
+        android:editable="false"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </android.support.constraint.ConstraintLayout>

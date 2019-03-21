@@ -1,4 +1,7 @@
 <resources>
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LOS TEMAS -->
+    <!-- ======================================================================================= -->
     <!-- Tema usado en general -->
     <style name="DefaultTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -23,8 +26,47 @@
         <item name="android:background">@color/colorNordokod</item>
     </style>
 
+    <!-- Tema usado para la pantalla del FirstConfiguration -->
+    <style name="FirstConfigurationTheme" parent="DefaultTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor">@color/colorBlack</item>
+        <item name="android:navigationBarColor">@color/colorBlack</item>
+    </style>
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LAS ANIMACIONES -->
+    <!-- ======================================================================================= -->
     <style name="NoticeDialogAnimation">
         <item name="android:windowEnterAnimation">@anim/down_to_up</item>
         <item name="android:windowExitAnimation">@anim/up_to_down</item>
+    </style>
+    
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LOS COMPONENTES -->
+    <!-- ======================================================================================= -->
+    <style name="title_first_configuration">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/first_configuration_title_text</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="description_first_configuration">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/first_configuration_description_text</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    
+    <style name="edittext_first_configuration">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/normal_text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@drawable/component_background_solid_radious</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:layout_marginBottom">@dimen/first_configuration_max_space</item>
     </style>
 </resources>

@@ -221,6 +221,7 @@ public class LoginActivity extends AppCompatActivity {
         btnFB.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                showLoginLoadingDialog();
                 btnFacebook.callOnClick();
             }
         });
@@ -231,6 +232,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v){
                 btnRegistrarse.startAnimation(press);
                 // Aquí debe ir la llamada al SigninActivity.
+                Intent firstConfiguration = new Intent(LoginActivity.this, FirstConfigurationActivity.class);
+                startActivity(firstConfiguration);
+
+                finish();
             }
         });
 
