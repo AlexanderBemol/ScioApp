@@ -4,21 +4,27 @@
         <!-- Customize your theme here. -->
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:navigationBarColor">@color/colorBackground</item>
-        <item name="android:background">@color/colorBackground</item>
+        <item name="android:textSize">@dimen/normal_text</item>
     </style>
 
     <!-- Tema usado para la pantalla del Login -->
-    <style name="LoginTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="LoginTheme" parent="DefaultTheme">
         <!-- Customize your theme here. -->
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:navigationBarColor">@color/colorPrimary</item>
-        <item name="android:amPmBackgroundColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
+
     <!-- Tema usado para la pantalla del Splash -->
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="SplashTheme" parent="DefaultTheme">
         <!-- Customize your theme here. -->
         <item name="android:statusBarColor">@color/colorNordokod</item>
         <item name="android:navigationBarColor">@color/colorNordokod</item>
         <item name="android:background">@color/colorNordokod</item>
+    </style>
+
+    <style name="NoticeDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/down_to_up</item>
+        <item name="android:windowExitAnimation">@anim/up_to_down</item>
     </style>
 </resources>
