@@ -13,7 +13,6 @@ import java.util.Objects;
 public class SystemsEventsProcess extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("testeo","holo");
         Log.d("testeo",intent.getAction());
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         assert pm != null;
@@ -23,7 +22,6 @@ public class SystemsEventsProcess extends BroadcastReceiver {
         SystemWriteProcess swp=new SystemWriteProcess(context);
         ConfigurationApp appconf;
         Intent servicioApps = new Intent(context,LockAppProcess.class);
-        Log.d("testeo",intent.getAction());
         switch (Objects.requireNonNull(intent.getAction())){
             case Intent.ACTION_BOOT_COMPLETED://activar al encender
                 context.startService(servicioApps);
@@ -36,16 +34,6 @@ public class SystemsEventsProcess extends BroadcastReceiver {
                 appconf=swp.getAllApps();
                 swp.saveUserConfig(appconf);
                 break;
-            case Intent.ACTION_SCREEN_OFF://detener al bloquear
-                Log.d("testeo","screen off");
-                context.stopService(servicioApps);
-                break;
-            case Intent.ACTION_SCREEN_ON://activar al desbloquear y buen nivel de carga
-                Log.d("testeo","screen on ");
-
-                    context.startService(servicioApps);
-
-                break;
             case Intent.ACTION_BATTERY_LOW://desactivar con bajo nivel de carga
                 context.stopService(servicioApps);
                 break;
@@ -53,6 +41,10 @@ public class SystemsEventsProcess extends BroadcastReceiver {
                 if(screenState){
                     context.startService(servicioApps);
                 }
+                break;
+            case "com.nordokod.kill":
+                context.startService(servicioApps);
+                Log.d("testeo","broadcast---------------");
                 break;
 
         }

@@ -25,6 +25,7 @@
             <intent-filter><action android:name="android.intent.action.PACKAGE_REMOVED"/></intent-filter>
             <intent-filter><action android:name="android.intent.action.BATTERY_LOW"/></intent-filter>
             <intent-filter><action android:name="android.intent.action.BATTERY_OKAY"/></intent-filter>
+            <intent-filter><action android:name="com.nordokod.kill"/></intent-filter>
 
         </receiver>
 
@@ -63,7 +64,9 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".process.LockAppProcess" />
+        <service android:name=".process.LockAppProcess"
+                 android:stopWithTask="false"
+            />
     </application>
 
 </manifest>

@@ -3,8 +3,10 @@ package com.nordokod.scio.process;
 import android.app.Service;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
@@ -31,9 +33,10 @@ public class LockAppProcess extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intencion, int flags, int idArranque) {
+    public int onStartCommand(Intent intentM, int flags, int idArranque) {
+        Log.d("testeo","onStart");
         final Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
+        final Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 handler.postDelayed(this, 1000);
@@ -46,28 +49,60 @@ public class LockAppProcess extends Service {
 
             }
         };
-        //Start
+        BroadcastReceiver myBroadCast=new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                switch (Objects.requireNonNull(intent.getAction())){
+                    case Intent.ACTION_SCREEN_ON:
+                        Log.d("testeo","screenOn");
+                        handler.postDelayed(runnable, 1000);//cada tiempo..
+
+                        break;
+                    case Intent.ACTION_SCREEN_OFF:
+                        Log.d("testeo","screenOff");
+                        handler.removeCallbacks(runnable);
+
+                        break;
+                }
+            }
+        };
         handler.postDelayed(runnable, 1000);//cada tiempo..
+        registerReceiver(myBroadCast,new IntentFilter(Intent.ACTION_SCREEN_ON));
+
+        registerReceiver(myBroadCast,new IntentFilter(Intent.ACTION_SCREEN_OFF));
         // If we get killed, after returning from here, restart
         return START_STICKY;
     }
 
     @Override
     public void onDestroy() {
-        Log.d("testeo","Stoped");
         super.onDestroy();
+        Intent intent=new Intent("com.nordokod.kill");
+        sendBroadcast(intent);
+        Log.d("testeo","Destroy");
+    }
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
+        Intent intent=new Intent("com.nordokod.kill");
+        sendBroadcast(intent);
+        Log.d("testeo","Removed");
     }
 
+
     public IBinder onBind(Intent intent) {
+        Log.d("testeo","bind");
         return null;
     }
 
 
     public void onLowMemory() {
+        Log.d("testeo","noMem");
 
     }
 
     public void onTrimMemory(int level) {
+        Log.d("testeo","trim");
 
     }
 
