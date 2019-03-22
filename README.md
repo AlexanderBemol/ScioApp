@@ -57,6 +57,15 @@ git reset --hard origin/mybranch
 			</table>
 		</td>
 	</tr>
+	<!-- FACEBOOK -->
+	<tr>
+		<td align="center">
+			<a href="https://developers.facebook.com/apps/342632009679209/dashboard/" target="_blank">
+		          <img width="60px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/F_icon.svg/1024px-F_icon.svg.png">
+	        </a>
+			</table>
+		</td>
+	</tr>
 </table>
 
 --------------------
