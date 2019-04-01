@@ -47,6 +47,14 @@
           }
         },
         {
+          "client_id": "1038530395665-vm88dlevp3o3auhhf8mv5erhdc4p4rkt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nordokod.scio",
+            "certificate_hash": "321cd0d76784e6f16c1adff545ddd19dccf2fed7"
+          }
+        },
+        {
           "client_id": "1038530395665-l41078qthki82d8tfuhej3o3c2j4hqak.apps.googleusercontent.com",
           "client_type": 3
         }

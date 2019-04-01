@@ -1,11 +1,17 @@
-
 * Las ramas deben ser creadas desde **desarrollo** con el nombre **DES-** seguido del número sucesivo a la última rama creada.
 
 * Al inicio de cada día que se vaya trabajar hay que hacer `git pull` para bajar los últimos cambios.
 
 * Al final de cada día que hayan estado trabajando hay que hacer `git commit` y `git push` para que no nos pase lo que a Javi :v
 
+<h4>Para resetear una rama:</h4>
 
+```
+git checkout mybranch
+git reset --hard origin/mybranch
+```
+
+--------------------
 <h3 align="center">Zeldas Importantes</h3>
 
 <table align="center" border="2" width="600px">
@@ -51,8 +57,18 @@
 			</table>
 		</td>
 	</tr>
+	<!-- FACEBOOK -->
+	<tr>
+		<td align="center">
+			<a href="https://developers.facebook.com/apps/342632009679209/dashboard/" target="_blank">
+		          <img width="60px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/F_icon.svg/1024px-F_icon.svg.png">
+	        </a>
+			</table>
+		</td>
+	</tr>
 </table>
 
+--------------------
 <h3 align="center">Librerias Open Source</h3>
 
 * [Konfetti (ISC)](https://github.com/DanielMartinus/konfetti)
@@ -67,6 +83,8 @@
 
 * [AutoFitTextView (Apache Licence V2)](https://github.com/grantland/android-autofittextview)
 
+* [CircleIndicator (MIT)](https://github.com/ongakuer/CircleIndicator)
+
 En este repositorio van a encontrar más librerias, hay más que nos pueden servir: 
 [Librerias](https://github.com/wasabeef/awesome-android-ui)
 
@@ -74,7 +92,7 @@ Las licencias que podemos usar son:
 *  ISC
 *  Apache License V2
 *  MIT
-
+--------------------
 <h3 align="center">Archivos</h3>
 En este documento podremos especificar cuales caracteristicas tendrán o no tendrán la versión FREE y PREMIUM, también qué categorias habrá y cuál será su color:
 
