@@ -1,4 +1,4 @@
-package com.nordokod.scio.View;
+package com.nordokod.scio.view;
 
 import android.view.View;
 

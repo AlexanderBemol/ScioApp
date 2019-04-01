@@ -1,4 +1,4 @@
-package com.nordokod.scio.Model;
+package com.nordokod.scio.model;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,10 +24,9 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.nordokod.scio.Controller.LoginController;
-import com.nordokod.scio.Entidad.*;
-import com.nordokod.scio.Entidad.Error;
-import com.nordokod.scio.R;
+import com.nordokod.scio.controller.LoginController;
+import com.nordokod.scio.entity.*;
+import com.nordokod.scio.entity.Error;
 
 public class LoginModel {
     private FirebaseAuth mAuth;

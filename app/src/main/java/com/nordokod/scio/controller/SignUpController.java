@@ -1,9 +1,9 @@
-package com.nordokod.scio.Controller;
+package com.nordokod.scio.controller;
 
 import android.app.Activity;
 import android.content.Context;
-import com.nordokod.scio.Entidad.User;
-import com.nordokod.scio.Model.SignUpModel;
+import com.nordokod.scio.entity.User;
+import com.nordokod.scio.model.SignUpModel;
 
 public class SignUpController {
     SignUpModel signModel;

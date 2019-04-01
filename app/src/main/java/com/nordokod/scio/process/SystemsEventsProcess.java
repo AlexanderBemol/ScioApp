@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.PowerManager;
 import android.util.Log;
 
-import com.nordokod.scio.Entidad.ConfigurationApp;
+import com.nordokod.scio.entity.ConfigurationApp;
 
 import java.util.Objects;
 

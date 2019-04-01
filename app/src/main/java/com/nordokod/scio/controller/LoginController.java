@@ -1,4 +1,4 @@
-package com.nordokod.scio.Controller;
+package com.nordokod.scio.controller;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,11 +6,10 @@ import android.content.Intent;
 
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
-import com.nordokod.scio.Entidad.Error;
-import com.nordokod.scio.Entidad.User;
-import com.nordokod.scio.Model.LoginModel;
-import com.nordokod.scio.R;
-import com.nordokod.scio.View.LoginActivity;
+import com.nordokod.scio.entity.Error;
+import com.nordokod.scio.entity.User;
+import com.nordokod.scio.model.LoginModel;
+import com.nordokod.scio.view.LoginActivity;
 
 public class LoginController{
     private LoginModel logModel;

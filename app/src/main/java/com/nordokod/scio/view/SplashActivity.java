@@ -1,4 +1,4 @@
-package com.nordokod.scio.View;
+package com.nordokod.scio.view;
 
 import android.app.ActivityManager;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package com.nordokod.scio.Model;
+package com.nordokod.scio.model;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,10 +9,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.nordokod.scio.Controller.SignUpController;
-import com.nordokod.scio.Entidad.User;
-
-import java.util.Objects;
+import com.nordokod.scio.controller.SignUpController;
+import com.nordokod.scio.entity.User;
 
 public class SignUpModel {
     private FirebaseAuth mAuth;

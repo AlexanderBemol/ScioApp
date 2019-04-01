@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 
-import com.nordokod.scio.Entidad.ConfigurationApp;
-import com.nordokod.scio.Entidad.appData;
+import com.nordokod.scio.entity.ConfigurationApp;
+import com.nordokod.scio.entity.appData;
 
 import java.io.File;
 import java.io.FileInputStream;

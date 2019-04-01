@@ -1,6 +1,6 @@
-package com.nordokod.scio.View;
+package com.nordokod.scio.view;
 
-import com.nordokod.scio.Entidad.Error;
+import com.nordokod.scio.entity.Error;
 
 interface BasicActivity {
     /**

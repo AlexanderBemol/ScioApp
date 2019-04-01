@@ -1,4 +1,4 @@
-package com.nordokod.scio.View;
+package com.nordokod.scio.view;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -20,8 +20,8 @@ import android.view.animation.AnimationUtils;
 
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
-import com.nordokod.scio.Controller.LoginController;
-import com.nordokod.scio.Entidad.Error;
+import com.nordokod.scio.controller.LoginController;
+import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
 import com.victor.loading.newton.NewtonCradleLoading;
 

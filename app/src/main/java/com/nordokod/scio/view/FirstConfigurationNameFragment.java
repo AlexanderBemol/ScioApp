@@ -1,6 +1,5 @@
-package com.nordokod.scio.View;
+package com.nordokod.scio.view;
 
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

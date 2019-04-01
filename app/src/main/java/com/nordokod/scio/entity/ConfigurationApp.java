@@ -1,4 +1,4 @@
-package com.nordokod.scio.Entidad;
+package com.nordokod.scio.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
