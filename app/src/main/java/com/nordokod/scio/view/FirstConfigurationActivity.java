@@ -29,6 +29,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
     // VARIABLES Y OBJETOS
     //==============================================================================================
     private final int NUMBER_PAGES = 6;
+    private boolean isActivityCreated = false;
     private boolean isPhotoSkip = false;
     private boolean isAppBlockSkip = false;
 
@@ -93,6 +94,8 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         //educationFragment.configFragment(firstConfigurationController);
         //appBlockFragment.configAdapter(firstConfigurationController, this);
         //appBlockFragment.configAdapter(firstConfigurationController, this);
+
+        isActivityCreated = true;
     }
 
     //==============================================================================================
@@ -113,7 +116,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                 switch (screen_number) {
                     case 0:
                         isPhotoSkip = true;
-                        //photoFragment.setDefaultPhoto();
+                        photoFragment.skip();
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                         break;
                     case 4:
@@ -163,7 +166,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                     case 5: // Pantalla para finalizar.
                         BTN_Next.setVisibility(View.GONE);
 
-                        BTN_Skip.setText(R.string.txt_btnStart);
+                        BTN_Skip.setText(R.string.txt_btnDone);
                         break;
                     default:
                         BTN_Skip.setText(R.string.txt_btnSkip);
@@ -173,7 +176,11 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
             }
 
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position == 4)
+                    if (validateFields(nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation()))
+                        completeFragment.onComplete();
+            }
 
             @Override
             public void onPageScrollStateChanged(int state) { }
@@ -369,10 +376,4 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         isAppBlockSkip = state;
     }
 
-    /**
-     * Método para cambiar la imagen y los textos para indicar que el proceso ha terminado.
-     */
-    protected void onSaveResult() {
-        //completeFragment.onComplete();
-    }
 }

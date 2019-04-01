@@ -23,7 +23,7 @@ public class FirstConfigurationAppBlockFragment extends Fragment implements Basi
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<App> arraylistapp;
 
-    private FirstConfigurationController firstConfigurationController;
+    //private FirstConfigurationController firstConfigurationController;
     private Context context;
 
     @Nullable
@@ -45,7 +45,7 @@ public class FirstConfigurationAppBlockFragment extends Fragment implements Basi
         listApps.setLayoutManager(layoutManager);
 
         mAdapter = new AppRecyclerViewAdapter(getListOfApps());
-        ((AppRecyclerViewAdapter) mAdapter).configAdapter(firstConfigurationController);
+        //((AppRecyclerViewAdapter) mAdapter).configAdapter(firstConfigurationController);
         listApps.setAdapter(mAdapter);
     }
 
@@ -53,32 +53,14 @@ public class FirstConfigurationAppBlockFragment extends Fragment implements Basi
     public void initListeners() {
 
     }
-
+/*
     protected void configAdapter(FirstConfigurationController controller, Context context) {
         this.firstConfigurationController   = controller;
         this.context = context;
     }
-
+*/
     private ArrayList<App> getListOfApps() {
-        arraylistapp = new ArrayList<>();
-
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_facebook), "Facebook", "holis1", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_settings), "Whatsapp", "holis2", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_panda), "Scio", "holis3", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_successed), "Discord", "holis4", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_error), "Instagram", "holis5", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_facebook), "Facebook", "holis6", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_settings), "Whatsapp", "holis7", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_panda), "Scio", "holis8", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_successed), "Discord", "holis9", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_error), "Instagram", "holis0", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_facebook), "Facebook", "holis90", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_settings), "Whatsapp", "holis87", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_panda), "Scio", "holi43s", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_successed), "Discord", "holis76", false));
-        arraylistapp.add(new App(getResources().getDrawable(R.drawable.ic_error), "Instagram", "holis65", false));
-
-        return arraylistapp;
+        return new ArrayList<>();
         //return firstConfigurationController.getListOfApps();
     }
 }

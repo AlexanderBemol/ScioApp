@@ -145,8 +145,6 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
             public void onClick(View v){
                 BTN_Signup.startAnimation(press);
                 // Aquí debe ir la llamada al SigninActivity.
-                Intent firstConfiguration = new Intent(LoginActivity.this, FirstConfigurationActivity.class);
-                startActivity(firstConfiguration);
 
                 finish();
             }

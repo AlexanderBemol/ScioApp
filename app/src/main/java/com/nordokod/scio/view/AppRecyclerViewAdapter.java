@@ -19,7 +19,7 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
 
     private ArrayList<App> appArrayList;
 
-    private FirstConfigurationController firstConfigurationController;
+    //private FirstConfigurationController firstConfigurationController;
 
     public AppRecyclerViewAdapter(ArrayList<App> appArrayList) {
         this.appArrayList = appArrayList;
@@ -54,7 +54,7 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
         holder.Switch_State.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                buttonView.setChecked(firstConfigurationController.onStateChanged(appArrayList.get(position).getPackagePath(), isChecked));
+                //buttonView.setChecked(firstConfigurationController.onStateChanged(appArrayList.get(position).getPackagePath(), isChecked));
             }
         });
     }
@@ -69,10 +69,11 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
      *
      * @param //firstConfigurationController - Controlador del Activity.
      */
+    /*
     public void configAdapter(FirstConfigurationController controller) {
         this.firstConfigurationController = controller;
     }
-
+    */
     class ViewHolder extends RecyclerView.ViewHolder {
         AppCompatImageView IV_Icon;
         AppCompatTextView TV_Name;
