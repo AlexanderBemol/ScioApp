@@ -1,4 +1,4 @@
-package com.nordokod.scio.View;
+package com.nordokod.scio.view;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatImageView;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
-import com.nordokod.scio.Entidad.App;
+import com.nordokod.scio.entity.App;
 import com.nordokod.scio.R;
 
 import java.util.ArrayList;

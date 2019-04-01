@@ -1,4 +1,4 @@
-package com.nordokod.scio.Entidad;
+package com.nordokod.scio.entity;
 
 public class Error {
     private int descriptionResource = 0;

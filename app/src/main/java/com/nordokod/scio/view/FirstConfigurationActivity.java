@@ -1,4 +1,4 @@
-package com.nordokod.scio.View;
+package com.nordokod.scio.view;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -17,7 +17,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.nordokod.scio.Entidad.Error;
+import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
 
 import java.util.Objects;

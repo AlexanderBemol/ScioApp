@@ -1,4 +1,4 @@
-package com.nordokod.scio.View;
+package com.nordokod.scio.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nordokod.scio.Entidad.App;
+import com.nordokod.scio.entity.App;
 import com.nordokod.scio.R;
 
 import java.util.ArrayList;

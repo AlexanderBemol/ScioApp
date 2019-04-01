@@ -1,4 +1,4 @@
-package com.nordokod.scio.Entidad;
+package com.nordokod.scio.entity;
 
 public class User {
     private String username;

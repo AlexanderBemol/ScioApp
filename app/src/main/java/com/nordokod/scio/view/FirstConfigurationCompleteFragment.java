@@ -1,4 +1,4 @@
-package com.nordokod.scio.View;
+package com.nordokod.scio.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

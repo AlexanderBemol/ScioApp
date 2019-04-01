@@ -11,7 +11,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.nordokod.scio.Entidad.ConfigurationApp;
+import com.nordokod.scio.entity.ConfigurationApp;
 
 import java.util.List;
 import java.util.Objects;
