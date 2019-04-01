@@ -5,14 +5,11 @@
     <!-- ======================================================================================= -->
     <string name="txt_save">Guardar</string>
     <string name="txt_cancel">Cancelar</string>
-    <string name="txt_next">Siguiente</string>
-    <string name="txt_skip">Omitir</string>
-    <string name="txt_start">Comenzar</string>
     <string name="txt_">x</string>
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_login -->
     <!-- ======================================================================================= -->
-    <string name="hint_editUser">Usuario</string>
+    <string name="hint_editMail">Correo</string>
     <string name="hint_editPassword">Contraseña</string>
     <string name="txt_login">Iniciar Sesión</string>
     <string name="txt_signup">Registrarse</string>
@@ -23,50 +20,76 @@
     <!-- ======================================================================================= -->
 
     <!-- ======================================================================================= -->
+    <!-- Strings relacionados con activity_permission -->
+    <!-- ======================================================================================= -->
+    <string name="description_permission">Necesitamos que nos des permisos...no te preocupes, no haremos nada malo.</string>
+
+    <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_first_configuration -->
     <!-- ======================================================================================= -->
     <string name="txt_btnSkip">Omitir</string>
     <string name="txt_btnNext">Siguiente</string>
+    <string name="txt_btnBack">Regresar</string>
     <string name="txt_btnStart">Comenzar</string>
     <string name="txt_btnDone">Listo</string>
-    <!-- Permisos -->
-    <string name="title_permission_first_configuration">Elige un nombre para que las personas te vean</string>
-    <string name="description_permission_first_configuration">Puedes dejar el nombre de tus redes o cambiarlo.</string>
     <!-- Foto -->
     <string name="title_photo_first_configuration">Los reflectores son tuyos</string>
     <string name="description_photo_first_configuration">Puedes elegir una foto o cambiarla en el\nmomento que quieras.</string>
     <!-- Nombre -->
-    <string name="hint_name_edittext">Scio Balboa...</string>
+    <string name="hint_name_edittext">Alejandra Montes…</string>
     <string name="title_name_first_configuration">Elige un nombre para que\nlas personas te vean</string>
     <string name="description_name_first_configuration">Puedes dejar el nombre de tus redes\no cambiarlo.</string>
     <!-- Cumpleaños -->
-    <string name="hint_birthday_edittext">Sí naciste, ¿verdad?...</string>
+    <string name="hint_birthday_edittext">Sí naciste, ¿verdad?…</string>
     <string name="title_birthday_first_configuration">¿Cuándo naciste?</string>
     <string name="description_birthday_first_configuration">Los cumpleaños son muy especiales para nosotros.</string>
     <!-- Escuela -->
     <string name="hint_school_edittext">Elige un nivel</string>
     <string name="title_school_first_configuration">¿En qué nivel de estudios\nte encuentras?</string>
-    <string name="description_school_first_configuration">x</string>
     <!-- Apps Bloqueadas -->
     <string name="title_appblock_first_configuration">Elige las apps que más usas\ny te distraen cuando estudias</string>
     <string name="description_appblock_first_configuration">Puedes elegirlas o cambiarlas cuando\nquieras.</string>
     <!-- Finalizar -->
     <string name="title_done_first_configuration">¡Perfecto!</string>
     <string name="description_done_first_configuration">Ahora estás listo para utilizar la app,\ny no olvides que:\n¡Esto es Sciooooo!</string>
+    <string name="title_incomplete_first_configuration">Aún no terminas</string>
+    <string name="description_incomplete_first_configuration">Por favor llena tus datos para\npoder usar la aplicación.</string>
+
     <!-- ======================================================================================= -->
-    <!--  -->
+    <!-- Strings de los niveles de educación -->
     <!-- ======================================================================================= -->
+    <string name="education_title_default">Elige una opción</string>
+    <string name="education_title_elementary">Primaria</string>
+    <string name="education_title_secondary_school">Secundaria</string>
+    <string name="education_title_high_school">Bachillerato</string>
+    <string name="education_title_college">Universidad</string>
+    <string name="education_title_master">Maestría</string>
+    <string name="education_title_doctoral">Doctorado</string>
+    <string name="education_description_swipe">Desliza para más opciones</string>
     <!-- Login Errors -->
-    <string name="title_error" translatable="false">¡Grrr!</string>
     <string name="error_mail">Parece que hubo un problema al intentar iniciar sesión.</string>
     <string name="error_facebook">Parece que hubo un problema al intentar iniciar sesión con Facebook.</string>
     <string name="error_google">Parece que hubo un problema al intentar iniciar sesión con Google.</string>
 
+    <!-- ======================================================================================= -->
     <!-- General messages for NoticeDialog -->
+    <!-- ======================================================================================= -->
+    <!-- Error -->
+    <string name="message_error">Parece que hubo un error\nLe he fallado, señor...\nusted confió en mi y yo le fallé.</string>
     <string name="message_emptyfields_error">¡Alto ahí, vaquero!\nNo puedes dejar campos vacíos.</string>
+    <string name="message_connection_error">Parece que no tienes conexión.</string>
+    <string name="message_max_apps_reached_error">Sólo puedes elegir 3 aplicaciones.\nConviertete en PREMIUM y podrás elegir cuantas aplicaciones quieras.</string>
+    <string name="message_from_the_future_error">Tranquilo, Marty\nNo es posible que vengas\ndel futuro.</string>
+    <string name="message_save_error">Hubo un error al intentar guardar.\n:(</string>
+    <string name="message_set_photo_error">Hubo un error al intentar\nguardar la foto.\n:(</string>
+    <!--Successed  -->
     <string name="message_login_success">Bienvenido</string>
+    <string name="message_save_success">Todo bien, todo correcto.</string>
+    <string name="message_set_photo_success">¡No puede ser!\n¡Yo te ví en una pelicula!</string>
 
+    <!-- ======================================================================================= -->
     <!-- Credenciales y pedos así -->
+    <!-- ======================================================================================= -->
     <string name="facebook_app_id">342632009679209</string>
     <string name="fb_login_protocol_scheme">fb342632009679209</string>
 

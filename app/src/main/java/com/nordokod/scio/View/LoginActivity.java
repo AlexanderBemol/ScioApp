@@ -21,26 +21,30 @@ import android.view.animation.AnimationUtils;
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.nordokod.scio.Controller.LoginController;
+import com.nordokod.scio.Entidad.Error;
 import com.nordokod.scio.R;
 import com.victor.loading.newton.NewtonCradleLoading;
 
-public class LoginActivity extends AppCompatActivity {
+import java.util.Objects;
+
+public class LoginActivity extends AppCompatActivity implements BasicActivity {
     // Botones de Inicio de Sesion y Registrarse
-    private AppCompatButton btnSesion, btnRegistrarse;
+    private AppCompatButton BTN_Login, BTN_Signup;
     // Facebook and Google Buttons
-    private AppCompatImageButton btnGoogle, btnFB;
-    private LoginButton btnFacebook;
+    private AppCompatImageButton BTN_Google, BTN_FB;
+    private LoginButton BTN_Facebook;
     // Recover password TextView
     private AppCompatTextView txtRecuperar;
     // User and Password EditTexts
-    private AppCompatEditText editUsuario, editContraseña;
+    private AppCompatEditText ET_Mail, ET_Password;
     //Controller
-    private LoginController logController;
+    private LoginController loginController;
     private CallbackManager mCallbackManager;
     // Animations
     private Animation press;
     // Dialogs
     private Dialog loginErrorDialog, noticeDialog;
+    private static final int NOTICE_DIALOG_TIME = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,167 +74,76 @@ public class LoginActivity extends AppCompatActivity {
         loading.start();
     }
 
-    public void showLoginSuccessDialog(){
-        if (noticeDialog == null)
-            noticeDialog = new Dialog(this);
-        else if (noticeDialog.isShowing()) {
-            noticeDialog.dismiss();
-        }
-
-        noticeDialog.setContentView(R.layout.dialog_success);
-        noticeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
-        noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
-        noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
-
-        AppCompatTextView message = noticeDialog.findViewById(R.id.txtMessage);
-        message.setText(R.string.message_login_success);
-
-        noticeDialog.show();
-
-        Handler handler;
-        handler = new Handler();
-        handler.postDelayed(new Runnable(){
-            public void run(){
-                noticeDialog.cancel();
-                noticeDialog.dismiss();
-                noticeDialog = null;
-            }
-        }, 1000);
-
-        handler = null;
-    }
-
-    public void showEmptyFieldsDialog(){
-        if (noticeDialog == null)
-            noticeDialog = new Dialog(this);
-        else if (noticeDialog.isShowing()) {
-            noticeDialog.dismiss();
-        }
-
-        noticeDialog.setContentView(R.layout.dialog_error);
-        noticeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
-        noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
-        noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
-
-        AppCompatTextView message = noticeDialog.findViewById(R.id.txtMessage);
-        message.setText(R.string.message_emptyfields_error);
-
-        noticeDialog.show();
-
-        Handler handler;
-        handler = new Handler();
-        handler.postDelayed(new Runnable(){
-            public void run(){
-                noticeDialog.cancel();
-                noticeDialog.dismiss();
-                noticeDialog = null;
-            }
-        }, 2000);
-
-        handler = null;
-    }
-
-    public void showErrorDialog(final String error){
-        loginErrorDialog = new Dialog(this);
-        loginErrorDialog.setContentView(R.layout.dialog_error_login);
-        loginErrorDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        AppCompatImageView  image   = loginErrorDialog.findViewById(R.id.imageError);
-        AppCompatTextView   text    = loginErrorDialog.findViewById(R.id.textError);
-
-        switch (error){
-            case "MAIL":
-                image.setImageResource(R.drawable.mail_error);
-                text.setText(R.string.error_mail);
-                break;
-            case "FACEBOOK":
-                image.setImageResource(R.drawable.facebook_error);
-                text.setText(R.string.error_facebook);
-                break;
-            case "GOOGLE":
-                image.setImageResource(R.drawable.google_error);
-                text.setText(R.string.error_google);
-                break;
-        }
-
-        loginErrorDialog.show();
-
-        if (noticeDialog != null && noticeDialog.isShowing()) {
-            noticeDialog.cancel();
-            noticeDialog.dismiss();
-        }
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        logController.onResult(requestCode,resultCode,data);
+        loginController.onResult(requestCode,resultCode,data);
     }
 
-    private void initComponents(){
-        btnSesion       = findViewById(R.id.btnSesion);
-        btnRegistrarse  = findViewById(R.id.btnRegistrarse);
+    @Override
+    public void initComponents(){
+        BTN_Login = findViewById(R.id.BTN_Login);
+        BTN_Signup = findViewById(R.id.BTN_Signup);
 
-        btnFB           = findViewById(R.id.btnFacebook);
-        btnGoogle       = findViewById(R.id.btnGoogle);
+        BTN_FB = findViewById(R.id.BTN_Facebook);
+        BTN_Google = findViewById(R.id.BTN_Google);
 
-        txtRecuperar    = findViewById(R.id.txtRecuperar);
+        txtRecuperar    = findViewById(R.id.TV_Forgot_Password);
 
-        editUsuario     = findViewById(R.id.editUsuario);
-        editContraseña  = findViewById(R.id.editContraseña);
+        ET_Mail = findViewById(R.id.ET_Mail);
+        ET_Password = findViewById(R.id.ET_Password);
 
-        btnFacebook     = new LoginButton(this);
+        BTN_Facebook = new LoginButton(this);
 
         mCallbackManager= CallbackManager.Factory.create();
 
-        logController   = new LoginController();//crear instancia
-        logController.configController(this,this,this);//pasar context, actual activity y LoginActivity
-        logController.initializeFirebase();//inicializar firebase
+        loginController = new LoginController();//crear instancia
+        loginController.configController(this,this,this);//pasar context, actual activity y LoginActivity
+        loginController.initializeFirebase();//inicializar firebase
 
-        logController.confGoogle();
+        loginController.confGoogle();
 
-        btnFacebook.setReadPermissions("email", "public_profile");
-        logController.confFB(mCallbackManager,btnFacebook);
+        BTN_Facebook.setReadPermissions("email", "public_profile");
+        loginController.confFB(mCallbackManager, BTN_Facebook);
 
 
     }
 
-    private void initListeners(){
+    @Override
+    public void initListeners(){
         //Iniciar Sesión
-        btnSesion.setOnClickListener(new View.OnClickListener(){
+        BTN_Login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                btnSesion.startAnimation(press);
+                BTN_Login.startAnimation(press);
                 showLoginLoadingDialog();
-                logController.loginWithMail(editUsuario.getText().toString(), editContraseña.getText().toString());
+                loginController.loginWithMail(ET_Mail.getText().toString(), ET_Password.getText().toString());
             }
         });
 
         //Google
-        btnGoogle.setOnClickListener(new View.OnClickListener(){
+        BTN_Google.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 showLoginLoadingDialog();
-                logController.loginGoogle();
+                loginController.loginGoogle();
             }
         });
 
         //Facebook
-        btnFB.setOnClickListener(new View.OnClickListener(){
+        BTN_FB.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 showLoginLoadingDialog();
-                btnFacebook.callOnClick();
+                BTN_Facebook.callOnClick();
             }
         });
 
         //Registrarse
-        btnRegistrarse.setOnClickListener(new View.OnClickListener(){
+        BTN_Signup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                btnRegistrarse.startAnimation(press);
+                BTN_Signup.startAnimation(press);
                 // Aquí debe ir la llamada al SigninActivity.
                 Intent firstConfiguration = new Intent(LoginActivity.this, FirstConfigurationActivity.class);
                 startActivity(firstConfiguration);
@@ -247,6 +160,112 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void showErrorNoticeDialog(Error error) {
+        if (noticeDialog == null)
+            noticeDialog = new Dialog(this);
+        else if (noticeDialog.isShowing()) {
+            noticeDialog.dismiss();
+        }
+
+        noticeDialog.setContentView(R.layout.dialog_error);
+        Objects.requireNonNull(noticeDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
+        noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
+        noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
+
+        AppCompatTextView errorMessage  = noticeDialog.findViewById(R.id.TV_Message);
+        AppCompatImageView image        = noticeDialog.findViewById(R.id.IV_Error);
+
+        if (error.getDescriptionResource() != 0) {
+            AppCompatTextView errorDescription = noticeDialog.findViewById(R.id.TV_Description);
+            errorDescription.setVisibility(View.VISIBLE);
+            errorDescription.setText(error.getDescriptionResource());
+        }else if (error.getDescriptionText() != null) {
+            AppCompatTextView errorDescription = noticeDialog.findViewById(R.id.TV_Description);
+            errorDescription.setVisibility(View.VISIBLE);
+            errorDescription.setText(error.getDescriptionText());
+        }
+
+        switch (error.getType()) {
+            case Error.EMPTY_FIELD:
+                image.setVisibility(View.GONE);
+                errorMessage.setText(R.string.message_emptyfields_error);
+                break;
+            case Error.LOGIN_MAIL:
+                image.setImageResource(R.drawable.ic_mail);
+                errorMessage.setText(R.string.error_mail);
+                break;
+            case Error.LOGIN_FACEBOOK:
+                image.setImageResource(R.drawable.ic_facebook);
+                errorMessage.setText(R.string.error_facebook);
+                break;
+            case Error.LOGIN_GOOGLE:
+                image.setImageResource(R.drawable.ic_google);
+                errorMessage.setText(R.string.error_google);
+                break;
+            case Error.CONNECTION:
+                errorMessage.setText(R.string.message_connection_error);
+                break;
+            default:
+                image.setVisibility(View.GONE);
+                errorMessage.setText(R.string.message_error);
+                break;
+        }
+
+        noticeDialog.show();
+
+        Handler handler;
+        handler = new Handler();
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                if (noticeDialog != null) {
+                    noticeDialog.cancel();
+                    noticeDialog.dismiss();
+                    noticeDialog = null;
+                }
+            }
+        }, NOTICE_DIALOG_TIME);
+
+        handler = null;
+    }
+
+    @Override
+    public void showSuccessNoticeDialog(String task) {
+        if (noticeDialog == null)
+            noticeDialog = new Dialog(this);
+        else if (noticeDialog.isShowing()) {
+            noticeDialog.dismiss();
+        }
+
+        noticeDialog.setContentView(R.layout.dialog_success);
+        noticeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
+        noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
+        noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
+
+        AppCompatTextView message = noticeDialog.findViewById(R.id.TV_Message);
+        message.setText(R.string.message_login_success);
+
+        noticeDialog.show();
+
+        Handler handler;
+        handler = new Handler();
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                noticeDialog.cancel();
+                noticeDialog.dismiss();
+                noticeDialog = null;
+            }
+        }, 1000);
+
+        handler = null;
+
+        Intent intent = new Intent(LoginActivity.this, PermissionActivity.class);
+        intent.setAction("First Configuration");
+        startActivity(intent);
     }
 
     private void initAnimations(){

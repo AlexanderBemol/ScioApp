@@ -1,34 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- ======================================================================================= -->
+    <color name="primaryColor">         #f2f2f2</color>
+    <color name="primaryLightColor">    #ffffff</color>
+    <color name="primaryDarkColor">     #bfbfbf</color>
+    <color name="primaryTextColor">     #656565</color>
+    <color name="onPrimaryColor">       #656565</color>
+
+    <color name="secondaryColor">       #009bdb</color>
+    <color name="secondaryLightColor">  #60ccff</color>
+    <color name="secondaryDarkColor">   #006da9</color>
+    <color name="secondaryTextColor">   #ffffff</color>
+    <color name="onSecondaryColor">     #ffffff</color>
+    <color name="onSecondaryTextColor"> @color/secondaryColor</color>
+
+    <color name="backgroundColor">      @color/primaryColor</color>
+    <color name="onBackgroundColor">    @color/primaryTextColor</color>
+
+    <color name="surfaceColor">         #ffffff</color>
+    <color name="onSurfaceColor">       #656565</color>
+
+    <color name="errorColor">           #b00020</color>
+    <color name="onErrorColor">         #ffffff</color>
+    <color name="onErrorTextColor">     #ffffff</color>
+
+    <color name="correctColor">         #4bc520</color>
+    <color name="onCorrectColor">       #ffffff</color>
+
+    <color name="cancelColor">          #d30202</color>
+
+    <color name="iconNormalColor">      @color/onSurfaceColor</color>
+    <color name="iconSelectedColor">    @color/secondaryColor</color>
+
+    <color name="starEmptyColor">       @color/onBackgroundColor</color>
+    <color name="starFillColor">        #ebd800</color>
+    <!-- ======================================================================================= -->
+    <!--
     <color name="colorPrimary">#009BDB</color>
-    <color name="colorPrimaryDark">#009BDB</color>
-    <color name="colorAccent">#ffffff</color>
+
+    <color name="colorPrimaryDark">#006da9</color>
+    <color name="colorAccent">#FFFFFF</color>
 
     <color name="colorScio">#009BDB</color>
     <color name="colorScioDark">#0078AA</color>
     <color name="colorNordokod">#655498</color>
     <color name="colorStars">#EBD800</color>
+    <color name="colorCancel">#D30202</color>
     <color name="colorCorrect">#4BC520</color>
     <color name="colorError">#D30202</color>
     <color name="colorErrorDark">#B71C1C</color>
-    <color name="colorBackground">#F2F2F2</color>
-    <color name="colorBackgroundDark">#9F9F9F</color>
-    <color name="colorErrorBackground">#EF5350</color>
-    <color name="colorText">#646464</color>
-    <color name="colorIconNormal">#646464</color>
-    <color name="colorIconFocused">#009BDB</color>
-    <color name="colorBlack">#000000</color>
 
+    <color name="colorBackground">#F2F2F2</color>
+    <color name="colorBackgroundDark">#CECECE</color>
+    <color name="colorBackgroundError">#EF5350</color>
+    <color name="colorBackgroundProgress">#0078AA</color>
+    <color name="colorBackgroundSuccess">#4BC520</color>
+    <color name="colorText">#656565</color>
+    <color name="colorTextLight">#FFFFFF</color>
+    <color name="colorIconNormal">#A0A0A0</color>
+    <color name="colorIconFocused">#00ABE0</color>
+    <color name="colorBlack">#000000</color>
+     -->
+    <!-- ======================================================================================= -->
+    <!-- Colores para los Buttons -->
+    <!-- =======================================================================================
+    <color name="colorButtonBackground">#009BDB</color>
+    <color name="colorButtonText">#FFFFFF</color>
+     -->
+    <!-- Para los de cancelar
+    <color name="colorButtonCancelBackground">#D30202</color>
+    <color name="colorButtonCancelText">#D30202</color>
+    -->
+    <!-- Para los de guardar
+    <color name="colorButtonSaveBackground">#4BC520</color>
+    <color name="colorButtonSaveText">#FFFFFF</color>
+    -->
+    <!-- Para el de inicio de sesión
+    <color name="colorButtonLoginBackground">#FFFFFF</color>
+    <color name="colorButtonLoginText">#009BDB</color>
+    -->
+    <!-- Para el de registro
+    <color name="colorButtonSignupBackground">#FFFFFF</color>
+    <color name="colorButtonSignupText">#FFFFFF</color>
+    -->
+    <!-- ======================================================================================= -->
+    <!-- Colores para la pantalla de LoginActivity -->
+    <!-- =======================================================================================
+    <color name="colorLogin">@color/colorScio</color>
+    <color name="colorEditTextTextLogin">#FFFFFF</color>
+    -->
+    <!-- ======================================================================================= -->
+    <!-- Colores para la pantalla de LoginActivity -->
+    <!-- =======================================================================================
+    <color name="colorEditTextTextSignup">@color/colorText</color>
+    -->
+    <!-- ======================================================================================= -->
+    <!-- Colores para la pantalla de splashActivity -->
+    <!-- =======================================================================================
+    <color name="colorSplash">@color/colorScio</color>
+    -->
+    <!-- ======================================================================================= -->
+    <!-- Colores para las pantallas de FirstConfigurationActivity -->
+    <!-- ======================================================================================= -->
+    <!-- Para el texto -->
+    <color name="colorTextFirstConfiguration">#FFFFFF</color>
+    <!-- Para las imagenes e iconos -->
+    <color name="colorImage_FirstConfiguration">#FFFFFF</color>
+    <!-- Morado -->
     <color name="colorPurple">#7E57C2</color>
-    <color name="colorPurpleDark">#512DA8</color>
+    <color name="colorPurpleDark">#4d2c91</color>
+    <!-- Azúl -->
     <color name="colorBlue">#2196F3</color>
-    <color name="colorBlueDark">#1565C0</color>
+    <color name="colorBlueDark">#0069c0</color>
+    <!-- Amarillo -->
     <color name="colorYellow">#FFB300</color>
-    <color name="colorYellowDark">#C99908</color>
+    <color name="colorYellowDark">#c68400</color>
+    <!-- Verde -->
     <color name="colorGreen">#43A047</color>
-    <color name="colorGreenDark">#1B5E32</color>
+    <color name="colorGreenDark">#00701a</color>
+    <!-- Naranja -->
     <color name="colorOrange">#F57C00</color>
-    <color name="colorOrangeDark">#F57C00</color>
-    <color name="colorRed">#EF5350</color>
-    <color name="colorRedDark">#D32F2F</color>
+    <color name="colorOrangeDark">#bb4d00</color>
+    <!-- Rojo -->
+    <color name="colorRed">#D32F2F</color>
+    <color name="colorRedDark">#9a0007</color>
 </resources>

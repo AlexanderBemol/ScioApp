@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_padding"
-    android:background="@color/colorOrange"
+    android:background="@color/colorBlue"
     >
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/title"
-        style="@style/title_first_configuration"
+        style="@style/FirstConfiguration_Title"
         android:text="@string/title_appblock_first_configuration"
-        android:layout_marginTop="@dimen/max_space"
+        android:layout_marginTop="@dimen/space_3"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -20,28 +20,26 @@
         />
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/description"
-        style="@style/description_first_configuration"
+        android:id="@+id/TV_Description"
+        style="@style/FirstConfiguration_Description"
         android:text="@string/description_appblock_first_configuration"
-        android:layout_marginTop="@dimen/med_space"
+        android:layout_marginTop="@dimen/space_2"
 
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
 
-    <view class="android.support.v7.app.AlertController$RecycleListView"
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/listApps"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/cardview_appblock"
-        android:layout_marginTop="@dimen/max_space"
+        android:layout_height="400dp"
+        android:background="@xml/background_simple"
+        android:layout_marginTop="@dimen/space_3"
         android:layout_marginBottom="@dimen/first_configuration_max_space"
+        android:scrollbars="vertical"
 
-        app:layout_constraintTop_toBottomOf="@+id/description"
+        app:layout_constraintTop_toBottomOf="@+id/TV_Description"
         >
-
-    </view>
-
-
+    </android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>

@@ -26,6 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.nordokod.scio.Controller.LoginController;
 import com.nordokod.scio.Entidad.*;
+import com.nordokod.scio.Entidad.Error;
+import com.nordokod.scio.R;
 
 public class LoginModel {
     private FirebaseAuth mAuth;
@@ -103,11 +105,11 @@ public class LoginModel {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.getException() != null) {
-                            loginController.signinResult(task.isSuccessful(), "GOOGLE");
+                            loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_GOOGLE));
                             Log.d("prueba", "error en google: " + task.getException().toString());
                         }
                             else{
-                            loginController.signinResult(task.isSuccessful());
+                            loginController.loginResult(task.isSuccessful());
                         }
                     }
                 });
@@ -120,7 +122,7 @@ public class LoginModel {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 AuthResultGoogle(account);
             } catch (Exception e) {
-                loginController.signinResult(false,e.getMessage());
+                loginController.loginResult(false, new Error(e.getMessage(), Error.GENERAL));
                 Log.d("prueba","error en result: "+e.toString());
             }
         }else{
@@ -134,9 +136,9 @@ public class LoginModel {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.getException() != null)
-                        loginController.signinResult(task.isSuccessful(), "MAIL");
+                        loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_MAIL));
                     else{
-                        loginController.signinResult(task.isSuccessful());
+                        loginController.loginResult(task.isSuccessful());
                     }
                 }
             });
@@ -148,7 +150,7 @@ public class LoginModel {
         loginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                loginController.signinResult(true, "FACEBOOK");
+                loginController.loginResult(true);
                 Log.d("prueba", "facebook:onSuccess:" + loginResult);
                 handleFacebookAccessToken(loginResult.getAccessToken());
             }
@@ -161,7 +163,7 @@ public class LoginModel {
 
             @Override
             public void onError(FacebookException error) {
-                loginController.signinResult(false, "FACEBOOK");
+                loginController.loginResult(false, new Error(Error.LOGIN_FACEBOOK));
                 Log.d("prueba", "facebook:onError", error);
                 // ...
             }
@@ -174,10 +176,10 @@ public class LoginModel {
                 .addOnCompleteListener(currentActivity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.getException()!=null)
-                            loginController.signinResult(task.isSuccessful(), "FACEBOOK");
+                        if (task.getException() != null)
+                            loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_FACEBOOK));
                         else{
-                            loginController.signinResult(task.isSuccessful());
+                            loginController.loginResult(task.isSuccessful());
                         }
                     }
                 });

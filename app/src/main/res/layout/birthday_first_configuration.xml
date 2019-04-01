@@ -5,49 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_padding"
-    android:background="@color/colorGreen"
+    android:background="@color/colorYellow"
     >
 
     <android.support.v7.widget.AppCompatImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/first_configuration_img_size"
-        android:tint="@color/colorAccent"
+        android:tint="@color/colorYellowDark"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/title"
-        app:srcCompat="@drawable/birthday_cake"
+        app:srcCompat="@drawable/img_birthday_cake"
         />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/title"
-        style="@style/title_first_configuration"
+        style="@style/FirstConfiguration_Title"
         android:text="@string/title_birthday_first_configuration"
-        android:layout_marginBottom="@dimen/med_space"
+        android:layout_marginBottom="@dimen/space_2"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/description"
+        app:layout_constraintBottom_toTopOf="@+id/TV_Description"
         />
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/description"
-        style="@style/description_first_configuration"
+        android:id="@+id/TV_Description"
+        style="@style/FirstConfiguration_Description"
         android:text="@string/description_birthday_first_configuration"
-        android:layout_marginBottom="@dimen/max_space"
+        android:layout_marginBottom="@dimen/space_3"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/txtBirthday"
+        app:layout_constraintBottom_toTopOf="@+id/ET_Birthday"
         />
 
     <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/txtBirthday"
-        style="@style/edittext_first_configuration"
+        android:id="@+id/ET_Birthday"
+        style="@style/FirstConfiguration_EditText"
         android:hint="@string/hint_birthday_edittext"
-        android:textColor="@color/colorGreen"
-        android:textColorHint="@color/colorGreen"
+        android:textColor="@color/colorYellow"
+        android:textColorHint="@color/colorYellow"
         android:editable="false"
 
         app:layout_constraintLeft_toLeftOf="parent"
