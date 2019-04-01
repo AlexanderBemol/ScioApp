@@ -1,30 +1,247 @@
 <resources>
-    <!-- Tema usado en general -->
+    <!-- ====================================================================================== -->
+    <!-- #     # ####### ######  #     #    #    #          #     # ####### ######  #######     -->
+    <!-- ##    # #     # #     # ##   ##   # #   #          ##   ## #     # #     # #           -->
+    <!-- # #   # #     # #     # # # # #  #   #  #          # # # # #     # #     # #           -->
+    <!-- #  #  # #     # ######  #  #  # #     # #          #  #  # #     # #     # #####       -->
+    <!-- #   # # #     # #   #   #     # ####### #          #     # #     # #     # #           -->
+    <!-- #    ## #     # #    #  #     # #     # #          #     # #     # #     # #           -->
+    <!-- #     # ####### #     # #     # #     # #######    #     # ####### ######  #######     -->
+    <!-- ====================================================================================== -->
     <style name="DefaultTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="android:statusBarColor">@color/colorPrimary</item>
-        <item name="android:navigationBarColor">@color/colorBackground</item>
-        <item name="android:textSize">@dimen/normal_text</item>
+        <item name="colorPrimary"               >@color/primaryColor</item>
+        <item name="colorPrimaryDark"           >@color/primaryDarkColor</item>
+        <item name="colorAccent"                >@color/secondaryColor</item>
+        
+        <item name="primaryColor"               >@color/primaryColor</item>
+        <item name="primaryLightColor"          >@color/primaryLightColor</item>
+        <item name="primaryDarkColor"           >@color/primaryDarkColor</item>
+        <item name="primaryTextColor"           >@color/primaryTextColor</item>
+        <item name="onPrimaryColor"             >@color/onPrimaryColor</item>
+
+        <item name="secondaryColor"             >@color/secondaryColor</item>
+        <item name="secondaryLightColor"        >@color/secondaryLightColor</item>
+        <item name="secondaryDarkColor"         >@color/secondaryDarkColor</item>
+        <item name="secondaryTextColor"         >@color/secondaryTextColor</item>
+        <item name="onSecondaryColor"           >@color/onSecondaryColor</item>
+        <item name="onSecondaryTextColor"       >@color/onSecondaryTextColor</item>
+
+        <item name="backgroundColor"            >@color/backgroundColor</item>
+        <item name="onBackgroundColor"          >@color/onBackgroundColor</item>
+
+        <item name="surfaceColor"               >@color/surfaceColor</item>
+        <item name="onSurfaceColor"             >@color/onSurfaceColor</item>
+
+        <item name="android:statusBarColor"     >?attr/secondaryColor</item>
+
+        <item name="android:textSize"           >@dimen/text_size_normal</item>
     </style>
 
-    <!-- Tema usado para la pantalla del Login -->
+    <!-- ====================================================================================== -->
+    <!-- #     # ###  #####  #     # #######    #     # ####### ######  #######                 -->
+    <!-- ##    #  #  #     # #     #    #       ##   ## #     # #     # #                       -->
+    <!-- # #   #  #  #       #     #    #       # # # # #     # #     # #                       -->
+    <!-- #  #  #  #  #  #### #######    #       #  #  # #     # #     # #####                   -->
+    <!-- #   # #  #  #     # #     #    #       #     # #     # #     # #                       -->
+    <!-- #    ##  #  #     # #     #    #       #     # #     # #     # #                       -->
+    <!-- #     # ###  #####  #     #    #       #     # ####### ######  #######                 -->
+    <!-- ====================================================================================== -->
+    <style name="NightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary"               >@color/primaryColor</item>
+        <item name="colorPrimaryDark"           >@color/primaryDarkColor</item>
+        <item name="colorAccent"                >@color/secondaryColor</item>
+
+        <item name="primaryColor"               >@color/primaryColor</item>
+        <item name="primaryLightColor"          >@color/primaryLightColor</item>
+        <item name="primaryDarkColor"           >@color/primaryDarkColor</item>
+        <item name="primaryTextColor"           >@color/primaryTextColor</item>
+        <item name="onPrimaryColor"             >@color/onPrimaryColor</item>
+
+        <item name="secondaryColor"             >@color/secondaryColor</item>
+        <item name="secondaryLightColor"        >@color/secondaryLightColor</item>
+        <item name="secondaryDarkColor"         >@color/secondaryDarkColor</item>
+        <item name="secondaryTextColor"         >@color/secondaryTextColor</item>
+        <item name="onSecondaryColor"           >@color/onSecondaryColor</item>
+        <item name="onSecondaryTextColor"       >@color/onSecondaryTextColor</item>
+
+        <item name="backgroundColor"            >@color/backgroundColor</item>
+        <item name="onBackgroundColor"          >@color/onBackgroundColor</item>
+
+        <item name="surfaceColor"               >@color/surfaceColor</item>
+        <item name="onSurfaceColor"             >@color/onSurfaceColor</item>
+
+        <item name="android:statusBarColor"     >?attr/primaryColor</item>
+        <item name="android:navigationBarColor" >?attr/surfaceColor</item>
+
+        <item name="android:textSize"           >@dimen/text_size_normal</item>
+    </style>
+
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LAS ACTIVITY -->
+    <!-- ======================================================================================= -->
+    <!-- Tema usado para LoginActivity -->
     <style name="LoginTheme" parent="DefaultTheme">
-        <!-- Customize your theme here. -->
-        <item name="android:statusBarColor">@color/colorPrimary</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:statusBarColor"     >@color/secondaryColor</item>
+        <item name="android:navigationBarColor" >@color/secondaryColor</item>
+        <item name="android:textColor"          >@color/secondaryTextColor</item>
     </style>
 
     <!-- Tema usado para la pantalla del Splash -->
     <style name="SplashTheme" parent="DefaultTheme">
-        <!-- Customize your theme here. -->
-        <item name="android:statusBarColor">@color/colorNordokod</item>
-        <item name="android:navigationBarColor">@color/colorNordokod</item>
-        <item name="android:background">@color/colorNordokod</item>
+        <item name="android:statusBarColor"     >@color/secondaryColor</item>
+        <item name="android:navigationBarColor" >@color/secondaryColor</item>
+        <item name="android:background"         >@color/secondaryColor</item>
     </style>
 
+    <!-- Tema usado para FirstConfigurationActivity -->
+    <style name="FirstConfigurationTheme" parent="DefaultTheme">
+        <item name="android:statusBarColor"     >#000000</item>
+    </style>
+
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LAS ANIMACIONES -->
+    <!-- ======================================================================================= -->
     <style name="NoticeDialogAnimation">
         <item name="android:windowEnterAnimation">@anim/down_to_up</item>
         <item name="android:windowExitAnimation">@anim/up_to_down</item>
     </style>
+    
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LOS COMPONENTES REFERENTES A FirstConfigurationActivity -->
+    <!-- ======================================================================================= -->
+    <style name="FirstConfiguration_Title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/colorTextFirstConfiguration</item>
+        <item name="android:textSize">@dimen/first_configuration_text_size_title</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="FirstConfiguration_Description">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/colorTextFirstConfiguration</item>
+        <item name="android:textSize">@dimen/first_configuration_text_size_description</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+    
+    <style name="FirstConfiguration_EditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:background">@xml/background_solid_round</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:layout_marginBottom">@dimen/first_configuration_max_space</item>
+    </style>
+
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LOS PICKERDIALOG DE FECHA Y HORA -->
+    <!-- ======================================================================================= -->
+    <style name="PickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">?attr/primaryColor</item>
+        <item name="colorPrimaryDark">?attr/secondaryDarkColor</item>
+        <item name="colorAccent">?attr/secondaryDarkColor</item>
+    </style>
+
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA EL SWIPE SELECTOR -->
+    <!-- ======================================================================================= -->
+    <style name="SwipeSelector_title">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/colorGreen</item>
+    </style>
+
+    <style name="SwipeSelector_description">
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/colorGreen</item>
+    </style>
+
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LOS EDIT TEXT -->
+    <!-- ======================================================================================= -->
+    <style name="EditText_Login">
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:textColor">?attr/secondaryTextColor</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColorHint">?attr/secondaryTextColor</item>
+        <item name="android:backgroundTint">?attr/secondaryTextColor</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LOS BOTONES -->
+    <!-- ======================================================================================= -->
+    <style name="button" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textSize">@dimen/text_size_button</item>
+    </style>
+
+    <style name="normalButton" parent="button">
+        <item name="android:textColor"      >@color/secondaryTextColor</item>
+        <item name="android:backgroundTint" >@color/secondaryColor</item>
+        <item name="android:background"     >@xml/background_solid_round</item>
+    </style>
+
+    <style name="cancelButton" parent="button">
+        <item name="android:textColor"      >@color/cancelColor</item>
+        <item name="android:backgroundTint" >@color/cancelColor</item>
+        <item name="android:background"     >@xml/background_stroke_round</item>
+    </style>
+
+    <style name="loginButton" parent="button">
+        <item name="android:textColor"      >@color/onSecondaryTextColor</item>
+        <item name="android:backgroundTint" >@color/onSecondaryColor</item>
+        <item name="android:background"     >@xml/background_solid_round</item>
+    </style>
+
+    <style name="signupButton" parent="button">
+        <item name="android:textColor"      >@color/secondaryTextColor</item>
+        <item name="android:backgroundTint" >@color/onSecondaryColor</item>
+        <item name="android:background"     >@xml/background_stroke_round</item>
+    </style>
+
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA CASOS DE CORRECTO O INCORRECTO -->
+    <!-- ======================================================================================= -->
+    <style name="wrongAnswer">
+        <item name="android:textColor"      >@color/onErrorColor</item>
+        <item name="android:backgroundTint" >@color/errorColor</item>
+    </style>
+
+    <style name="correctAnswer">
+        <item name="android:textColor"      >@color/onCorrectColor</item>
+        <item name="android:backgroundTint" >@color/correctColor</item>
+    </style>
+
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LOS NOTICE DIALOG -->
+    <!-- ======================================================================================= -->
+    <style name="NoticeDialog_message">
+        <item name="android:textColor">?attr/secondaryTextColor</item>
+        <item name="android:textSize">@dimen/notice_dialog_text_size</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:layout_marginBottom">@dimen/space_2</item>
+    </style>
+
+    <style name="NoticeDialog_description">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">?attr/secondaryTextColor</item>
+        <item name="android:textSize">@dimen/notice_dialog_text_size</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_marginBottom">@dimen/activity_padding</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="NoticeDialog_image">
+        <item name="android:tint">?attr/onSecondaryColor</item>
+        <item name="android:layout_marginTop">@dimen/space_2</item>
+        <item name="android:layout_marginBottom">@dimen/space_2</item>
+    </style>
+
 </resources>

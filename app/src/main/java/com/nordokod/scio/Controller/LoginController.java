@@ -6,8 +6,10 @@ import android.content.Intent;
 
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
+import com.nordokod.scio.Entidad.Error;
 import com.nordokod.scio.Entidad.User;
 import com.nordokod.scio.Model.LoginModel;
+import com.nordokod.scio.R;
 import com.nordokod.scio.View.LoginActivity;
 
 public class LoginController{
@@ -41,22 +43,22 @@ public class LoginController{
 
             logModel.loginWithMail(user);
         }else {
-            logActivity.showEmptyFieldsDialog();
+            logActivity.showErrorNoticeDialog(new Error(Error.EMPTY_FIELD));
         }
     }
 
-    public void signinResult(Boolean result, String error){ //con error
+    public void loginResult(Boolean result, Error error){ //con error
         if (result){
-            logActivity.showLoginSuccessDialog();
+            logActivity.showSuccessNoticeDialog(null);
         }
         else {
-            logActivity.showErrorDialog(error);
+            logActivity.showErrorNoticeDialog(error);
         }
     }
 
-    public void signinResult(Boolean result){ //sin error
+    public void loginResult(Boolean result){ //sin error
         if (result){
-            logActivity.showLoginSuccessDialog();
+            logActivity.showSuccessNoticeDialog(null);
         }
     }
 

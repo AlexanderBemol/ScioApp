@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".View.FirstConfigurationActivity">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/BTN_Skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_btnSkip"
+        android:textSize="@dimen/text_size_button"
+        android:background="@drawable/background_transparent"
+        android:textColor="?attr/secondaryTextColor"
+        android:layout_marginBottom="@dimen/space_1"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/pageIndicator"
+        />
+
+    <me.relex.circleindicator.CircleIndicator
+        android:id="@+id/pageIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginBottom="@dimen/activity_padding"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+    </me.relex.circleindicator.CircleIndicator>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/BTN_Next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_btnNext"
+        android:textSize="@dimen/text_size_button"
+        android:background="@drawable/background_transparent"
+        android:textColor="?attr/secondaryTextColor"
+        android:drawableEnd="@drawable/ic_arrow_right"
+
+        app:layout_constraintTop_toTopOf="@id/pageIndicator"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/pageIndicator"
+        />
+</android.support.constraint.ConstraintLayout>
