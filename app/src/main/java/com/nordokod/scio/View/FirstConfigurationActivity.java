@@ -14,11 +14,9 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.nordokod.scio.Controller.FirstConfigurationController;
 import com.nordokod.scio.Entidad.Error;
 import com.nordokod.scio.R;
 
@@ -54,7 +52,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
     /**
      * Obejeto del controlador perteneciente a esta Activity.
      */
-    private FirstConfigurationController firstConfigurationController;
+    //private FirstConfigurationController firstConfigurationController;
 
     //==============================================================================================
     // ON CREATE
@@ -87,16 +85,14 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         viewPager.setAdapter(fragmentStatePagerAdapter);
         circleIndicator.setViewPager(viewPager);
 
-        firstConfigurationController = new FirstConfigurationController();
-        firstConfigurationController.configController(this, this, this);
+        //firstConfigurationController = new FirstConfigurationController();
+        //firstConfigurationController.configController(this, this, this);
 
         //photoFragment.configFragment(firstConfigurationController);
-        //nameFragment.configFragment(firstConfigurationController);
         //birthdayFragment.configFragment(firstConfigurationController);
         //educationFragment.configFragment(firstConfigurationController);
         //appBlockFragment.configAdapter(firstConfigurationController, this);
-
-        appBlockFragment.configAdapter(firstConfigurationController, this);
+        //appBlockFragment.configAdapter(firstConfigurationController, this);
     }
 
     //==============================================================================================

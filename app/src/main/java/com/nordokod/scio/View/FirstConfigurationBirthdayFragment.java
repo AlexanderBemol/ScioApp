@@ -17,8 +17,6 @@ public class FirstConfigurationBirthdayFragment extends Fragment implements Basi
 
     private AppCompatEditText ET_Birthday;
 
-    //private FirstConfigurationController firstConfigurationController;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle s) {
@@ -42,20 +40,6 @@ public class FirstConfigurationBirthdayFragment extends Fragment implements Basi
                 showDatePickerDialog();
             }
         });
-    }
-/*
-    /**
-     * Método para configurar este Fragment con el objeto del controlador usado por el Activity.
-     * /
-    protected void configFragment(FirstConfigurationController controller) {
-        this.firstConfigurationController = controller;
-    }
-*/
-    /**
-     * Método que actualiza la fecha de nacimineto del usuario en Firebase.
-     */
-    protected void updateBirthday() {
-        //firstConfigurationController.updateBirthday(ET_Birthday.getText().toString());
     }
 
     /**

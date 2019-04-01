@@ -16,8 +16,6 @@ public class FirstConfigurationEducationFragment extends Fragment implements Bas
 
     private SwipeSelector educationSelector;
 
-    //private FirstConfigurationController firstConfigurationController;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle s) {
@@ -46,22 +44,6 @@ public class FirstConfigurationEducationFragment extends Fragment implements Bas
 
     @Override
     public void initListeners() { }
-
-/*
-    /**
-     * Método para configurar este Fragment con el objeto del controlador usado por el Activity.
-     * /
-    protected void configFragment(FirstConfigurationController controller) {
-        this.firstConfigurationController = controller;
-    }
-*/
-
-    /**
-     * Método que actualiza el nivel de educación elegido por al usuario, en Firebase.
-     */
-    protected void updateEducation() {
-        //firstConfigurationController.updateEducation(educationSelector.getSelectedItem().value);
-    }
 
     public Object getEducation() {
         return educationSelector.getSelectedItem().value;

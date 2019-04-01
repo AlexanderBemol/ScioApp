@@ -15,8 +15,6 @@ public class FirstConfigurationNameFragment extends Fragment implements BasicFra
 
     private AppCompatEditText ET_Name;
 
-    //private FirstConfigurationController firstConfigurationController;
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle s) {
@@ -34,22 +32,6 @@ public class FirstConfigurationNameFragment extends Fragment implements BasicFra
     @Override
     public void initListeners() {
 
-    }
-
-/*
-    /**
-     * Método para configurar este Fragment con el objeto del controlador usado por el Activity.
-     * /
-    protected void configFragment(FirstConfigurationController controller) {
-        this.firstConfigurationController = controller;
-    }
-*/
-
-    /**
-     * Método para actualizar el nombre de usuario en Firebase.
-     */
-    protected void updateName() {
-        //firstConfigurationController.updateName(ET_Name.getText().toString());
     }
 
     public String getName() {

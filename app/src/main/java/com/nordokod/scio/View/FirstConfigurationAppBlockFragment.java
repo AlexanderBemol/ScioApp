@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.nordokod.scio.Controller.FirstConfigurationController;
 import com.nordokod.scio.Entidad.App;
 import com.nordokod.scio.R;
 
