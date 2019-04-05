@@ -1,9 +1,12 @@
 package com.nordokod.scio.view;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -16,9 +19,13 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Gallery;
 
+import com.nordokod.scio.controller.FirstConfigurationController;
+import com.nordokod.scio.entity.AppConstants;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
+import com.soundcloud.android.crop.Crop;
 
 import java.util.Objects;
 
@@ -53,7 +60,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
     /**
      * Obejeto del controlador perteneciente a esta Activity.
      */
-    //private FirstConfigurationController firstConfigurationController;
+    private FirstConfigurationController firstConfigurationController;
 
     //==============================================================================================
     // ON CREATE
@@ -86,10 +93,9 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         viewPager.setAdapter(fragmentStatePagerAdapter);
         circleIndicator.setViewPager(viewPager);
 
-        //firstConfigurationController = new FirstConfigurationController();
-        //firstConfigurationController.configController(this, this, this);
+        firstConfigurationController = new FirstConfigurationController(this, this, this);
 
-        //photoFragment.configFragment(firstConfigurationController);
+        photoFragment.configFragment(firstConfigurationController);
         //birthdayFragment.configFragment(firstConfigurationController);
         //educationFragment.configFragment(firstConfigurationController);
         //appBlockFragment.configAdapter(firstConfigurationController, this);
@@ -376,4 +382,25 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         isAppBlockSkip = state;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // Result code is RESULT_OK only if the user selects an Image
+        if (resultCode == Activity.RESULT_OK)
+            switch (requestCode){
+                case AppConstants.GALLERY_REQUEST_CODE:
+                    Uri selectedImage = data.getData();
+                    firstConfigurationController.trimPhoto(selectedImage);
+                    break;
+                case Crop.REQUEST_CROP:
+                    Uri resultUri = Crop.getOutput(data);
+                    firstConfigurationController.uploadPhoto(resultUri);
+                    //photoFragment.setPhoto(resultUri);
+                    break;
+            }
+    }
+
+    public void updatePhoto(){
+        photoFragment.defaultPhoto();
+    }
 }

@@ -261,7 +261,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
 
         handler = null;
 
-        Intent intent = new Intent(LoginActivity.this, PermissionActivity.class);
+        Intent intent = new Intent(LoginActivity.this, FirstConfigurationActivity.class);
         intent.setAction("First Configuration");
         startActivity(intent);
     }

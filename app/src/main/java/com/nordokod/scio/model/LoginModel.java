@@ -108,7 +108,10 @@ public class LoginModel {
                             Log.d("prueba", "error en google: " + task.getException().toString());
                         }
                             else{
-                            loginController.loginResult(task.isSuccessful());
+                                loginController.loginResult(task.isSuccessful());
+                                if(task.getResult().getAdditionalUserInfo().isNewUser()){
+                                    loginController.firstConfiguration();
+                                }
                         }
                     }
                 });
@@ -138,6 +141,9 @@ public class LoginModel {
                         loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_MAIL));
                     else{
                         loginController.loginResult(task.isSuccessful());
+                        if(task.getResult().getAdditionalUserInfo().isNewUser()){
+                            loginController.firstConfiguration();
+                        }
                     }
                 }
             });
@@ -179,6 +185,9 @@ public class LoginModel {
                             loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_FACEBOOK));
                         else{
                             loginController.loginResult(task.isSuccessful());
+                            if(task.getResult().getAdditionalUserInfo().isNewUser()){
+                                loginController.firstConfiguration();
+                            }
                         }
                     }
                 });
