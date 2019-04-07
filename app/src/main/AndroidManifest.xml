@@ -6,9 +6,10 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS"
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -22,19 +23,29 @@
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/></intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED"/></intent-filter>
-            <intent-filter><action android:name="android.intent.action.PACKAGE_REMOVED"/></intent-filter>
-            <intent-filter><action android:name="android.intent.action.BATTERY_LOW"/></intent-filter>
-            <intent-filter><action android:name="android.intent.action.BATTERY_OKAY"/></intent-filter>
-            <intent-filter><action android:name="com.nordokod.kill"/></intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_LOW" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_OKAY" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.nordokod.kill" />
+            </intent-filter>
         </receiver>
         <!-- ======================================================================================= Splash -->
         <activity
             android:name=".view.SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -45,8 +56,8 @@
         <!-- ======================================================================================= Login -->
         <activity
             android:name=".view.LoginActivity"
-            android:theme="@style/LoginTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -69,23 +80,22 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".process.LockAppProcess"
-                 android:stopWithTask="false"
-            />
-
+        <service
+            android:name=".process.LockAppProcess"
+            android:stopWithTask="false" />
         <!-- ======================================================================================= Permission -->
-        <activity android:name=".view.PermissionActivity"
-            android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".view.PermissionActivity"
+            android:screenOrientation="portrait" />
         <!-- ======================================================================================= First Configuration -->
-        <activity android:name=".view.FirstConfigurationActivity"
-            android:screenOrientation="portrait"/>
-
-        <!-- ======================================================================================= Signup -->
-
-
+        <activity
+            android:name=".view.FirstConfigurationActivity"
+            android:screenOrientation="portrait" />
         <!-- ======================================================================================= Main -->
+        <activity android:name=".view.MainActivity"
+            android:screenOrientation="portrait">
 
+        </activity>
     </application>
 
 </manifest>
