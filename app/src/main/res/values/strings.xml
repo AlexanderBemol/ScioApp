@@ -88,9 +88,20 @@
     <string name="message_set_photo_success">¡No puede ser!\n¡Yo te ví en una pelicula!</string>
 
     <!-- ======================================================================================= -->
+    <!-- Titulos para las opciones en los menú -->
+    <!-- ======================================================================================= -->
+    <string name="navbaf_title_home">Inicio</string>
+    <string name="navbaf_title_create">Crear</string>
+    <string name="navbaf_title_guides">Guías</string>
+    <string name="menu_title_">X</string>
+
+    <!-- ======================================================================================= -->
     <!-- Credenciales y pedos así -->
     <!-- ======================================================================================= -->
     <string name="facebook_app_id">342632009679209</string>
     <string name="fb_login_protocol_scheme">fb342632009679209</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
