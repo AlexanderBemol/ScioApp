@@ -1,16 +1,23 @@
 package com.nordokod.scio.controller;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.util.Log;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.entity.App;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.model.FirstConfigurationModel;
 import com.nordokod.scio.view.FirstConfigurationActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -57,9 +64,27 @@ public class FirstConfigurationController {
     public void uploadCanceled(){
         Error error=new Error();
         error.setType(Error.WHEN_SAVING_ON_DATABASE);
-        error.setDescriptionResource(R.string.message_save_error);
-        error.setDescriptionText("Algo salió mal");
         fcActivity.showErrorNoticeDialog(error);
     }
 
+    public String getName(){
+        return fcModel.getName();
+    }
+
+
+    public boolean validateFields(String name, String birthday,Integer education){
+        return fcModel.validateFields(name,birthday,education);
+    }
+
+    public ArrayList<App> getListOfApps() {
+        return fcModel.getListOfApps();
+    }
+
+    public boolean onStateChanged(String packagePath, boolean isChecked) {
+        return fcModel.onStateChanged(packagePath,isChecked);
+    }
+
+    public void showError(Error error) {
+        fcActivity.showErrorNoticeDialog(error);
+    }
 }

@@ -38,6 +38,7 @@ public class FirstConfigurationPhotoFragment extends Fragment implements BasicFr
     public void initComponents(View view) {
         IV_Camera = view.findViewById(R.id.imgCamera);
         CIV_Photo = view.findViewById(R.id.photo);
+        CIV_Photo.setImageResource(R.drawable.default_photo);
         defaultPhoto();
 
     }
@@ -74,9 +75,6 @@ public class FirstConfigurationPhotoFragment extends Fragment implements BasicFr
      */
     private void newPhoto() {
         firstConfigurationController.photoFromStorage();
-        Uri photo = null,finalUri = null;
-
-
     }
 
     /**

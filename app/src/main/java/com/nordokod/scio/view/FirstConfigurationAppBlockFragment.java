@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.nordokod.scio.controller.FirstConfigurationController;
 import com.nordokod.scio.entity.App;
 import com.nordokod.scio.R;
 
@@ -23,8 +24,8 @@ public class FirstConfigurationAppBlockFragment extends Fragment implements Basi
     private RecyclerView.LayoutManager layoutManager;
     private ArrayList<App> arraylistapp;
 
-    //private FirstConfigurationController firstConfigurationController;
-    private Context context;
+    private FirstConfigurationActivity firstConfigurationActivity;
+    private FirstConfigurationController firstConfigurationController;
 
     @Nullable
     @Override
@@ -41,11 +42,12 @@ public class FirstConfigurationAppBlockFragment extends Fragment implements Basi
     public void initComponents(View view) {
         listApps = view.findViewById(R.id.listApps);
 
-        layoutManager = new LinearLayoutManager(context);
+        layoutManager = new LinearLayoutManager(getContext());
         listApps.setLayoutManager(layoutManager);
 
         mAdapter = new AppRecyclerViewAdapter(getListOfApps());
-        //((AppRecyclerViewAdapter) mAdapter).configAdapter(firstConfigurationController);
+        ((AppRecyclerViewAdapter) mAdapter).configAdapter(firstConfigurationController);
+
         listApps.setAdapter(mAdapter);
     }
 
@@ -53,14 +55,11 @@ public class FirstConfigurationAppBlockFragment extends Fragment implements Basi
     public void initListeners() {
 
     }
-/*
-    protected void configAdapter(FirstConfigurationController controller, Context context) {
+    protected void configAdapter(FirstConfigurationController controller,FirstConfigurationActivity firstConfigurationActivity) {
         this.firstConfigurationController   = controller;
-        this.context = context;
+        this.firstConfigurationActivity = firstConfigurationActivity;
     }
-*/
     private ArrayList<App> getListOfApps() {
-        return new ArrayList<>();
-        //return firstConfigurationController.getListOfApps();
+        return firstConfigurationController.getListOfApps();
     }
 }

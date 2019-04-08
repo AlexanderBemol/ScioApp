@@ -26,6 +26,7 @@ import com.nordokod.scio.entity.AppConstants;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
 import com.soundcloud.android.crop.Crop;
+import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.Objects;
 
@@ -57,6 +58,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
     private FirstConfigurationAppBlockFragment      appBlockFragment;
     private FirstConfigurationCompleteFragment      completeFragment;
 
+    private NewtonCradleLoading loading;
     /**
      * Obejeto del controlador perteneciente a esta Activity.
      */
@@ -96,9 +98,10 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         firstConfigurationController = new FirstConfigurationController(this, this, this);
 
         photoFragment.configFragment(firstConfigurationController);
+        nameFragment.configFragment(firstConfigurationController);
         //birthdayFragment.configFragment(firstConfigurationController);
         //educationFragment.configFragment(firstConfigurationController);
-        //appBlockFragment.configAdapter(firstConfigurationController, this);
+        appBlockFragment.configAdapter(firstConfigurationController,this);
         //appBlockFragment.configAdapter(firstConfigurationController, this);
 
         isActivityCreated = true;
@@ -144,6 +147,8 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                 int screen_number = viewPager.getCurrentItem();
                 if (screen_number == 5)
                     saveConfiguration();
+                if(screen_number==2)
+                    nameFragment.updateName();
 
                 viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
             }
@@ -168,24 +173,31 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                         BTN_Next.setText(R.string.txt_btnDone);
 
                         BTN_Skip.setVisibility(View.VISIBLE);
+
                         break;
                     case 5: // Pantalla para finalizar.
                         BTN_Next.setVisibility(View.GONE);
-
+                        if (validateFields(nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation()))
+                            completeFragment.onComplete();
+                        else
+                            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
                         BTN_Skip.setText(R.string.txt_btnDone);
                         break;
                     default:
                         BTN_Skip.setText(R.string.txt_btnSkip);
                         BTN_Skip.setVisibility(View.GONE);
                         break;
+
                 }
             }
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == 4)
+                if (position == 5)
                     if (validateFields(nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation()))
                         completeFragment.onComplete();
+                    else
+                        viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
             }
 
             @Override
@@ -359,9 +371,8 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
      * @return  true    = Todos los datos son válidos.
      *          false   = Al menos un dato no fué válido.
      */
-    private boolean validateFields(String name, String birthday, Object education) {
-        //return firstConfigurationController.validateFields(name, birthday, img_education);
-        return true;
+    private boolean validateFields(String name, String birthday, Integer education) {
+        return firstConfigurationController.validateFields(name, birthday, education);
     }
 
     /**
@@ -395,7 +406,6 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                 case Crop.REQUEST_CROP:
                     Uri resultUri = Crop.getOutput(data);
                     firstConfigurationController.uploadPhoto(resultUri);
-                    //photoFragment.setPhoto(resultUri);
                     break;
             }
     }
@@ -403,4 +413,6 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
     public void updatePhoto(){
         photoFragment.defaultPhoto();
     }
+
+
 }

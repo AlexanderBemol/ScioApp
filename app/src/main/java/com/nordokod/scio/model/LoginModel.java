@@ -163,14 +163,13 @@ public class LoginModel {
             @Override
             public void onCancel() {
                 Log.d("prueba", "facebook:onCancel");
-                // ...
             }
 
             @Override
             public void onError(FacebookException error) {
                 loginController.loginResult(false, new Error(Error.LOGIN_FACEBOOK));
                 Log.d("prueba", "facebook:onError", error);
-                // ...
+
             }
         });
     }
