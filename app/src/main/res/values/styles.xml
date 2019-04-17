@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
     <!-- ====================================================================================== -->
     <!-- #     # ####### ######  #     #    #    #          #     # ####### ######  #######     -->
     <!-- ##    # #     # #     # ##   ##   # #   #          ##   ## #     # #     # #           -->
@@ -35,6 +35,7 @@
         <item name="android:statusBarColor"     >?attr/secondaryColor</item>
 
         <item name="android:textSize"           >@dimen/text_size_normal</item>
+        <item name="android:fontFamily"         >sans-serif</item>
     </style>
 
     <!-- ====================================================================================== -->
@@ -105,7 +106,14 @@
         <item name="android:windowEnterAnimation">@anim/down_to_up</item>
         <item name="android:windowExitAnimation">@anim/up_to_down</item>
     </style>
-    
+
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LOS COMPONENTES REFERENTES A MainActivity -->
+    <!-- ======================================================================================= -->
+    <style name="NavigationView" parent="DefaultTheme">
+
+    </style>
+
     <!-- ======================================================================================= -->
     <!-- ESTILOS PARA LOS COMPONENTES REFERENTES A FirstConfigurationActivity -->
     <!-- ======================================================================================= -->

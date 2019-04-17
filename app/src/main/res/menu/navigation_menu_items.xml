@@ -2,7 +2,37 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/Menu_Acount"
-        android:title="Cuenta"
-        android:icon="@drawable/ic_home"
+        android:title="@string/navmenu_title_account"
+        android:icon="@drawable/user_icon"
+        />
+
+    <item
+        android:id="@+id/Menu_Settings"
+        android:title="@string/navmenu_title_settings"
+        android:icon="@drawable/ic_settings"
+        />
+
+    <item
+        android:id="@+id/Menu_Security"
+        android:title="@string/navmenu_title_security"
+        android:icon="@drawable/lock_icon"
+        />
+
+    <item
+        android:id="@+id/Menu_Apps"
+        android:title="@string/navmenu_title_apps"
+        android:icon="@drawable/ic_apps"
+        />
+
+    <item
+        android:id="@+id/Menu_OpenSource"
+        android:title="@string/navmenu_title_opensource"
+        android:icon="@drawable/heart_icon"
+        />
+
+    <item
+        android:id="@+id/Menu_About"
+        android:title="@string/navmenu_title_about"
+        android:icon="@drawable/ic_about"
         />
 </menu>
