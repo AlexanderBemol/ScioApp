@@ -5,14 +5,15 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.nordokod.scio.R;
 
-public class CreateFragment extends Fragment implements BasicFragment {
+public class CreateFragment extends BottomSheetDialogFragment implements BasicFragment {
 
     private Context context;
     private Activity activity;
@@ -34,7 +35,7 @@ public class CreateFragment extends Fragment implements BasicFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_create, container, false);
+        View view = inflater.inflate(R.layout.fragment_new_guide, container, false);
 
         initComponents(view);
         initListeners();

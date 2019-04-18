@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".view.NewGuideFragment"
+    >
+    <android.support.constraint.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_padding"
+        android:background="@color/backgroundColor"
+        >
+        <!-- TITULO -->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/TV_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nueva Guía"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/TV_Category"
+            />
+
+        <!-- CATEGORIA -->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/TV_Category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categoria"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/RV_Categories"
+            />
+
+        <include
+            android:id="@+id/RV_Categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toTopOf="@id/TV_Topic"
+
+            layout="@layout/recyclerview_categories"
+            />
+
+        <!-- TEMA -->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/TV_Topic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tema"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ET_Topic"
+            />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/ET_Topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toTopOf="@id/TV_DateTime"
+            />
+
+        <!-- FECHA Y HORA -->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/TV_DateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha y hora"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/LL_Date"
+            />
+
+        <LinearLayout
+            android:id="@+id/LL_Date"
+            android:layout_width="150dp"
+            android:layout_height="130dp"
+            android:orientation="vertical"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/LL_Time"
+            app:layout_constraintBottom_toTopOf="@id/BTN_Create"
+            >
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Noviembre"
+                android:textAlignment="center"
+                android:textColor="@color/onSecondaryColor"
+                android:background="@xml/background_top_normal_round"
+                android:backgroundTint="@color/cancelColor"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="60sp"
+                android:text="30"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@xml/background_bottom_normal_round"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LL_Time"
+            android:layout_width="150dp"
+            android:layout_height="130dp"
+            android:orientation="vertical"
+
+            app:layout_constraintLeft_toRightOf="@id/LL_Date"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/BTN_Create"
+            >
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="AM"
+                android:textAlignment="center"
+                android:textColor="@color/onSecondaryColor"
+                android:background="@xml/background_top_normal_round"
+                android:backgroundTint="@color/secondaryColor"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="50sp"
+                android:text="12:00"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="@xml/background_bottom_normal_round"
+                />
+
+        </LinearLayout>
+
+        <!-- BOTONES -->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/BTN_Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_cancel"
+
+            app:layout_constraintTop_toTopOf="@id/BTN_Create"
+            app:layout_constraintRight_toLeftOf="@id/BTN_Create"
+            app:layout_constraintBottom_toBottomOf="@id/BTN_Create"
+
+            style="@style/cancelButton"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/BTN_Create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crear"
+
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            style="@style/normalButton"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

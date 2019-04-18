@@ -1,5 +1,10 @@
 package com.nordokod.scio.view;
 
+
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,11 +15,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.Error;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements BasicActivity {
 
@@ -28,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private HomeFragment    homeFragment;
     private CreateFragment  createFragment;
     private GuidesFragment  guidesFragment;
+    private Fragment selectedFragment = null;
 
     //private MainController mainController;
 
@@ -38,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
         initComponents();
         initListeners();
+
+        navigationBar.setSelectedItemId(R.id.NAV_Home);
     }
 
     @Override
@@ -66,14 +78,15 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         navigationBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment = null;
 
                 switch (item.getItemId()) {
                     case R.id.NAV_Home:
                         selectedFragment = new HomeFragment();
                         break;
                     case R.id.NAV_Create:
-                        // Abrir fragment
+                        DialogFragment dialogFragment = new CreateFragment();
+
+                        dialogFragment.show(getSupportFragmentManager(), "New");
                         break;
                     case R.id.NAV_Guides:
                         selectedFragment = new GuidesFragment();
@@ -85,12 +98,10 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                 return true;
             }
         });
-
-
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);

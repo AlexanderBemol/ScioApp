@@ -187,6 +187,7 @@
     <!-- ======================================================================================= -->
     <style name="button" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:textSize">@dimen/text_size_button</item>
+        <item name="android:minWidth">130dp</item>
     </style>
 
     <style name="normalButton" parent="button">
