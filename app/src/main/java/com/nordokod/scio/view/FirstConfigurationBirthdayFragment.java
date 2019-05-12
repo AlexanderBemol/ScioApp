@@ -49,6 +49,7 @@ public class FirstConfigurationBirthdayFragment extends Fragment implements Basi
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 final String selectedDate = twoDigits(dayOfMonth) + "/" + twoDigits(month + 1) + "/" + year;
+
                 ET_Birthday.setText(selectedDate);
             }
         });

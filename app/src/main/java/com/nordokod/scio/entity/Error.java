@@ -111,6 +111,10 @@ public class Error {
      * Este limite sólo existe cuando el usuario es FREE.
      */
     public static final int MAXIMUM_NUMBER_OF_APPS_REACHED = 12;
+    /**
+     * Constante utilizada cuando el usuario introduce un nombre inválido
+     */
+    public static final int INVALID_USER_NAME = 13;
 
 
 }

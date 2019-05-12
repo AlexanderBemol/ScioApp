@@ -2,11 +2,16 @@ package com.nordokod.scio.entity;
 
 import android.graphics.drawable.Drawable;
 
-public class App {
+import java.io.Serializable;
+
+public class App implements Serializable {
     private Drawable icon;
     private String name, packagePath;
     private boolean state;
 
+    public App(){
+
+    }
     public App(Drawable icon, String name, String packagePath, boolean state) {
         this.icon = icon;
         this.name = name;

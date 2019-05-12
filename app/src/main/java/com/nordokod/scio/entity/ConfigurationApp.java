@@ -7,18 +7,10 @@ public class ConfigurationApp implements Serializable {
     private int secondsBQ;
     private boolean appLocker;
     private ArrayList<String> lockedApps;
-    private ArrayList<appData> allApps;
     public ConfigurationApp(){
         this.lockedApps=new ArrayList<String>();
-        this.allApps=new ArrayList<appData>();
     }
 
-    public void setAllApps(ArrayList<appData> allApps) {
-        this.allApps = allApps;
-    }
-    public ArrayList<appData> getAllApps() {
-        return allApps;
-    }
     public int getSecondsBQ() {
         return secondsBQ;
     }

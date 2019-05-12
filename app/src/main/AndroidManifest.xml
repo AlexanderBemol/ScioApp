@@ -11,6 +11,10 @@
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:appCategory="productivity"
@@ -80,9 +84,11 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name=".process.LockAppProcess"
-            android:stopWithTask="false" />
+        <service android:name=".process.LockAppProcess"
+                 android:stopWithTask="false"
+            />
+        <!-- ============================================================================== Crop Recortes -->
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
         <!-- ======================================================================================= Permission -->
         <activity
             android:name=".view.PermissionActivity"
