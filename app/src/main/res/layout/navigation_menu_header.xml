@@ -12,7 +12,7 @@
         android:id="@+id/CIV_Photo"
         android:layout_width="@dimen/navigation_photo_size"
         android:layout_height="@dimen/navigation_photo_size"
-        android:src="@drawable/photo_mayuko"
+        android:src="@drawable/default_photo"
         android:layout_marginBottom="@dimen/space_1"
 
         app:layout_constraintLeft_toLeftOf="parent"
