@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
@@ -35,7 +37,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+
 
 public class FirstConfigurationModel {
     private FirebaseAuth mAuth;
@@ -74,6 +79,7 @@ public class FirstConfigurationModel {
             storage = FirebaseStorage.getInstance();
             storageReference = storage.getReference();//obtenemos referencia a la bd
 
+            
             if(photopath.contains(storageReference.toString())){//si el link de la foto es de firebase...
 
                 StorageReference sRef = storage.getReferenceFromUrl(photopath);//obtenemos la referencia al link
@@ -118,7 +124,11 @@ public class FirstConfigurationModel {
             fcController.setDefaultScioPhoto();
         }
     }
-    public void photoFromStorage(){//método para elegir foto de los archivos del celular
+
+    /**
+     * método para lanzar selector de imagenes de los archivos
+     */
+    public void photoFromStorage(){
         Intent intent=new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         String[] mimeTypes = {"image/jpeg", "image/png"};
@@ -145,7 +155,6 @@ public class FirstConfigurationModel {
             e.printStackTrace();
         }
     }
-
     /**
      * Método para subir foto a firebase
      * @param photo a subir
@@ -299,14 +308,14 @@ public class FirstConfigurationModel {
      * @param education int nivel educación
      * @return valid
      */
-    public boolean validateFields(String name, String birthday, Integer education) {
+    public boolean validateFields(String name, String birthday, int education) {
         /*
         * la expresion regular regEx sólo permite escribir nombres no vacíos, compuestos por caracteres no especiales, no permite usar más de un espacio seguido
         **/
         String regEx="([A-Za-zÁÉÍÓÚáéíóúÄËÏÖÜäëïöüÑñ]+)([\\s]([A-Za-zÁÉÍÓÚáéíóúÄËÏÖÜäëïöüÑñ])+)*";
         if(!name.matches(regEx)||(name.length()<5||name.length()>30)){
             Error error=new Error();
-            error.setType(Error.EMPTY_FIELD);
+            error.setType(Error.INVALID_USER_NAME);
             fcController.showError(error);
             return false;
         }
@@ -319,7 +328,7 @@ public class FirstConfigurationModel {
             Date dateToday = new Date();
             if(date.after(dateToday)){
                 Error error=new Error();
-                error.setType(Error.EMPTY_FIELD);
+                error.setType(Error.GUY_FROM_THE_FUTURE);
                 fcController.showError(error);
                 return false;
             }
@@ -328,7 +337,7 @@ public class FirstConfigurationModel {
              */
             if (education==0){
                 Error error=new Error();
-                error.setType(Error.INVALID_OPTION);
+                error.setType(Error.EMPTY_FIELD);
                 fcController.showError(error);
                 return false;
             }
@@ -339,7 +348,7 @@ public class FirstConfigurationModel {
              * esta excepción es por error al convertir fecha, signifa que el usaurio no seleccionó una fecha
              */
             Error error=new Error();
-            error.setType(Error.INVALID_OPTION);
+            error.setType(Error.EMPTY_FIELD);
             fcController.showError(error);
             return false;
         }
@@ -348,5 +357,52 @@ public class FirstConfigurationModel {
 
         }
         return true;
+    }
+
+    public void saveConfiguration(String name, String birthday, int education){
+        try {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            currentUser=mAuth.getCurrentUser();
+
+            SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+            Date date=sdf.parse(birthday);
+            DocumentReference eduReference=db.collection(AppConstants.CLOUD_EDUCATIONAL_LEVEL).document(String.valueOf(education));
+
+            Map<String, Object> data = new HashMap<>();
+            data.put(AppConstants.CLOUD_USER_BIRTHDAY,date);
+            data.put(AppConstants.CLOUD_USER_EDUCATIONAL_LEVEL,eduReference);
+            db.collection(AppConstants.CLOUD_USERS).document(currentUser.getUid())
+                    .set(data)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            fcController.configurationSaved();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("testeo",e.getMessage());
+                            fcController.showError(new Error(Error.GENERAL));
+                        }
+                    });
+
+            UserProfileChangeRequest dataProfile= new UserProfileChangeRequest.Builder().setDisplayName(name).build();
+            currentUser.updateProfile(dataProfile).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    fcController.configurationSaved();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d("testeo",e.getMessage());
+                    fcController.showError(new Error(Error.GENERAL));
+                }
+            });
+        } catch (ParseException e) {
+            Log.d("testeo",e.getMessage());
+            fcController.showError(new Error(Error.GENERAL));
+        }
     }
 }

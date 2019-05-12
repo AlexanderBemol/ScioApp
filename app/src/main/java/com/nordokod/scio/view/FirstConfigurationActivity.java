@@ -36,10 +36,8 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
     //==============================================================================================
     // VARIABLES Y OBJETOS
     //==============================================================================================
-    private final int NUMBER_PAGES = 6;
+    private final int NUMBER_PAGES = 5;
     private boolean isActivityCreated = false;
-    private boolean isPhotoSkip = false;
-    private boolean isAppBlockSkip = false;
 
     private AppCompatButton BTN_Skip, BTN_Next;
 
@@ -120,21 +118,20 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         BTN_Skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
+
                 int screen_number = viewPager.getCurrentItem();
                 switch (screen_number) {
                     case 0:
-                        isPhotoSkip = true;
                         photoFragment.skip();
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                         break;
-                    case 4:
+                    /*case 4:
                         isAppBlockSkip = true;
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                         break;
                     case 5:
                         saveConfiguration();
-                        break;
+                        break;*/
                     default:
                         break;
                 }
@@ -145,8 +142,6 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
             @Override
             public void onClick(View v) {
                 int screen_number = viewPager.getCurrentItem();
-                if (screen_number == 5)
-                    saveConfiguration();
                 if(screen_number==2)
                     nameFragment.updateName();
 
@@ -169,7 +164,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                     case 0: // Pantalla para la foto.
                         BTN_Skip.setVisibility(View.VISIBLE);
                         break;
-                    case 4: // Pantalla para las apps bloqueadas.
+                    /*case 4: // Pantalla para las apps bloqueadas.
                         BTN_Next.setText(R.string.txt_btnDone);
 
                         BTN_Skip.setVisibility(View.VISIBLE);
@@ -182,20 +177,27 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                         else
                             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
                         BTN_Skip.setText(R.string.txt_btnDone);
+                        break;*/
+                    case 4:
+                        BTN_Next.setVisibility(View.GONE);
+                        if (validateFields(nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation()))
+                            completeFragment.onComplete();
+                        else
+                            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+                        BTN_Skip.setText(R.string.txt_btnDone);
                         break;
                     default:
                         BTN_Skip.setText(R.string.txt_btnSkip);
                         BTN_Skip.setVisibility(View.GONE);
                         break;
-
                 }
             }
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == 5)
+                if (position == 4)
                     if (validateFields(nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation()))
-                        completeFragment.onComplete();
+                        saveConfiguration(nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation());
                     else
                         viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
             }
@@ -240,6 +242,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
             case Error.GUY_FROM_THE_FUTURE:
                 image.setVisibility(View.GONE);
                 errorMessage.setText(R.string.message_from_the_future_error);
+                viewPager.setCurrentItem(3);
                 break;
             case Error.WHEN_SAVING_ON_DEVICE:
                 errorMessage.setText(R.string.message_save_error);
@@ -253,7 +256,10 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
             case Error.MAXIMUM_NUMBER_OF_APPS_REACHED:
                 errorMessage.setText(R.string.message_max_apps_reached_error);
                 break;
-
+            case Error.INVALID_USER_NAME:
+                errorMessage.setText(R.string.message_invalid_name);
+                viewPager.setCurrentItem(2);
+                break;
             default:
                 image.setVisibility(View.GONE);
                 errorMessage.setText(R.string.message_error);
@@ -331,8 +337,9 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                 case 1:     return nameFragment;
                 case 2:     return birthdayFragment;
                 case 3:     return educationFragment;
-                case 4:     return appBlockFragment;
-                case 5:     return completeFragment;
+                case 4:     return completeFragment;
+                //case 4:     return appBlockFragment;
+                //case 5:     return completeFragment;
                 default:    return null;
             }
         }
@@ -346,19 +353,9 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
     /**
      *  Método que manda a guardar los datos del usuario.
      */
-    private void saveConfiguration() {
-        /*
-        if (validateFields(nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation())) {
-            if (isPhotoSkip && isAppBlockSkip)
-                //firstConfigurationController.saveConfiguration(nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation());
-            else if (isPhotoSkip)
-                //firstConfigurationController.saveConfiguration(nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation(), true);
-            else if (isAppBlockSkip)
-                //firstConfigurationController.saveConfiguration(true, nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation());
-            else
-                //firstConfigurationController.saveConfiguration(true, nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation(), true);
-        }
-        */
+    private void saveConfiguration(String name, String birthday, int education) {
+        firstConfigurationController.saveConfiguration(name,birthday,education);
+        //completeFragment.onComplete();
     }
 
     /**
@@ -375,23 +372,6 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         return firstConfigurationController.validateFields(name, birthday, education);
     }
 
-    /**
-     * Método que cambia el estado si el usuario no pusó foto o si lo hizo.
-     *
-     * @param state
-     */
-    protected void isPhotoSkip(boolean state) {
-        isPhotoSkip = state;
-    }
-
-    /**
-     * Método que cambia el estado si el usuaio eligió aplicaciones para bloquear o no lo hizo.
-     *
-     * @param state
-     */
-    protected void isAppBlockSkip(boolean state) {
-        isAppBlockSkip = state;
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

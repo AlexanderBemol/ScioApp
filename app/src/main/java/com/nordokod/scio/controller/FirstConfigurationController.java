@@ -72,7 +72,7 @@ public class FirstConfigurationController {
     }
 
 
-    public boolean validateFields(String name, String birthday,Integer education){
+    public boolean validateFields(String name, String birthday,int education){
         return fcModel.validateFields(name,birthday,education);
     }
 
@@ -87,4 +87,11 @@ public class FirstConfigurationController {
     public void showError(Error error) {
         fcActivity.showErrorNoticeDialog(error);
     }
+    public void saveConfiguration(String name, String birthday, int education){
+        fcModel.saveConfiguration(name,birthday,education);
+    }
+    public void configurationSaved(){
+
+    }
+
 }

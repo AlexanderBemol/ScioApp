@@ -82,6 +82,7 @@
     <string name="message_from_the_future_error">Tranquilo, Marty\nNo es posible que vengas\ndel futuro.</string>
     <string name="message_save_error">Hubo un error al intentar guardar.\n:(</string>
     <string name="message_set_photo_error">Hubo un error al intentar\nguardar la foto.\n:(</string>
+    <string name="message_invalid_name">Escriba un nombre válido</string>
     <!--Successed  -->
     <string name="message_login_success">Bienvenido</string>
     <string name="message_save_success">Todo bien, todo correcto.</string>
