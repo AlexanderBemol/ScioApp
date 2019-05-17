@@ -34,6 +34,10 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        initComponents();
+        initAnimations();
+        initListeners();
     }
 
 
@@ -46,8 +50,8 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
         ET_Password = findViewById(R.id.ET_Password);
         ET_ConfirmPassword = findViewById(R.id.ET_ConfirmPassword);
 
-        SignupController = new SignUpController();
-        SignupController.signUpUser(ET_Mail.toString(),ET_Password.toString(),ET_ConfirmPassword.toString());
+        SignupController = new SignUpController(this,this);
+
 
     }
 
@@ -57,8 +61,15 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
             @Override
             public void onClick(View view) {
                 BTN_Signup.startAnimation(press);
-                showLoginDialog();
-
+                showLoadingDialog();
+                SignupController.signUpUser(ET_Mail.getText().toString(),ET_Password.getText().toString(),ET_ConfirmPassword.getText().toString());
+            }
+        });
+        BTN_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BTN_Cancel.startAnimation(press);
+                onBackPressed();
             }
         });
     }
@@ -72,10 +83,12 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
     public void showSuccessNoticeDialog(String task) {
 
     }
+
     private void initAnimations(){
         press = AnimationUtils.loadAnimation(this, R.anim.press);
     }
-    public void showLoginDialog(){
+
+    private void showLoadingDialog(){
         if (noticeDialog == null)
             noticeDialog = new Dialog(this);
         else if (noticeDialog.isShowing()) {

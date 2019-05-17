@@ -148,7 +148,6 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                     Intent i = new Intent(LoginActivity.this,SignupActivity.class);
                     startActivity(i);
 
-                finish();
             }
         });
 
