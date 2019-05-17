@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.SignupActivity">
+
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/ET_Mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_editMail"
+        android:layout_marginBottom="@dimen/space_2"
+        android:layout_margin="@dimen/activity_padding"
+        android:textColor="@color/primaryTextColor"
+        android:textColorHint="@color/primaryTextColor"
+        android:singleLine="true"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ET_Password"
+        />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/ET_Password"
+        style="@style/Base.V7.Widget.AppCompat.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_padding"
+        android:hint="@string/hint_editPassword"
+        android:inputType="textPassword"
+        android:pointerIcon="arrow"
+        android:textColorHint="@color/primaryTextColor"
+        app:layout_constraintBottom_toTopOf="@id/ET_ConfirmPassword"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/ET_ConfirmPassword"
+        style="@style/Base.V7.Widget.AppCompat.EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_padding"
+
+        android:hint="@string/txt_ConfirmPassword"
+        android:inputType="textPassword"
+        android:pointerIcon="arrow"
+        android:textColorHint="@color/primaryTextColor"
+        app:layout_constraintBottom_toTopOf="@id/BTN_Signup"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/BTN_Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_cancel"
+            android:layout_margin="@dimen/activity_padding"
+            android:layout_marginBottom="@dimen/activity_padding"
+            android:paddingHorizontal="@dimen/button_padding_size"
+
+
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/BTN_Signup"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            style="@style/cancelButton"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/BTN_Signup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_signup"
+
+            android:layout_margin="@dimen/activity_padding"
+            android:layout_marginLeft="@dimen/space_2"
+            android:layout_marginBottom="@dimen/activity_padding"
+            android:backgroundTint="@color/secondaryColor"
+            android:textColor="@color/onSecondaryColor"
+            android:paddingHorizontal="@dimen/button_padding_size"
+
+            app:layout_constraintLeft_toRightOf="@id/BTN_Cancel"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            style="@style/normalButton"
+            />
+
+</android.support.constraint.ConstraintLayout>
