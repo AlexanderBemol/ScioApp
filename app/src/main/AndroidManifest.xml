@@ -18,6 +18,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/DefaultTheme">
+        <activity android:name=".view.SignupActivity"></activity>
+
         <receiver
             android:name=".process.SystemsEventsProcess"
             android:enabled="true"
@@ -40,8 +42,7 @@
             <intent-filter>
                 <action android:name="com.nordokod.kill" />
             </intent-filter>
-        </receiver>
-        <!-- ======================================================================================= Splash -->
+        </receiver> <!-- ======================================================================================= Splash -->
         <activity
             android:name=".view.SplashActivity"
             android:screenOrientation="portrait"
@@ -52,8 +53,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!-- ======================================================================================= Login -->
+        </activity> <!-- ======================================================================================= Login -->
         <activity
             android:name=".view.LoginActivity"
             android:screenOrientation="portrait"
@@ -61,8 +61,7 @@
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
-        <!-- ======================================================================================= Facebook -->
+            android:value="@string/facebook_app_id" /> <!-- ======================================================================================= Facebook -->
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -82,20 +81,16 @@
 
         <service
             android:name=".process.LockAppProcess"
-            android:stopWithTask="false" />
-        <!-- ======================================================================================= Permission -->
+            android:stopWithTask="false" /> <!-- ======================================================================================= Permission -->
         <activity
             android:name=".view.PermissionActivity"
-            android:screenOrientation="portrait" />
-        <!-- ======================================================================================= First Configuration -->
+            android:screenOrientation="portrait" /> <!-- ======================================================================================= First Configuration -->
         <activity
             android:name=".view.FirstConfigurationActivity"
-            android:screenOrientation="portrait" />
-        <!-- ======================================================================================= Main -->
-        <activity android:name=".view.MainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" /> <!-- ======================================================================================= Main -->
+        <activity
+            android:name=".view.MainActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
