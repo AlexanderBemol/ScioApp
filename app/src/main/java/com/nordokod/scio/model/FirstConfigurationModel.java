@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -41,7 +43,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-
 public class FirstConfigurationModel {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListner;
@@ -61,6 +62,7 @@ public class FirstConfigurationModel {
         lockedApps=0;
         initMAuth();
     }
+
     private void initMAuth(){//conectar firebase
         mAuth=FirebaseAuth.getInstance();
         mAuthListner = new FirebaseAuth.AuthStateListener() {
@@ -71,6 +73,7 @@ public class FirstConfigurationModel {
         };
         mAuth.addAuthStateListener(mAuthListner);
     }
+    @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
     public void requestPhoto(){//obtener foto
         String photopath;
         try{
