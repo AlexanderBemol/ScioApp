@@ -108,7 +108,10 @@ public class LoginModel {
                             Log.d("prueba", "error en google: " + task.getException().toString());
                         }
                             else{
-                            loginController.loginResult(task.isSuccessful());
+                                loginController.loginResult(task.isSuccessful());
+                                if(task.getResult().getAdditionalUserInfo().isNewUser()){
+                                    loginController.firstConfiguration();
+                                }
                         }
                     }
                 });
@@ -138,6 +141,9 @@ public class LoginModel {
                         loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_MAIL));
                     else{
                         loginController.loginResult(task.isSuccessful());
+                        if(task.getResult().getAdditionalUserInfo().isNewUser()){
+                            loginController.firstConfiguration();
+                        }
                     }
                 }
             });
@@ -157,14 +163,13 @@ public class LoginModel {
             @Override
             public void onCancel() {
                 Log.d("prueba", "facebook:onCancel");
-                // ...
             }
 
             @Override
             public void onError(FacebookException error) {
                 loginController.loginResult(false, new Error(Error.LOGIN_FACEBOOK));
                 Log.d("prueba", "facebook:onError", error);
-                // ...
+
             }
         });
     }
@@ -179,6 +184,9 @@ public class LoginModel {
                             loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_FACEBOOK));
                         else{
                             loginController.loginResult(task.isSuccessful());
+                            if(task.getResult().getAdditionalUserInfo().isNewUser()){
+                                loginController.firstConfiguration();
+                            }
                         }
                     }
                 });

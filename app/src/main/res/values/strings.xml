@@ -22,7 +22,7 @@
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_permission -->
     <!-- ======================================================================================= -->
-    <string name="description_permission">Necesitamos que nos des permisos...no te preocupes, no haremos nada malo.</string>
+    <string name="description_permission">Necesitamos que nos des permisos…no te preocupes, no haremos nada malo.</string>
 
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_first_configuration -->
@@ -82,6 +82,7 @@
     <string name="message_from_the_future_error">Tranquilo, Marty\nNo es posible que vengas\ndel futuro.</string>
     <string name="message_save_error">Hubo un error al intentar guardar.\n:(</string>
     <string name="message_set_photo_error">Hubo un error al intentar\nguardar la foto.\n:(</string>
+    <string name="message_invalid_name">Escriba un nombre válido</string>
     <!--Successed  -->
     <string name="message_login_success">Bienvenido</string>
     <string name="message_save_success">Todo bien, todo correcto.</string>
@@ -90,9 +91,19 @@
     <!-- ======================================================================================= -->
     <!-- Titulos para las opciones en los menú -->
     <!-- ======================================================================================= -->
-    <string name="navbaf_title_home">Inicio</string>
-    <string name="navbaf_title_create">Crear</string>
-    <string name="navbaf_title_guides">Guías</string>
+    <!-- Bottom Navigation View -->
+    <string name="navbar_title_home">Inicio</string>
+    <string name="navbar_title_create">Crear</string>
+    <string name="navbar_title_guides">Guías</string>
+    <!-- Navigation View -->
+    <string name="navmenu_title_account">Cuenta</string>
+    <string name="navmenu_title_settings">Ajustes</string>
+    <string name="navmenu_title_security">Seguridad</string>
+    <string name="navmenu_title_apps">Aplicaciones</string>
+    <string name="navmenu_title_opensource" translatable="false">Open Source</string>
+    <string name="navmenu_title_about">Acerca de Scio</string>
+    <string name="navmenu_title_logout">Cerrar sesión</string>
+
     <string name="menu_title_">X</string>
 
     <!-- ======================================================================================= -->

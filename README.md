@@ -34,7 +34,7 @@ git reset --hard origin/mybranch
 	<!-- GOOGLE PLAY -->
 	<tr>
 		<td align="center">
-			<a href="https://xnxx.com" target="_blank">
+			<a href="https://developer.android.com/distribute/console?authuser=3&hl=es#" target="_blank">
 		          <img width="170px" src="https://www.gstatic.com/android/market_images/web/play_prism_hlock_2x.png">
 	        </a>
 		</td>
@@ -57,6 +57,24 @@ git reset --hard origin/mybranch
 			</table>
 		</td>
 	</tr>
+	<!-- ENEIT -->
+	<tr>
+		<td align="center">
+			<a href="http://registroeneit.tecnm.mx/" target="_blank">
+		          <img width="160px" src="http://registroeneit.tecnm.mx/Content/Project/Imagenes/Logo.png">
+	        </a>
+	        <table width="400px">
+	        <tr>
+	        <td align="center" width="200px">
+	        16540291
+	        </td>
+	         <td align="center" width="200px">
+	        8AKJ2C2p4z
+	        </td>
+	        </tr>
+			</table>
+		</td>
+	</tr>
 	<!-- FACEBOOK -->
 	<tr>
 		<td align="center">
@@ -66,6 +84,7 @@ git reset --hard origin/mybranch
 			</table>
 		</td>
 	</tr>
+	
 </table>
 
 --------------------
@@ -84,6 +103,9 @@ git reset --hard origin/mybranch
 * [AutoFitTextView (Apache Licence V2)](https://github.com/grantland/android-autofittextview)
 
 * [CircleIndicator (MIT)](https://github.com/ongakuer/CircleIndicator)
+
+* [AndroidCrop (Apache Licence V2)] (https://github.com/jdamcd/android-crop)
+
 
 En este repositorio van a encontrar más librerias, hay más que nos pueden servir: 
 [Librerias](https://github.com/wasabeef/awesome-android-ui)

@@ -3,12 +3,14 @@ package com.nordokod.scio.controller;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.entity.User;
 import com.nordokod.scio.model.LoginModel;
+import com.nordokod.scio.view.FirstConfigurationActivity;
 import com.nordokod.scio.view.LoginActivity;
 
 public class LoginController{
@@ -77,5 +79,9 @@ public class LoginController{
         logModel.setLoginButton(lb);
         logModel.setmCallbackManager(cb);
         logModel.registerCallback();
+    }
+    public void firstConfiguration(){
+        Intent intent= new Intent(currentContext, FirstConfigurationActivity.class);
+        currentContext.startActivity(intent);
     }
 }

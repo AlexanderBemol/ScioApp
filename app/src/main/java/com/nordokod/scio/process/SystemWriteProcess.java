@@ -3,9 +3,10 @@ package com.nordokod.scio.process;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.util.Log;
 
+import com.nordokod.scio.entity.App;
 import com.nordokod.scio.entity.ConfigurationApp;
-import com.nordokod.scio.entity.appData;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,57 +31,50 @@ public class SystemWriteProcess {
     public void saveUserConfig(ConfigurationApp confObj) {
         try {
             configFile = new File(internalStorageDir, "userConfig.txt");
+            configFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(configFile);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(confObj);
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("testeo",e.getMessage().toString());
         }
     }
 
     public ConfigurationApp readUserConfig() {
         configFile = new File(internalStorageDir, "userConfig.txt");
         ConfigurationApp confObj = new ConfigurationApp();
-        if (configFile.exists()) {
-
-            try {
+        try {
+            if (configFile.exists()){
                 FileInputStream fis = new FileInputStream(configFile);
                 ObjectInputStream ois = new ObjectInputStream(fis);
                 confObj = (ConfigurationApp) ois.readObject();
-            } catch (Exception e) {
-                e.printStackTrace();
+            }else{
+                confObj=new ConfigurationApp();
+                confObj.setLockedApps(new ArrayList<String>());
+                saveUserConfig(confObj);
             }
-        }
+            }catch (Exception e) {
+                Log.d("testeo",e.getMessage());
+            }
         return confObj;
     }
 
-    public ConfigurationApp getAllApps() {
+    public ArrayList<App> getAllApps() {
         final PackageManager pm = currentContext.getPackageManager();
         List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        ArrayList<appData> data = new ArrayList<>();
-        ConfigurationApp configApp = readUserConfig();
+        ArrayList<App> data = new ArrayList<>();
         for (ApplicationInfo p : packages) {
-            appData ad = new appData();
-            ad.setAppName(p.loadLabel(pm).toString());
-            ad.setAppPackage(p.packageName);
-            if (configApp.getLockedApps().isEmpty()) {
-                if (configApp.getLockedApps().contains(p.packageName)) {
-                    ad.setAppState(true);
-                } else {
-                    ad.setAppState(false);
-                }
-            } else {
-                ad.setAppState(false);
-            }
+            App ad = new App();
+            ad.setName(p.loadLabel(pm).toString());
+            ad.setPackagePath(p.packageName);
+            ad.setState(false);
             ad.setIcon(p.loadIcon(pm));
             if ((p.flags & ApplicationInfo.FLAG_SYSTEM) == 1) {
                 continue;
             }
             data.add(ad);
-
         }
-        configApp.setAllApps(data);
-        return configApp;
+        return data;
     }
     public void lockApp(String pck){
         ConfigurationApp configApp = readUserConfig();

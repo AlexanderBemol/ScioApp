@@ -1,8 +1,9 @@
-<resources>
+<resources
+    xmlns:tools="http://schemas.android.com/tools">
     <!-- ======================================================================================= -->
     <!-- FOR GENERAL PURPOSE -->
     <!-- ======================================================================================= -->
-    <dimen name="activity_padding">24dp</dimen>
+    <dimen name="activity_padding">14dp</dimen>
 
     <!-- ======================================================================================= -->
     <!-- SPACE BETWEEN COMPONENTS -->
@@ -17,9 +18,9 @@
     <!-- TEXT SIZE -->
     <!-- ======================================================================================= -->
     <dimen name="text_size_title">24sp</dimen>
-    <dimen name="text_size_normal">18sp</dimen>
-    <dimen name="text_size_small">15sp</dimen>
-    <dimen name="text_size_description">18sp</dimen>
+    <dimen name="text_size_small">14sp</dimen>
+    <dimen name="text_size_normal">16sp</dimen>
+    <dimen name="text_size_description">16sp</dimen>
     <dimen name="text_size_button">16sp</dimen>
 
     <!-- ======================================================================================= -->
@@ -42,4 +43,13 @@
     <!-- ======================================================================================= -->
     <dimen name="notice_dialog_img_size">60dp</dimen>
     <dimen name="notice_dialog_text_size">18dp</dimen>
+
+    <!-- ======================================================================================= -->
+    <!-- Menú Lateral -->
+    <!-- ======================================================================================= -->
+    <dimen name="design_navigation_icon_size" tools:override="true">25dp</dimen>
+    <dimen name="navigation_bottom_height">55dp</dimen>
+    <dimen name="navigation_bottom_icon_height">30dp</dimen>
+    <dimen name="navigation_max_width">300dp</dimen>
+    <dimen name="navigation_photo_size">60dp</dimen>
 </resources>

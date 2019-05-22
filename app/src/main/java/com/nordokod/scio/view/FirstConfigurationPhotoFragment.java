@@ -1,6 +1,6 @@
 package com.nordokod.scio.view;
 
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.controller.FirstConfigurationController;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -21,7 +22,7 @@ public class FirstConfigurationPhotoFragment extends Fragment implements BasicFr
     /**
      * Obejeto del controlador perteneciente a esta Activity.
      */
-    //private FirstConfigurationController firstConfigurationController;
+    private FirstConfigurationController firstConfigurationController;
 
     @Nullable
     @Override
@@ -37,6 +38,9 @@ public class FirstConfigurationPhotoFragment extends Fragment implements BasicFr
     public void initComponents(View view) {
         IV_Camera = view.findViewById(R.id.imgCamera);
         CIV_Photo = view.findViewById(R.id.photo);
+        CIV_Photo.setImageResource(R.drawable.default_photo);
+        defaultPhoto();
+
     }
 
     @Override
@@ -51,30 +55,34 @@ public class FirstConfigurationPhotoFragment extends Fragment implements BasicFr
 /*
     /**
      * Método para configurar este Fragment con el objeto del controlador usado por el Activity.
-     * /
+     * /*/
     protected void configFragment(FirstConfigurationController controller) {
         this.firstConfigurationController = controller;
     }
-*/
+
     /**
      * Método que define la foto por defecto.
      */
+    protected void defaultPhoto() {
+        firstConfigurationController.requestPhoto(CIV_Photo);
+    }
     protected void skip() {
-        CIV_Photo.setImageResource(R.drawable.default_photo);
+        //firstConfigurationController.requestPhoto(CIV_Photo);
     }
 
     /**
      * Método que define la foto elegida por el usuario.
      */
     private void newPhoto() {
-        //firstConfigurationController.newPhoto();
+        firstConfigurationController.photoFromStorage();
     }
 
     /**
      * Método para mostrar la foto elegida por el usuario y que ya está guardada en Firebase.
      */
-    protected void setPhoto(Bitmap photo) {
+    protected void setPhoto(Uri photo) {
         if (photo != null)
-            CIV_Photo.setImageBitmap(photo);
+            CIV_Photo.setImageURI(photo);
     }
+
 }

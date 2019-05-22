@@ -44,7 +44,7 @@ public class FirstConfigurationEducationFragment extends Fragment implements Bas
     @Override
     public void initListeners() { }
 
-    public Object getEducation() {
-        return educationSelector.getSelectedItem().value;
+    public Integer getEducation() {
+        return Integer.parseInt(educationSelector.getSelectedItem().value.toString());
     }
 }
