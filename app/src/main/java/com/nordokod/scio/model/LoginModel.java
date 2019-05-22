@@ -78,7 +78,7 @@ public class LoginModel {
         return currentUser;
     }
 
-    public boolean userIsLogged(){ //El usuario tiene sesión activa?
+    public boolean IsUserLogged(){ //El usuario tiene sesión activa?
         currentUser = mAuth.getCurrentUser();
         return (currentUser!=null);
     }
@@ -111,6 +111,8 @@ public class LoginModel {
                                 loginController.loginResult(task.isSuccessful());
                                 if(task.getResult().getAdditionalUserInfo().isNewUser()){
                                     loginController.firstConfiguration();
+                                }else{
+                                    loginController.mainMenu();
                                 }
                         }
                     }
@@ -186,6 +188,8 @@ public class LoginModel {
                             loginController.loginResult(task.isSuccessful());
                             if(task.getResult().getAdditionalUserInfo().isNewUser()){
                                 loginController.firstConfiguration();
+                            }else{
+                                loginController.mainMenu();
                             }
                         }
                     }
