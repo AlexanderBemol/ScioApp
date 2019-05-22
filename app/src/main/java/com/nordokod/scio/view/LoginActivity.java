@@ -53,6 +53,12 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         initComponents();
         initAnimations();
         initListeners();
+
+        if(loginController.IsUserLogged()){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+        }
+
     }
 
     private void showLoginLoadingDialog(){

@@ -12,6 +12,7 @@ import com.nordokod.scio.entity.User;
 import com.nordokod.scio.model.LoginModel;
 import com.nordokod.scio.view.FirstConfigurationActivity;
 import com.nordokod.scio.view.LoginActivity;
+import com.nordokod.scio.view.MainActivity;
 
 public class LoginController{
     private LoginModel logModel;
@@ -83,5 +84,12 @@ public class LoginController{
     public void firstConfiguration(){
         Intent intent= new Intent(currentContext, FirstConfigurationActivity.class);
         currentContext.startActivity(intent);
+    }
+    public void mainMenu(){
+        Intent intent= new Intent(currentContext, MainActivity.class);
+        currentContext.startActivity(intent);
+    }
+    public boolean IsUserLogged(){
+        return logModel.IsUserLogged();
     }
 }

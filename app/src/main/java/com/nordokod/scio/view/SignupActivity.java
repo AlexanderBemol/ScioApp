@@ -181,6 +181,8 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
         }, 1000);
 
         handler = null;
+        Intent intent= new Intent(this, FirstConfigurationActivity.class);
+        this.startActivity(intent);
     }
 
     private void initAnimations(){

@@ -2,6 +2,7 @@ package com.nordokod.scio.controller;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.Log;
@@ -11,6 +12,7 @@ import com.nordokod.scio.entity.App;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.model.FirstConfigurationModel;
 import com.nordokod.scio.view.FirstConfigurationActivity;
+import com.nordokod.scio.view.MainActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -91,7 +93,9 @@ public class FirstConfigurationController {
         fcModel.saveConfiguration(name,birthday,education);
     }
     public void configurationSaved(){
-
+        fcActivity.showSuccessNoticeDialog("SAVE");
+        Intent intent= new Intent(currentContext, MainActivity.class);
+        currentContext.startActivity(intent);
     }
 
 }
