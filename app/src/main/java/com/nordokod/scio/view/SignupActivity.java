@@ -181,8 +181,10 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
         }, 1000);
 
         handler = null;
+        //mover esto a un método en controller
         Intent intent= new Intent(this, FirstConfigurationActivity.class);
         this.startActivity(intent);
+        finish();
     }
 
     private void initAnimations(){

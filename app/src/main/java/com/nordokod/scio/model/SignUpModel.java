@@ -3,6 +3,7 @@ package com.nordokod.scio.model;
 import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,6 +40,7 @@ public class SignUpModel {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Log.d("testeo",e.getMessage());
                         SignController.incorrectSignUp(new Error(Error.WHEN_LOADING));
                     }
                 })

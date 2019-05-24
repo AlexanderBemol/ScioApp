@@ -61,7 +61,9 @@
         <activity
             android:name=".view.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme" />
+            android:theme="@style/LoginTheme"
+            android:exported="true"
+            />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

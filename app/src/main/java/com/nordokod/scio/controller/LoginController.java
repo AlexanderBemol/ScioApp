@@ -52,6 +52,7 @@ public class LoginController{
     public void loginResult(Boolean result, Error error){ //con error
         if (result){
             logActivity.showSuccessNoticeDialog(null);
+
         }
         else {
             logActivity.showErrorNoticeDialog(error);
@@ -61,6 +62,7 @@ public class LoginController{
     public void loginResult(Boolean result){ //sin error
         if (result){
             logActivity.showSuccessNoticeDialog(null);
+            mainMenu();
         }
     }
 
@@ -84,10 +86,12 @@ public class LoginController{
     public void firstConfiguration(){
         Intent intent= new Intent(currentContext, FirstConfigurationActivity.class);
         currentContext.startActivity(intent);
+        logActivity.finish();
     }
     public void mainMenu(){
-        Intent intent= new Intent(currentContext, MainActivity.class);
-        currentContext.startActivity(intent);
+        Intent menu= new Intent(currentContext, MainActivity.class);
+        currentContext.startActivity(menu);
+        logActivity.finish();
     }
     public boolean IsUserLogged(){
         return logModel.IsUserLogged();

@@ -46,6 +46,8 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
     private Dialog loginErrorDialog, noticeDialog;
     private static final int NOTICE_DIALOG_TIME = 2000;
 
+    public String state="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +57,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         initListeners();
 
         if(loginController.IsUserLogged()){
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+            loginController.mainMenu();
         }
 
     }
@@ -150,7 +151,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
             @Override
             public void onClick(View v){
                 BTN_Signup.startAnimation(press);
-                // Aquí debe ir la llamada al SigninActivity.
+                // mover esto a un método en controller
                     Intent i = new Intent(LoginActivity.this,SignupActivity.class);
                     startActivity(i);
 
@@ -169,6 +170,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
 
     @Override
     public void showErrorNoticeDialog(Error error) {
+
         if (noticeDialog == null)
             noticeDialog = new Dialog(this);
         else if (noticeDialog.isShowing()) {
@@ -219,7 +221,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                 errorMessage.setText(R.string.message_error);
                 break;
         }
-
+        state=errorMessage.getText().toString();
         noticeDialog.show();
 
         Handler handler;
@@ -267,10 +269,6 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         }, 1000);
 
         handler = null;
-
-        Intent intent = new Intent(LoginActivity.this, FirstConfigurationActivity.class);
-        intent.setAction("First Configuration");
-        startActivity(intent);
     }
 
     private void initAnimations(){

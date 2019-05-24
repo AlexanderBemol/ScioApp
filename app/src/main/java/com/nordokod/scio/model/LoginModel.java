@@ -139,8 +139,9 @@ public class LoginModel {
             .addOnCompleteListener(currentActivity, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.getException() != null)
-                        loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_MAIL));
+                    if (task.getException() != null){
+                        Log.d("testeo",task.getException().getMessage());
+                        loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_MAIL));}
                     else{
                         loginController.loginResult(task.isSuccessful());
                         if(task.getResult().getAdditionalUserInfo().isNewUser()){
