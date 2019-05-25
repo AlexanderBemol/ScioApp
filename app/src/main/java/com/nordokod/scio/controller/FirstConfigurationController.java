@@ -96,6 +96,7 @@ public class FirstConfigurationController {
         fcActivity.showSuccessNoticeDialog("SAVE");
         Intent intent= new Intent(currentContext, MainActivity.class);
         currentContext.startActivity(intent);
+        fcActivity.finish();
     }
 
 }
