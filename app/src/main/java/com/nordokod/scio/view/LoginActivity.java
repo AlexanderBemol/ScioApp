@@ -151,9 +151,8 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
             @Override
             public void onClick(View v){
                 BTN_Signup.startAnimation(press);
-                // mover esto a un método en controller
-                    Intent i = new Intent(LoginActivity.this,SignupActivity.class);
-                    startActivity(i);
+                    loginController.signup();
+
 
             }
         });

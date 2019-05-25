@@ -13,6 +13,7 @@ import com.nordokod.scio.model.LoginModel;
 import com.nordokod.scio.view.FirstConfigurationActivity;
 import com.nordokod.scio.view.LoginActivity;
 import com.nordokod.scio.view.MainActivity;
+import com.nordokod.scio.view.SignupActivity;
 
 public class LoginController{
     private LoginModel logModel;
@@ -95,5 +96,10 @@ public class LoginController{
     }
     public boolean IsUserLogged(){
         return logModel.IsUserLogged();
+    }
+
+    public void signup() {
+        Intent intent = new Intent(logActivity, SignupActivity.class);
+        logActivity.startActivity(intent);
     }
 }
