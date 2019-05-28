@@ -55,23 +55,22 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         initListeners();
     }
 
-    private void showLoginLoadingDialog(){
-        if (noticeDialog == null)
+    public void showLoginLoadingDialog(){
+        if (noticeDialog == null) {
             noticeDialog = new Dialog(this);
-        else if (noticeDialog.isShowing()) {
-            noticeDialog.dismiss();
-        }
+            noticeDialog.setContentView(R.layout.dialog_progress);
+            noticeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
+            noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
+            noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
 
-        noticeDialog.setContentView(R.layout.dialog_progress);
-        noticeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
-        noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
-        noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
+            NewtonCradleLoading loading = noticeDialog.findViewById(R.id.loading);
 
-        NewtonCradleLoading loading = noticeDialog.findViewById(R.id.loading);
-
-        noticeDialog.show();
-        loading.start();
+            noticeDialog.show();
+            loading.start();
+            }else if (noticeDialog.isShowing()) {
+                noticeDialog.dismiss();
+            }
     }
 
     @Override

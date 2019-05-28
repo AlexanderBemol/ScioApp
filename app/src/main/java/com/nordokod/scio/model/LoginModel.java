@@ -16,7 +16,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -100,33 +103,43 @@ public class LoginModel {
     public void AuthResultGoogle(GoogleSignInAccount acct) {//aquí se revisa la auth de google
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(currentActivity, new OnCompleteListener<AuthResult>() {
+                .addOnSuccessListener(currentActivity, new OnSuccessListener<AuthResult>() {
                     @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.getException() != null) {
-                            loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_GOOGLE));
-                            Log.d("prueba", "error en google: " + task.getException().toString());
-                        }
-                            else{
-                            loginController.loginResult(task.isSuccessful());
-                        }
+                    public void onSuccess(AuthResult authResult) {
+                            loginController.loginResult(true);
+                    }
+                })
+                .addOnCanceledListener(currentActivity, new OnCanceledListener() {
+                    @Override
+                    public void onCanceled() {
+                        Log.d("prueba", "auth google canceled");
+                    }
+                })
+                .addOnFailureListener(currentActivity, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        loginController.loginResult(false, new Error(Error.LOGIN_GOOGLE));
                     }
                 });
     }
 
-    public void onResult(int requestCode, int resultCode, Intent data){//aquí vemos qué pasó con el activity llamado
-        if (requestCode == 123) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                AuthResultGoogle(account);
-            } catch (Exception e) {
-                loginController.loginResult(false, new Error(e.getMessage(), Error.GENERAL));
-                Log.d("prueba","error en result: "+e.toString());
+    public void onResult(int requestCode, int resultCode, Intent data) {//aquí vemos qué pasó con el activity llamado
+        if (resultCode == -1) {
+            if (requestCode == 123) {
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                try {
+                    GoogleSignInAccount account = task.getResult(ApiException.class);
+                    AuthResultGoogle(account);
+                } catch (Exception e) {
+                    loginController.loginResult(false, new Error(e.getMessage(), Error.GENERAL));
+                    Log.d("prueba", "error en result: " + e.toString());
+                }
+            } else {
+                mCallbackManager.onActivityResult(requestCode, resultCode, data);
+
             }
-        }else{
-            mCallbackManager.onActivityResult(requestCode, resultCode, data);
         }
+        loginController.loginResult(false);
     }
 
     public void loginWithMail(User user){

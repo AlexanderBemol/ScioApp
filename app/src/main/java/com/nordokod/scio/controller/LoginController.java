@@ -59,6 +59,9 @@ public class LoginController{
         if (result){
             logActivity.showSuccessNoticeDialog(null);
         }
+        else {
+            logActivity.showLoginLoadingDialog();
+        }
     }
 
     public void confGoogle(){
