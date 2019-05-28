@@ -183,6 +183,15 @@
     </style>
 
     <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LOS EDIT TEXT -->
+    <!-- ======================================================================================= -->
+    <style name="TV_changeImage" >
+        <item name="android:textColor">@color/onSecondaryTextColor</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- ======================================================================================= -->
     <!-- ESTILOS PARA LOS BOTONES -->
     <!-- ======================================================================================= -->
     <style name="button" parent="Widget.AppCompat.Button.Borderless">
