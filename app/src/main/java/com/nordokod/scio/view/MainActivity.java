@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -20,7 +21,10 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Error;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements BasicActivity {
 
@@ -31,13 +35,18 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private Toolbar toolbar;
     private ActionBar actionBar;
 
+    private TextView BTN_Logout;//corrección rapida :C
+    private CircleImageView Image_User;
+    private TextView TV_Username;
+
     private HomeFragment    homeFragment;
     private NewGuideFragment createFragment;
     private GuidesFragment  guidesFragment;
     private DialogFragment dialogFragment;
     private Fragment selectedFragment = null;
 
-    //private MainController mainController;
+
+    private MainController mainController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +67,27 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         frameLayout     = findViewById(R.id.FL_Main);
         toolbar         = findViewById(R.id.Toolbar);
 
+
         homeFragment    = new HomeFragment(this, this);
         createFragment  = new NewGuideFragment(this, this);
         guidesFragment  = new GuidesFragment(this, this);
 
-        //mainController = new MainController();
+        BTN_Logout = navigationMenu.findViewById(R.id.BTN_Logout);
+
+        View header=navigationMenu.getHeaderView(0);
+
+        Image_User = header.findViewById(R.id.CIV_Photo);
+        TV_Username = header.findViewById(R.id.TV_Name);
+
+        mainController = new MainController(this,this);
         // Toolbar
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        mainController.requestPhoto();
+        TV_Username.setText(mainController.getName());
     }
 
     @Override
@@ -76,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         navigationBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
+                Fragment selectedFragment = null;
                 switch (item.getItemId()) {
                     case R.id.NAV_Home:
                         selectedFragment = new HomeFragment();
@@ -126,5 +145,12 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     @Override
     public void showSuccessNoticeDialog(String task) {
 
+    }
+
+    public void setUserPhoto(Bitmap photo){
+        Image_User.setImageBitmap(photo);
+    }
+    public void setDefaultUserPhoto(){
+        Image_User.setImageResource(R.drawable.default_photo);
     }
 }

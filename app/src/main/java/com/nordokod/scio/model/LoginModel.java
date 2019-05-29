@@ -78,7 +78,7 @@ public class LoginModel {
         return currentUser;
     }
 
-    public boolean userIsLogged(){ //El usuario tiene sesión activa?
+    public boolean IsUserLogged(){ //El usuario tiene sesión activa?
         currentUser = mAuth.getCurrentUser();
         return (currentUser!=null);
     }
@@ -108,7 +108,12 @@ public class LoginModel {
                             Log.d("prueba", "error en google: " + task.getException().toString());
                         }
                             else{
-                            loginController.loginResult(task.isSuccessful());
+                                loginController.loginResult(task.isSuccessful());
+                                if(task.getResult().getAdditionalUserInfo().isNewUser()){
+                                    loginController.firstConfiguration();
+                                }else{
+                                    loginController.mainMenu();
+                                }
                         }
                     }
                 });
@@ -134,10 +139,14 @@ public class LoginModel {
             .addOnCompleteListener(currentActivity, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.getException() != null)
-                        loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_MAIL));
+                    if (task.getException() != null){
+                        Log.d("testeo",task.getException().getMessage());
+                        loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_MAIL));}
                     else{
                         loginController.loginResult(task.isSuccessful());
+                        if(task.getResult().getAdditionalUserInfo().isNewUser()){
+                            loginController.firstConfiguration();
+                        }
                     }
                 }
             });
@@ -157,14 +166,13 @@ public class LoginModel {
             @Override
             public void onCancel() {
                 Log.d("prueba", "facebook:onCancel");
-                // ...
             }
 
             @Override
             public void onError(FacebookException error) {
                 loginController.loginResult(false, new Error(Error.LOGIN_FACEBOOK));
                 Log.d("prueba", "facebook:onError", error);
-                // ...
+
             }
         });
     }
@@ -179,6 +187,11 @@ public class LoginModel {
                             loginController.loginResult(task.isSuccessful(), new Error(Error.LOGIN_FACEBOOK));
                         else{
                             loginController.loginResult(task.isSuccessful());
+                            if(task.getResult().getAdditionalUserInfo().isNewUser()){
+                                loginController.firstConfiguration();
+                            }else{
+                                loginController.mainMenu();
+                            }
                         }
                     }
                 });

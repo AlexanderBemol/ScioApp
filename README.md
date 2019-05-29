@@ -104,6 +104,9 @@ git reset --hard origin/mybranch
 
 * [CircleIndicator (MIT)](https://github.com/ongakuer/CircleIndicator)
 
+* [AndroidCrop (Apache Licence V2)] (https://github.com/jdamcd/android-crop)
+
+
 En este repositorio van a encontrar más librerias, hay más que nos pueden servir: 
 [Librerias](https://github.com/wasabeef/awesome-android-ui)
 

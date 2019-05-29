@@ -3,13 +3,17 @@ package com.nordokod.scio.controller;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.facebook.CallbackManager;
 import com.facebook.login.widget.LoginButton;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.entity.User;
 import com.nordokod.scio.model.LoginModel;
+import com.nordokod.scio.view.FirstConfigurationActivity;
 import com.nordokod.scio.view.LoginActivity;
+import com.nordokod.scio.view.MainActivity;
+import com.nordokod.scio.view.SignupActivity;
 
 public class LoginController{
     private LoginModel logModel;
@@ -49,6 +53,7 @@ public class LoginController{
     public void loginResult(Boolean result, Error error){ //con error
         if (result){
             logActivity.showSuccessNoticeDialog(null);
+
         }
         else {
             logActivity.showErrorNoticeDialog(error);
@@ -58,6 +63,7 @@ public class LoginController{
     public void loginResult(Boolean result){ //sin error
         if (result){
             logActivity.showSuccessNoticeDialog(null);
+            mainMenu();
         }
     }
 
@@ -77,5 +83,23 @@ public class LoginController{
         logModel.setLoginButton(lb);
         logModel.setmCallbackManager(cb);
         logModel.registerCallback();
+    }
+    public void firstConfiguration(){
+        Intent intent= new Intent(currentContext, FirstConfigurationActivity.class);
+        currentContext.startActivity(intent);
+        logActivity.finish();
+    }
+    public void mainMenu(){
+        Intent menu= new Intent(currentContext, MainActivity.class);
+        currentContext.startActivity(menu);
+        logActivity.finish();
+    }
+    public boolean IsUserLogged(){
+        return logModel.IsUserLogged();
+    }
+
+    public void signup() {
+        Intent intent = new Intent(logActivity, SignupActivity.class);
+        logActivity.startActivity(intent);
     }
 }

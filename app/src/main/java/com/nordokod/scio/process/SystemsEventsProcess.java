@@ -26,14 +26,6 @@ public class SystemsEventsProcess extends BroadcastReceiver {
             case Intent.ACTION_BOOT_COMPLETED://activar al encender
                 context.startService(servicioApps);
                 break;
-            case Intent.ACTION_PACKAGE_ADDED://actualizar lista apps
-                appconf=swp.getAllApps();
-                swp.saveUserConfig(appconf);
-                break;
-            case Intent.ACTION_PACKAGE_REMOVED://actualizar lista apps
-                appconf=swp.getAllApps();
-                swp.saveUserConfig(appconf);
-                break;
             case Intent.ACTION_BATTERY_LOW://desactivar con bajo nivel de carga
                 context.stopService(servicioApps);
                 break;

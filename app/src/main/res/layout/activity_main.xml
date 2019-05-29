@@ -11,6 +11,42 @@
     >
 
     <!-- android:layout_gravity="start" -->
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <FrameLayout
+            android:id="@+id/FL_Main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/NAV_Bar"
+            >
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/backgroundColor"
+                />
+        </FrameLayout>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/NAV_Bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+
+            app:itemBackground="@color/surfaceColor"
+            app:itemIconTint="@color/navigation_bar_colors"
+            app:itemTextColor="@color/navigation_bar_colors"
+            app:menu="@menu/navigation_bar_items"
+            >
+        </android.support.design.widget.BottomNavigationView>
+
+    </RelativeLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/NAV_Menu"
         android:layout_width="wrap_content"
@@ -46,6 +82,7 @@
                 />
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/BTN_Logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/navmenu_title_logout"
