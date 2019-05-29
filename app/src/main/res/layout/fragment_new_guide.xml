@@ -10,18 +10,23 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/activity_padding"
-        android:background="@color/backgroundColor"
+        android:background="?attr/backgroundColor"
         >
         <!-- TITULO -->
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/TV_Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nueva Guía"
+            android:text="@string/txt_TV_NewGuide"
+            android:layout_marginTop="@dimen/activity_padding"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginBottom="@dimen/space_2"
 
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toTopOf="@id/TV_Category"
+
+            style="@style/titleTextView"
             />
 
         <!-- CATEGORIA -->
@@ -29,10 +34,13 @@
             android:id="@+id/TV_Category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Categoria"
+            android:text="@string/txt_TV_Category"
+            android:layout_marginStart="@dimen/activity_padding"
 
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toTopOf="@id/RV_Categories"
+
+            style="@style/normalTextView"
             />
 
         <include
@@ -50,18 +58,27 @@
             android:id="@+id/TV_Topic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tema"
+            android:text="@string/txt_TV_Topic"
+            android:layout_marginStart="@dimen/activity_padding"
 
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toTopOf="@id/ET_Topic"
+
+            style="@style/normalTextView"
             />
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/ET_Topic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginEnd="@dimen/space_2"
+            android:layout_marginBottom="@dimen/space_2"
+
 
             app:layout_constraintBottom_toTopOf="@id/TV_DateTime"
+
+            style="@style/EditText_Normal"
             />
 
         <!-- FECHA Y HORA -->
@@ -69,74 +86,82 @@
             android:id="@+id/TV_DateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Fecha y hora"
+            android:text="@string/txt_TV_DateTime"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginBottom="@dimen/space_2"
 
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toTopOf="@id/LL_Date"
+
+            style="@style/normalTextView"
             />
 
         <LinearLayout
             android:id="@+id/LL_Date"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="130dp"
+            android:layout_marginBottom="@dimen/space_3"
             android:orientation="vertical"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginEnd="@dimen/activity_padding"
 
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/LL_Time"
             app:layout_constraintBottom_toTopOf="@id/BTN_Create"
-            >
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/LL_Time">
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/TV_Month"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Noviembre"
-                android:textAlignment="center"
-                android:textColor="@color/onSecondaryColor"
                 android:background="@xml/background_top_normal_round"
                 android:backgroundTint="@color/cancelColor"
-                />
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@color/onSecondaryColor" />
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/TV_Day"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="60sp"
-                android:text="30"
-                android:textStyle="bold"
-                android:gravity="center"
                 android:background="@xml/background_bottom_normal_round"
+                android:text="-"
+
+                style="@style/datetimeTextView"
                 />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/LL_Time"
-            android:layout_width="150dp"
+            android:layout_width="0dp"
             android:layout_height="130dp"
+            android:layout_marginBottom="@dimen/space_3"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginEnd="@dimen/activity_padding"
             android:orientation="vertical"
 
-            app:layout_constraintLeft_toRightOf="@id/LL_Date"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toTopOf="@id/BTN_Create"
-            >
+            app:layout_constraintLeft_toRightOf="@id/LL_Date"
+            app:layout_constraintRight_toRightOf="parent">
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/TV_Time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="AM"
-                android:textAlignment="center"
-                android:textColor="@color/onSecondaryColor"
                 android:background="@xml/background_top_normal_round"
                 android:backgroundTint="@color/secondaryColor"
-                />
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@color/onSecondaryColor" />
 
             <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/TV_Hour"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="50sp"
-                android:text="12:00"
-                android:textStyle="bold"
-                android:gravity="center"
                 android:background="@xml/background_bottom_normal_round"
+                android:text="-"
+
+                style="@style/datetimeTextView"
                 />
 
         </LinearLayout>
@@ -146,7 +171,8 @@
             android:id="@+id/BTN_Cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_cancel"
+            android:text="@string/txt_BTN_Cancel"
+            android:layout_marginEnd="@dimen/activity_padding"
 
             app:layout_constraintTop_toTopOf="@id/BTN_Create"
             app:layout_constraintRight_toLeftOf="@id/BTN_Create"
@@ -159,7 +185,9 @@
             android:id="@+id/BTN_Create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Crear"
+            android:text="@string/txt_BTN_Create"
+            android:layout_marginEnd="@dimen/activity_padding"
+            android:layout_marginBottom="@dimen/space_2"
 
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

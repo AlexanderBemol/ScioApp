@@ -1,9 +1,6 @@
 package com.nordokod.scio.view;
 
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
@@ -15,15 +12,15 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.WindowManager;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.Error;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements BasicActivity {
 
@@ -35,8 +32,9 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private ActionBar actionBar;
 
     private HomeFragment    homeFragment;
-    private CreateFragment  createFragment;
+    private NewGuideFragment createFragment;
     private GuidesFragment  guidesFragment;
+    private DialogFragment dialogFragment;
     private Fragment selectedFragment = null;
 
     //private MainController mainController;
@@ -61,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         toolbar         = findViewById(R.id.Toolbar);
 
         homeFragment    = new HomeFragment(this, this);
-        createFragment  = new CreateFragment(this, this);
+        createFragment  = new NewGuideFragment(this, this);
         guidesFragment  = new GuidesFragment(this, this);
 
         //mainController = new MainController();
@@ -84,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                         selectedFragment = new HomeFragment();
                         break;
                     case R.id.NAV_Create:
-                        DialogFragment dialogFragment = new CreateFragment();
+                        dialogFragment = createFragment;
 
                         dialogFragment.show(getSupportFragmentManager(), "New");
                         break;
@@ -98,6 +96,15 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                 return true;
             }
         });
+
+    }
+
+    public void onCloseFragment() {
+        getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentByTag("New")).commit();
+    }
+
+    public void onClickCategoryListener(View view) {
+        createFragment.onClickCategoryListener(view);
     }
 
     @Override

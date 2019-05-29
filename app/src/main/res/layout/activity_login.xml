@@ -27,7 +27,7 @@
         android:id="@+id/ET_Mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_editMail"
+        android:hint="@string/hint_ET_Mail"
         android:layout_marginBottom="@dimen/space_2"
 
         app:layout_constraintLeft_toLeftOf="parent"
@@ -42,7 +42,7 @@
         android:id="@+id/ET_Password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_editPassword"
+        android:hint="@string/hint_ET_Password"
         android:inputType="textPassword"
         android:pointerIcon="arrow"
 
@@ -58,7 +58,7 @@
         android:id="@+id/TV_Forgot_Password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/txt_recover_password"
+        android:text="@string/txt_TV_recover_password"
         android:textColor="?attr/secondaryTextColor"
         android:layout_marginBottom="@dimen/space_3"
         android:textSize="@dimen/text_size_small"
@@ -72,7 +72,7 @@
         android:id="@+id/BTN_Login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txt_login"
+        android:text="@string/txt_BTN_Login"
         android:layout_marginBottom="@dimen/space_1"
 
         app:layout_constraintLeft_toLeftOf="parent"
@@ -87,7 +87,7 @@
         android:id="@+id/BTN_Signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/txt_signup"
+        android:text="@string/txt_BTN_Signup"
         android:layout_marginBottom="@dimen/space_3"
 
         app:layout_constraintLeft_toLeftOf="parent"
@@ -102,7 +102,7 @@
         android:id="@+id/txtConectar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/txt_options"
+        android:text="@string/txt_TV_options"
         android:textColor="?attr/secondaryTextColor"
         android:layout_marginBottom="@dimen/space_1"
         android:textSize="@dimen/text_size_small"

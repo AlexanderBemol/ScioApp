@@ -3,21 +3,30 @@
     <!-- ======================================================================================= -->
     <!-- Strings generales -->
     <!-- ======================================================================================= -->
-    <string name="txt_save">Guardar</string>
-    <string name="txt_cancel">Cancelar</string>
-    <string name="txt_">x</string>
+    <string name="txt_BTN_Save">Guardar</string>
+    <string name="txt_BTN_Cancel">Cancelar</string>
+    <string name="txt_BTN_Create">Crear</string>
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_login -->
     <!-- ======================================================================================= -->
-    <string name="hint_editMail">Correo</string>
-    <string name="hint_editPassword">Contraseña</string>
-    <string name="txt_login">Iniciar Sesión</string>
-    <string name="txt_signup">Registrarse</string>
-    <string name="txt_recover_password">¿Olvidaste tu contraseña?</string>
-    <string name="txt_options">o conéctate con</string>
+    <string name="hint_ET_Mail">Correo</string>
+    <string name="hint_ET_Password">Contraseña</string>
+    <string name="txt_BTN_Login">Iniciar Sesión</string>
+    <string name="txt_BTN_Signup">Registrarse</string>
+    <string name="txt_TV_recover_password">¿Olvidaste tu contraseña?</string>
+    <string name="txt_TV_options">o conéctate con</string>
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_signup -->
     <!-- ======================================================================================= -->
+
+    <!-- ======================================================================================= -->
+    <!-- Strings relacionados con fragment_new_guide -->
+    <!-- ======================================================================================= -->
+    <string name="txt_TV_NewGuide">Nueva Guía</string>
+    <string name="hint_ET_Topic">p. ej: </string>
+    <string name="txt_TV_Category">Categoría</string>
+    <string name="txt_TV_Topic">Tema</string>
+    <string name="txt_TV_DateTime">Fecha y Hora</string>
 
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_permission -->
@@ -27,11 +36,11 @@
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_first_configuration -->
     <!-- ======================================================================================= -->
-    <string name="txt_btnSkip">Omitir</string>
-    <string name="txt_btnNext">Siguiente</string>
-    <string name="txt_btnBack">Regresar</string>
-    <string name="txt_btnStart">Comenzar</string>
-    <string name="txt_btnDone">Listo</string>
+    <string name="txt_BTN_Skip">Omitir</string>
+    <string name="txt_BTN_Next">Siguiente</string>
+    <string name="txt_BTN_Back">Regresar</string>
+    <string name="txt_BTN_Start">Comenzar</string>
+    <string name="txt_BTN_Done">Listo</string>
     <!-- Foto -->
     <string name="title_photo_first_configuration">Los reflectores son tuyos</string>
     <string name="description_photo_first_configuration">Puedes elegir una foto o cambiarla en el\nmomento que quieras.</string>
@@ -72,6 +81,33 @@
     <string name="error_google">Parece que hubo un problema al intentar iniciar sesión con Google.</string>
 
     <!-- ======================================================================================= -->
+    <!-- Strings de las categorias -->
+    <!-- ======================================================================================= -->
+    <string name="category_art">Arte</string>
+    <string name="category_exact_sciences">Exactas</string>
+    <string name="category_social_sciences">Sociales</string>
+    <string name="category_sports">Deportes</string>
+    <string name="category_entertainment">Entretenimiento</string>
+    <string name="category_tech">Tecnología</string>
+    <string name="category_others">Otros</string>
+
+    <!-- ======================================================================================= -->
+    <!-- Strings de los meses -->
+    <!-- ======================================================================================= -->
+    <string name="month_january">Enero</string>
+    <string name="month_february">Febrero</string>
+    <string name="month_march">Marzo</string>
+    <string name="month_april">Abril</string>
+    <string name="month_may">Mayo</string>
+    <string name="month_june">Junio</string>
+    <string name="month_july">Julio</string>
+    <string name="month_august">Agosto</string>
+    <string name="month_september">Septiembre</string>
+    <string name="month_october">Octubre</string>
+    <string name="month_november">Noviembre</string>
+    <string name="month_december">Diciembre</string>
+
+    <!-- ======================================================================================= -->
     <!-- General messages for NoticeDialog -->
     <!-- ======================================================================================= -->
     <!-- Error -->
@@ -108,10 +144,7 @@
     <!-- ======================================================================================= -->
     <!-- Credenciales y pedos así -->
     <!-- ======================================================================================= -->
-    <string name="facebook_app_id">342632009679209</string>
-    <string name="fb_login_protocol_scheme">fb342632009679209</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="facebook_app_id" translatable="false">342632009679209</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb342632009679209</string>
 
 </resources>
