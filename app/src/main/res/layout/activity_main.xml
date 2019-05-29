@@ -47,6 +47,7 @@
         </android.support.design.widget.BottomNavigationView>
 
     </RelativeLayout>
+
     <android.support.design.widget.NavigationView
         android:id="@+id/NAV_Menu"
         android:layout_width="wrap_content"
@@ -95,40 +96,4 @@
         </android.support.constraint.ConstraintLayout>
     </android.support.design.widget.NavigationView>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-        <FrameLayout
-            android:id="@+id/FL_Main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/NAV_Bar"
-            >
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/Toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/backgroundColor"
-                app:titleTextAppearance="@style/titleTextView"
-                />
-        </FrameLayout>
-
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/NAV_Bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_alignParentBottom="true"
-            android:background="?attr/primaryDarkColor"
-
-            app:itemBackground="?attr/surfaceColor"
-            app:itemIconTint="@color/navigation_bar_colors"
-            app:itemTextColor="@color/navigation_bar_colors"
-            app:menu="@menu/navigation_bar_items"
-            >
-        </android.support.design.widget.BottomNavigationView>
-
-    </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

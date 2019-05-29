@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +12,6 @@
         android:id="@+id/ET_Mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_editMail"
         android:layout_marginBottom="@dimen/space_2"
         android:layout_margin="@dimen/activity_padding"
         android:textColor="@color/primaryTextColor"
@@ -29,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_padding"
-        android:hint="@string/hint_editPassword"
         android:inputType="textPassword"
         android:pointerIcon="arrow"
         android:textColorHint="@color/primaryTextColor"
@@ -44,10 +43,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_padding"
-
-        android:hint="@string/txt_ConfirmPassword"
+        android:hint=""
         android:inputType="textPassword"
-        android:pointerIcon="arrow"
         android:textColorHint="@color/primaryTextColor"
         app:layout_constraintBottom_toTopOf="@id/BTN_Signup"
 
@@ -58,10 +55,9 @@
             android:id="@+id/BTN_Cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_cancel"
+            android:text="@string/txt_BTN_Cancel"
             android:layout_margin="@dimen/activity_padding"
             android:layout_marginBottom="@dimen/activity_padding"
-            android:paddingHorizontal="@dimen/button_padding_size"
 
 
 
@@ -76,14 +72,14 @@
             android:id="@+id/BTN_Signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_signup"
+            android:text="@string/txt_BTN_Signup"
 
             android:layout_margin="@dimen/activity_padding"
             android:layout_marginLeft="@dimen/space_2"
             android:layout_marginBottom="@dimen/activity_padding"
             android:backgroundTint="@color/secondaryColor"
             android:textColor="@color/onSecondaryColor"
-            android:paddingHorizontal="@dimen/button_padding_size"
+
 
             app:layout_constraintLeft_toRightOf="@id/BTN_Cancel"
             app:layout_constraintRight_toRightOf="parent"

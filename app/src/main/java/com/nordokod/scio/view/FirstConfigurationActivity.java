@@ -25,7 +25,7 @@ import com.nordokod.scio.controller.FirstConfigurationController;
 import com.nordokod.scio.entity.AppConstants;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
-import com.soundcloud.android.crop.Crop;
+//import com.soundcloud.android.crop.Crop;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.Objects;
@@ -184,7 +184,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                             completeFragment.onComplete();
                         else
                             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
-                        BTN_Skip.setText(R.string.txt_btnDone);
+                        //BTN_Skip.setText(R.string.txt_btnDone);
                         break;
                     default:
                         BTN_Skip.setText(R.string.txt_BTN_Skip);
@@ -257,7 +257,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                 errorMessage.setText(R.string.message_max_apps_reached_error);
                 break;
             case Error.INVALID_USER_NAME:
-                errorMessage.setText(R.string.message_invalid_name);
+                //errorMessage.setText(R.string.message_invalid_name);
                 viewPager.setCurrentItem(2);
                 break;
             default:
@@ -383,10 +383,10 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                     Uri selectedImage = data.getData();
                     firstConfigurationController.trimPhoto(selectedImage);
                     break;
-                case Crop.REQUEST_CROP:
-                    Uri resultUri = Crop.getOutput(data);
-                    firstConfigurationController.uploadPhoto(resultUri);
-                    break;
+                //case Crop.REQUEST_CROP:
+                    //Uri resultUri = Crop.getOutput(data);
+                    //firstConfigurationController.uploadPhoto(resultUri);
+                    //break;
             }
     }
 

@@ -1,6 +1,7 @@
 package com.nordokod.scio.view;
 
 
+import android.graphics.Bitmap;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
@@ -11,14 +12,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.nordokod.scio.R;
 import com.nordokod.scio.controller.MainController;
@@ -35,9 +33,8 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private Toolbar toolbar;
     private ActionBar actionBar;
 
-    private TextView BTN_Logout;//corrección rapida :C
-    private CircleImageView Image_User;
-    private TextView TV_Username;
+    private CircleImageView CIV_Photo;
+    private AppCompatTextView TV_Name, BTN_Logout;
 
     private HomeFragment    homeFragment;
     private NewGuideFragment createFragment;
@@ -76,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
         View header=navigationMenu.getHeaderView(0);
 
-        Image_User = header.findViewById(R.id.CIV_Photo);
-        TV_Username = header.findViewById(R.id.TV_Name);
+        CIV_Photo = header.findViewById(R.id.CIV_Photo);
+        TV_Name = header.findViewById(R.id.TV_Name);
 
         mainController = new MainController(this,this);
         // Toolbar
@@ -86,8 +83,10 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
         mainController.requestPhoto();
-        TV_Username.setText(mainController.getName());
+
+        TV_Name.setText(mainController.getName());
     }
 
     @Override
@@ -95,7 +94,6 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         navigationBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment = null;
                 switch (item.getItemId()) {
                     case R.id.NAV_Home:
                         selectedFragment = new HomeFragment();
@@ -116,6 +114,12 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
             }
         });
 
+        BTN_Logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mainController.logOut();
+            }
+        });
     }
 
     public void onCloseFragment() {
@@ -148,9 +152,9 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     }
 
     public void setUserPhoto(Bitmap photo){
-        Image_User.setImageBitmap(photo);
+        CIV_Photo.setImageBitmap(photo);
     }
     public void setDefaultUserPhoto(){
-        Image_User.setImageResource(R.drawable.default_photo);
+        CIV_Photo.setImageResource(R.drawable.default_photo);
     }
 }
