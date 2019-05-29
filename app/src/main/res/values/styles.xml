@@ -32,10 +32,16 @@
         <item name="surfaceColor"               >@color/surfaceColor</item>
         <item name="onSurfaceColor"             >@color/onSurfaceColor</item>
 
+        <item name="iconNormalColor"            >@color/iconNormalColor</item>
+        <item name="iconSelectedColor"          >@color/iconSelectedColor</item>
+
+        <item name="cancelColor"                >@color/cancelColor</item>
+
         <item name="android:statusBarColor"     >?attr/secondaryColor</item>
 
         <item name="android:textSize"           >@dimen/text_size_normal</item>
         <item name="android:fontFamily"         >sans-serif</item>
+        <item name="android:textColor"          >?attr/primaryTextColor</item>
     </style>
 
     <!-- ====================================================================================== -->
@@ -48,15 +54,15 @@
     <!-- #     # ###  #####  #     #    #       #     # ####### ######  #######                 -->
     <!-- ====================================================================================== -->
     <style name="NightTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary"               >@color/primaryColor</item>
-        <item name="colorPrimaryDark"           >@color/primaryDarkColor</item>
+        <item name="colorPrimary"               >#02283A</item>
+        <item name="colorPrimaryDark"           >#000000</item>
         <item name="colorAccent"                >@color/secondaryColor</item>
 
-        <item name="primaryColor"               >@color/primaryColor</item>
-        <item name="primaryLightColor"          >@color/primaryLightColor</item>
-        <item name="primaryDarkColor"           >@color/primaryDarkColor</item>
-        <item name="primaryTextColor"           >@color/primaryTextColor</item>
-        <item name="onPrimaryColor"             >@color/onPrimaryColor</item>
+        <item name="primaryColor"               >#02283A</item>
+        <item name="primaryLightColor"          >#65A0C9</item>
+        <item name="primaryDarkColor"           >#02354D</item>
+        <item name="primaryTextColor"           >#ffffff</item>
+        <item name="onPrimaryColor"             >#ffffff</item>
 
         <item name="secondaryColor"             >@color/secondaryColor</item>
         <item name="secondaryLightColor"        >@color/secondaryLightColor</item>
@@ -65,16 +71,23 @@
         <item name="onSecondaryColor"           >@color/onSecondaryColor</item>
         <item name="onSecondaryTextColor"       >@color/onSecondaryTextColor</item>
 
-        <item name="backgroundColor"            >@color/backgroundColor</item>
-        <item name="onBackgroundColor"          >@color/onBackgroundColor</item>
+        <item name="backgroundColor"            >?attr/primaryColor</item>
+        <item name="onBackgroundColor"          >#ffffff</item>
 
-        <item name="surfaceColor"               >@color/surfaceColor</item>
-        <item name="onSurfaceColor"             >@color/onSurfaceColor</item>
+        <item name="surfaceColor"               >?attr/primaryDarkColor</item>
+        <item name="onSurfaceColor"             >#ffffff</item>
+
+        <item name="iconNormalColor"            >?attr/primaryLightColor</item>
+        <item name="iconSelectedColor"          >@color/iconSelectedColor</item>
 
         <item name="android:statusBarColor"     >?attr/primaryColor</item>
-        <item name="android:navigationBarColor" >?attr/surfaceColor</item>
+        <item name="android:navigationBarColor" >?attr/primaryColor</item>
+
+        <item name="cancelColor"                >#ffffff</item>
 
         <item name="android:textSize"           >@dimen/text_size_normal</item>
+        <item name="android:fontFamily"         >sans-serif</item>
+        <item name="android:textColor"          >?attr/primaryTextColor</item>
     </style>
 
     <!-- ======================================================================================= -->
@@ -170,20 +183,52 @@
     </style>
 
     <!-- ======================================================================================= -->
-    <!-- ESTILOS PARA LOS EDIT TEXT -->
+                                                                                                    <!-- ESTILOS PARA LOS TEXT VIEW -->
     <!-- ======================================================================================= -->
-    <style name="EditText_Login">
+    <style name="normalTextView">
         <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:textColor">?attr/onSurfaceColor</item>
+    </style>
+
+    <style name="titleTextView" parent="normalTextView">
+        <item name="android:textSize">@dimen/text_size_title</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="categoryTextView" parent="normalTextView">
+        <item name="android:textSize">@dimen/text_size_xsmall</item>
+        <item name="android:textColor">?attr/iconNormalColor</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="datetimeTextView">
+        <item name="android:textSize">60sp</item>
+        <item name="android:textColor">@color/onBackgroundColor</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- ======================================================================================= -->
+                                                                                                    <!-- ESTILOS PARA LOS EDIT TEXT -->
+    <!-- ======================================================================================= -->
+    <style name="EditText_Normal">
+        <item name="android:textSize">@dimen/text_size_normal</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColorHighlight">?attr/onBackgroundColor</item>
+        <item name="android:backgroundTint">@color/secondaryColor</item>
+        <item name="android:textColor">?attr/onBackgroundColor</item>
+    </style>
+
+    <style name="EditText_Login" parent="EditText_Normal">
         <item name="android:textColor">?attr/secondaryTextColor</item>
         <item name="android:textAlignment">center</item>
         <item name="android:textColorHint">?attr/secondaryTextColor</item>
         <item name="android:backgroundTint">?attr/secondaryTextColor</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:padding">10dp</item>
     </style>
 
     <!-- ======================================================================================= -->
-    <!-- ESTILOS PARA LOS BOTONES -->
+                                                                                                    <!-- ESTILOS PARA LOS BOTONES -->
     <!-- ======================================================================================= -->
     <style name="button" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:textSize">@dimen/text_size_button</item>
@@ -192,14 +237,14 @@
     </style>
 
     <style name="normalButton" parent="button">
-        <item name="android:textColor"      >@color/secondaryTextColor</item>
-        <item name="android:backgroundTint" >@color/secondaryColor</item>
+        <item name="android:textColor"      >?secondaryTextColor</item>
+        <item name="android:backgroundTint" >?secondaryColor</item>
         <item name="android:background"     >@xml/background_solid_round</item>
     </style>
 
     <style name="cancelButton" parent="button">
-        <item name="android:textColor"      >@color/cancelColor</item>
-        <item name="android:backgroundTint" >@color/cancelColor</item>
+        <item name="android:textColor"      >?cancelColor</item>
+        <item name="android:backgroundTint" >?cancelColor</item>
         <item name="android:background"     >@xml/background_stroke_round</item>
     </style>
 

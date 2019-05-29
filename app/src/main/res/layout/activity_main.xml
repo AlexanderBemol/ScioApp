@@ -6,7 +6,7 @@
     android:id="@+id/DrawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
+    android:background="?attr/backgroundColor"
     tools:context=".view.MainActivity"
     >
 
@@ -53,11 +53,12 @@
         android:layout_height="match_parent"
         android:maxWidth="@dimen/navigation_max_width"
         android:fitsSystemWindows="true"
-        android:background="@color/backgroundColor"
+        android:background="?attr/backgroundColor"
         android:layout_gravity="start"
 
         app:itemTextAppearance="@style/NavigationView"
-        app:itemTextColor="@color/onBackgroundColor"
+        app:itemIconTint="?iconNormalColor"
+        app:itemTextColor="?onBackgroundColor"
         app:headerLayout="@layout/navigation_menu_header"
         app:menu="@menu/navigation_menu_items"
         >
@@ -72,8 +73,9 @@
             <android.support.v7.widget.AppCompatImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:tint="?iconNormalColor"
 
-                app:srcCompat="@drawable/ic_moon_off"
+                app:srcCompat="@drawable/ic_moon_on"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -92,4 +94,41 @@
                 />
         </android.support.constraint.ConstraintLayout>
     </android.support.design.widget.NavigationView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <FrameLayout
+            android:id="@+id/FL_Main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/NAV_Bar"
+            >
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/backgroundColor"
+                app:titleTextAppearance="@style/titleTextView"
+                />
+        </FrameLayout>
+
+        <android.support.design.widget.BottomNavigationView
+            android:id="@+id/NAV_Bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:background="?attr/primaryDarkColor"
+
+            app:itemBackground="?attr/surfaceColor"
+            app:itemIconTint="@color/navigation_bar_colors"
+            app:itemTextColor="@color/navigation_bar_colors"
+            app:menu="@menu/navigation_bar_items"
+            >
+        </android.support.design.widget.BottomNavigationView>
+
+    </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

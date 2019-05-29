@@ -51,6 +51,7 @@
             android:name=".view.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -96,10 +97,15 @@
             android:screenOrientation="portrait" /> <!-- ======================================================================================= First Configuration -->
         <activity
             android:name=".view.FirstConfigurationActivity"
-            android:screenOrientation="portrait" /> <!-- ======================================================================================= Main -->
+            android:screenOrientation="portrait" />
+        <!-- ======================================================================================= Main -->
         <activity
             android:name=".view.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/DefaultTheme"
+            >
+
+        </activity>
     </application>
 
 </manifest>

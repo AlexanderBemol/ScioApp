@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<HorizontalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:scrollbars="none"
+    >
+
+    <LinearLayout
+        android:id="@+id/LL_Categories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/activity_padding"
+        android:paddingBottom="@dimen/activity_padding"
+        >
+        <!-- ======================================================================================= C. Exactas -->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/CL_Exacts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:onClick="onClickCategoryListener"
+            >
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/IV_Exacts"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="@dimen/space_2"
+                android:tint="?attr/iconNormalColor"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/TV_Exacts"
+                app:layout_constraintRight_toRightOf="@id/TV_Exacts"
+                app:layout_constraintBottom_toTopOf="@id/TV_Exacts"
+                app:srcCompat="@drawable/ic_flask"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/TV_Exacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category_exact_sciences"
+
+                app:layout_constraintTop_toBottomOf="@id/IV_Exacts"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                style="@style/categoryTextView"
+                />
+        </android.support.constraint.ConstraintLayout>
+
+        <!-- ======================================================================================= C. Sociales -->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/CL_Socials"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:onClick="onClickCategoryListener"
+            >
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/IV_Socials"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="@dimen/space_2"
+                android:tint="?attr/iconNormalColor"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/TV_Socials"
+                app:layout_constraintRight_toRightOf="@id/TV_Socials"
+                app:layout_constraintBottom_toTopOf="@id/TV_Socials"
+                app:srcCompat="@drawable/ic_globe"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/TV_Socials"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category_social_sciences"
+
+                app:layout_constraintTop_toBottomOf="@id/IV_Socials"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                style="@style/categoryTextView"
+                />
+        </android.support.constraint.ConstraintLayout>
+
+        <!-- ======================================================================================= Deportes -->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/CL_Sports"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:onClick="onClickCategoryListener"
+            >
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/IV_Sports"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="@dimen/space_2"
+                android:tint="?attr/iconNormalColor"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/TV_Sports"
+                app:layout_constraintRight_toRightOf="@id/TV_Sports"
+                app:layout_constraintBottom_toTopOf="@id/TV_Sports"
+                app:srcCompat="@drawable/ic_ball"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/TV_Sports"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category_sports"
+
+                app:layout_constraintTop_toBottomOf="@id/IV_Sports"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                style="@style/categoryTextView"
+                />
+        </android.support.constraint.ConstraintLayout>
+
+        <!-- ======================================================================================= Arte -->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/CL_Art"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:onClick="onClickCategoryListener"
+            >
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/IV_Art"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="@dimen/space_2"
+                android:tint="?attr/iconNormalColor"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/TV_Art"
+                app:layout_constraintRight_toRightOf="@id/TV_Art"
+                app:layout_constraintBottom_toTopOf="@id/TV_Art"
+                app:srcCompat="@drawable/ic_palette"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/TV_Art"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category_art"
+
+                app:layout_constraintTop_toBottomOf="@id/IV_Art"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                style="@style/categoryTextView"
+                />
+        </android.support.constraint.ConstraintLayout>
+
+        <!-- ======================================================================================= Tecnología -->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/CL_Tech"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:onClick="onClickCategoryListener"
+            >
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/IV_Tech"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="@dimen/space_2"
+                android:tint="?attr/iconNormalColor"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/TV_Tech"
+                app:layout_constraintRight_toRightOf="@id/TV_Tech"
+                app:layout_constraintBottom_toTopOf="@id/TV_Tech"
+                app:srcCompat="@drawable/ic_code"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/TV_Tech"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category_tech"
+
+                app:layout_constraintTop_toBottomOf="@id/IV_Tech"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                style="@style/categoryTextView"
+                />
+        </android.support.constraint.ConstraintLayout>
+
+        <!-- ======================================================================================= Entretenimineto -->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/CL_Entertainment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:onClick="onClickCategoryListener"
+            >
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/IV_Entertainment"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="@dimen/space_2"
+                android:tint="?attr/iconNormalColor"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/TV_Entertainment"
+                app:layout_constraintRight_toRightOf="@id/TV_Entertainment"
+                app:layout_constraintBottom_toTopOf="@id/TV_Entertainment"
+                app:srcCompat="@drawable/ic_theatre"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/TV_Entertainment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category_entertainment"
+
+                app:layout_constraintTop_toBottomOf="@id/IV_Entertainment"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                style="@style/categoryTextView"
+                />
+        </android.support.constraint.ConstraintLayout>
+
+        <!-- ======================================================================================= Otros -->
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/CL_Others"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:onClick="onClickCategoryListener"
+            >
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/IV_Others"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="@dimen/space_2"
+                android:tint="?attr/iconNormalColor"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/TV_Others"
+                app:layout_constraintRight_toRightOf="@id/TV_Others"
+                app:layout_constraintBottom_toTopOf="@id/TV_Others"
+                app:srcCompat="@drawable/ic_scio_face"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/TV_Others"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category_others"
+
+                app:layout_constraintTop_toBottomOf="@id/IV_Others"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+
+                style="@style/categoryTextView"
+                />
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</HorizontalScrollView>

@@ -1,5 +1,6 @@
 package com.nordokod.scio.view;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -25,6 +26,7 @@ public class DatePickerFragment extends DialogFragment {
     public void setListener(DatePickerDialog.OnDateSetListener listener) {
         this.listener = listener;
     }
+
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class DatePickerFragment extends DialogFragment {
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
-        return new DatePickerDialog(getActivity(), R.style.PickerDialog, listener , year, month, day);
+
+        return new DatePickerDialog(getActivity(), R.style.PickerDialog, listener, year, month, day);
     }
 }

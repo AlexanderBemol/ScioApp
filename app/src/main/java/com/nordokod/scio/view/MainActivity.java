@@ -1,9 +1,7 @@
 package com.nordokod.scio.view;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.Constraints;
+
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -17,10 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nordokod.scio.R;
 import com.nordokod.scio.controller.MainController;
@@ -42,8 +40,10 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private TextView TV_Username;
 
     private HomeFragment    homeFragment;
-    private CreateFragment  createFragment;
+    private NewGuideFragment createFragment;
     private GuidesFragment  guidesFragment;
+    private DialogFragment dialogFragment;
+    private Fragment selectedFragment = null;
 
 
     private MainController mainController;
@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
         initComponents();
         initListeners();
+
+        navigationBar.setSelectedItemId(R.id.NAV_Home);
     }
 
     @Override
@@ -67,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
 
         homeFragment    = new HomeFragment(this, this);
-        createFragment  = new CreateFragment(this, this);
+        createFragment  = new NewGuideFragment(this, this);
         guidesFragment  = new GuidesFragment(this, this);
 
         BTN_Logout = navigationMenu.findViewById(R.id.BTN_Logout);
@@ -99,7 +101,9 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                         selectedFragment = new HomeFragment();
                         break;
                     case R.id.NAV_Create:
-                        // Abrir fragment
+                        dialogFragment = createFragment;
+
+                        dialogFragment.show(getSupportFragmentManager(), "New");
                         break;
                     case R.id.NAV_Guides:
                         selectedFragment = new GuidesFragment();
@@ -111,17 +115,19 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                 return true;
             }
         });
-        BTN_Logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainController.logOut();
-            }
-        });
 
     }
 
+    public void onCloseFragment() {
+        getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentByTag("New")).commit();
+    }
+
+    public void onClickCategoryListener(View view) {
+        createFragment.onClickCategoryListener(view);
+    }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);

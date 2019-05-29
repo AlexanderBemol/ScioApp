@@ -157,8 +157,8 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
             @Override
             public void onPageSelected(int position) {
                 BTN_Next.setVisibility(View.VISIBLE);
-                BTN_Skip.setText(R.string.txt_btnSkip);
-                BTN_Next.setText(R.string.txt_btnNext);
+                BTN_Skip.setText(R.string.txt_BTN_Skip);
+                BTN_Next.setText(R.string.txt_BTN_Next);
 
                 switch (position) {
                     case 0: // Pantalla para la foto.
@@ -187,7 +187,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                         BTN_Skip.setText(R.string.txt_btnDone);
                         break;
                     default:
-                        BTN_Skip.setText(R.string.txt_btnSkip);
+                        BTN_Skip.setText(R.string.txt_BTN_Skip);
                         BTN_Skip.setVisibility(View.GONE);
                         break;
                 }

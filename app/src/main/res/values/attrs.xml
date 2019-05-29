@@ -20,5 +20,10 @@
         <!-- Surface colors -->
         <attr name="surfaceColor"           format="color"/>
         <attr name="onSurfaceColor"         format="color"/>
+        <!-- Icon colors -->
+        <attr name="iconNormalColor"        format="color"/>
+        <attr name="iconSelectedColor"      format="color"/>
+
+        <attr name="cancelColor"            format="color"/>
     </declare-styleable>
 </resources>

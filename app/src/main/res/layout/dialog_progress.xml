@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:minHeight="100dp"
     android:backgroundTint="?attr/secondaryDarkColor"
-    android:background="@xml/background_bottom_dialog"
+    android:background="@xml/background_top_normal_round"
     android:layout_gravity="bottom"
     >
 
