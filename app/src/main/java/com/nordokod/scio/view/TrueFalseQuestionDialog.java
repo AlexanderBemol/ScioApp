@@ -26,6 +26,8 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
     private AppCompatImageView IV_Star_1, IV_Star_2, IV_Star_3;
     private AppCompatTextView TV_Question, TV_Category, TV_Topic, TV_True, TV_False;
 
+    private boolean wasAnswered = false;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;
@@ -74,13 +76,14 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
         TV_True.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (question.isAnswer()) {
+                if (question.isAnswer() && !wasAnswered) {
                     // Mostramos que eligió la respuesta correcta.
                     TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
                     TV_True.setTextAppearance(context, R.style.correctAnswer);
 
                     changeStarState(0);
-                } else {
+                    wasAnswered = true;
+                } else if (!wasAnswered) {
                     // Mostramos que eligió la respuesta incorrecta.
                     TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_wrong_answer));
                     TV_True.setTextAppearance(context, R.style.wrongAnswer);
@@ -94,10 +97,19 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
         TV_False.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!question.isAnswer()) {
+                if (!question.isAnswer() && !wasAnswered) {
+                    // Mostramos que eligió la respuesta correcta.
+                    TV_False.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
                     TV_False.setTextAppearance(context, R.style.correctAnswer);
-                } else {
+
+                    changeStarState(0);
+                    wasAnswered = true;
+                } else if (!wasAnswered) {
+                    // Mostramos que eligió la respuesta incorrecta.
+                    TV_False.setBackgroundDrawable(context.getDrawable(R.drawable.background_wrong_answer));
                     TV_False.setTextAppearance(context, R.style.wrongAnswer);
+                    // Mostramos que True es la respuesta correcta.
+                    TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
                     TV_True.setTextAppearance(context, R.style.correctAnswer);
                 }
             }

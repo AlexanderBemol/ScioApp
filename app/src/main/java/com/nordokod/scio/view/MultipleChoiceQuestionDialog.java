@@ -27,6 +27,8 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
     private AppCompatImageView IV_Star_1, IV_Star_2, IV_Star_3;
     private AppCompatTextView TV_Question, TV_Category, TV_Topic, TV_First_Answer, TV_Second_Answer, TV_Third_Answer, TV_Fourth_Answer;
 
+    private boolean wasAnswered = false;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         this.context = context;
@@ -65,9 +67,10 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
         TV_First_Answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (question.getCorrect_answer_index() == 0)
+                if (question.getCorrect_answer_index() == 0 && !wasAnswered) {
                     onCorrectAnswer(0);
-                else
+                    changeStarState(0);
+                } else if (!wasAnswered)
                     onWrongAnswer(0);
             }
         });
@@ -75,9 +78,10 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
         TV_Second_Answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (question.getCorrect_answer_index() == 1)
+                if (question.getCorrect_answer_index() == 1 && !wasAnswered) {
                     onCorrectAnswer(1);
-                else
+                    changeStarState(0);
+                } else if (!wasAnswered)
                     onWrongAnswer(1);
             }
         });
@@ -85,9 +89,10 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
         TV_Third_Answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (question.getCorrect_answer_index() == 2)
+                if (question.getCorrect_answer_index() == 2 && !wasAnswered) {
                     onCorrectAnswer(2);
-                else
+                    changeStarState(0);
+                } else if (!wasAnswered)
                     onWrongAnswer(2);
             }
         });
@@ -95,9 +100,10 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
         TV_Fourth_Answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (question.getCorrect_answer_index() == 3)
+                if (question.getCorrect_answer_index() == 3 && !wasAnswered) {
                     onCorrectAnswer(3);
-                else
+                    changeStarState(0);
+                } else if (!wasAnswered)
                     onWrongAnswer(3);
             }
         });
@@ -134,21 +140,9 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
 
     @Override
     public void changeStarState(int number_of_stars) {
-        switch (number_of_stars) {
-            case 1:
-                IV_Star_1.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
-                break;
-            case 2:
-                IV_Star_1.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
-                IV_Star_2.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
-                break;
-            case 3:
-                IV_Star_1.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
-                IV_Star_2.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
-                IV_Star_3.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
-                break;
-            default: break;
-        }
+        IV_Star_1.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
+        IV_Star_2.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
+        IV_Star_3.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
     }
 
     /**
@@ -197,6 +191,8 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
                 TV_Fourth_Answer.setTextAppearance(context, R.style.correctAnswer);
                 break;
         }
+
+        wasAnswered = true;
     }
 
     /**
