@@ -14,7 +14,6 @@ import android.view.WindowManager;
 
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.MultipleChoiceQuestion;
-import com.nordokod.scio.entity.TrueFalseQuestion;
 
 import java.util.ArrayList;
 
@@ -24,7 +23,7 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
     private Dialog dialog;
     private MultipleChoiceQuestion question;
 
-    private AppCompatImageView IV_Star_1, IV_Star_2, IV_Star_3;
+    private AppCompatImageView IV_Star_1, IV_Star_2, IV_Star_3, IV_Close;
     private AppCompatTextView TV_Question, TV_Category, TV_Topic, TV_First_Answer, TV_Second_Answer, TV_Third_Answer, TV_Fourth_Answer;
 
     private boolean wasAnswered = false;
@@ -43,18 +42,20 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.dialog_true_false_question);
+        dialog.setContentView(R.layout.dialog_multiple_choice_question);
     }
 
     @Override
     public void initComponents() {
-        IV_Star_1       = dialog.findViewById(R.id.TFQuestion_IV_Star_1);
-        IV_Star_2       = dialog.findViewById(R.id.TFQuestion_IV_Star_2);
-        IV_Star_3       = dialog.findViewById(R.id.TFQuestion_IV_Star_3);
+        IV_Star_1       = dialog.findViewById(R.id.MCQuestion_IV_Star_1);
+        IV_Star_2       = dialog.findViewById(R.id.MCQuestion_IV_Star_2);
+        IV_Star_3       = dialog.findViewById(R.id.MCQuestion_IV_Star_3);
 
-        TV_Category     = dialog.findViewById(R.id.TFQuestion_TV_Category);
-        TV_Topic        = dialog.findViewById(R.id.TFQuestion_TV_Topic);
-        TV_Question     = dialog.findViewById(R.id.TFQuestion_TV_Question);
+        IV_Close        = dialog.findViewById(R.id.MCQuestion_IV_Close);
+
+        TV_Category     = dialog.findViewById(R.id.MCQuestion_TV_Category);
+        TV_Topic        = dialog.findViewById(R.id.MCQuestion_TV_Topic);
+        TV_Question     = dialog.findViewById(R.id.MCQuestion_TV_Question);
 
         TV_First_Answer     = dialog.findViewById(R.id.MCQuestion_TV_First_Answer);
         TV_Second_Answer    = dialog.findViewById(R.id.MCQuestion_TV_Second_Answer);
@@ -64,6 +65,13 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
 
     @Override
     public void initListeners() {
+        IV_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
         TV_First_Answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

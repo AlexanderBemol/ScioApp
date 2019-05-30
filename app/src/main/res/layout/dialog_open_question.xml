@@ -9,7 +9,7 @@
     >
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/TFQuestion_IV_Close"
+        android:id="@+id/OQuestion_IV_Close"
         android:layout_width="@dimen/icon_size_star"
         android:layout_height="@dimen/icon_size_star"
         android:tint="@color/cancelColor"
@@ -22,7 +22,7 @@
 
     <!-- =========================================================================================== Categoria -->
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/TFQuestion_TV_Category"
+        android:id="@+id/OQuestion_TV_Category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_1"
@@ -36,12 +36,12 @@
 
     <!-- =========================================================================================== Tema -->
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/TFQuestion_TV_Topic"
+        android:id="@+id/OQuestion_TV_Topic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_1"
 
-        app:layout_constraintTop_toBottomOf="@id/TFQuestion_TV_Category"
+        app:layout_constraintTop_toBottomOf="@id/OQuestion_TV_Category"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
 
@@ -50,84 +50,128 @@
 
     <!-- =========================================================================================== Estrellas -->
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/TFQuestion_IV_Star_1"
+        android:id="@+id/OQuestion_IV_Star_1"
         android:layout_width="@dimen/icon_size_star"
         android:layout_height="@dimen/icon_size_star"
         android:layout_marginStart="@dimen/space_3"
         android:tint="@color/starEmptyColor"
 
-        app:layout_constraintTop_toTopOf="@id/TFQuestion_IV_Star_2"
-        app:layout_constraintLeft_toRightOf="@id/TFQuestion_IV_Star_2"
-        app:layout_constraintBottom_toBottomOf="@id/TFQuestion_IV_Star_2"
+        app:layout_constraintTop_toTopOf="@id/OQuestion_IV_Star_2"
+        app:layout_constraintLeft_toRightOf="@id/OQuestion_IV_Star_2"
+        app:layout_constraintBottom_toBottomOf="@id/OQuestion_IV_Star_2"
         app:srcCompat="@drawable/ic_moon_on"
         />
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/TFQuestion_IV_Star_2"
+        android:id="@+id/OQuestion_IV_Star_2"
         android:layout_width="@dimen/icon_size_star"
         android:layout_height="@dimen/icon_size_star"
         android:layout_marginTop="@dimen/space_2"
         android:tint="@color/starEmptyColor"
 
-        app:layout_constraintTop_toBottomOf="@id/TFQuestion_TV_Topic"
+        app:layout_constraintTop_toBottomOf="@id/OQuestion_TV_Topic"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:srcCompat="@drawable/ic_moon_on"
         />
 
     <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/TFQuestion_IV_Star_3"
+        android:id="@+id/OQuestion_IV_Star_3"
         android:layout_width="@dimen/icon_size_star"
         android:layout_height="@dimen/icon_size_star"
         android:layout_marginEnd="@dimen/space_3"
         android:tint="@color/starEmptyColor"
 
-        app:layout_constraintTop_toTopOf="@id/TFQuestion_IV_Star_2"
-        app:layout_constraintRight_toLeftOf="@id/TFQuestion_IV_Star_2"
-        app:layout_constraintBottom_toBottomOf="@id/TFQuestion_IV_Star_2"
+        app:layout_constraintTop_toTopOf="@id/OQuestion_IV_Star_2"
+        app:layout_constraintRight_toLeftOf="@id/OQuestion_IV_Star_2"
+        app:layout_constraintBottom_toBottomOf="@id/OQuestion_IV_Star_2"
         app:srcCompat="@drawable/ic_moon_on"
         />
 
     <!-- =========================================================================================== Pregunta -->
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/TFQuestion_TV_Question"
+        android:id="@+id/OQuestion_TV_Question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_3"
 
-        app:layout_constraintTop_toBottomOf="@id/TFQuestion_IV_Star_2"
+        app:layout_constraintTop_toBottomOf="@id/OQuestion_IV_Star_2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
 
         style="@style/normalTextView"
         />
 
-    <!-- =========================================================================================== Respuestas -->
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/TFQuestion_Answer_True"
+    <!-- =========================================================================================== Respuesta -->
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/OQuestion_ET_Answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:padding="10dp"
-        android:text="@string/txt_Answer_True"
-        android:background="@xml/background_answer"
         android:layout_marginTop="@dimen/space_3"
+        android:hint="@string/txt_hint_ET_Answer"
 
-        app:layout_constraintTop_toBottomOf="@id/TFQuestion_TV_Question"
+        app:layout_constraintTop_toBottomOf="@id/OQuestion_TV_Question"
+
+        style="@style/EditText_Normal"
+        />
+
+    <!-- =========================================================================================== Respuesta Correcta -->
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/OQuestion_TV_Correct_Answer_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_title_TV_Answer"
+        android:layout_marginTop="@dimen/space_2"
+        android:visibility="gone"
+
+        app:layout_constraintTop_toBottomOf="@id/OQuestion_ET_Answer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        style="@style/normalTextView"
         />
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/TFQuestion_Answer_False"
-        android:layout_width="match_parent"
+        android:id="@+id/OQuestion_TV_Correct_Answer"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:padding="10dp"
-        android:text="@string/txt_Answer_False"
         android:layout_marginTop="@dimen/space_2"
-        android:layout_marginBottom="@dimen/space_2"
-        android:background="@xml/background_answer"
+        android:visibility="gone"
 
-        app:layout_constraintTop_toBottomOf="@id/TFQuestion_Answer_True"
+        app:layout_constraintTop_toBottomOf="@id/OQuestion_TV_Correct_Answer_Title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        style="@style/normalTextView"
+        />
+
+    <!-- =========================================================================================== Botones -->
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/OQuestion_BTN_Answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_BTN_Answer"
+        android:layout_marginTop="@dimen/space_2"
+        android:layout_marginBottom="@dimen/space_1"
+
+        app:layout_constraintTop_toBottomOf="@id/OQuestion_TV_Correct_Answer"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+
+        style="@style/normalButton"
+        />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/OQuestion_BTN_Skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_BTN_Skip"
+        android:layout_marginEnd="@dimen/space_2"
+
+        app:layout_constraintTop_toTopOf="@id/OQuestion_BTN_Answer"
+        app:layout_constraintRight_toLeftOf="@id/OQuestion_BTN_Answer"
+        app:layout_constraintBottom_toBottomOf="@id/OQuestion_BTN_Answer"
+
+        style="@style/skipButton"
         />
 </android.support.constraint.ConstraintLayout>

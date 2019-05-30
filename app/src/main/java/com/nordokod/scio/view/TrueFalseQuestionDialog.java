@@ -23,7 +23,7 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
     private Dialog dialog;
     private TrueFalseQuestion question;
 
-    private AppCompatImageView IV_Star_1, IV_Star_2, IV_Star_3;
+    private AppCompatImageView IV_Star_1, IV_Star_2, IV_Star_3, IV_Close;
     private AppCompatTextView TV_Question, TV_Category, TV_Topic, TV_True, TV_False;
 
     private boolean wasAnswered = false;
@@ -56,6 +56,8 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
         IV_Star_2       = dialog.findViewById(R.id.TFQuestion_IV_Star_2);
         IV_Star_3       = dialog.findViewById(R.id.TFQuestion_IV_Star_3);
 
+        IV_Close        = dialog.findViewById(R.id.TFQuestion_IV_Close);
+
         TV_Category     = dialog.findViewById(R.id.TFQuestion_TV_Category);
         TV_Topic        = dialog.findViewById(R.id.TFQuestion_TV_Topic);
         TV_Question     = dialog.findViewById(R.id.TFQuestion_TV_Question);
@@ -73,6 +75,13 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
     */
     @Override
     public void initListeners() {
+        IV_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
         TV_True.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
