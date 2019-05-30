@@ -46,8 +46,6 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
     private Dialog loginErrorDialog, noticeDialog;
     private static final int NOTICE_DIALOG_TIME = 2000;
 
-    public String state="";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -220,7 +218,6 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                 errorMessage.setText(R.string.message_error);
                 break;
         }
-        state=errorMessage.getText().toString();
         noticeDialog.show();
 
         Handler handler;
@@ -272,5 +269,17 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
 
     private void initAnimations(){
         press = AnimationUtils.loadAnimation(this, R.anim.press);
+    }
+
+    @Override
+    protected void onDestroy() {
+        dismissProgressDialog();
+        super.onDestroy();
+    }
+
+    private void dismissProgressDialog() {
+        if (noticeDialog != null && noticeDialog.isShowing()) {
+            noticeDialog.dismiss();
+        }
     }
 }
