@@ -10,5 +10,5 @@ interface BasicDialog {
 
     void showDialog();
 
-    void changeStarState();
+    void changeStarState(int number_of_stars);
 }
