@@ -5,20 +5,30 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.nordokod.scio.controller.MainController;
+import com.nordokod.scio.entity.AppConstants;
+import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.process.DownloadImageProcess;
 import com.nordokod.scio.view.MainActivity;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class MainModel {
     private MainController mainController;
@@ -30,6 +40,7 @@ public class MainModel {
     private Activity currentActivity;
     private FirebaseStorage storage;
     private StorageReference storageReference;
+
 
     public MainModel(MainController mc, MainActivity mActivity,Context context){
         this.mainController=mc;
@@ -120,7 +131,40 @@ public class MainModel {
     }
     public String getName(){
         currentUser=mAuth.getCurrentUser();
-        return currentUser.getDisplayName();
+        if (currentUser != null) {
+            return currentUser.getDisplayName();
+        }else {
+            return  "User";
+        }
+    }
+
+    public void createGuide(int category_selected_id, String topic, Date date) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        currentUser=mAuth.getCurrentUser();
+        DocumentReference categoryReference=db.collection(AppConstants.CLOUD_CATEGORYS).document(String.valueOf(category_selected_id));
+
+        Map<String, Object> data = new HashMap<>();
+        data.put(AppConstants.CLOUD_GUIDES_CATEGORY,categoryReference);
+        data.put(AppConstants.CLOUD_GUIDES_TOPIC,topic);
+        data.put(AppConstants.CLOUD_GUIDES_DATETIME,date);
+        data.put(AppConstants.CLOUD_GUIDES_UID,currentUser.getUid());
+
+        db.collection(AppConstants.CLOUD_GUIDES).add(data)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        mainController.succesUpload();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        mainController.showError(new Error(Error.WHEN_SAVING_ON_DATABASE));
+                        Log.d("testeo",e.getMessage());
+                    }
+                });
+
+
     }
 }
 

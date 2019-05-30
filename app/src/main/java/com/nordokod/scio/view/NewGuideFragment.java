@@ -5,12 +5,15 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.controller.MainController;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -36,8 +40,8 @@ import static com.nordokod.scio.R.attr.iconSelectedColor;
 public class NewGuideFragment extends BottomSheetDialogFragment implements BasicFragment {
 
     private Context context;
-    private Activity activity;
-    private AppCompatEditText ET_Topic;
+    private MainController mainController;
+    AppCompatEditText ET_Topic;
     private LinearLayout LL_Date, LL_Time, LL_Categories;
     private AppCompatTextView TV_Month, TV_Day, TV_Time, TV_Hour;
     private AppCompatButton BTN_Cancel, BTN_Create;
@@ -45,22 +49,20 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
     private String date_selected, time_selected;
     // Animations
     private Animation press;
-    //private CreateController createController;
+    private ConstraintLayout CL_Exacts,CL_Socials,CL_Sports,CL_Art,CL_Tech,CL_Entertainment,CL_Others;
 
     public NewGuideFragment() { }
 
     // TODO: Agregar al constructor el parametro del controllador
     @SuppressLint("ValidFragment")
-    public NewGuideFragment(Context context, Activity activity) {
+    public NewGuideFragment(Context context, MainController mc) {
         this.context = context;
-        this.activity = activity;
-        //this.createController = createController;
+        this.mainController=mc;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -85,16 +87,27 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
         TV_Hour         = view.findViewById(R.id.TV_Hour);
         BTN_Cancel      = view.findViewById(R.id.BTN_Cancel);
         BTN_Create      = view.findViewById(R.id.BTN_Create);
-
+        ET_Topic        = view.findViewById(R.id.ET_Topic);
+        ET_Topic.setText("");
+        //
+        CL_Exacts = view.findViewById(R.id.CL_Exacts);
+        CL_Socials = view.findViewById(R.id.CL_Socials);
+        CL_Sports = view.findViewById(R.id.CL_Sports);
+        CL_Art = view.findViewById(R.id.CL_Art);
+        CL_Tech = view.findViewById(R.id.CL_Tech);
+        CL_Entertainment = view.findViewById(R.id.CL_Entertainment);
+        CL_Others = view.findViewById(R.id.CL_Others);
         //
         Calendar calendar = Calendar.getInstance();
         TV_Month.setText(getMonthName(calendar.get(Calendar.MONTH)));
         TV_Day.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
+        date_selected = twoDigits(calendar.get(Calendar.DAY_OF_MONTH))+"/"+twoDigits(calendar.get(Calendar.MONTH)+1)+"/"+twoDigits(calendar.get(Calendar.YEAR));
         //
-        String hour = calendar.get(Calendar.HOUR) + ":" + twoDigits(calendar.get(Calendar.MINUTE));
+        int minute = Integer.parseInt(twoDigits(calendar.get(Calendar.MINUTE)));
+        String hour = twoDigits(calendar.get(Calendar.HOUR)) + ":" + twoDigits(minute);
         TV_Hour.setText(hour);
         TV_Time.setText((calendar.get(Calendar.AM_PM) < 1) ? "AM" : "PM");
-
+        time_selected = hour;
     }
 
     @Override
@@ -117,8 +130,8 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
             @Override
             public void onClick(View v) {
                 BTN_Cancel.startAnimation(press);
+                Objects.requireNonNull(getFragmentManager()).beginTransaction().remove(NewGuideFragment.this).commit();
 
-                //createController.onCloseFragment();
             }
         });
 
@@ -126,7 +139,50 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
             @Override
             public void onClick(View v) {
                 BTN_Create.startAnimation(press);
-                //createController.createGuide(category_selected_id, ET_Topic.getText(), date_selected, time_selected);
+                mainController.createGuide(category_selected_id, ET_Topic.getText(), date_selected, time_selected);
+            }
+        });
+        //
+        CL_Exacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickCategoryListener(v);
+            }
+        });
+        CL_Socials.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickCategoryListener(v);
+            }
+        });
+        CL_Sports.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickCategoryListener(v);
+            }
+        });
+        CL_Art.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickCategoryListener(v);
+            }
+        });
+        CL_Tech.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickCategoryListener(v);
+            }
+        });
+        CL_Entertainment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickCategoryListener(v);
+            }
+        });
+        CL_Others.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickCategoryListener(v);
             }
         });
     }
@@ -161,14 +217,14 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
 
     private int getCategoryId(int view_selected_id) {
         switch (view_selected_id) {
-            case R.id.CL_Exacts:        return 0;
-            case R.id.CL_Socials:       return 1;
-            case R.id.CL_Sports:        return 2;
-            case R.id.CL_Art:           return 3;
-            case R.id.CL_Tech:          return 4;
-            case R.id.CL_Entertainment: return 5;
-            case R.id.CL_Others:        return 6;
-            default:                    return 6;
+            case R.id.CL_Exacts:        return 1;
+            case R.id.CL_Socials:       return 2;
+            case R.id.CL_Sports:        return 3;
+            case R.id.CL_Art:           return 4;
+            case R.id.CL_Tech:          return 5;
+            case R.id.CL_Entertainment: return 6;
+            case R.id.CL_Others:        return 7;
+            default:                    return 7;
         }
     }
 
@@ -214,8 +270,7 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 TV_Time.setText((hourOfDay < 12) ? "AM" : "PM");
-
-                time_selected = hourOfDay + ":" + minute;
+                time_selected = twoDigits(hourOfDay) + ":" +twoDigits(minute);
 
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat12 = new SimpleDateFormat("h:mm");
                 @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat24 = new SimpleDateFormat("HH:mm");
