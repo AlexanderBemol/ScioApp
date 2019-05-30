@@ -70,6 +70,8 @@
     <string name="txt_Answer_True">Verdadero</string>
     <string name="txt_Answer_False">Falso</string>
     <string name="txt_BTN_Answer">Contestar</string>
+    <string name="txt_hint_ET_Answer">Escribe tu respuesta aquí...</string>
+    <string name="txt_title_TV_Answer">Respuesta:</string>
     
     <!-- ======================================================================================= -->
     <!-- Strings de los niveles de educación -->

@@ -56,4 +56,6 @@
     <string name="txt_Answer_True">True</string>
     <string name="txt_Answer_False">False</string>
     <string name="txt_BTN_Answer">Answer</string>
+    <string name="txt_hint_ET_Answer">Tap your answer here...</string>
+    <string name="txt_title_TV_Answer">Answer:</string>
 </resources>

@@ -8,11 +8,24 @@
     android:background="?attr/backgroundColor"
     >
 
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/MCQuestion_IV_Close"
+        android:layout_width="@dimen/icon_size_star"
+        android:layout_height="@dimen/icon_size_star"
+        android:tint="@color/cancelColor"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:srcCompat="@drawable/crop__ic_cancel"
+        />
+
     <!-- =========================================================================================== Categoria -->
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/MCQuestion_TV_Category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_1"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -46,7 +59,7 @@
         app:layout_constraintTop_toTopOf="@id/MCQuestion_IV_Star_2"
         app:layout_constraintLeft_toRightOf="@id/MCQuestion_IV_Star_2"
         app:layout_constraintBottom_toBottomOf="@id/MCQuestion_IV_Star_2"
-        app:srcCompat="@drawable/ic_moon_on"
+        app:srcCompat="@drawable/ic_star"
         />
 
     <android.support.v7.widget.AppCompatImageView
@@ -59,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@id/MCQuestion_TV_Topic"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/ic_moon_on"
+        app:srcCompat="@drawable/ic_star"
         />
 
     <android.support.v7.widget.AppCompatImageView
@@ -72,7 +85,7 @@
         app:layout_constraintTop_toTopOf="@id/MCQuestion_IV_Star_2"
         app:layout_constraintRight_toLeftOf="@id/MCQuestion_IV_Star_2"
         app:layout_constraintBottom_toBottomOf="@id/MCQuestion_IV_Star_2"
-        app:srcCompat="@drawable/ic_moon_on"
+        app:srcCompat="@drawable/ic_star"
         />
 
     <!-- =========================================================================================== Pregunta -->
@@ -97,6 +110,7 @@
         android:textAlignment="center"
         android:padding="10dp"
         android:background="@xml/background_answer"
+        android:layout_marginTop="@dimen/space_3"
 
         app:layout_constraintTop_toBottomOf="@id/MCQuestion_TV_Question"
         />

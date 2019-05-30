@@ -248,6 +248,12 @@
         <item name="android:background"     >@xml/background_stroke_round</item>
     </style>
 
+    <style name="skipButton" parent="button">
+        <item name="android:textColor"      >?secondaryColor</item>
+        <item name="android:backgroundTint" >?secondaryColor</item>
+        <item name="android:background"     >@xml/background_stroke_round</item>
+    </style>
+
     <style name="loginButton" parent="button">
         <item name="android:textColor"      >@color/onSecondaryTextColor</item>
         <item name="android:backgroundTint" >@color/onSecondaryColor</item>
