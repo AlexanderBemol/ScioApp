@@ -79,7 +79,7 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
                     TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
                     TV_True.setTextAppearance(context, R.style.correctAnswer);
 
-
+                    changeStarState(0);
                 } else {
                     // Mostramos que eligió la respuesta incorrecta.
                     TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_wrong_answer));
@@ -129,7 +129,7 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
 
 
     @Override
-    public void changeStarState() {
+    public void changeStarState(int number_of_stars) {
         IV_Star_1.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
         IV_Star_2.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
         IV_Star_3.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
