@@ -65,6 +65,13 @@
     <string name="description_incomplete_first_configuration">Por favor llena tus datos para\npoder usar la aplicación.</string>
 
     <!-- ======================================================================================= -->
+    <!-- Strings relacionados con las preguntas -->
+    <!-- ======================================================================================= -->
+    <string name="txt_Answer_True">Verdadero</string>
+    <string name="txt_Answer_False">Falso</string>
+    <string name="txt_BTN_Answer">Contestar</string>
+    
+    <!-- ======================================================================================= -->
     <!-- Strings de los niveles de educación -->
     <!-- ======================================================================================= -->
     <string name="education_title_default">Elige una opción</string>
@@ -139,8 +146,6 @@
     <string name="navmenu_title_opensource" translatable="false">Open Source</string>
     <string name="navmenu_title_about">Acerca de Scio</string>
     <string name="navmenu_title_logout">Cerrar sesión</string>
-
-    <string name="menu_title_">X</string>
 
     <!-- ======================================================================================= -->
     <!-- Credenciales y pedos así -->

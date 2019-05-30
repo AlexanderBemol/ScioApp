@@ -53,4 +53,7 @@
     <string name="month_november">November</string>
     <string name="month_october">October</string>
     <string name="month_september">September</string>
+    <string name="txt_Answer_True">True</string>
+    <string name="txt_Answer_False">False</string>
+    <string name="txt_BTN_Answer">Answer</string>
 </resources>
