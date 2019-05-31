@@ -55,10 +55,12 @@ public class FirstConfigurationAppBlockFragment extends Fragment implements Basi
     public void initListeners() {
 
     }
+
     protected void configAdapter(FirstConfigurationController controller,FirstConfigurationActivity firstConfigurationActivity) {
-        this.firstConfigurationController   = controller;
+        this.firstConfigurationController = controller;
         this.firstConfigurationActivity = firstConfigurationActivity;
     }
+
     private ArrayList<App> getListOfApps() {
         return firstConfigurationController.getListOfApps();
     }

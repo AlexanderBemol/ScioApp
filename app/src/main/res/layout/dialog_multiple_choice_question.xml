@@ -109,7 +109,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:padding="10dp"
-        android:background="@xml/background_answer"
+        android:background="@xml/background_card_round"
         android:layout_marginTop="@dimen/space_3"
 
         app:layout_constraintTop_toBottomOf="@id/MCQuestion_TV_Question"
@@ -121,7 +121,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:padding="10dp"
-        android:background="@xml/background_answer"
+        android:background="@xml/background_card_round"
         android:layout_marginTop="@dimen/space_2"
 
         app:layout_constraintTop_toBottomOf="@id/MCQuestion_TV_First_Answer"
@@ -133,7 +133,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:padding="10dp"
-        android:background="@xml/background_answer"
+        android:background="@xml/background_card_round"
         android:layout_marginTop="@dimen/space_2"
 
         app:layout_constraintTop_toBottomOf="@id/MCQuestion_TV_Second_Answer"
@@ -145,7 +145,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:padding="10dp"
-        android:background="@xml/background_answer"
+        android:background="@xml/background_card_round"
         android:layout_marginTop="@dimen/space_2"
         android:layout_marginBottom="@dimen/space_2"
 

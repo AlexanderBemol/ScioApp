@@ -7,16 +7,33 @@
     android:layout_height="match_parent"
     tools:context=".view.GuidesFragment">
 
-    <android.support.v7.widget.AppCompatImageView
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/FGuides_RV_Categories"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_my_guides"
-        android:tint="@color/iconNormalColor"
+        android:layout_marginTop="@dimen/space_5"
 
         app:layout_constraintTop_toTopOf="parent"
+
+        layout="@layout/list_categories"
+    />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/FGuides_RV_Guides"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        android:layout_marginTop="@dimen/space_2"
+        android:layout_marginStart="@dimen/activity_padding"
+        android:layout_marginEnd="@dimen/activity_padding"
+
+
+        app:layout_constraintTop_toBottomOf="@id/FGuides_RV_Categories"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        >
+
+    </android.support.v7.widget.RecyclerView>
 
 </android.support.constraint.ConstraintLayout>

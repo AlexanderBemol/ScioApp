@@ -49,7 +49,7 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
     private String date_selected, time_selected;
     // Animations
     private Animation press;
-    private ConstraintLayout CL_Exacts,CL_Socials,CL_Sports,CL_Art,CL_Tech,CL_Entertainment,CL_Others;
+    private ConstraintLayout CL_Exacts, CL_Socials, CL_Sports, CL_Art, CL_Tech, CL_Entertainment, CL_Others;
 
     public NewGuideFragment() { }
 
@@ -81,15 +81,18 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
         LL_Date         = view.findViewById(R.id.LL_Date);
         LL_Time         = view.findViewById(R.id.LL_Time);
         LL_Categories   = view.findViewById(R.id.LL_Categories);
+
         TV_Day          = view.findViewById(R.id.TV_Day);
         TV_Month        = view.findViewById(R.id.TV_Month);
         TV_Time         = view.findViewById(R.id.TV_Time);
         TV_Hour         = view.findViewById(R.id.TV_Hour);
+
         BTN_Cancel      = view.findViewById(R.id.BTN_Cancel);
         BTN_Create      = view.findViewById(R.id.BTN_Create);
+
         ET_Topic        = view.findViewById(R.id.ET_Topic);
         ET_Topic.setText("");
-        //
+
         CL_Exacts = view.findViewById(R.id.CL_Exacts);
         CL_Socials = view.findViewById(R.id.CL_Socials);
         CL_Sports = view.findViewById(R.id.CL_Sports);
@@ -97,12 +100,12 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
         CL_Tech = view.findViewById(R.id.CL_Tech);
         CL_Entertainment = view.findViewById(R.id.CL_Entertainment);
         CL_Others = view.findViewById(R.id.CL_Others);
-        //
+
         Calendar calendar = Calendar.getInstance();
         TV_Month.setText(getMonthName(calendar.get(Calendar.MONTH)));
         TV_Day.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
         date_selected = twoDigits(calendar.get(Calendar.DAY_OF_MONTH))+"/"+twoDigits(calendar.get(Calendar.MONTH)+1)+"/"+twoDigits(calendar.get(Calendar.YEAR));
-        //
+
         int minute = Integer.parseInt(twoDigits(calendar.get(Calendar.MINUTE)));
         String hour = twoDigits(calendar.get(Calendar.HOUR)) + ":" + twoDigits(minute);
         TV_Hour.setText(hour);

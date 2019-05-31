@@ -14,6 +14,7 @@ public class SignUpController {
     private User user;
     private Activity currentActivity;
     private Context currentContext;
+
     public SignUpController(Context cCon,Activity cAct, SignupActivity activity){
         signModel=new SignUpModel(this,cAct,cCon);
         user=new User();

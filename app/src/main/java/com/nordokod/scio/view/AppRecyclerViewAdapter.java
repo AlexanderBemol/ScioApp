@@ -73,6 +73,7 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
     public void configAdapter(FirstConfigurationController controller) {
         this.firstConfigurationController = controller;
     }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         AppCompatImageView IV_Icon;
         AppCompatTextView TV_Name;
