@@ -1,134 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/activity_padding"
     android:background="?attr/backgroundColor"
-
+    android:orientation="vertical"
     >
 
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/TFQuestion_IV_Close"
-        android:layout_width="@dimen/icon_size_star"
-        android:layout_height="@dimen/icon_size_star"
-        android:tint="@color/cancelColor"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-        app:srcCompat="@drawable/crop__ic_cancel"
-        />
-
-    <!-- =========================================================================================== Categoria -->
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/TFQuestion_TV_Category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_1"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-        style="@style/normalTextView"
-        />
-
-    <!-- =========================================================================================== Tema -->
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/TFQuestion_TV_Topic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_1"
-
-        app:layout_constraintTop_toBottomOf="@id/TFQuestion_TV_Category"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-        style="@style/normalTextView"
-        />
-
-    <!-- =========================================================================================== Estrellas -->
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/TFQuestion_IV_Star_1"
-        android:layout_width="@dimen/icon_size_star"
-        android:layout_height="@dimen/icon_size_star"
-        android:layout_marginStart="@dimen/space_3"
-        android:tint="@color/starEmptyColor"
-
-        app:layout_constraintTop_toTopOf="@id/TFQuestion_IV_Star_2"
-        app:layout_constraintLeft_toRightOf="@id/TFQuestion_IV_Star_2"
-        app:layout_constraintBottom_toBottomOf="@id/TFQuestion_IV_Star_2"
-        app:srcCompat="@drawable/ic_star"
-        />
-
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/TFQuestion_IV_Star_2"
-        android:layout_width="@dimen/icon_size_star"
-        android:layout_height="@dimen/icon_size_star"
-        android:layout_marginTop="@dimen/space_2"
-        android:tint="@color/starEmptyColor"
-
-        app:layout_constraintTop_toBottomOf="@id/TFQuestion_TV_Topic"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/ic_star"
-        />
-
-    <android.support.v7.widget.AppCompatImageView
-        android:id="@+id/TFQuestion_IV_Star_3"
-        android:layout_width="@dimen/icon_size_star"
-        android:layout_height="@dimen/icon_size_star"
-        android:layout_marginEnd="@dimen/space_3"
-        android:tint="@color/starEmptyColor"
-
-        app:layout_constraintTop_toTopOf="@id/TFQuestion_IV_Star_2"
-        app:layout_constraintRight_toLeftOf="@id/TFQuestion_IV_Star_2"
-        app:layout_constraintBottom_toBottomOf="@id/TFQuestion_IV_Star_2"
-        app:srcCompat="@drawable/ic_star"
-        />
-
-    <!-- =========================================================================================== Pregunta -->
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/TFQuestion_TV_Question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_3"
-
-        app:layout_constraintTop_toBottomOf="@id/TFQuestion_IV_Star_2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-        style="@style/normalTextView"
-        />
-
-    <!-- =========================================================================================== Respuestas -->
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/TFQuestion_Answer_True"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:padding="10dp"
-        android:text="@string/txt_Answer_True"
-        android:background="@xml/background_answer"
-        android:layout_marginTop="@dimen/space_3"
+        android:orientation="vertical"
+        >
 
-        app:layout_constraintTop_toBottomOf="@id/TFQuestion_TV_Question"
-        />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
 
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/TFQuestion_Answer_False"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:padding="10dp"
-        android:text="@string/txt_Answer_False"
-        android:layout_marginTop="@dimen/space_2"
-        android:layout_marginBottom="@dimen/space_2"
-        android:background="@xml/background_answer"
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/TFQuestion_IV_Close"
+                android:layout_width="@dimen/icon_size_star"
+                android:layout_height="@dimen/icon_size_star"
+                android:layout_alignEnd="@+id/TFQuestion_TV_Category"
+                android:tint="@color/cancelColor"
+                android:layout_alignParentEnd="true"
 
-        app:layout_constraintTop_toBottomOf="@id/TFQuestion_Answer_True"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
-</android.support.constraint.ConstraintLayout>
+                app:srcCompat="@drawable/crop__ic_cancel"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/TFQuestion_TV_Category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_1"
+                android:text="Texto de prueba"
+                android:textAlignment="center"
+
+                style="@style/normalTextView"
+                />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/TFQuestion_TV_Topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_1"
+            android:text="Texto de prueba"
+            android:textAlignment="center"
+
+            style="@style/normalTextView"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/space_2"
+            >
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/TFQuestion_IV_Star_1"
+                android:layout_width="@dimen/icon_size_star"
+                android:layout_height="@dimen/icon_size_star"
+                android:layout_marginEnd="@dimen/space_3"
+                android:tint="@color/starEmptyColor"
+
+                app:srcCompat="@drawable/ic_star"
+                />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/TFQuestion_IV_Star_2"
+                android:layout_width="@dimen/icon_size_star"
+                android:layout_height="@dimen/icon_size_star"
+                android:tint="@color/starEmptyColor"
+
+                app:srcCompat="@drawable/ic_star"
+                />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/TFQuestion_IV_Star_3"
+                android:layout_width="@dimen/icon_size_star"
+                android:layout_height="@dimen/icon_size_star"
+                android:layout_marginStart="@dimen/space_3"
+                android:tint="@color/starEmptyColor"
+
+                app:srcCompat="@drawable/ic_star"
+                />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/TFQuestion_TV_Question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3"
+            android:text="Texto de prueba"
+            android:textAlignment="center"
+
+            style="@style/normalTextView"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/TFQuestion_Answer_True"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:text="@string/txt_Answer_True"
+            android:background="@xml/background_answer"
+            android:layout_marginTop="@dimen/space_3"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/TFQuestion_Answer_False"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:padding="10dp"
+            android:text="@string/txt_Answer_False"
+            android:layout_marginTop="@dimen/space_2"
+            android:layout_marginBottom="@dimen/space_2"
+            android:background="@xml/background_answer"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
+<!-- =========================================================================================== -->

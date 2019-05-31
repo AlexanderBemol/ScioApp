@@ -34,6 +34,7 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
         initDialog();
         initComponents();
         initListeners();
+
     }
 
     @Override
