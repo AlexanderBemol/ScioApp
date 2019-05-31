@@ -49,7 +49,7 @@ public class LockAppProcess extends Service {
                 appslocked.add("com.twitter.android");
                 appslocked.add("com.google.android.youtube");
                 if(appslocked.contains(getForegroundApp())){//está bloqueada..
-                    qlp.launchQuestionMulti();
+                    qlp.launchQuestionTrueFalse();
                 }
 
             }
