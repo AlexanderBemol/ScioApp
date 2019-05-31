@@ -38,19 +38,19 @@
             android:layout_marginStart="@dimen/activity_padding"
 
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/RV_Categories"
+            app:layout_constraintBottom_toTopOf="@id/FGuides_RV_Categories"
 
             style="@style/normalTextView"
             />
 
         <include
-            android:id="@+id/RV_Categories"
+            android:id="@+id/FGuides_RV_Categories"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
             app:layout_constraintBottom_toTopOf="@id/TV_Topic"
 
-            layout="@layout/recyclerview_categories"
+            layout="@layout/list_categories"
             />
 
         <!-- TEMA -->

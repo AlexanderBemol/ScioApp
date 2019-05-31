@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         frameLayout     = findViewById(R.id.FL_Main);
         toolbar         = findViewById(R.id.Toolbar);
 
-        mainController = new MainController(this,this);
+        mainController  = new MainController(this,this);
         homeFragment    = new HomeFragment(this, this);
         createFragment  = new NewGuideFragment(this,mainController );
         guidesFragment  = new GuidesFragment(this, this);
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                         dialogFragment.show(getSupportFragmentManager(), "New");
                         break;
                     case R.id.NAV_Guides:
-                        selectedFragment = new GuidesFragment();
+                        selectedFragment = guidesFragment;
                         break;
                 }
 
