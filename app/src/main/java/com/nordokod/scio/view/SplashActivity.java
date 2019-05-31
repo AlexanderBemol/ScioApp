@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         Intent service= new Intent(this,LockAppProcess.class);
         if(!isMyServiceRunning(LockAppProcess.class)){
-            //startService(service);
+            startService(service);
         }
 
         new Handler().postDelayed(new Runnable() {

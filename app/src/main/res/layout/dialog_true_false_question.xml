@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/activity_padding"
     android:background="?attr/backgroundColor"
+
     >
 
     <android.support.v7.widget.AppCompatImageView

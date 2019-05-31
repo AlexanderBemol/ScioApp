@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.nordokod.scio.entity.ConfigurationApp;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.SortedMap;
@@ -35,6 +36,7 @@ public class LockAppProcess extends Service {
     @Override
     public int onStartCommand(Intent intentM, int flags, int idArranque) {
         Log.d("testeo","onStart");
+        final QuestionLauncherProcess qlp =new QuestionLauncherProcess(currentContext);
         final Handler handler = new Handler();
         final Runnable runnable = new Runnable() {
             @Override
@@ -42,9 +44,12 @@ public class LockAppProcess extends Service {
                 handler.postDelayed(this, 1000);
                 Log.d("testeo","working");
                 String fgApp=getForegroundApp();
-                if(confApp.getLockedApps().contains(fgApp)){//está bloqueada..
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    //startActivity(intent);
+                ArrayList<String> appslocked=new ArrayList<>();
+                appslocked.add("com.whatsapp");
+                appslocked.add("com.twitter.android");
+                appslocked.add("com.google.android.youtube");
+                if(appslocked.contains(getForegroundApp())){//está bloqueada..
+                    qlp.launchQuestionMulti();
                 }
 
             }
@@ -111,6 +116,7 @@ public class LockAppProcess extends Service {
         UsageStatsManager usm = (UsageStatsManager) currentContext.getSystemService(Context.USAGE_STATS_SERVICE);
         long time = System.currentTimeMillis();
         List<UsageStats> appList = Objects.requireNonNull(usm).queryUsageStats(UsageStatsManager.INTERVAL_DAILY, time - 1000 * 1000, time);
+        Log.d("testeo",appList.size()+"");
         if (appList != null && appList.size() > 0) {
             SortedMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
             for (UsageStats usageStats : appList) {
@@ -120,6 +126,7 @@ public class LockAppProcess extends Service {
                 currentApp = mySortedMap.get(mySortedMap.lastKey()).getPackageName();
             }
         }
+        Log.d("testeo",currentApp);
         return currentApp;
     }
 

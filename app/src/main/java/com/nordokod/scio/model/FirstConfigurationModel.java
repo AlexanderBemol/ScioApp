@@ -272,7 +272,7 @@ public class FirstConfigurationModel {
      * @return ArrayList de apps
      */
     public ArrayList<App> getListOfApps() {
-        SystemWriteProcess swp=new SystemWriteProcess(currentContext);
+        SystemWriteProcess swp = new SystemWriteProcess(currentContext);
         return swp.getAllApps();
     }
 
