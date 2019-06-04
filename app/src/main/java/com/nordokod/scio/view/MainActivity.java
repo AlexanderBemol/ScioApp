@@ -1,7 +1,10 @@
 package com.nordokod.scio.view;
 
 
+import android.content.ClipData;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.design.internal.NavigationMenu;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.annotation.NonNull;
@@ -12,8 +15,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -44,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
 
     private MainController mainController;
+
+    private MenuItem Menu_Apps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         mainController.requestPhoto();
 
         TV_Name.setText(mainController.getName());
+
+        Menu_Apps = findViewById(R.id.Menu_Apps);
     }
 
     @Override
@@ -106,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                     case R.id.NAV_Guides:
                         selectedFragment = new GuidesFragment();
                         break;
+
                 }
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.FL_Main, selectedFragment).commit();
@@ -114,12 +124,15 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
             }
         });
 
+
+
         BTN_Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mainController.logOut();
             }
         });
+
     }
 
     public void onCloseFragment() {
@@ -136,10 +149,21 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.Menu_Apps:
+                Intent i = new Intent(MainActivity.this,AppBlockedActivity.class);
+
+                startActivity(i);
+
+                drawerLayout.openDrawer(GravityCompat.START);
+
+                return true;
+
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     @Override
     public void showErrorNoticeDialog(Error error) {

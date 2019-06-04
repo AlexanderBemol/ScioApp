@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.AppBlockedActivity"
+    android:background="?attr/backgroundColor"
+    android:padding="@dimen/activity_padding"
+    >
+
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/AppBlocked_TV_Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Apps"
+        android:gravity="center"
+        style="@style/titleTextView"
+
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/AppBlocked_TV_Description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Elige las apps que te distraen mas."
+        android:gravity="center"
+        android:layout_marginTop="@dimen/space_1"
+
+        app:layout_constraintTop_toBottomOf="@id/AppBlocked_TV_Title"
+        />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/AppBlocked_TV_Activate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Activar"
+            android:layout_marginTop="@dimen/space_2"
+
+            app:layout_constraintTop_toBottomOf="@id/AppBlocked_TV_Description"
+            />
+
+
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/AppBlocked_SC_Activated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_2"
+
+            app:layout_constraintTop_toBottomOf="@id/AppBlocked_TV_Description"
+            app:layout_constraintLeft_toRightOf="@id/AppBlocked_TV_Activate"
+            />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/AppBlocked_RV_listApps"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:background="@xml/background_simple"
+                android:layout_marginTop="@dimen/space_3"
+                android:layout_marginBottom="@dimen/first_configuration_max_space"
+                android:scrollbars="vertical"
+                android:backgroundTint="@color/backgroundColor"
+
+
+                app:layout_constraintTop_toBottomOf="@id/AppBlocked_SC_Activated"
+                app:layout_constraintBottom_toTopOf="@id/AppBlocked_BTN_Save"
+                />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/AppBlocked_BTN_Cancel"
+        style="@style/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/space_3"
+        android:text="@string/txt_BTN_Cancel"
+        android:layout_marginTop="@dimen/space_3"
+
+        android:tooltipText="@string/txt_BTN_Cancel"
+
+
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/AppBlocked_BTN_Save"
+
+        />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/AppBlocked_BTN_Save"
+        style="@style/normalButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/space_3"
+        android:text="@string/txt_BTN_Save"
+
+        app:layout_constraintLeft_toRightOf="@id/AppBlocked_BTN_Cancel"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</android.support.constraint.ConstraintLayout>
