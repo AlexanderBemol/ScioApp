@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         mainController  = new MainController(this,this);
         homeFragment    = new HomeFragment(this, this);
         createFragment  = new NewGuideFragment(this,mainController );
-        guidesFragment  = new GuidesFragment(this, this);
+        guidesFragment  = new GuidesFragment(this, mainController);
 
         BTN_Logout = navigationMenu.findViewById(R.id.BTN_Logout);
 

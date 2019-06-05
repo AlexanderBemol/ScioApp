@@ -9,11 +9,13 @@ import android.util.Log;
 
 import com.nordokod.scio.entity.Error;
 
+import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.model.MainModel;
 import com.nordokod.scio.view.LoginActivity;
 import com.nordokod.scio.view.MainActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -84,7 +86,7 @@ public class MainController {
         catch (Exception e){
             Error error=new Error(Error.GENERAL);
             showError(error);
-            Log.d("testeo",e.getMessage().toString());
+            Log.d("testeo",e.getMessage());
         }
     }
     public void showError(Error error){
@@ -93,5 +95,17 @@ public class MainController {
 
     public void succesUpload() {
         mainActivity.showSuccessNoticeDialog(null);
+    }
+
+    public ArrayList<Guide> getListOfGuides(int category) {
+        ArrayList<Guide> guides=new ArrayList<>();
+        for(Guide guide:mainModel.getListOfGuides()){
+            if(guide.getCategory()==category)
+                guides.add(guide);
+        }
+        return guides;
+    }
+    public void loadGuides(){
+        mainModel.loadGuides();
     }
 }

@@ -18,6 +18,10 @@ public class Guide {
         this.is_actived = is_actived;
     }
 
+    public Guide() {
+
+    }
+
     public int getCategory() {
         return category;
     }

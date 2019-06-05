@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Guide;
 
 import java.util.ArrayList;
@@ -30,11 +31,10 @@ import static com.nordokod.scio.R.attr.iconSelectedColor;
 public class GuidesFragment extends Fragment implements BasicFragment {
 
     private Context context;
-    private Activity activity;
+    private MainController mainController;
     private RecyclerView RV_Guides;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    //private GuidesController guidesController;
 
     private ConstraintLayout CL_Exacts, CL_Socials, CL_Sports, CL_Art, CL_Tech, CL_Entertainment, CL_Others;
     private LinearLayout LL_Categories;
@@ -47,9 +47,9 @@ public class GuidesFragment extends Fragment implements BasicFragment {
     public GuidesFragment() { }
 
     @SuppressLint("ValidFragment")
-    public GuidesFragment(Context context, Activity activity) {
+    public GuidesFragment(Context context, MainController mainController) {
         this.context = context;
-        this.activity = activity;
+        this.mainController=mainController;
     }
 
     @Override
@@ -84,8 +84,8 @@ public class GuidesFragment extends Fragment implements BasicFragment {
         CL_Entertainment    = view.findViewById(R.id.CL_Entertainment);
         CL_Others           = view.findViewById(R.id.CL_Others);
 
-        //guidesController =  new GuidesController(context, activity);
-        //guidesController.getListOfGuides();
+        mainController.loadGuides();
+
 
         RV_Guides = view.findViewById(R.id.FGuides_RV_Guides);
 
@@ -175,8 +175,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
     }
 
     private ArrayList<Guide> getListOfGuides(int category) {
-        //return guidesController.getListOfGuides(category);
-        return null;
+        return mainController.getListOfGuides(category);
     }
 
     private int getCategoryId(int view_selected_id) {

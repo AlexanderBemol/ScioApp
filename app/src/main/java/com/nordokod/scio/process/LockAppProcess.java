@@ -40,7 +40,7 @@ public class LockAppProcess extends Service {
             @Override
             public void run() {
                 handler.postDelayed(this, 1000);
-                Log.d("testeo","working");
+                //Log.d("testeo","working");
                 String fgApp=getForegroundApp();
                 if(confApp.getLockedApps().contains(fgApp)){//está bloqueada..
                     //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
