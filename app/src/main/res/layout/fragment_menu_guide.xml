@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.MenuGuideFragment">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@xml/background_top_normal_round"
+        android:backgroundTint="?attr/backgroundColor"
+        >
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/FMGuide_IV_Icon"
+            android:layout_width="@dimen/icon_category_size"
+            android:layout_height="@dimen/icon_category_size"
+            android:layout_marginTop="@dimen/activity_padding"
+            android:tint="@color/secondaryColor"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FMGuide_TV_Topic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tema"
+            android:layout_marginTop="@dimen/space_1"
+
+            app:layout_constraintTop_toBottomOf="@id/FMGuide_IV_Icon"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <View
+            android:id="@+id/dividerGuide"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?attr/primaryLightColor"
+            android:layout_marginTop="@dimen/space_1"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginEnd="@dimen/activity_padding"
+
+            app:layout_constraintTop_toBottomOf="@id/FMGuide_TV_Topic"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FMGuide_TV_TitleGuides"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_guide_options_menu_title_guide"
+            android:layout_marginTop="@dimen/space_1"
+
+            app:layout_constraintTop_toBottomOf="@id/dividerGuide"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/infoGuideTextView"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FMGuide_TV_StudyGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_study_guide_option_menu_guide"
+
+            app:layout_constraintTop_toBottomOf="@id/FMGuide_TV_TitleGuides"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/menuGuideTextView"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FMGuide_TV_ShareGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_share_guide_option_menu_guide"
+
+            app:layout_constraintTop_toBottomOf="@id/FMGuide_TV_StudyGuide"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/menuGuideTextView"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FMGuide_TV_EditGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_edit_guide_option_menu_guide"
+
+            app:layout_constraintTop_toBottomOf="@id/FMGuide_TV_ShareGuide"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/menuGuideTextView"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FMGuide_TV_DeleteGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_delete_guide_option_menu_guide"
+
+            app:layout_constraintTop_toBottomOf="@id/FMGuide_TV_EditGuide"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/menuGuideTextView"
+            />
+
+        <View
+            android:id="@+id/dividerQuestions"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="?attr/primaryLightColor"
+            android:layout_marginTop="@dimen/space_1"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginEnd="@dimen/activity_padding"
+
+            app:layout_constraintTop_toBottomOf="@id/FMGuide_TV_DeleteGuide"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FMGuide_TV_TitleQuestions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_question_options_menu_title_guide"
+            android:layout_marginTop="@dimen/space_1"
+
+            app:layout_constraintTop_toBottomOf="@id/dividerQuestions"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/infoGuideTextView"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FMGuide_TV_AddQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_add_question_option_menu_guide"
+
+            app:layout_constraintTop_toBottomOf="@id/FMGuide_TV_TitleQuestions"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/menuGuideTextView"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FMGuide_TV_EditQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_edit_question_option_menu_guide"
+
+            app:layout_constraintTop_toBottomOf="@id/FMGuide_TV_AddQuestion"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/menuGuideTextView"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FMGuide_TV_DeleteQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_delete_question_option_menu_guide"
+            android:layout_marginBottom="@dimen/activity_padding"
+
+            app:layout_constraintTop_toBottomOf="@id/FMGuide_TV_EditQuestion"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            style="@style/menuGuideTextView"
+            />
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

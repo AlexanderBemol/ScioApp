@@ -2,7 +2,6 @@ package com.nordokod.scio.view;
 
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
@@ -11,7 +10,6 @@ import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SwitchCompat;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +28,7 @@ import static com.nordokod.scio.R.attr.iconSelectedColor;
 public class GuidesFragment extends Fragment implements BasicFragment {
 
     private Context context;
-    private Activity activity;
+    private MainActivity activity;
     private RecyclerView RV_Guides;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -39,15 +37,13 @@ public class GuidesFragment extends Fragment implements BasicFragment {
     private ConstraintLayout CL_Exacts, CL_Socials, CL_Sports, CL_Art, CL_Tech, CL_Entertainment, CL_Others;
     private LinearLayout LL_Categories;
     private AppCompatTextView TV_Topic, TV_Cateoory, TV_Days;
-    private AppCompatImageView IV_Icon;
-    private SwitchCompat Switch_State;
 
     private int preview_Category_View_Selected = 0, category_selected_id;
 
     public GuidesFragment() { }
 
     @SuppressLint("ValidFragment")
-    public GuidesFragment(Context context, Activity activity) {
+    public GuidesFragment(Context context, MainActivity activity) {
         this.context = context;
         this.activity = activity;
     }
@@ -55,7 +51,6 @@ public class GuidesFragment extends Fragment implements BasicFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -96,7 +91,6 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
     @Override
     public void initListeners() {
-
         CL_Exacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,8 +123,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
         });
         CL_Entertainment.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v, 6);
+            public void onClick(View v) { onClickCategoryListener(v, 6);
             }
         });
         CL_Others.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +132,8 @@ public class GuidesFragment extends Fragment implements BasicFragment {
                 onClickCategoryListener(v, 7);
             }
         });
+
+        onBackFragment();
     }
 
     @SuppressLint("ResourceType")
@@ -167,17 +162,17 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
             preview_Category_View_Selected = view.getId();
 
-            mAdapter = new GuidesRecyclerViewAdapter(getListOfGuides(category), category, context);
+            //mAdapter = new GuidesRecyclerViewAdapter(getListOfGuides(category), category, context, activity);
             //((GuidesRecyclerViewAdapter) mAdapter).configAdapter(guidesController);
 
             RV_Guides.setAdapter(mAdapter);
         }
     }
-
+    /*
     private ArrayList<Guide> getListOfGuides(int category) {
-        //return guidesController.getListOfGuides(category);
-        return null;
+        return guidesController.getListOfGuides(category);
     }
+    */
 
     private int getCategoryId(int view_selected_id) {
         switch (view_selected_id) {
@@ -202,6 +197,40 @@ public class GuidesFragment extends Fragment implements BasicFragment {
             case R.id.CL_Entertainment: return R.id.IV_Entertainment;
             case R.id.CL_Others:        return R.id.IV_Others;
             default:                    return 0;
+        }
+    }
+
+    private void onBackFragment() {
+        switch (preview_Category_View_Selected) {
+            case R.id.CL_Exacts:
+                preview_Category_View_Selected = 0;
+                CL_Exacts.performClick();
+                break;
+            case R.id.CL_Socials:
+                preview_Category_View_Selected = 0;
+                CL_Socials.performClick();
+                break;
+            case R.id.CL_Sports:
+                preview_Category_View_Selected = 0;
+                CL_Sports.performClick();
+                break;
+            case R.id.CL_Art:
+                preview_Category_View_Selected = 0;
+                CL_Art.performClick();
+                break;
+            case R.id.CL_Tech:
+                preview_Category_View_Selected = 0;
+                CL_Tech.performClick();
+                break;
+            case R.id.CL_Entertainment:
+                preview_Category_View_Selected = 0;
+                CL_Entertainment.performClick();
+                break;
+            case R.id.CL_Others:
+                preview_Category_View_Selected = 0;
+                CL_Others.performClick();
+                break;
+            default: CL_Exacts.performClick();
         }
     }
 }

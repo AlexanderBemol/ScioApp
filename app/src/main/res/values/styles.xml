@@ -217,6 +217,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="menuGuideTextView" parent="titleGuideTextView">
+        <item name="android:textAlignment">center</item>
+        <item name="android:padding">@dimen/space_1</item>
+    </style>
+
     <!-- ======================================================================================= -->
                                                                                                     <!-- ESTILOS PARA LOS EDIT TEXT -->
     <!-- ======================================================================================= -->

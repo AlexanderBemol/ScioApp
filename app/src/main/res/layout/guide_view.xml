@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:background="@xml/background_card_round"
     android:padding="@dimen/activity_padding"
-    android:layout_marginTop="@dimen/space_1"
+    android:layout_marginBottom="@dimen/space_1"
 
     >
 
