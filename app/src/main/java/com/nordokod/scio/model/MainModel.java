@@ -209,5 +209,19 @@ public class MainModel {
     public ArrayList<Guide> getListOfGuides() {
         return listOfGuides;
     }
+
+    public void onSaveMultipleChoiceQuestion(Guide guide,
+                                             String question, String option_1, String option_2, String option_3, String option_4,
+                                             boolean is_correct_1, boolean is_correct_2, boolean is_correct_3, boolean is_correct_4) {
+        // TODO: Logica para guardar la pregunta.
+    }
+
+    public void onSaveTrueFalseQuestion(Guide guide, String question, boolean answer) {
+        // TODO: Logica para guardar la pregunta.
+    }
+
+    public void onSaveOpenAnswerQuestion(Guide guide, String question, String answer) {
+        // TODO: Logica para guardar la pregunta.
+    }
 }
 

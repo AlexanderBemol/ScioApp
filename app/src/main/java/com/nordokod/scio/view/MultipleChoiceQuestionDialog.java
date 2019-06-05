@@ -71,7 +71,7 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
                 dialog.dismiss();
             }
         });
-
+        /*
         TV_First_Answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,6 +115,7 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
                     onWrongAnswer(3);
             }
         });
+        */
     }
 
     @Override
@@ -229,6 +230,6 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
                 break;
         }
 
-        onCorrectAnswer(question.getCorrect_answer_index());
+        //onCorrectAnswer(question.getCorrect_answer_index());
     }
 }

@@ -27,6 +27,7 @@ import android.widget.FrameLayout;
 import com.nordokod.scio.R;
 import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Error;
+import com.nordokod.scio.entity.Guide;
 
 import java.util.Objects;
 
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         mainController  = new MainController(this,this);
         homeFragment    = new HomeFragment(this, this);
         createFragment  = new NewGuideFragment(this,mainController );
-        guidesFragment  = new GuidesFragment(this, mainController);
+        guidesFragment  = new GuidesFragment(this, mainController, this);
 
         BTN_Logout = navigationMenu.findViewById(R.id.BTN_Logout);
 
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                     case R.id.NAV_Create:
                         dialogFragment = createFragment;
 
-                        dialogFragment.show(getSupportFragmentManager(), "New");
+                        dialogFragment.show(getSupportFragmentManager(), "New Guide");
                         break;
                     case R.id.NAV_Guides:
                         selectedFragment = guidesFragment;
@@ -133,8 +134,47 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         });
     }
 
-    public void onCloseFragment() {
-        getSupportFragmentManager().beginTransaction().remove(getSupportFragmentManager().findFragmentByTag("New")).commit();
+    public void onNewQuestionDialog(Guide guide) {
+        dialogFragment = new NewQuestionFragment(this, mainController, guide);
+        dialogFragment.show(getSupportFragmentManager(), "New Question");
+    }
+
+    public void onNewMultipleChoiceQuestionDialog(Guide guide) {
+        dialogFragment = new NewMultipleChoiceQuestionFragment(this, mainController, guide);
+        dialogFragment.show(getSupportFragmentManager(), "New Multiple Choice");
+    }
+
+    public void onNewOpenAnswerQuestionDialog(Guide guide) {
+        dialogFragment = new NewOpenAnswerQuestionFragment(this, mainController, guide);
+        dialogFragment.show(getSupportFragmentManager(), "New Open Answer");
+    }
+
+    public void onNewTrueFalseQuestionDialog(Guide guide) {
+        dialogFragment = new NewTrueFalseQuestionFragment(this, mainController, guide);
+        dialogFragment.show(getSupportFragmentManager(), "New TrueFalse");
+    }
+
+    public void onCloseFragment(String tag) {
+        switch (tag) {
+            case "New Guide":
+                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("New Guide"))).commit();
+                break;
+            case "New Question":
+                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("New Question"))).commit();
+                break;
+            case "Menu Guide":
+                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("Menu Guide"))).commit();
+                break;
+            case "New Multiple Choice":
+                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("New Multiple Choice"))).commit();
+                break;
+            case "New TrueFalse":
+                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("New TrueFalse"))).commit();
+                break;
+            case "New Open Answer":
+                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("New Open Answer"))).commit();
+                break;
+        }
     }
 
     public void onClickCategoryListener(View view) {
@@ -143,10 +183,9 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            drawerLayout.openDrawer(GravityCompat.START);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -185,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         if(dialogFragment!=null)
             dialogFragment.dismiss();
     }
+
     @Override
     public void showErrorNoticeDialog(Error error) {
 
@@ -252,15 +292,14 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         handler = null;
     }
 
-
-
-
     public void setUserPhoto(Bitmap photo){
         CIV_Photo.setImageBitmap(photo);
     }
+
     public void setDefaultUserPhoto(){
         CIV_Photo.setImageResource(R.drawable.default_photo);
     }
+
     @Override
     protected void onDestroy() {
         dismissProgressDialog();

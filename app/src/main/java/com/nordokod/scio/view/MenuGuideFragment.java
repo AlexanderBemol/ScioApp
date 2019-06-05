@@ -11,25 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Guide;
 
 public class MenuGuideFragment extends BottomSheetDialogFragment implements BasicFragment {
 
     private Context context;
-    //private GuidesController guidesController;
+    private MainController mainController;
     private Guide guide;
     private AppCompatTextView TV_Study_Guide, TV_Edit_Guide, TV_Delete_Guide, TV_Share_Guide, TV_Add_Question, TV_Edit_Question, TV_Delete_Question, TV_Topic;
     private AppCompatImageView IV_Icon;
 
     public MenuGuideFragment() { }
-    /*
+
     @SuppressLint("ValidFragment")
-    public MenuGuideFragment(Context context, GuidesController guidesController, Guide guide) {
+    public MenuGuideFragment(Context context, MainController mainController, Guide guide) {
         this.context = context;
-        this.guidesController = guidesController;
+        this.mainController = mainController;
         this.guide = guide;
     }
-    */
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,8 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
         TV_Add_Question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mainController.onCloseFragment("Menu Guide");
+                mainController.onNewQuestionDialog(guide);
             }
         });
 

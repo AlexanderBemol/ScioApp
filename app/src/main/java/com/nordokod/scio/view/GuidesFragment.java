@@ -29,6 +29,7 @@ import static com.nordokod.scio.R.attr.iconSelectedColor;
 public class GuidesFragment extends Fragment implements BasicFragment {
 
     private Context context;
+    private MainActivity mainActivity;
     private MainController mainController;
     private RecyclerView RV_Guides;
     private RecyclerView.Adapter mAdapter;
@@ -43,9 +44,10 @@ public class GuidesFragment extends Fragment implements BasicFragment {
     public GuidesFragment() { }
 
     @SuppressLint("ValidFragment")
-    public GuidesFragment(Context context, MainController mainController) {
+    public GuidesFragment(Context context, MainController mainController, MainActivity mainActivity) {
         this.context = context;
-        this.mainController=mainController;
+        this.mainController = mainController;
+        this.mainActivity = mainActivity;
     }
 
     @Override
@@ -162,17 +164,16 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
             preview_Category_View_Selected = view.getId();
 
-            //mAdapter = new GuidesRecyclerViewAdapter(getListOfGuides(category), category, context, activity);
-            //((GuidesRecyclerViewAdapter) mAdapter).configAdapter(guidesController);
+            mAdapter = new GuidesRecyclerViewAdapter(getListOfGuides(category), category, context, mainActivity);
+            ((GuidesRecyclerViewAdapter) mAdapter).configAdapter(mainController);
 
             RV_Guides.setAdapter(mAdapter);
         }
     }
-    /*
+
     private ArrayList<Guide> getListOfGuides(int category) {
         return mainController.getListOfGuides(category);
     }
-    */
 
     private int getCategoryId(int view_selected_id) {
         switch (view_selected_id) {

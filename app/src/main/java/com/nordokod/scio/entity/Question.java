@@ -1,11 +1,13 @@
 package com.nordokod.scio.entity;
 
 public class Question {
+    private int id;
     private String question;
     private String topic;
     private int category;
 
-    public Question(String question, String topic, int category) {
+    public Question(int id, String question, String topic, int category) {
+        this.id = id;
         this.question = question;
         this.topic = topic;
         this.category = category;

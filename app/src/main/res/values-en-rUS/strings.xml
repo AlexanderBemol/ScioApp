@@ -68,4 +68,9 @@
     <string name="txt_study_guide_option_menu_guide">Study</string>
     <string name="txt_guide_options_menu_title_guide">Guide:</string>
     <string name="txt_question_options_menu_title_guide">Questions:</string>
+    <string name="txt_title_question_type_true_false">True/False</string>
+    <string name="txt_title_question_type_open_answer">Open Answer</string>
+    <string name="txt_title_question_type_multiple_choice">Multiple Choice</string>
+    <string name="txt_title_fragment_new_question">New Question</string>
+    <string name="txt_hint_fragment_new_question">Choose the type of question you want to create.</string>
 </resources>

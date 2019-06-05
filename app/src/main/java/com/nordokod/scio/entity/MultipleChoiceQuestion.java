@@ -4,28 +4,31 @@ import java.util.ArrayList;
 
 public class MultipleChoiceQuestion extends Question {
 
-    private ArrayList<String> answer;
-    private int correct_answer_index;
+    private ArrayList<Option> answers;
 
-    public MultipleChoiceQuestion(String question, String topic, int category, ArrayList<String> answer, int correct_answer_index) {
-        super(question, topic, category);
-        this.answer = answer;
-        this.correct_answer_index = correct_answer_index;
+    public MultipleChoiceQuestion(int id, String question, String topic, int category) {
+        super(id, question, topic, category);
     }
 
-    public ArrayList<String> getAnswer() {
-        return answer;
+    public void setAnswer(String option, boolean is_correct) {
+        answers.add(new Option(option, is_correct));
     }
 
-    public void setAnswer(ArrayList<String> answer) {
-        this.answer = answer;
+    public boolean isAnswerCorrect(int index) {
+        return answers.get(index).is_correct();
     }
 
-    public int getCorrect_answer_index() {
-        return correct_answer_index;
-    }
+    class Option {
+        private String option;
+        private boolean is_correct;
 
-    public void setCorrect_answer_index(int correct_answer_index) {
-        this.correct_answer_index = correct_answer_index;
+        Option(String option, boolean is_correct) {
+            this.option = option;
+            this.is_correct = is_correct;
+        }
+
+        public boolean is_correct() {
+            return is_correct;
+        }
     }
 }
