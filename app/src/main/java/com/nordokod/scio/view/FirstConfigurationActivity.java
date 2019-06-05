@@ -26,6 +26,7 @@ import com.nordokod.scio.entity.AppConstants;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
 //import com.soundcloud.android.crop.Crop;
+import com.soundcloud.android.crop.Crop;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.Objects;
@@ -383,16 +384,26 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                     Uri selectedImage = data.getData();
                     firstConfigurationController.trimPhoto(selectedImage);
                     break;
-                //case Crop.REQUEST_CROP:
-                    //Uri resultUri = Crop.getOutput(data);
-                    //firstConfigurationController.uploadPhoto(resultUri);
-                    //break;
+                case Crop.REQUEST_CROP:
+                    Uri resultUri = Crop.getOutput(data);
+                    firstConfigurationController.uploadPhoto(resultUri);
+                    break;
             }
     }
 
     public void updatePhoto(){
         photoFragment.defaultPhoto();
     }
+    @Override
+    protected void onDestroy() {
+        dismissProgressDialog();
+        super.onDestroy();
+    }
 
+    private void dismissProgressDialog() {
+        if (noticeDialog != null && noticeDialog.isShowing()) {
+            noticeDialog.dismiss();
+        }
+    }
 
 }

@@ -209,4 +209,15 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
         noticeDialog.show();
         loading.start();
     }
+    @Override
+    protected void onDestroy() {
+        dismissProgressDialog();
+        super.onDestroy();
+    }
+
+    private void dismissProgressDialog() {
+        if (noticeDialog != null && noticeDialog.isShowing()) {
+            noticeDialog.dismiss();
+        }
+    }
 }
