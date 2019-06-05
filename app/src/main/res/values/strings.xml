@@ -160,7 +160,16 @@
     <string name="facebook_app_id" translatable="false">342632009679209</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb342632009679209</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="txt_add_question_option_menu_guide">Agregar</string>
+    <string name="txt_edit_question_option_menu_guide">Editar</string>
+    <string name="txt_delete_question_option_menu_guide">Eliminar</string>
+    <string name="txt_share_guide_option_menu_guide">Compartir</string>
+    <string name="txt_edit_guide_option_menu_guide">Editar</string>
+    <string name="txt_delete_guide_option_menu_guide">Eliminar</string>
+    <string name="txt_study_guide_option_menu_guide">Estudiar</string>
+    <string name="txt_question_options_menu_title_guide">Preguntas:</string>
+    <string name="txt_guide_options_menu_title_guide">Guía:</string>
 
 </resources>

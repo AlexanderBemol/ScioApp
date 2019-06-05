@@ -1,8 +1,8 @@
 package com.nordokod.scio.view;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -20,19 +20,21 @@ import java.util.ArrayList;
 public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecyclerViewAdapter.ViewHolder> {
 
     private Context context;
+    private MainActivity activity;
     //private GuidesController guidesController;
     private ArrayList<Guide> guideArrayList;
+    private DialogFragment dialogFragment;
     private int category;
 
-    public GuidesRecyclerViewAdapter(ArrayList<Guide> guideArrayList, int category, Context context) {
+    public GuidesRecyclerViewAdapter(ArrayList<Guide> guideArrayList, int category, Context context, MainActivity activity) {
         this.guideArrayList = guideArrayList;
         this.category = category;
         this.context = context;
+        this.activity = activity;
     }
 
-    @NonNull
     @Override
-    public GuidesRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GuidesRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.guide_view, parent, false);
 
         GuidesRecyclerViewAdapter.ViewHolder viewHolder = new GuidesRecyclerViewAdapter.ViewHolder(view);
@@ -40,7 +42,7 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GuidesRecyclerViewAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(GuidesRecyclerViewAdapter.ViewHolder holder, int position) {
         holder.IV_Icon.setImageResource(getCategoryIcon());
         holder.TV_Topic.setText(guideArrayList.get(position).getTopic());
         holder.TV_Category.setText(getCategoryName());
@@ -50,11 +52,12 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
         initListeners(holder, position);
     }
 
-    private void initListeners(@NonNull GuidesRecyclerViewAdapter.ViewHolder holder, final int position) {
+    private void initListeners(GuidesRecyclerViewAdapter.ViewHolder holder, final int position) {
         holder.CL_Guide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Aquí se debe abrir el menú de la guía.
+                //dialogFragment = new MenuGuideFragment(context, guidesController, guideArrayList.get(position));
+                dialogFragment.show(activity.getSupportFragmentManager(), "Menu");
             }
         });
 
@@ -105,7 +108,7 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
             case 3:     return R.drawable.ic_ball;
             case 4:     return R.drawable.ic_palette;
             case 5:     return R.drawable.ic_code;
-            case 6:     return R.drawable.ic_sad_face;
+            case 6:     return R.drawable.ic_theatre;
             case 7:     return R.drawable.ic_scio_face;
             default:    return R.drawable.ic_scio_face;
         }
