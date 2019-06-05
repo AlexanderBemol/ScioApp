@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:text="@string/txt_BTN_Skip"
         android:textSize="@dimen/text_size_button"
-        android:background="@drawable/background_transparent"
+
         android:textColor="?attr/secondaryTextColor"
         android:layout_marginBottom="@dimen/space_1"
 
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:text="@string/txt_BTN_Next"
         android:textSize="@dimen/text_size_button"
-        android:background="@drawable/background_transparent"
+
         android:textColor="?attr/secondaryTextColor"
         android:drawableEnd="@drawable/ic_arrow_right"
 

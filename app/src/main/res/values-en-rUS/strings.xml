@@ -59,4 +59,13 @@
     <string name="txt_hint_ET_Answer">Tap your answer here...</string>
     <string name="txt_title_TV_Answer">Answer:</string>
     <string name="txt_days_left">%1$d days left</string>
+    <string name="txt_add_question_option_menu_guide">Add</string>
+    <string name="txt_delete_guide_option_menu_guide">Delete</string>
+    <string name="txt_delete_question_option_menu_guide">Delete</string>
+    <string name="txt_edit_guide_option_menu_guide">Edit</string>
+    <string name="txt_edit_question_option_menu_guide">Edit</string>
+    <string name="txt_share_guide_option_menu_guide">Share</string>
+    <string name="txt_study_guide_option_menu_guide">Study</string>
+    <string name="txt_guide_options_menu_title_guide">Guide:</string>
+    <string name="txt_question_options_menu_title_guide">Questions:</string>
 </resources>
