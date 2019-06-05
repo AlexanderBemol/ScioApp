@@ -10,6 +10,8 @@ import android.util.Log;
 import com.nordokod.scio.entity.Error;
 
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.MultipleChoiceQuestion;
+import com.nordokod.scio.entity.Question;
 import com.nordokod.scio.model.MainModel;
 import com.nordokod.scio.view.LoginActivity;
 import com.nordokod.scio.view.MainActivity;
@@ -23,6 +25,7 @@ public class MainController {
     private MainActivity mainActivity;
     private MainModel mainModel;
     private Context currentContext;
+
     public MainController(MainActivity mActivity,Context context){
         this.mainActivity=mActivity;
         this.currentContext=context;
@@ -46,6 +49,7 @@ public class MainController {
         Intent intent = new Intent(currentContext, LoginActivity.class);
         currentContext.startActivity(intent);
     }
+
     public String getName(){
         return mainModel.getName();
     }
@@ -89,6 +93,7 @@ public class MainController {
             Log.d("testeo",e.getMessage());
         }
     }
+
     public void showError(Error error){
         mainActivity.showErrorNoticeDialog(error);
     }
@@ -99,12 +104,54 @@ public class MainController {
 
     public ArrayList<Guide> getListOfGuides(int category) {
         ArrayList<Guide> guides=new ArrayList<>();
+
+        //Para pruebas
+        //guides.add(new Guide(1, "", "sdfss", "df", "sdfs", true));
+
         for(Guide guide:mainModel.getListOfGuides()){
             if(guide.getCategory()==category)
                 guides.add(guide);
         }
         return guides;
     }
+
+    public void onCloseFragment(String tag) {
+        mainActivity.onCloseFragment(tag);
+    }
+
+    public void onNewQuestionDialog(Guide guide) {
+        mainActivity.onNewQuestionDialog(guide);
+    }
+
+    public void onNewMultipleChoiceQuestionDialog(Guide guide) {
+        mainActivity.onNewMultipleChoiceQuestionDialog(guide);
+    }
+
+    public void onNewOpenAnswerQuestionDialog(Guide guide) {
+        mainActivity.onNewOpenAnswerQuestionDialog(guide);
+    }
+
+    public void onNewTrueFalseQuestionDialog(Guide guide) {
+        mainActivity.onNewTrueFalseQuestionDialog(guide);
+    }
+
+    public void onSaveMultipleChoiceQuestion(Guide guide, String question,
+                                             String option_1, String option_2, String option_3, String option_4,
+                                             boolean is_correct_1, boolean is_correct_2, boolean is_correct_3, boolean is_correct_4) {
+
+        mainModel.onSaveMultipleChoiceQuestion(guide, question,
+                option_1, option_2, option_3, option_4,
+                is_correct_1, is_correct_2, is_correct_3, is_correct_4);
+    }
+
+    public void onSaveTrueFalseQuestion(Guide guide, String question, boolean answer) {
+        mainModel.onSaveTrueFalseQuestion(guide, question, answer);
+    }
+
+    public void onSaveOpenAnswerQuestion(Guide guide, String question, String answer) {
+        mainModel.onSaveOpenAnswerQuestion(guide, question, answer);
+    }
+
     public void loadGuides(){
         mainModel.loadGuides();
     }

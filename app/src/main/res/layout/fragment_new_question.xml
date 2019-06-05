@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.NewQuestionFragment">
+
+    <android.support.constraint.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/backgroundColor"
+        android:padding="@dimen/activity_padding"
+        >
+        <!-- FMTypeQuestion_ -->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewQuestion_TV_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_title_fragment_new_question"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            style="@style/titleTextView"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewQuestion_TV_Hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_hint_fragment_new_question"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_Title"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            style="@style/infoGuideTextView"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewQuestion_TV_Multiple"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_title_question_type_multiple_choice"
+            android:layout_marginTop="@dimen/space_2"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_Hint"
+            app:layout_constraintLeft_toLeftOf="@id/FNewQuestion_IV_Multiple"
+            app:layout_constraintRight_toRightOf="@id/FNewQuestion_IV_Multiple"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewQuestion_TV_TrueFalse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_title_question_type_true_false"
+            android:layout_marginTop="@dimen/space_2"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_Hint"
+            app:layout_constraintLeft_toLeftOf="@id/FNewQuestion_IV_TrueFalse"
+            app:layout_constraintRight_toRightOf="@id/FNewQuestion_IV_TrueFalse"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewQuestion_TV_Open"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_title_question_type_open_answer"
+            android:layout_marginTop="@dimen/space_2"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_Hint"
+            app:layout_constraintLeft_toLeftOf="@id/FNewQuestion_IV_Open"
+            app:layout_constraintRight_toRightOf="@id/FNewQuestion_IV_Open"
+            />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/FNewQuestion_IV_Multiple"
+            android:layout_width="@dimen/icon_question_size"
+            android:layout_height="@dimen/icon_question_size"
+            android:tint="?attr/onBackgroundColor"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_Multiple"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/FNewQuestion_IV_TrueFalse"
+
+            app:srcCompat="@drawable/ic_multiple_option"
+            />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/FNewQuestion_IV_TrueFalse"
+            android:layout_width="@dimen/icon_question_size"
+            android:layout_height="@dimen/icon_question_size"
+            android:tint="?attr/onBackgroundColor"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_TrueFalse"
+            app:layout_constraintRight_toLeftOf="@id/FNewQuestion_IV_Open"
+            app:layout_constraintLeft_toRightOf="@id/FNewQuestion_IV_Multiple"
+
+            app:srcCompat="@drawable/ic_true_false"
+            />
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/FNewQuestion_IV_Open"
+            android:layout_width="@dimen/icon_question_size"
+            android:layout_height="@dimen/icon_question_size"
+            android:tint="?attr/onBackgroundColor"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_Open"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/FNewQuestion_IV_TrueFalse"
+
+            app:srcCompat="@drawable/ic_open"
+            />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

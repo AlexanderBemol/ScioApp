@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Guide;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
 
     private Context context;
     private MainActivity activity;
-    //private GuidesController guidesController;
+    private MainController mainController;
     private ArrayList<Guide> guideArrayList;
     private DialogFragment dialogFragment;
     private int category;
@@ -56,8 +57,8 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
         holder.CL_Guide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //dialogFragment = new MenuGuideFragment(context, guidesController, guideArrayList.get(position));
-                dialogFragment.show(activity.getSupportFragmentManager(), "Menu");
+                dialogFragment = new MenuGuideFragment(context, mainController, guideArrayList.get(position));
+                dialogFragment.show(activity.getSupportFragmentManager(), "Menu Guide");
             }
         });
 
@@ -77,11 +78,11 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
      *
      * @param //firstConfigurationController - Controlador del Activity.
      */
-    /*
-    public void configAdapter(GuidesController controller) {
-        this.guidesController = controller;
+
+    public void configAdapter(MainController mainController) {
+        this.mainController = mainController;
     }
-    */
+
 
     @Override
     public int getItemCount() {

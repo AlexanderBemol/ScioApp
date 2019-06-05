@@ -4,8 +4,8 @@ public class OpenQuestion extends Question {
 
     private String answer;
 
-    public OpenQuestion(String question, String topic, int category, String answer) {
-        super(question, topic, category);
+    public OpenQuestion(int id, String question, String topic, int category, String answer) {
+        super(id, question, topic, category);
         this.answer = answer;
     }
 
