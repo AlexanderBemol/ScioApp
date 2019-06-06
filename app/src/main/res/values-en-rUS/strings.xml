@@ -79,4 +79,5 @@
     <string name="txt_ConfirmPassword">Re-enter Passwrod</string>
     <string name="txt_ET_question_hint">Type the question here</string>
     <string name="txt_TV_recover_password">Forgot password?</string>
+    <string name="txt_ET_answer_hint">Type the answer here</string>
 </resources>

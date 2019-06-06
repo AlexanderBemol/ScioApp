@@ -3,12 +3,111 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.NewOpenAnswerQuestionFragment">
+    tools:context=".view.NewOpenAnswerQuestionFragment"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:background="?attr/backgroundColor"
+        android:padding="@dimen/activity_padding"
+        >
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewOpenQuestion_TV_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_title_fragment_new_question"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            style="@style/titleTextView"
+            />
+        <!-- ========================================================================== Pregunta -->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewOpenQuestion_TV_Title_Question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_title_question"
+            android:layout_marginTop="@dimen/space_2"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewOpenQuestion_TV_Title"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            style="@style/normalTextView"
+            />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/FNewOpenQuestion_ET_Question"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/txt_ET_question_hint"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewOpenQuestion_TV_Title_Question"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/EditText_Normal"
+            />
+
+        <!-- ========================================================================= Respuesta -->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewOpenQuestion_TV_Title_Answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_title_TV_Answer"
+            android:layout_marginTop="@dimen/space_2"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewOpenQuestion_ET_Question"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            style="@style/normalTextView"
+            />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/FNewOpenQuestion_ET_Answer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/txt_ET_answer_hint"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewOpenQuestion_TV_Title_Answer"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/EditText_Normal"
+            />
+
+        <!-- =========================================================================== Botones -->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/FNewOpenQuestion_BTN_Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_BTN_Cancel"
+            android:layout_marginEnd="@dimen/space_2"
+
+            app:layout_constraintTop_toTopOf="@id/FNewOpenQuestion_BTN_Create"
+            app:layout_constraintRight_toLeftOf="@id/FNewOpenQuestion_BTN_Create"
+            app:layout_constraintBottom_toBottomOf="@id/FNewOpenQuestion_BTN_Create"
+
+            style="@style/cancelButton"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/FNewOpenQuestion_BTN_Create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_BTN_Create"
+            android:layout_marginTop="@dimen/space_3"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewOpenQuestion_ET_Answer"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            style="@style/normalButton"
+            />
+
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>
