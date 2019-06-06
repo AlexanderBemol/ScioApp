@@ -8,8 +8,10 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,7 +19,7 @@ import android.view.WindowManager;
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.TrueFalseQuestion;
 
-public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicDialog {
+public class TrueFalseQuestionDialog implements BasicDialog {
 
     private Context context;
     private Dialog dialog;
@@ -28,8 +30,7 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
 
     private boolean wasAnswered = false;
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
+    public void config(Context context) {
         this.context = context;
         initDialog();
         initComponents();
@@ -38,16 +39,22 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
 
     public void setQuestion(TrueFalseQuestion trueFalseQuestion) {
         this.question = trueFalseQuestion;
-        showDialog();
+        //showDialog();
     }
 
     @Override
     public void initDialog() {
-        dialog = new Dialog(context, R.style.Theme_AppCompat_Dialog_Alert);
+        //AlertDialog.Builder builder=new AlertDialog.Builder(context,R.style.DefaultTheme);
 
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(true);
+        //LayoutInflater inflater = LayoutInflater.from(context);
+        //View dialogView = inflater.inflate(R.layout.dialog_true_false_question, null);
+        //builder.setView(dialogView);
+        //dialog=builder.create();
+        dialog=new Dialog(context,R.style.DefaultTheme);
         dialog.setContentView(R.layout.dialog_true_false_question);
+        //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+
     }
 
     @Override
@@ -131,8 +138,13 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
             TV_Category.setText(getCategoryResId(question.getCategory()));
             TV_Topic.setText(question.getTopic());
             TV_Question.setText(question.getQuestion());
-
-            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <Build.VERSION_CODES.O){
+                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_TOAST);
+            }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+            }else{
+                dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_PHONE);
+            }
             WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
             Window window = dialog.getWindow();
             layoutParams.copyFrom(window.getAttributes());
@@ -159,8 +171,13 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
     private int getCategoryResId(int category) {
         //TODO Agregar los casos según el ID de cada categoría para devolver el R.string....
         switch (category) {
-            case 0: return 0;
-            default: return 0;
+            case 1: return R.string.category_exact_sciences;
+            case 2: return R.string.category_social_sciences;
+            case 3: return R.string.category_sports;
+            case 4: return R.string.category_art;
+            case 5: return R.string.category_tech;
+            case 6: return R.string.category_entertainment;
+            default: return R.string.category_others;
         }
     }
 }

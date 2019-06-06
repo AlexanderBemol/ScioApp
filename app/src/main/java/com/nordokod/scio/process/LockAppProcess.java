@@ -36,7 +36,10 @@ public class LockAppProcess extends Service {
     @Override
     public int onStartCommand(Intent intentM, int flags, int idArranque) {
         Log.d("testeo","onStart");
-        final QuestionLauncherProcess qlp =new QuestionLauncherProcess(currentContext);
+        final Intent myIntent=new Intent();
+        myIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        String broadcast = "com.nordokod.scio.intent.action.SEND_QUESTION";
+        myIntent.setAction(broadcast);
         final Handler handler = new Handler();
         final Runnable runnable = new Runnable() {
             @Override
@@ -49,7 +52,8 @@ public class LockAppProcess extends Service {
                 appslocked.add("com.twitter.android");
                 appslocked.add("com.google.android.youtube");
                 if(appslocked.contains(getForegroundApp())){//está bloqueada..
-                    qlp.launchQuestionTrueFalse();
+                    currentContext.sendBroadcast(myIntent);
+                    Log.d("testeo","sended");
                 }
 
             }

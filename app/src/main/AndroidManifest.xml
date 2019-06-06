@@ -25,7 +25,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/DefaultTheme">
-        <activity android:name=".view.SignupActivity"></activity>
+        <activity android:name=".view.SignupActivity"/>
 
         <receiver
             android:name=".process.SystemsEventsProcess"
@@ -106,9 +106,14 @@
             android:name=".view.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/DefaultTheme"
-            >
-
-        </activity>
+            />
+        <receiver android:name=".process.QuestionLauncherProcess"
+            android:enabled="true"
+            android:exported="false">
+        <intent-filter>
+            <action android:name="com.nordokod.scio.intent.action.SEND_QUESTION"/>
+        </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

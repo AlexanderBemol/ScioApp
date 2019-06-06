@@ -187,7 +187,7 @@
     <!-- ======================================================================================= -->
     <style name="normalTextView">
         <item name="android:textSize">@dimen/text_size_normal</item>
-        <item name="android:textColor">?attr/onSurfaceColor</item>
+        <item name="android:textColor">@color/onSurfaceColor</item>
     </style>
 
     <style name="titleTextView" parent="normalTextView">
