@@ -196,6 +196,10 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         Toasty.success(this, R.string.message_save_question_success).show();
     }
 
+    public void onErrorSaveQuestion() {
+        Toasty.error(this, R.string.message_save_question_error).show();
+    }
+
     @Override
     public void showSuccessNoticeDialog(String task) {
         if (noticeDialog == null)
