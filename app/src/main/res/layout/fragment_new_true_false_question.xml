@@ -1,14 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.NewTrueFalseQuestionFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:background="?attr/backgroundColor"
+        android:padding="@dimen/activity_padding"
+        >
+        <!-- FNewTFQuestion_ -->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewTFQuestion_TV_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_title_fragment_new_question"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            style="@style/titleTextView"
+            />
+        <!-- ========================================================================== Pregunta -->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewTFQuestion_TV_Title_Question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_title_question"
+            android:layout_marginTop="@dimen/space_2"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewTFQuestion_TV_Title"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            style="@style/normalTextView"
+            />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/FNewTFQuestion_ET_Question"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/txt_ET_question_hint"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewTFQuestion_TV_Title_Question"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/EditText_Normal"
+            />
+
+        <!-- ========================================================================= Respuesta -->
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewTFQuestion_TV_Title_Answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_title_TV_Answer"
+            android:layout_marginTop="@dimen/space_2"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewTFQuestion_ET_Question"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            style="@style/normalTextView"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewTFQuestion_TV_Hint_Answer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_hint_answer"
+            android:layout_marginTop="@dimen/space_1"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewTFQuestion_TV_Title_Answer"
+            app:layout_constraintLeft_toLeftOf="parent"
+
+            style="@style/hintTextview"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewTFQuestion_TV_True"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@xml/background_card_round"
+            android:text="@string/txt_Answer_True"
+            android:layout_marginTop="@dimen/space_2"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewTFQuestion_TV_Hint_Answer"
+
+            style="@style/optionTextView"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/FNewTFQuestion_TV_False"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@xml/background_card_round"
+            android:text="@string/txt_Answer_False"
+            android:layout_marginTop="@dimen/space_2"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewTFQuestion_TV_True"
+
+            style="@style/optionTextView"
+            />
+
+        <!-- =========================================================================== Botones -->
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/FNewTFQuestion_BTN_Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_BTN_Cancel"
+            android:layout_marginEnd="@dimen/space_2"
+
+            app:layout_constraintTop_toTopOf="@id/FNewTFQuestion_BTN_Create"
+            app:layout_constraintRight_toLeftOf="@id/FNewTFQuestion_BTN_Create"
+            app:layout_constraintBottom_toBottomOf="@id/FNewTFQuestion_BTN_Create"
+
+            style="@style/cancelButton"
+            />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/FNewTFQuestion_BTN_Create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_BTN_Create"
+            android:layout_marginTop="@dimen/space_3"
+
+            app:layout_constraintTop_toBottomOf="@id/FNewTFQuestion_TV_False"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            style="@style/normalButton"
+            />
+
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

@@ -138,6 +138,8 @@
     <string name="message_save_success">Todo bien, todo correcto.</string>
     <string name="message_set_photo_success">¡No puede ser!\n¡Yo te ví en una pelicula!</string>
 
+    <string name="message_save_question_success">Listo, tu pregunta se creó.</string>
+
     <!-- ======================================================================================= -->
     <!-- Titulos para las opciones en los menú -->
     <!-- ======================================================================================= -->
@@ -176,6 +178,10 @@
     <string name="txt_title_question_type_multiple_choice">Opción multiple</string>
     <string name="txt_title_question_type_true_false">V o F</string>
     <string name="txt_title_question_type_open_answer">Pregunta Abierta</string>
+
+    <string name="txt_title_question">Pregunta</string>
+    <string name="txt_ET_question_hint">Escribe la pregunta aquí</string>
+    <string name="txt_hint_answer">Elige la respuesta correcta.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

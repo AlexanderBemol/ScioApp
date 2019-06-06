@@ -14,17 +14,25 @@ public class MultipleChoiceQuestion extends Question {
         answers.add(new Option(option, is_correct));
     }
 
+    public ArrayList<Option> getAnswers() {
+        return answers;
+    }
+
     public boolean isAnswerCorrect(int index) {
         return answers.get(index).is_correct();
     }
 
-    class Option {
+    public class Option {
         private String option;
         private boolean is_correct;
 
         Option(String option, boolean is_correct) {
             this.option = option;
             this.is_correct = is_correct;
+        }
+
+        public String getOption() {
+            return option;
         }
 
         public boolean is_correct() {

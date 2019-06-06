@@ -105,9 +105,6 @@ public class MainController {
     public ArrayList<Guide> getListOfGuides(int category) {
         ArrayList<Guide> guides=new ArrayList<>();
 
-        //Para pruebas
-        //guides.add(new Guide(1, "", "sdfss", "df", "sdfs", true));
-
         for(Guide guide:mainModel.getListOfGuides()){
             if(guide.getCategory()==category)
                 guides.add(guide);

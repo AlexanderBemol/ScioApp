@@ -61,8 +61,8 @@
         <item name="primaryColor"               >#02283A</item>
         <item name="primaryLightColor"          >#65A0C9</item>
         <item name="primaryDarkColor"           >#02354D</item>
-        <item name="primaryTextColor"           >#ffffff</item>
-        <item name="onPrimaryColor"             >#ffffff</item>
+        <item name="primaryTextColor"           >#C7C7C7</item>
+        <item name="onPrimaryColor"             >#C7C7C7</item>
 
         <item name="secondaryColor"             >@color/secondaryColor</item>
         <item name="secondaryLightColor"        >@color/secondaryLightColor</item>
@@ -72,10 +72,10 @@
         <item name="onSecondaryTextColor"       >@color/onSecondaryTextColor</item>
 
         <item name="backgroundColor"            >?attr/primaryColor</item>
-        <item name="onBackgroundColor"          >#ffffff</item>
+        <item name="onBackgroundColor"          >#C7C7C7</item>
 
         <item name="surfaceColor"               >?attr/primaryDarkColor</item>
-        <item name="onSurfaceColor"             >#ffffff</item>
+        <item name="onSurfaceColor"             >#C7C7C7</item>
 
         <item name="iconNormalColor"            >?attr/primaryLightColor</item>
         <item name="iconSelectedColor"          >@color/iconSelectedColor</item>
@@ -83,7 +83,7 @@
         <item name="android:statusBarColor"     >?attr/primaryColor</item>
         <item name="android:navigationBarColor" >?attr/primaryColor</item>
 
-        <item name="cancelColor"                >#ffffff</item>
+        <item name="cancelColor"                >#C7C7C7</item>
 
         <item name="android:textSize"           >@dimen/text_size_normal</item>
         <item name="android:fontFamily"         >sans-serif</item>
@@ -204,6 +204,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="hintTextview" parent="normalTextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
     <style name="categoryTextView" parent="normalTextView">
         <item name="android:textSize">@dimen/text_size_xsmall</item>
         <item name="android:textColor">?attr/iconNormalColor</item>
@@ -222,6 +226,15 @@
         <item name="android:padding">@dimen/space_1</item>
     </style>
 
+    <style name="optionTextView" parent="normalTextView">
+        <item name="android:padding">10dp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="optionSelectedTextView" parent="optionTextView">
+        <item name="android:textColor">@color/onSecondaryColor</item>
+    </style>
+
     <!-- ======================================================================================= -->
                                                                                                     <!-- ESTILOS PARA LOS EDIT TEXT -->
     <!-- ======================================================================================= -->
@@ -232,6 +245,7 @@
         <item name="android:textColorHighlight">?attr/onBackgroundColor</item>
         <item name="android:backgroundTint">@color/secondaryColor</item>
         <item name="android:textColor">?attr/onBackgroundColor</item>
+        <item name="android:textColorHint">?attr/onBackgroundColor</item>
     </style>
 
     <style name="EditText_Login" parent="EditText_Normal">

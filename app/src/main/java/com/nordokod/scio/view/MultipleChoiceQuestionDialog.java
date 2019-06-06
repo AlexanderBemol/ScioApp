@@ -125,11 +125,11 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
             TV_Topic.setText(question.getTopic());
             TV_Question.setText(question.getQuestion());
 
-            ArrayList<String> answers = question.getAnswer();
-            TV_First_Answer.setText(answers.get(0));
-            TV_Second_Answer.setText(answers.get(1));
-            TV_Third_Answer.setText(answers.get(2));
-            TV_Fourth_Answer.setText(answers.get(3));
+            ArrayList<MultipleChoiceQuestion.Option> answers = question.getAnswers();
+            TV_First_Answer.setText(answers.get(0).getOption());
+            TV_Second_Answer.setText(answers.get(1).getOption());
+            TV_Third_Answer.setText(answers.get(2).getOption());
+            TV_Fourth_Answer.setText(answers.get(3).getOption());
 
             dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
             WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
