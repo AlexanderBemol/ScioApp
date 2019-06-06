@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.nordokod.scio.R;
 import com.nordokod.scio.controller.MainController;
@@ -22,6 +23,8 @@ import com.nordokod.scio.entity.Guide;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import es.dmoral.toasty.Toasty;
 
 import static com.nordokod.scio.R.attr.iconNormalColor;
 import static com.nordokod.scio.R.attr.iconSelectedColor;
@@ -39,7 +42,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
     private LinearLayout LL_Categories;
     private AppCompatTextView TV_Topic, TV_Cateoory, TV_Days;
 
-    private int preview_Category_View_Selected = 0, category_selected_id;
+    private int preview_Category_View_Selected = 0;
 
     public GuidesFragment() { }
 
@@ -83,12 +86,10 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
         mainController.loadGuides();
 
-
         RV_Guides = view.findViewById(R.id.FGuides_RV_Guides);
 
         layoutManager = new LinearLayoutManager(getContext());
         RV_Guides.setLayoutManager(layoutManager);
-
     }
 
     @Override
@@ -150,8 +151,6 @@ public class GuidesFragment extends Fragment implements BasicFragment {
                 categoryIcon.setColorFilter(typedValue.data);
             }
 
-            category_selected_id = getCategoryId(view.getId());
-
             // A la categoria anterior se le devuelve su color de icono normal
             if(preview_Category_View_Selected != 0) {
                 categoryIcon = LL_Categories.findViewById(getCategoryImageViewId(preview_Category_View_Selected));
@@ -169,6 +168,8 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
             RV_Guides.setAdapter(mAdapter);
         }
+
+
     }
 
     private ArrayList<Guide> getListOfGuides(int category) {
@@ -231,7 +232,10 @@ public class GuidesFragment extends Fragment implements BasicFragment {
                 preview_Category_View_Selected = 0;
                 CL_Others.performClick();
                 break;
-            default: CL_Exacts.performClick();
+            default:
+                preview_Category_View_Selected = 0;
+                CL_Exacts.performClick();
+                break;
         }
     }
 }

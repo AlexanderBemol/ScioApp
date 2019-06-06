@@ -32,6 +32,7 @@ import com.nordokod.scio.entity.Guide;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.dmoral.toasty.Toasty;
 
 public class MainActivity extends AppCompatActivity implements BasicActivity {
 
@@ -189,6 +190,10 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onSuccessSaveQuestion() {
+        Toasty.success(this, R.string.message_save_question_success).show();
     }
 
     @Override

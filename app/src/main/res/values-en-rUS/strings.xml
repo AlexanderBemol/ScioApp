@@ -73,4 +73,10 @@
     <string name="txt_title_question_type_multiple_choice">Multiple Choice</string>
     <string name="txt_title_fragment_new_question">New Question</string>
     <string name="txt_hint_fragment_new_question">Choose the type of question you want to create.</string>
+    <string name="txt_hint_answer">Choose the correct answer.</string>
+    <string name="txt_title_answer">Answer</string>
+    <string name="txt_title_question">Question</string>
+    <string name="txt_ConfirmPassword">Re-enter Passwrod</string>
+    <string name="txt_ET_question_hint">Type the question here</string>
+    <string name="txt_TV_recover_password">Forgot password?</string>
 </resources>
