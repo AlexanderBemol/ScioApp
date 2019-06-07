@@ -72,6 +72,8 @@
     <string name="txt_BTN_Answer">Contestar</string>
     <string name="txt_hint_ET_Answer">Escribe tu respuesta aquí...</string>
     <string name="txt_title_TV_Answer">Respuesta:</string>
+    <string name="txt_title_TV_Options">Opciones:</string>
+    <string name="txt_hint_TV_Options">Activa las respuestas que son correctas.</string>
 
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con las guías -->
@@ -140,6 +142,7 @@
 
     <string name="message_save_question_success">Listo, tu pregunta se creó.</string>
     <string name="message_save_question_error">No se pudo crear la pregunta.</string>
+    <string name="message_unselected_answer_warning">Elige al menos una respesta correcta.</string>
 
     <!-- ======================================================================================= -->
     <!-- Titulos para las opciones en los menú -->
@@ -183,9 +186,9 @@
     <string name="txt_title_question">Pregunta</string>
     <string name="txt_ET_question_hint">Escribe la pregunta aquí</string>
     <string name="txt_ET_answer_hint">Escribe la respuesta aquí</string>
+    <string name="txt_ET_option_hint">Escribe la opción aquí</string>
     <string name="txt_hint_answer">Elige la respuesta correcta.</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_title_answer">Respuesta</string>
 
 </resources>

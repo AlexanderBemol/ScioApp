@@ -147,18 +147,35 @@ public class MainController {
     public void onSaveMultipleChoiceQuestion(Guide guide, String question,
                                              String option_1, String option_2, String option_3, String option_4,
                                              boolean is_correct_1, boolean is_correct_2, boolean is_correct_3, boolean is_correct_4) {
-
-        mainModel.onSaveMultipleChoiceQuestion(guide, question,
-                option_1, option_2, option_3, option_4,
-                is_correct_1, is_correct_2, is_correct_3, is_correct_4);
+        if (!question.equals("")) {
+            if (!option_1.equals("") && !option_2.equals("") && !option_3.equals("") && !option_4.equals("")) {
+                if (!is_correct_1 && !is_correct_2 && !is_correct_3 && !is_correct_4) {
+                    onUnselectedAnswer();
+                } else {
+                    mainModel.onSaveMultipleChoiceQuestion(guide, question,
+                            option_1, option_2, option_3, option_4,
+                            is_correct_1, is_correct_2, is_correct_3, is_correct_4);
+                }
+            } else {
+                onEmptyField();
+            }
+        } else {
+            onEmptyField();
+        }
     }
 
     public void onSaveTrueFalseQuestion(Guide guide, String question, boolean answer) {
-        mainModel.onSaveTrueFalseQuestion(guide, question, answer);
+        if (!question.equals(""))
+            mainModel.onSaveTrueFalseQuestion(guide, question, answer);
+        else
+            onEmptyField();
     }
 
     public void onSaveOpenAnswerQuestion(Guide guide, String question, String answer) {
-        mainModel.onSaveOpenAnswerQuestion(guide, question, answer);
+        if (!question.equals("") && !answer.equals(""))
+            mainModel.onSaveOpenAnswerQuestion(guide, question, answer);
+        else
+            onEmptyField();
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -171,5 +188,13 @@ public class MainController {
 
     public void onErrorSaveQuestion() {
         mainActivity.onErrorSaveQuestion();
+    }
+
+    public void onEmptyField() {
+        mainActivity.onEmptyField();
+    }
+
+    public void onUnselectedAnswer() {
+        mainActivity.onUnselectedAnswer();
     }
 }
