@@ -147,7 +147,7 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
         }
     }
 
-    @Override
+
     public void changeStarState(int number_of_stars) {
         IV_Star_1.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
         IV_Star_2.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
