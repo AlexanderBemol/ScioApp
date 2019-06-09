@@ -126,7 +126,7 @@ public class OpenQuestionDialog extends BroadcastReceiver implements BasicDialog
         }
     }
 
-    @Override
+
     public void changeStarState(int number_of_stars) {
         switch (number_of_stars) {
             case 1:
