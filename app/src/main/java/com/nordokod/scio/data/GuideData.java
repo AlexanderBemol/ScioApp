@@ -45,6 +45,14 @@ public class GuideData{
         this.db=fs;
         this.currentUser=fu;
     }
+    public GuideData(){
+
+    }
+    public void configGuideData(FirebaseFirestore fs,FirebaseUser fu,Context context){
+        this.currentContext=context;
+        this.db=fs;
+        this.currentUser=fu;
+    }
     public void setCustomListener(GuideData.customListener customListener) {
         this.customListener = customListener;
     }
@@ -112,8 +120,8 @@ public class GuideData{
                                     guide.setCategory(Integer.parseInt(category));
                                     guide.setId(documentSnapshot.getReference().toString());
                                     listOfGuides.add(guide);
-                                    customListener.onlineLoadSucces(listOfGuides);
                                 }
+                                customListener.onlineLoadSucces(listOfGuides);
                                 Log.d("testeo","cargaLista");
                             }
                         }

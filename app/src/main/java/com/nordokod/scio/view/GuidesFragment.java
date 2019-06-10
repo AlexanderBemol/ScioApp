@@ -84,7 +84,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
         CL_Entertainment    = view.findViewById(R.id.CL_Entertainment);
         CL_Others           = view.findViewById(R.id.CL_Others);
 
-        mainController.loadGuides();
+        //mainController.loadGuides();
 
         RV_Guides = view.findViewById(R.id.FGuides_RV_Guides);
 
@@ -202,7 +202,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
         }
     }
 
-    private void onBackFragment() {
+    public void onBackFragment() {
         switch (preview_Category_View_Selected) {
             case R.id.CL_Exacts:
                 preview_Category_View_Selected = 0;

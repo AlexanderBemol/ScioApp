@@ -108,7 +108,6 @@ public class MainController {
 
     public ArrayList<Guide> getListOfGuides(int category) {
         ArrayList<Guide> guides=new ArrayList<>();
-
         for(Guide guide:mainModel.getListOfGuides()){
             if(guide.getCategory()==category)
                 guides.add(guide);
@@ -155,5 +154,13 @@ public class MainController {
 
     public void loadGuides(){
         mainModel.loadGuides();
+    }
+
+    public void checkConnectionMode(){
+        mainModel.checkConnectionMode();
+    }
+
+    public void refreshGuides() {
+        mainActivity.refreshGuides();
     }
 }

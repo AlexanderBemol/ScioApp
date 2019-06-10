@@ -24,11 +24,7 @@ import com.nordokod.scio.process.NetworkUtils;
 import com.nordokod.scio.view.MainActivity;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
 
 public class MainModel {
     private MainController mainController;
@@ -48,6 +44,7 @@ public class MainModel {
         this.mainActivity=mActivity;
         this.currentContext=context;
         initMAuth();
+        guideData=new GuideData();
     }
     public void initMAuth(){
         mAuth=FirebaseAuth.getInstance();
@@ -142,16 +139,18 @@ public class MainModel {
     public void createGuide(Guide guide) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         currentUser=mAuth.getCurrentUser();
-        guideData= new GuideData(db,currentUser,currentContext);
+        guideData.configGuideData(db,currentUser,currentContext);
         guideData.setCustomListener(new GuideData.customListener() {
             @Override
             public void onSuccesUpload() {
                 mainController.succesUpload();
+                mainController.loadGuides();
             }
 
             @Override
             public void onSucces() {
                 mainController.succesUpload();
+                mainController.loadGuides();
             }
 
             @Override
@@ -170,14 +169,17 @@ public class MainModel {
         guide.setOnline(false);
         if(networkUtils.isNetworkConnected(currentContext)){
             guideData.saveGuideOnline(guide);
+        }else{
+            mainController.showError(new Error(Error.CONNECTION));
         }
-            guideData.saveGuideOffline(guide);
+            //guideData.saveGuideOffline(guide);
     }
 
     public void loadGuides(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         currentUser=mAuth.getCurrentUser();
-        guideData= new GuideData(db,currentUser,currentContext);
+        guideData.configGuideData(db,currentUser,currentContext);
+        listOfGuides=new ArrayList<Guide>();//dice que no es necesario pero no borrar
         guideData.setCustomListener(new GuideData.customListener() {
             @Override
             public void onSuccesUpload() {
@@ -194,8 +196,10 @@ public class MainModel {
             @Override
             public void onlineLoadSucces(ArrayList<Guide> guides) {
                 listOfGuides=guides;
+                mainController.refreshGuides();
             }
         });
+        guideData.loadOnlineGuides();
     }
     public ArrayList<Guide> getListOfGuides() {
         return listOfGuides;
@@ -213,6 +217,13 @@ public class MainModel {
 
     public void onSaveOpenAnswerQuestion(Guide guide, String question, String answer) {
         // TODO: Logica para guardar la pregunta.
+    }
+
+    public void checkConnectionMode() {
+        NetworkUtils networkUtils=new NetworkUtils();
+        if(networkUtils.isNetworkConnected(currentContext)){
+
+        }
     }
 }
 

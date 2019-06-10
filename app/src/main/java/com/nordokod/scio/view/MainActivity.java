@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         CIV_Photo = header.findViewById(R.id.CIV_Photo);
         TV_Name = header.findViewById(R.id.TV_Name);
 
+        mainController.loadGuides();
 
         // Toolbar
         setSupportActionBar(toolbar);
@@ -314,6 +316,13 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private void dismissProgressDialog() {
         if (noticeDialog != null && noticeDialog.isShowing()) {
             noticeDialog.dismiss();
+        }
+    }
+    public void refreshGuides(){
+        Log.d("testeo","refresh");
+        if(guidesFragment!=null&&selectedFragment==guidesFragment){
+            Log.d("testeo","selcted");
+            guidesFragment.onBackFragment();
         }
     }
 }
