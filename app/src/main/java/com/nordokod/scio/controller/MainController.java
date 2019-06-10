@@ -76,7 +76,11 @@ public class MainController {
                         showError(error);
                     }else{
                         String finalTopic=topic.toString();
-                        mainModel.createGuide(category_selected_id,finalTopic,date);
+                        Guide guide=new Guide();
+                        guide.setCategory(category_selected_id);
+                        guide.setDatetime(date);
+                        guide.setTopic(finalTopic);
+                        mainModel.createGuide(guide);
                     }
                 }
 
@@ -104,7 +108,6 @@ public class MainController {
 
     public ArrayList<Guide> getListOfGuides(int category) {
         ArrayList<Guide> guides=new ArrayList<>();
-
         for(Guide guide:mainModel.getListOfGuides()){
             if(guide.getCategory()==category)
                 guides.add(guide);
@@ -196,5 +199,13 @@ public class MainController {
 
     public void onUnselectedAnswer() {
         mainActivity.onUnselectedAnswer();
+    }
+
+    public void checkConnectionMode(){
+        mainModel.checkConnectionMode();
+    }
+
+    public void refreshGuides() {
+        mainActivity.refreshGuides();
     }
 }

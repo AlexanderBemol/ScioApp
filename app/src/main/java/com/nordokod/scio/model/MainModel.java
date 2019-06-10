@@ -5,44 +5,26 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.nordokod.scio.data.GuideData;
 import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.AppConstants;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.process.DownloadImageProcess;
+import com.nordokod.scio.process.NetworkUtils;
 import com.nordokod.scio.view.MainActivity;
 
 import java.io.File;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
-import es.dmoral.toasty.Toasty;
 
 public class MainModel {
     private MainController mainController;
@@ -55,12 +37,14 @@ public class MainModel {
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private ArrayList<Guide> listOfGuides;
+    private GuideData guideData;
 
     public MainModel(MainController mc, MainActivity mActivity,Context context){
         this.mainController=mc;
         this.mainActivity=mActivity;
-        initMAuth();
         this.currentContext=context;
+        initMAuth();
+        guideData=new GuideData();
     }
     public void initMAuth(){
         mAuth=FirebaseAuth.getInstance();
@@ -152,62 +136,70 @@ public class MainModel {
         }
     }
 
-    public void createGuide(int category_selected_id, String topic, Date date) {
+    public void createGuide(Guide guide) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         currentUser=mAuth.getCurrentUser();
-        DocumentReference categoryReference=db.collection(AppConstants.CLOUD_CATEGORYS).document(String.valueOf(category_selected_id));
-        Calendar calendar = Calendar.getInstance();
-        Map<String, Object> data = new HashMap<>();
-        data.put(AppConstants.CLOUD_GUIDES_CATEGORY,categoryReference);
-        data.put(AppConstants.CLOUD_GUIDES_TOPIC,topic);
-        data.put(AppConstants.CLOUD_GUIDES_DATETIME,date);
-        db.collection(AppConstants.CLOUD_GUIDES).document(currentUser.getUid()).collection(AppConstants.CLOUD_GUIDES).add(data)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        mainController.succesUpload();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        mainController.showError(new Error(Error.WHEN_SAVING_ON_DATABASE));
-                        Log.d("testeo",e.getMessage());
-                    }
-                });
+        guideData.configGuideData(db,currentUser,currentContext);
+        guideData.setCustomListener(new GuideData.customListener() {
+            @Override
+            public void onSuccesUpload() {
+                mainController.succesUpload();
+                mainController.loadGuides();
+            }
+
+            @Override
+            public void onSucces() {
+                mainController.succesUpload();
+                mainController.loadGuides();
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                mainController.showError(new Error(Error.WHEN_SAVING_ON_DATABASE));
+            }
+
+            @Override
+            public void onlineLoadSucces(ArrayList<Guide> guides) {
+
+            }
+        });
+        guide.setUID(currentUser.getUid());
+        guide.setIs_actived(true);
+        NetworkUtils networkUtils=new NetworkUtils();
+        guide.setOnline(false);
+        if(networkUtils.isNetworkConnected(currentContext)){
+            guideData.saveGuideOnline(guide);
+        }else{
+            mainController.showError(new Error(Error.CONNECTION));
+        }
+            //guideData.saveGuideOffline(guide);
     }
 
     public void loadGuides(){
-        listOfGuides=new ArrayList<Guide>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         currentUser=mAuth.getCurrentUser();
-        CollectionReference userGuides=db.collection(AppConstants.CLOUD_GUIDES).document(currentUser.getUid()).collection(AppConstants.CLOUD_GUIDES);
-        userGuides.get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if(task.isSuccessful()){
-                            if(!task.getResult().isEmpty()){
-                                for(QueryDocumentSnapshot documentSnapshot:task.getResult()){
-                                    Guide guide=new Guide();
-                                    DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.ENGLISH);
-                                    Timestamp ts= (Timestamp) documentSnapshot.getData().get(AppConstants.CLOUD_GUIDES_DATETIME);
-                                    Date date=ts.toDate();
-                                    String dateS=sdf.format(date);
+        guideData.configGuideData(db,currentUser,currentContext);
+        listOfGuides=new ArrayList<Guide>();//dice que no es necesario pero no borrar
+        guideData.setCustomListener(new GuideData.customListener() {
+            @Override
+            public void onSuccesUpload() {
+            }
 
-                                    guide.setDate(dateS);
-                                    guide.setTopic((String)documentSnapshot.getData().get(AppConstants.CLOUD_GUIDES_TOPIC));
-                                    DocumentReference docRef =(DocumentReference) documentSnapshot.getData().get(AppConstants.CLOUD_GUIDES_CATEGORY);
-                                    String category= String.valueOf(docRef.getPath().charAt(docRef.getPath().length()-1));
-                                    guide.setCategory(Integer.parseInt(category));
-                                    guide.setId(documentSnapshot.getReference().toString());
-                                    listOfGuides.add(guide);
-                                }
-                                Log.d("testeo","cargaLista");
-                            }
-                        }
-                    }
-                });
+            @Override
+            public void onSucces() {
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+            }
+
+            @Override
+            public void onlineLoadSucces(ArrayList<Guide> guides) {
+                listOfGuides=guides;
+                mainController.refreshGuides();
+            }
+        });
+        guideData.loadOnlineGuides();
     }
     public ArrayList<Guide> getListOfGuides() {
         return listOfGuides;
@@ -225,6 +217,13 @@ public class MainModel {
 
     public void onSaveOpenAnswerQuestion(Guide guide, String question, String answer) {
         // TODO: Logica para guardar la pregunta.
+    }
+
+    public void checkConnectionMode() {
+        NetworkUtils networkUtils=new NetworkUtils();
+        if(networkUtils.isNetworkConnected(currentContext)){
+
+        }
     }
 }
 
