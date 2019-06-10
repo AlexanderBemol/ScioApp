@@ -16,4 +16,7 @@ public class AppConstants {
     public static final String CLOUD_GUIDES_TOPIC="Topic";
     public static final String CLOUD_GUIDES_DATETIME="Datetime";
     public static final String CLOUD_GUIDES_UID="UID";
+
+    public static final String CLOUD_QUESTIONS="Questions";
+
 }

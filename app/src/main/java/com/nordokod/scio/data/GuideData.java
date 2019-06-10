@@ -118,7 +118,9 @@ public class GuideData{
                                     DocumentReference docRef =(DocumentReference) documentSnapshot.getData().get(AppConstants.CLOUD_GUIDES_CATEGORY);
                                     String category= String.valueOf(docRef.getPath().charAt(docRef.getPath().length()-1));
                                     guide.setCategory(Integer.parseInt(category));
-                                    guide.setId(documentSnapshot.getReference().toString());
+                                    guide.setId(documentSnapshot.getId());
+                                    Log.d("testeo",documentSnapshot.getId());
+
                                     listOfGuides.add(guide);
                                 }
                                 customListener.onlineLoadSucces(listOfGuides);
