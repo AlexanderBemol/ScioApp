@@ -19,6 +19,8 @@ import com.nordokod.scio.R;
 import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Guide;
 
+import java.util.Objects;
+
 public class NewTrueFalseQuestionFragment extends BottomSheetDialogFragment implements BasicFragment {
 
     private Context context;
@@ -31,7 +33,7 @@ public class NewTrueFalseQuestionFragment extends BottomSheetDialogFragment impl
     private Animation press;
 
     private boolean answer;
-    private int preview_answer;
+    private int preview_answer = 0;
 
     public NewTrueFalseQuestionFragment() { }
 
@@ -96,7 +98,10 @@ public class NewTrueFalseQuestionFragment extends BottomSheetDialogFragment impl
             @Override
             public void onClick(View v) {
                 BTN_Create.startAnimation(press);
-                mainController.onSaveTrueFalseQuestion(guide, ET_Question.getText().toString(), answer);
+                if (preview_answer > 0)
+                    mainController.onSaveTrueFalseQuestion(guide, Objects.requireNonNull(ET_Question.getText()).toString(), answer);
+                else
+                    mainController.onUnselectedAnswer();
             }
         });
     }

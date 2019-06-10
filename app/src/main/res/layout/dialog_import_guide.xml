@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/backgroundColor"
+    android:padding="@dimen/activity_padding">
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/DIGuide_IV_Close"
+        android:layout_width="@dimen/icon_size_star"
+        android:layout_height="@dimen/icon_size_star"
+        android:tint="@color/cancelColor"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:srcCompat="@drawable/crop__ic_cancel"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/DIGuide_TV_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_import_guide_dialog_title"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        style="@style/titleTextView"
+        />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/DIGuide_CI_Photo"
+        android:layout_width="@dimen/navigation_photo_size"
+        android:layout_height="@dimen/navigation_photo_size"
+        android:src="@drawable/default_photo"
+        android:layout_marginTop="@dimen/space_3"
+
+        app:layout_constraintTop_toBottomOf="@id/DIGuide_TV_Title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/DIGuide_TV_User"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_1"
+
+        app:layout_constraintTop_toBottomOf="@id/DIGuide_CI_Photo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        style="@style/normalTextView"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/DIGuide_TV_Category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_3"
+
+
+        app:layout_constraintTop_toBottomOf="@id/DIGuide_TV_User"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        style="@style/normalTextView"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/DIGuide_TV_Topic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_1"
+
+
+        app:layout_constraintTop_toBottomOf="@id/DIGuide_TV_Category"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        style="@style/normalTextView"
+        />
+
+    <LinearLayout
+        android:id="@+id/DIGuide_LL_Date"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        android:layout_marginBottom="@dimen/space_3"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/activity_padding"
+        android:layout_marginEnd="@dimen/activity_padding"
+        android:layout_marginTop="@dimen/space_2"
+
+        app:layout_constraintTop_toBottomOf="@id/DIGuide_TV_Topic"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/DIGuide_LL_Time">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/DIGuide_TV_Month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@xml/background_top_normal_round"
+            android:backgroundTint="@color/cancelColor"
+            android:text="-"
+            android:textAlignment="center"
+            android:textColor="@color/onSecondaryColor" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/DIGuide_TV_Day"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@xml/background_bottom_normal_round"
+            android:text="-"
+
+            style="@style/datetimeTextView"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/DIGuide_LL_Time"
+        android:layout_width="0dp"
+        android:layout_height="130dp"
+        android:layout_marginBottom="@dimen/space_3"
+        android:layout_marginStart="@dimen/activity_padding"
+        android:layout_marginEnd="@dimen/activity_padding"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/space_2"
+
+        app:layout_constraintTop_toBottomOf="@id/DIGuide_TV_Topic"
+        app:layout_constraintLeft_toRightOf="@id/DIGuide_LL_Date"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/DIGuide_TV_Time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@xml/background_top_normal_round"
+            android:backgroundTint="@color/secondaryColor"
+            android:text="-"
+            android:textAlignment="center"
+            android:textColor="@color/onSecondaryColor"
+            />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/DIGuide_TV_Hour"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@xml/background_bottom_normal_round"
+            android:text="-"
+
+            style="@style/datetimeTextView"
+            />
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/DIguide_BTN_Import"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_BTN_Import"
+        android:layout_marginTop="@dimen/space_3"
+
+        app:layout_constraintTop_toBottomOf="@id/DIGuide_LL_Time"
+
+
+        style="@style/normalButton"
+        />
+
+</android.support.constraint.ConstraintLayout>

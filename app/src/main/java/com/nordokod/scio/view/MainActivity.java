@@ -198,6 +198,18 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         Toasty.success(this, R.string.message_save_question_success).show();
     }
 
+    public void onErrorSaveQuestion() {
+        Toasty.error(this, R.string.message_save_question_error).show();
+    }
+
+    public void onEmptyField() {
+        Toasty.warning(this, R.string.message_emptyfields_error).show();
+    }
+
+    public void onUnselectedAnswer() {
+        Toasty.warning(this, R.string.message_unselected_answer_warning).show();
+    }
+
     @Override
     public void showSuccessNoticeDialog(String task) {
         if (noticeDialog == null)

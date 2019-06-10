@@ -5,87 +5,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.SignupActivity">
+    android:padding="@dimen/activity_padding"
+    android:background="?attr/backgroundColor"
+    tools:context=".view.SignupActivity"
+    >
+
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_activity_signup_title"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        style="@style/titleTextView"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/SU_TV_Mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_textview_mail_title"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/SU_ET_Mail"
+        />
+
 
 
     <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/ET_Mail"
+        android:id="@+id/SU_ET_Mail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="@string/txt_edittext_mail_hint"
         android:layout_marginBottom="@dimen/space_2"
-        android:layout_margin="@dimen/activity_padding"
-        android:textColor="@color/primaryTextColor"
-        android:textColorHint="@color/primaryTextColor"
-        android:singleLine="true"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/ET_Password"
+        app:layout_constraintBottom_toTopOf="@id/SU_TV_Password"
+
+        style="@style/EditText_Normal"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/SU_TV_Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_textview_password_title"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/SU_ET_Password"
         />
 
     <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/ET_Password"
-        style="@style/Base.V7.Widget.AppCompat.EditText"
+        android:id="@+id/SU_ET_Password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_padding"
         android:inputType="textPassword"
-        android:pointerIcon="arrow"
-        android:textColorHint="@color/primaryTextColor"
-        app:layout_constraintBottom_toTopOf="@id/ET_ConfirmPassword"
+        android:hint="@string/txt_edittext_password_hint"
+        android:layout_marginBottom="@dimen/space_2"
 
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/SU_TV_ConfirmPassword"
+
+        style="@style/EditText_Normal"
+        />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/SU_TV_ConfirmPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_textview_confirm_password_title"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/SU_ET_ConfirmPassword"
+
+        />
 
     <android.support.v7.widget.AppCompatEditText
-        android:id="@+id/ET_ConfirmPassword"
-        style="@style/Base.V7.Widget.AppCompat.EditText"
+        android:id="@+id/SU_ET_ConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_padding"
-        android:hint=""
+        android:hint="@string/txt_edittext_confirm_password_hint"
         android:inputType="textPassword"
-        android:textColorHint="@color/primaryTextColor"
-        app:layout_constraintBottom_toTopOf="@id/BTN_Signup"
+        android:layout_marginBottom="@dimen/space_2"
 
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/SU_TV_Notice"
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/BTN_Cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_BTN_Cancel"
-            android:layout_margin="@dimen/activity_padding"
-            android:layout_marginBottom="@dimen/activity_padding"
+        style="@style/EditText_Normal"
+        />
 
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/SU_TV_Notice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_textview_notice_terms"
+        android:layout_marginBottom="@dimen/space_3"
+        android:textAlignment="center"
 
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/SU_BTN_Signup"
 
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/BTN_Signup"
-            app:layout_constraintBottom_toBottomOf="parent"
+        style="@style/infoGuideTextView"
+        />
 
-            style="@style/cancelButton"
-            />
+    <!-- ======================================================================================= Botones -->
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/SU_BTN_Cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_BTN_Cancel"
+        android:layout_marginEnd="@dimen/space_2"
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/BTN_Signup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_BTN_Signup"
+        app:layout_constraintTop_toTopOf="@id/SU_BTN_Signup"
+        app:layout_constraintRight_toLeftOf="@id/SU_BTN_Signup"
+        app:layout_constraintBottom_toBottomOf="@id/SU_BTN_Signup"
 
-            android:layout_margin="@dimen/activity_padding"
-            android:layout_marginLeft="@dimen/space_2"
-            android:layout_marginBottom="@dimen/activity_padding"
-            android:backgroundTint="@color/secondaryColor"
-            android:textColor="@color/onSecondaryColor"
+        style="@style/cancelButton"
+        />
 
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/SU_BTN_Signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_BTN_Signup"
 
-            app:layout_constraintLeft_toRightOf="@id/BTN_Cancel"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
 
-            style="@style/normalButton"
-            />
+        style="@style/normalButton"
+        />
 
 </android.support.constraint.ConstraintLayout>

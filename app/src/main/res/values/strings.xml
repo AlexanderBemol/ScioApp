@@ -41,6 +41,7 @@
     <string name="txt_BTN_Back">Regresar</string>
     <string name="txt_BTN_Start">Comenzar</string>
     <string name="txt_BTN_Done">Listo</string>
+    <string name="txt_BTN_Import">Importar</string>
     <!-- Foto -->
     <string name="title_photo_first_configuration">Los reflectores son tuyos</string>
     <string name="description_photo_first_configuration">Puedes elegir una foto o cambiarla en el\nmomento que quieras.</string>
@@ -72,6 +73,8 @@
     <string name="txt_BTN_Answer">Contestar</string>
     <string name="txt_hint_ET_Answer">Escribe tu respuesta aquí...</string>
     <string name="txt_title_TV_Answer">Respuesta:</string>
+    <string name="txt_title_TV_Options">Opciones:</string>
+    <string name="txt_hint_TV_Options">Activa las respuestas que son correctas.</string>
 
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con las guías -->
@@ -132,13 +135,20 @@
     <string name="message_from_the_future_error">Tranquilo, Marty\nNo es posible que vengas\ndel futuro.</string>
     <string name="message_save_error">Hubo un error al intentar guardar.\n:(</string>
     <string name="message_set_photo_error">Hubo un error al intentar\nguardar la foto.\n:(</string>
-    <string name="message_invalid_name">Escriba un nombre válido</string>
+    <string name="message_invalid_name">Escribe un nombre válido</string>
+    <string name="message_invalid_password">La contraseña debe tener al menos 8 caracteres.</string>
+    <string name="message_match_password_error">Las contraseñas no coinciden.</string>
+    <string name="message_rejected_email">El correo no es válido o ya existe.</string>
     <!--Successed  -->
-    <string name="message_login_success">Bienvenido</string>
+    <string name="message_login_success">Bienvenido\nTe enviamos un correo de confirmación a tu email.</string>
     <string name="message_save_success">Todo bien, todo correcto.</string>
     <string name="message_set_photo_success">¡No puede ser!\n¡Yo te ví en una pelicula!</string>
 
     <string name="message_save_question_success">Listo, tu pregunta se creó.</string>
+    <string name="message_save_question_error">No se pudo crear la pregunta.</string>
+    <string name="message_unselected_answer_warning">Elige al menos una respesta correcta.</string>
+    <!-- Loading -->
+    <string name="message_signup_loading">Espera un momento en lo que comprobamos que no eres un robot del futuro enviado para destruir a la raza humana :)</string>
 
     <!-- ======================================================================================= -->
     <!-- Titulos para las opciones en los menú -->
@@ -181,9 +191,19 @@
 
     <string name="txt_title_question">Pregunta</string>
     <string name="txt_ET_question_hint">Escribe la pregunta aquí</string>
+    <string name="txt_ET_answer_hint">Escribe la respuesta aquí</string>
+    <string name="txt_ET_option_hint">Escribe la opción aquí</string>
     <string name="txt_hint_answer">Elige la respuesta correcta.</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_title_answer">Respuesta</string>
+    <string name="txt_import_guide_dialog_title">Importar Guía</string>
+    <string name="txt_activity_signup_title">Crea tu cuenta</string>
+    <string name="txt_textview_mail_title">Correo</string>
+    <string name="txt_edittext_mail_hint">Teclea tu correo</string>
+    <string name="txt_textview_password_title">Contreseña</string>
+    <string name="txt_edittext_password_hint">Teclea tu contraseña</string>
+    <string name="txt_textview_confirm_password_title">Confirmar Constraseña</string>
+    <string name="txt_edittext_confirm_password_hint">Vuelve a teclear tu contraseña</string>
+    <string name="txt_textview_notice_terms">Al crear tu cuenta aceptas nuestros terminos y condiciones, y el aviso de privacidad</string>
 
 </resources>

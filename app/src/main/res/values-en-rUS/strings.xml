@@ -79,4 +79,11 @@
     <string name="txt_ConfirmPassword">Re-enter Passwrod</string>
     <string name="txt_ET_question_hint">Type the question here</string>
     <string name="txt_TV_recover_password">Forgot password?</string>
+    <string name="txt_ET_answer_hint">Type the answer here</string>
+    <string name="txt_TV_options">or</string>
+    <string name="txt_title_TV_Options">Options:</string>
+    <string name="txt_ET_option_hint">Type the option here</string>
+    <string name="txt_BTN_Import">Import</string>
+    <string name="txt_import_guide_dialog_title">Import Guide</string>
+    <string name="txt_hint_TV_Options">Select the correct answers.</string>
 </resources>

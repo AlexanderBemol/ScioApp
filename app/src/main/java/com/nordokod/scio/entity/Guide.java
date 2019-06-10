@@ -22,6 +22,9 @@ public class Guide {
     private boolean is_actived;
     private Date datetime;
 
+    private String user_Name;
+    private Bitmap user_photo;
+
     public Guide(int category, String id, String topic, String date, String time, boolean is_actived) {
         this.category = category;
         this.id = id;
@@ -33,6 +36,19 @@ public class Guide {
 
     public Guide() {
 
+    }
+
+    public void setUserData(String user_Name, Bitmap user_photo) {
+        this.user_Name = user_Name;
+        this.user_photo = user_photo;
+    }
+
+    public String getUser_Name() {
+        return user_Name;
+    }
+
+    public Bitmap getUser_photo() {
+        return user_photo;
     }
 
     public int getCategory() {
