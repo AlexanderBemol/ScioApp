@@ -76,7 +76,11 @@ public class MainController {
                         showError(error);
                     }else{
                         String finalTopic=topic.toString();
-                        mainModel.createGuide(category_selected_id,finalTopic,date);
+                        Guide guide=new Guide();
+                        guide.setCategory(category_selected_id);
+                        guide.setDatetime(date);
+                        guide.setTopic(finalTopic);
+                        mainModel.createGuide(guide);
                     }
                 }
 

@@ -3,19 +3,27 @@ package com.nordokod.scio.process;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.util.JsonWriter;
 import android.util.Log;
 
 import com.nordokod.scio.entity.App;
 import com.nordokod.scio.entity.ConfigurationApp;
+import com.nordokod.scio.entity.Guide;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.grpc.internal.JsonParser;
 
 
 public class SystemWriteProcess {
@@ -95,4 +103,42 @@ public class SystemWriteProcess {
         }
     }
 
+
+    public boolean saveJSON(JSONObject json,String folder,String filename){
+        boolean b=true;
+        try{
+            File file= new File(internalStorageDir,folder+filename+".json");
+            if(file.exists()){
+                file.delete();
+            }
+            file.createNewFile();
+            FileWriter fw=new FileWriter(file);
+            fw.write(json.toString());
+            fw.flush();
+            fw.close();
+        }catch (Exception e){
+            b=false;
+        }
+        return b;
+    }
+    public ArrayList<JSONObject> getJSONs(String folder){
+        ArrayList<JSONObject> jsons=new ArrayList<>();
+        try{
+            File filesFolder=new File(internalStorageDir,folder);
+            File[] files=filesFolder.listFiles();
+            for(File f:files){
+                FileInputStream fis = new FileInputStream(f);
+                int size = fis.available();
+                byte[] buffer = new byte[size];
+                fis.read(buffer);
+                fis.close();
+                String data=new String(buffer);
+                JSONObject json=new JSONObject(data);
+                jsons.add(json);
+            }
+        }catch (Exception e){
+            Log.d("testeo",e.getMessage());
+        }
+        return jsons;
+    }
 }

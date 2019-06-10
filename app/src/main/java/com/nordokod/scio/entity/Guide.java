@@ -1,13 +1,26 @@
 package com.nordokod.scio.entity;
 
-public class Guide {
+import java.util.Date;
 
+public class Guide {
+    public static String KEY_UID="UID";
+    public static String KEY_ONLINE="Online";
+    public static String KEY_CATEGORY="Category";
+    public static String KEY_ID="Id";
+    public static String KEY_TOPIC="Topic";
+    public static String KEY_DATETIME="Datetime";
+    public static String KEY_DATE="Date";
+    public static String KEY_TIME="Time";
+    public static String KEY_ACTIVATED="Activated";
     private int category;
     private String id;
     private String topic;
     private String date;
     private String time;
+    private String UID;
+    private boolean Online;
     private boolean is_actived;
+    private Date datetime;
 
     public Guide(int category, String id, String topic, String date, String time, boolean is_actived) {
         this.category = category;
@@ -72,5 +85,29 @@ public class Guide {
 
     public int getDaysLeft() {
         return 0;
+    }
+
+    public String getUID() {
+        return UID;
+    }
+
+    public void setUID(String UID) {
+        this.UID = UID;
+    }
+
+    public boolean isOnline() {
+        return Online;
+    }
+
+    public void setOnline(boolean online) {
+        Online = online;
+    }
+
+    public Date getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
     }
 }
