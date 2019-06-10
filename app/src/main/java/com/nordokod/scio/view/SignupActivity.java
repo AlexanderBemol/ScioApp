@@ -1,6 +1,7 @@
 package com.nordokod.scio.view;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,18 +25,17 @@ import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 public class SignupActivity extends AppCompatActivity implements BasicActivity{
     private static final int NOTICE_DIALOG_TIME = 2000;
+
     private AppCompatButton BTN_Cancel,BTN_Signup;
-
     private AppCompatEditText ET_Mail,ET_Password,ET_ConfirmPassword;
-
-    private Dialog RegisterDialog, noticeDialog;
-
+    private Dialog noticeDialog;
     private Animation press;
-
     private SignUpController SignupController;
-
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +50,14 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
 
     @Override
     public void initComponents() {
-        BTN_Cancel = findViewById(R.id.BTN_Cancel);
-        BTN_Signup = findViewById(R.id.BTN_Signup);
+        BTN_Cancel          = findViewById(R.id.SU_BTN_Cancel);
+        BTN_Signup          = findViewById(R.id.SU_BTN_Signup);
 
-        ET_Mail = findViewById(R.id.ET_Mail);
-        ET_Password = findViewById(R.id.ET_Password);
-        ET_ConfirmPassword = findViewById(R.id.ET_ConfirmPassword);
+        ET_Mail             = findViewById(R.id.SU_ET_Mail);
+        ET_Password         = findViewById(R.id.SU_ET_Password);
+        ET_ConfirmPassword  = findViewById(R.id.SU_ET_ConfirmPassword);
 
-        SignupController = new SignUpController(this,this,this);
-
-
+        SignupController = new SignUpController(this,SignupActivity.this);
     }
 
     @Override
@@ -68,10 +66,14 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
             @Override
             public void onClick(View view) {
                 BTN_Signup.startAnimation(press);
-                showLoadingDialog();
-                SignupController.signUpUser(ET_Mail.getText().toString(),ET_Password.getText().toString(),ET_ConfirmPassword.getText().toString());
+
+                SignupController.signUpUser(
+                        Objects.requireNonNull(ET_Mail.getText()).toString(),
+                        Objects.requireNonNull(ET_Password.getText()).toString(),
+                        Objects.requireNonNull(ET_ConfirmPassword.getText()).toString());
             }
         });
+
         BTN_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,6 +81,9 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
                 onBackPressed();
             }
         });
+
+        // TODO: Cuando tengamos hechos los terminos y condiciones, y el aviso de privacidad
+        //  debemos agregar que con un clic lo redireccione a leerlos.
     }
 
     @Override
@@ -187,37 +192,45 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
         finish();
     }
 
+    public void onSuccessSignUp() {
+        if(progressDialog.isShowing())
+            progressDialog.dismiss();
+
+        Toasty.success(this, R.string.message_login_success).show();
+
+        Intent intent= new Intent(this, FirstConfigurationActivity.class);
+        this.startActivity(intent);
+        finish();
+    }
+
+    public void onEmptyFields() {
+        Toasty.warning(this, R.string.message_emptyfields_error).show();
+    }
+
+    public void onErrorSignUp() {
+        Toasty.error(this, R.string.message_error).show();
+    }
+
+    public void onShowProgressDialog() {
+        progressDialog = new ProgressDialog(SignupActivity.this);
+        progressDialog.setMessage(getResources().getString(R.string.message_signup_loading));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    public void onInvalidPassword() {
+        Toasty.error(this, R.string.message_invalid_password).show();
+    }
+
+    public void onErrorMatchPasswords() {
+        Toasty.error(this, R.string.message_match_password_error).show();
+    }
+
+    public void onRejectedEmail() {
+        Toasty.error(this, R.string.message_rejected_email).show();
+    }
+
     private void initAnimations(){
         press = AnimationUtils.loadAnimation(this, R.anim.press);
-    }
-
-    private void showLoadingDialog(){
-        if (noticeDialog == null)
-            noticeDialog = new Dialog(this);
-        else if (noticeDialog.isShowing()) {
-            noticeDialog.dismiss();
-        }
-
-        noticeDialog.setContentView(R.layout.dialog_progress);
-        noticeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
-        noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
-        noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
-
-        NewtonCradleLoading loading = noticeDialog.findViewById(R.id.loading);
-
-        noticeDialog.show();
-        loading.start();
-    }
-    @Override
-    protected void onDestroy() {
-        dismissProgressDialog();
-        super.onDestroy();
-    }
-
-    private void dismissProgressDialog() {
-        if (noticeDialog != null && noticeDialog.isShowing()) {
-            noticeDialog.dismiss();
-        }
     }
 }
