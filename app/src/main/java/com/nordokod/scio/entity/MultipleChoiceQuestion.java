@@ -5,9 +5,18 @@ import java.util.ArrayList;
 public class MultipleChoiceQuestion extends Question {
 
     private ArrayList<Option> answers;
+    public static String CLOUD_Answer1="Answer1";
+    public static String CLOUD_Answer2="Answer2";
+    public static String CLOUD_Answer3="Answer3";
+    public static String CLOUD_Answer4="Answer4";
+    public static String CLOUD_AnswerReal1="AnswerReal1";
+    public static String CLOUD_AnswerReal2="AnswerReal2";
+    public static String CLOUD_AnswerReal3="AnswerReal3";
+    public static String CLOUD_AnswerReal4="AnswerReal4";
 
     public MultipleChoiceQuestion(int id, String question, String topic, int category) {
         super(id, question, topic, category);
+        answers=new ArrayList<>();
     }
 
     public void setAnswer(String option, boolean is_correct) {

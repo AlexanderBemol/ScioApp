@@ -1,5 +1,7 @@
 package com.nordokod.scio.entity;
 
+import android.graphics.Bitmap;
+
 import java.util.Date;
 
 public class Guide {

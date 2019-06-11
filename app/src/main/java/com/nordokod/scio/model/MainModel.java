@@ -16,9 +16,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.nordokod.scio.data.GuideData;
 import com.nordokod.scio.controller.MainController;
-import com.nordokod.scio.entity.AppConstants;
+import com.nordokod.scio.data.QuestionData;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.MultipleChoiceQuestion;
+import com.nordokod.scio.entity.OpenQuestion;
+import com.nordokod.scio.entity.Question;
+import com.nordokod.scio.entity.TrueFalseQuestion;
 import com.nordokod.scio.process.DownloadImageProcess;
 import com.nordokod.scio.process.NetworkUtils;
 import com.nordokod.scio.view.MainActivity;
@@ -208,15 +212,80 @@ public class MainModel {
     public void onSaveMultipleChoiceQuestion(Guide guide,
                                              String question, String option_1, String option_2, String option_3, String option_4,
                                              boolean is_correct_1, boolean is_correct_2, boolean is_correct_3, boolean is_correct_4) {
-        // TODO: Logica para guardar la pregunta.
+        MultipleChoiceQuestion mcq=new MultipleChoiceQuestion(Question.QUESTION_MULTIPLE_CHOICE,question,guide.getTopic(),guide.getCategory());
+        mcq.setAnswer(option_1,is_correct_1);
+        mcq.setAnswer(option_2,is_correct_2);
+        mcq.setAnswer(option_3,is_correct_3);
+        mcq.setAnswer(option_4,is_correct_4);
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        currentUser=mAuth.getCurrentUser();
+        QuestionData mcqData=new QuestionData(db,currentUser,currentContext);
+        mcqData.setCustomListener(new QuestionData.customListener() {
+            @Override
+            public void onSuccesUpload() {
+                mainController.onSuccessSaveQuestion();
+            }
+
+            @Override
+            public void onSucces() {
+
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                mainController.onErrorSaveQuestion();
+            }
+        });
+        mcqData.addQuestionMultiple(mcq,guide);
     }
 
     public void onSaveTrueFalseQuestion(Guide guide, String question, boolean answer) {
-        // TODO: Logica para guardar la pregunta.
+        TrueFalseQuestion tfq=new TrueFalseQuestion(Question.QUESTION_TRUEFALSE,question,guide.getTopic(),guide.getCategory(),answer);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        currentUser=mAuth.getCurrentUser();
+        QuestionData qData=new QuestionData(db,currentUser,currentContext);
+        qData.setCustomListener(new QuestionData.customListener() {
+            @Override
+            public void onSuccesUpload() {
+                mainController.onSuccessSaveQuestion();
+            }
+
+            @Override
+            public void onSucces() {
+
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                mainController.onErrorSaveQuestion();
+            }
+        });
+        qData.addQuestionTrueFalse(tfq,guide);
     }
 
     public void onSaveOpenAnswerQuestion(Guide guide, String question, String answer) {
-        // TODO: Logica para guardar la pregunta.
+        OpenQuestion oq=new OpenQuestion(Question.QUESTION_OPEN,question,guide.getTopic(),guide.getCategory(),answer);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        currentUser=mAuth.getCurrentUser();
+        QuestionData qData=new QuestionData(db,currentUser,currentContext);
+        qData.setCustomListener(new QuestionData.customListener() {
+            @Override
+            public void onSuccesUpload() {
+                mainController.onSuccessSaveQuestion();
+            }
+
+            @Override
+            public void onSucces() {
+
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                mainController.onErrorSaveQuestion();
+            }
+        });
+        qData.addOpenQuestion(oq,guide);
     }
 
     public void checkConnectionMode() {
