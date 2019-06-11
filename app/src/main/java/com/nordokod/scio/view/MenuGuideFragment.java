@@ -91,7 +91,7 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
         TV_Share_Guide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //guideController.shareGuide(guide.getId());
+                mainController.shareGuide(guide.getId());
             }
         });
 

@@ -2,14 +2,18 @@ package com.nordokod.scio.model;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
@@ -293,6 +297,26 @@ public class MainModel {
         if(networkUtils.isNetworkConnected(currentContext)){
 
         }
+    }
+
+    public void shareGuide(String id) {
+        currentUser=mAuth.getCurrentUser();
+        DynamicLink dynamicLink= FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLink(Uri.parse("https://www.nordokod.com/"+currentUser.getUid()+"/"+id))
+                .setDomainUriPrefix("https://nordokod.page.link")
+                .setSocialMetaTagParameters(new DynamicLink.SocialMetaTagParameters.Builder()
+                        .setTitle("Una Guia para ti!")
+                        .setDescription("Revisa esta guia de estudio :D").build()
+                )
+                .setAndroidParameters(new DynamicLink.AndroidParameters.Builder("com.nordokod.scio").build())
+                .buildDynamicLink();
+
+        Uri dynamicLinkUri = dynamicLink.getUri();
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT,"SHARE");
+        sharingIntent.putExtra(Intent.EXTRA_TEXT,dynamicLinkUri.toString());
+        currentContext.startActivity(sharingIntent);
     }
 }
 

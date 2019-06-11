@@ -208,4 +208,8 @@ public class MainController {
     public void refreshGuides() {
         mainActivity.refreshGuides();
     }
+
+    public void shareGuide(String id) {
+        mainModel.shareGuide(id);
+    }
 }
