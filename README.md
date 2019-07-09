@@ -27,7 +27,7 @@ git reset --hard origin/mybranch
 	<tr>
 		<td align="center">
 			<a href="https://console.firebase.google.com/u/3/project/nordoscio/overview" target="_blank">
-		          <img width="170px" src="https://firebase.google.com/_static/3aadba8ea3/images/firebase/lockup.png?hl=es-419">
+		          <img width="170px" src="https://firebase.google.com/images/brand-guidelines/logo-standard.png?hl=es-419">
 	        </a>
 		</td>
 	</tr>
@@ -104,7 +104,7 @@ git reset --hard origin/mybranch
 
 * [CircleIndicator (MIT)](https://github.com/ongakuer/CircleIndicator)
 
-* [AndroidCrop (Apache Licence V2)] (https://github.com/jdamcd/android-crop)
+* [AndroidCrop (Apache Licence V2)](https://github.com/jdamcd/android-crop)
 
 
 En este repositorio van a encontrar más librerias, hay más que nos pueden servir: 
