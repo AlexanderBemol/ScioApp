@@ -41,10 +41,10 @@ public class LoginController{
 
     public void loginWithMail(String mail, String password){
         if (mail.length() != 0 && password.length() != 0){
-            user.setPassword(password);
-            user.setEmail(mail);
+            //user.setPassword(password);
+            //user.setEmail(mail);
 
-            logModel.loginWithMail(user);
+            //logModel.loginWithMail(user);
         }else {
             logActivity.showErrorNoticeDialog(new Error(Error.EMPTY_FIELD));
         }

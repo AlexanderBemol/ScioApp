@@ -134,7 +134,7 @@ public class LoginModel {
         }
     }
 
-    public void loginWithMail(User user){
+    public void loginWithMail(com.nordokod.scio.entity.User user){
         mAuth.signInWithEmailAndPassword(user.getEmail(), user.getPassword())
             .addOnCompleteListener(currentActivity, new OnCompleteListener<AuthResult>() {
                 @Override

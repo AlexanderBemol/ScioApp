@@ -28,10 +28,9 @@ public class SignUpController {
                     signupActivity.onShowProgressDialog();
 
                     user = new User();
-                    user.setEmail(email);
-                    user.setPassword(password1);
 
-                    signUpModel.signUpUser(user);
+                    com.nordokod.scio.model.User User=new com.nordokod.scio.model.User();
+                    //User.SignInWithMail(user)
                 } else
                     signupActivity.onErrorMatchPasswords();
             } else

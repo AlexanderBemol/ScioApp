@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -12,6 +13,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -19,13 +21,31 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.nordokod.scio.controller.LoginController;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
+import com.nordokod.scio.model.User;
 import com.victor.loading.newton.NewtonCradleLoading;
 
+import java.util.Arrays;
 import java.util.Objects;
+import com.nordokod.scio.constants.*;
+
+import javax.annotation.Nullable;
 
 public class LoginActivity extends AppCompatActivity implements BasicActivity {
     // Botones de Inicio de Sesion y Registrarse
@@ -37,9 +57,13 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
     private AppCompatTextView txtRecuperar;
     // User and Password EditTexts
     private AppCompatEditText ET_Mail, ET_Password;
-    //Controller
-    private LoginController loginController;
-    private CallbackManager mCallbackManager;
+    //Facebook
+    private CallbackManager callbackManager;
+    //Google
+    private GoogleSignInOptions googleSignInOptions;
+    private GoogleSignInClient mGoogleSignInClient;
+    //Model
+    private User userModel;
     // Animations
     private Animation press;
     // Dialogs
@@ -53,11 +77,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         initComponents();
         initAnimations();
         initListeners();
-
-        if(loginController.IsUserLogged()){
-            loginController.mainMenu();
-        }
-
+        if(userModel.isUserLogged())goToMainView();
     }
 
     private void showLoginLoadingDialog(){
@@ -79,10 +99,43 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         loading.start();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        loginController.onResult(requestCode,resultCode,data);
+        if(requestCode==RequestCode.RC_GOOGLE.getCode()){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                userModel.signInWithGoogle(account).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        if(authResult.getAdditionalUserInfo().isNewUser()){
+                            goToFirstConfigurationView();
+                        }
+                        else{
+                            goToMainView();
+                        }
+                    }
+                }).addOnCanceledListener(new OnCanceledListener() {
+                    @Override
+                    public void onCanceled() {
+                        showError(new Exception());
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        showError(e);
+                    }
+                });
+            } catch (Exception e) {
+                Log.d("testing","error en result: "+e.toString());
+                dismissProgressDialog();
+            }
+        }
+        else{
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
@@ -98,20 +151,15 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         ET_Mail = findViewById(R.id.ET_Mail);
         ET_Password = findViewById(R.id.ET_Password);
 
-        BTN_Facebook = new LoginButton(this);
+        callbackManager = CallbackManager.Factory.create();
 
-        mCallbackManager= CallbackManager.Factory.create();
+        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
-        loginController = new LoginController();//crear instancia
-        loginController.configController(this,this,this);//pasar context, actual activity y LoginActivity
-        loginController.initializeFirebase();//inicializar firebase
-
-        loginController.confGoogle();
-
-        BTN_Facebook.setReadPermissions("email", "public_profile");
-        loginController.confFB(mCallbackManager, BTN_Facebook);
-
-
+        userModel = new User();
     }
 
     @Override
@@ -121,8 +169,9 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
             @Override
             public void onClick(View v){
                 BTN_Login.startAnimation(press);
-                showLoginLoadingDialog();
-                loginController.loginWithMail(ET_Mail.getText().toString(), ET_Password.getText().toString());
+                //programar lógica de iniciar sesión, usar userModel.signInWithMail, revisar vacíos etc.
+                //showLoginLoadingDialog();
+
             }
         });
 
@@ -130,8 +179,10 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         BTN_Google.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                BTN_Google.startAnimation(press);
                 showLoginLoadingDialog();
-                loginController.loginGoogle();
+                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(signInIntent,RequestCode.RC_GOOGLE.getCode());
             }
         });
 
@@ -140,7 +191,40 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
             @Override
             public void onClick(View v){
                 showLoginLoadingDialog();
-                BTN_Facebook.callOnClick();
+                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email","public_profile","user_birthday"));
+                LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        userModel.signInWithFacebook(loginResult.getAccessToken()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                if(authResult.getAdditionalUserInfo().isNewUser()){
+                                    goToFirstConfigurationView();
+                                }else{
+                                    goToMainView();
+                                }
+                            }
+                        }).addOnCanceledListener(new OnCanceledListener() {
+                            @Override
+                            public void onCanceled() {
+                                showError(new Exception());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                showError(e);
+                            }
+                        });
+                    }
+                    @Override
+                    public void onCancel() {
+                        showError(new Exception());
+                    }
+                    @Override
+                    public void onError(FacebookException error) {
+                        showError(new Exception());
+                    }
+                });
             }
         });
 
@@ -149,9 +233,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
             @Override
             public void onClick(View v){
                 BTN_Signup.startAnimation(press);
-                    loginController.signup();
-
-
+                goToSignUpView();
             }
         });
 
@@ -159,10 +241,9 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         txtRecuperar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                // No sé cómo vayamos a hacer esta opción.
+                //activity restore password
             }
         });
-
     }
 
     @Override
@@ -269,6 +350,27 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
 
     private void initAnimations(){
         press = AnimationUtils.loadAnimation(this, R.anim.press);
+    }
+
+    private void goToFirstConfigurationView(){
+        Intent firstConfigurationIntent = new Intent(this,FirstConfigurationActivity.class);
+        startActivity(firstConfigurationIntent);
+        dismissProgressDialog();
+    }
+
+    private void goToMainView(){
+        Intent mainIntent = new Intent(this,MainActivity.class);
+        startActivity(mainIntent);
+        dismissProgressDialog();
+    }
+    private void goToSignUpView(){
+        Intent signUpIntent = new Intent(this,SignupActivity.class);
+        startActivity(signUpIntent);
+        dismissProgressDialog();
+    }
+    private void showError(Exception exception){
+        Log.d("testing",exception.getLocalizedMessage());
+        dismissProgressDialog();
     }
 
     @Override
