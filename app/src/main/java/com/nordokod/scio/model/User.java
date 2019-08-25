@@ -69,4 +69,11 @@ public class User {
         }
     }
 
+    /**
+     * Cerrar Sesión
+     */
+    public void logOut(){
+        mAuth.signOut();
+    }
+
 }

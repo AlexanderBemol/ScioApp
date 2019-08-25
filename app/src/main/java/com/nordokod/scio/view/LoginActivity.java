@@ -35,7 +35,14 @@ import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseError;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
 import com.nordokod.scio.model.User;
@@ -370,6 +377,19 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
     }
     private void showError(Exception exception){
         Log.d("testing",exception.getLocalizedMessage());
+        ErrorMessage errorMessage;
+        if(exception instanceof FirebaseAuthInvalidCredentialsException){
+            errorMessage=ErrorMessage.E_03;
+        }
+        else if(exception instanceof FirebaseAuthInvalidUserException){
+            errorMessage=ErrorMessage.E_03;
+        }
+        else if(exception instanceof FirebaseAuthUserCollisionException){
+            errorMessage=ErrorMessage.E_13;
+        }
+        else if(exception instanceof FirebaseNetworkException){
+            errorMessage=ErrorMessage.E_02;
+        }
         dismissProgressDialog();
     }
 
