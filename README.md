@@ -75,6 +75,24 @@ git reset --hard origin/mybranch
 			</table>
 		</td>
 	</tr>
+	<!-- HostGator -->
+	<tr>
+		<td align="center">
+			<a href="https://cliente.hostgator.mx" target="_blank">
+		          <img width="160px" src="https://billing.hostgator.mx//assets/img/login/logoHg.png">
+	        </a>
+	        <table width="400px">
+	        <tr>
+	        <td align="center" width="200px">
+	        nordokod@gmail.com
+	        </td>
+	         <td align="center" width="200px">
+	        Cat05wX25*
+	        </td>
+	        </tr>
+			</table>
+		</td>
+	</tr>
 	<!-- FACEBOOK -->
 	<tr>
 		<td align="center">
