@@ -5,12 +5,13 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import java.io.InputStream;
+import java.util.concurrent.CancellationException;
 
 public class DownloadImageProcess extends AsyncTask<String, Void, Bitmap> {
     CustomListener listener;
     public interface CustomListener {
         void onCompleted(Bitmap photo);
-        void onCancelled();
+        void onError(Exception e);
     }
     public DownloadImageProcess(){
         this.listener=null;
@@ -34,7 +35,7 @@ public class DownloadImageProcess extends AsyncTask<String, Void, Bitmap> {
             options.inPreferQualityOverSpeed=true;
             bmp = BitmapFactory.decodeStream(in);
         } catch (Exception e) {
-            listener.onCancelled();
+            listener.onError(e);
         }
         return bmp;
     }
@@ -45,7 +46,7 @@ public class DownloadImageProcess extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected void onCancelled() {
-        listener.onCancelled();
+        listener.onError(new CancellationException());
     }
 
 
