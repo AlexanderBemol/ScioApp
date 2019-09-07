@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -65,7 +64,7 @@ public class FirstConfigurationModel {
         mAuth=FirebaseAuth.getInstance();
         mAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            public void onAuthStateChanged(FirebaseAuth firebaseAuth) {
                 currentUser=firebaseAuth.getCurrentUser();
             }
         };
@@ -93,7 +92,7 @@ public class FirstConfigurationModel {
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(@NonNull Exception e) {
+                    public void onFailure(Exception e) {
                         fcController.setDefaultScioPhoto();//si algo sale mal se usa la foto por defecto
                     }
                 });
@@ -106,7 +105,7 @@ public class FirstConfigurationModel {
                     }
                 }
                 DownloadImageProcess dip=new DownloadImageProcess();
-                dip.setListener(new DownloadImageProcess.CustomListener() {
+                /*dip.setListener(new DownloadImageProcess.CustomListener() {
                     @Override
                     public void onCompleted(Bitmap photo) {
                         fcController.setDefaultUserPhoto(photo);
@@ -117,7 +116,7 @@ public class FirstConfigurationModel {
                         fcController.setDefaultScioPhoto();
                     }
                 });
-                dip.execute(photopath);
+                dip.execute(photopath);*/
             }
 
         }catch (Exception e){
@@ -381,7 +380,7 @@ public class FirstConfigurationModel {
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e) {
+                        public void onFailure(Exception e) {
                             Log.d("testeo",e.getMessage());
                             fcController.showError(new Error(Error.GENERAL));
                         }
@@ -395,7 +394,7 @@ public class FirstConfigurationModel {
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
-                public void onFailure(@NonNull Exception e) {
+                public void onFailure(Exception e) {
                     Log.d("testeo",e.getMessage());
                     fcController.showError(new Error(Error.GENERAL));
                 }

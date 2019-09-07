@@ -206,4 +206,27 @@
     <string name="txt_edittext_confirm_password_hint">Vuelve a teclear tu contraseña</string>
     <string name="txt_textview_notice_terms">Al crear tu cuenta aceptas nuestros terminos y condiciones, y el aviso de privacidad</string>
 
+    <!-- ======================================================================================= -->
+    <!-- Mensajes de error para usuario -->
+    <!-- ======================================================================================= -->
+    <string name="txt_error_title_E01">Error De Conexión</string>
+    <string name="txt_error_message_E01">Para continuar necesitas conexión a internet</string>
+    <string name="txt_error_message_E02">No se pudo conectar con los servidores reintenta más tarde</string>
+    <string name="txt_error_message_E03">El usuario introducido no está registrado o tus credenciales son incorrectas</string>
+    <string name="txt_error_title_E04">Error Inesperado</string>
+    <string name="txt_error_message_E04">Parece que algo salió mal, reintenta más tarde</string>
+    <string name="txt_error_title_E05">Datos Inválidos</string>
+    <string name="txt_error_message_E05">El correo introducido no es válido</string>
+    <string name="txt_error_message_E06">La contraseña debe tener una longuitud de almenos 8 caracteres</string>
+    <string name="txt_error_message_E07">Ambas contraseñas deben coincidir</string>
+    <string name="txt_error_message_E08">El nombre de usario no puede ser un espacio vacío ni contener caracteres especiales</string>
+    <string name="txt_error_message_E09">La fecha seleccionada no puede ser anterior a la actual</string>
+    <string name="txt_error_message_E10">La fecha seleccionada no puede ser posterior a la actual</string>
+    <string name="txt_error_title_E11">Caracteristíca Premium</string>
+    <string name="txt_error_message_E11">Conviertete en usuario premium para acceder a esta caracteristíca</string>
+    <string name="txt_error_title_E12">Operación Cancelada</string>
+    <string name="txt_error_message_E12">Operación Cancelada</string>
+    <string name="txt_error_message_E13">El usuario ya se encuentra registrado</string>
+
+
 </resources>
