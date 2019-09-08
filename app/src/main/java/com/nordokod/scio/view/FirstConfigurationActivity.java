@@ -54,7 +54,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
     private FirstConfigurationNameFragment          nameFragment;
     private FirstConfigurationBirthdayFragment      birthdayFragment;
     private FirstConfigurationEducationFragment     educationFragment;
-    private FirstConfigurationAppBlockFragment      appBlockFragment;
+    //private FirstConfigurationAppBlockFragment      appBlockFragment;
     private FirstConfigurationCompleteFragment      completeFragment;
 
     private NewtonCradleLoading loading;
@@ -88,7 +88,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         nameFragment        = new FirstConfigurationNameFragment();
         birthdayFragment    = new FirstConfigurationBirthdayFragment();
         educationFragment   = new FirstConfigurationEducationFragment();
-        appBlockFragment    = new FirstConfigurationAppBlockFragment();
+        //appBlockFragment    = new FirstConfigurtionAppBlockFragment();
         completeFragment    = new FirstConfigurationCompleteFragment();
 
         viewPager.setAdapter(fragmentStatePagerAdapter);
@@ -100,7 +100,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         nameFragment.configFragment(firstConfigurationController);
         //birthdayFragment.configFragment(firstConfigurationController);
         //educationFragment.configFragment(firstConfigurationController);
-        appBlockFragment.configAdapter(firstConfigurationController,this);
+        //appBlockFragment.configAdapter(firstConfigurationController,this);
         //appBlockFragment.configAdapter(firstConfigurationController, this);
 
         isActivityCreated = true;

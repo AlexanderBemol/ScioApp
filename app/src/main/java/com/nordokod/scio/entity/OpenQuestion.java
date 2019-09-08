@@ -1,12 +1,12 @@
 package com.nordokod.scio.entity;
 
 public class OpenQuestion extends Question {
+    public static String KEY_ANSWER="ANSWER";
 
     private String answer;
 
-    public static String CLOUD_ANSWER="Answer";
-    public OpenQuestion(int id, String question, String topic, int category, String answer) {
-        super(id, question, topic, category);
+    public OpenQuestion(int id, String question, int kindOfQuestion, String answer) {
+        super(id, question, kindOfQuestion);
         this.answer = answer;
     }
 

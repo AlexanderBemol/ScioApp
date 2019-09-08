@@ -3,6 +3,7 @@ package com.nordokod.scio.model;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 
 import com.facebook.AccessToken;
@@ -21,7 +22,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.nordokod.scio.constants.ProfilePhotoHost;
-import com.nordokod.scio.entity.AppConstants;
 import com.nordokod.scio.entity.InvalidValueException;
 import com.nordokod.scio.process.DownloadImageProcess;
 import com.nordokod.scio.process.MediaProcess;
@@ -125,7 +125,7 @@ public class User {
         /*
          * se crea referencia a la carpeta que aloja las fotos de los usarios y se solicita subir archivo
          */
-        StorageReference sRef = storageReference.child(AppConstants.CLOUD_USERS).child(AppConstants.CLOUD_PROFILE_PHOTO).child("userPhoto-"+mAuth.getCurrentUser().getUid());
+        StorageReference sRef = storageReference.child(com.nordokod.scio.entity.User.KEY_USERS).child(com.nordokod.scio.entity.User.KEY_PROFILE_PHOTO).child("userPhoto-"+mAuth.getCurrentUser().getUid());
         return sRef.putFile(Uri.fromFile(file));
 
     }
@@ -138,7 +138,7 @@ public class User {
         /*
          * se obtiene link de la foto
          */
-        StorageReference sRef = storageReference.child(AppConstants.CLOUD_USERS).child(AppConstants.CLOUD_PROFILE_PHOTO).child("userPhoto-"+ Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
+        StorageReference sRef = storageReference.child(com.nordokod.scio.entity.User.KEY_USERS).child(com.nordokod.scio.entity.User.KEY_PROFILE_PHOTO).child("userPhoto-"+ Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
         /*
          * se actualiza link de foto del usario
          */
@@ -171,9 +171,9 @@ public class User {
     public Task<Void> setUserInformation(com.nordokod.scio.entity.User user){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> data = new HashMap<>();
-        data.put(AppConstants.CLOUD_USER_BIRTHDAY,user.getBirthdayDate());
-        data.put(AppConstants.CLOUD_USER_EDUCATIONAL_LEVEL,user.getStudyLevel());
-        return  db.collection(AppConstants.CLOUD_USERS).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).set(data);
+        data.put(com.nordokod.scio.entity.User.KEY_BIRTHDAY,user.getBirthdayDate());
+        data.put(com.nordokod.scio.entity.User.KEY_STUDY_LEVEL,user.getStudyLevel());
+        return  db.collection(com.nordokod.scio.entity.User.KEY_USERS).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).set(data);
     }
 
     /**
@@ -224,7 +224,7 @@ public class User {
      * @return FileDownload task con el resultado
      * @throws IOException en error en uri, o almacenamiento.
      */
-    public FileDownloadTask getInternProfilePhoto() throws IOException {
+    public FileDownloadTask getFirebaseProfilePhoto() throws IOException {
         String photoPath = Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getPhotoUrl()).toString();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();//obtenemos referencia a la bd
@@ -249,6 +249,22 @@ public class User {
         DownloadImageProcess dip = new DownloadImageProcess();
         dip.setListener(customListener);
         dip.execute(photoPath);
+    }
+
+    /**
+     * Obtener la foto de perfil de los archivos locales
+     * @param context contexto actual
+     * @return la foto en formato bitmap o nulo si no se encontró
+     */
+    public Bitmap getLocalProfilePhoto(Context context){
+        String pictureFile = "userPhoto-" +mAuth.getCurrentUser().getUid()+".jpg";
+        File storageDir = context.getFilesDir();
+        File file=new File(storageDir,pictureFile);
+        if(file.exists()){
+            return BitmapFactory.decodeFile(file.getPath());
+        }else{
+            return null;
+        }
     }
     /**
      * Cerrar Sesión

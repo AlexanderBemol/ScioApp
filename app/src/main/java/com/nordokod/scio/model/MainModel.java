@@ -1,36 +1,7 @@
 package com.nordokod.scio.model;
 
-import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.nordokod.scio.data.GuideData;
-import com.nordokod.scio.controller.MainController;
-import com.nordokod.scio.data.QuestionData;
-import com.nordokod.scio.entity.Error;
-import com.nordokod.scio.entity.Guide;
-import com.nordokod.scio.entity.MultipleChoiceQuestion;
-import com.nordokod.scio.entity.OpenQuestion;
-import com.nordokod.scio.entity.Question;
-import com.nordokod.scio.entity.TrueFalseQuestion;
-import com.nordokod.scio.process.DownloadImageProcess;
-import com.nordokod.scio.process.NetworkUtils;
-import com.nordokod.scio.view.MainActivity;
-
-import java.io.File;
-import java.util.ArrayList;
-
 public class MainModel {
-    private MainController mainController;
+    /*private MainController mainController;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListner;
     private FirebaseUser currentUser;
@@ -63,6 +34,7 @@ public class MainModel {
     /**
      * Obtener Foto del usuario, preferente del almacenamiento local
      */
+    /*
     public void requestPhoto(){
         currentUser=mAuth.getCurrentUser();
         String pictureFile = "userPhoto-" +currentUser.getUid()+".jpg";
@@ -167,7 +139,7 @@ public class MainModel {
             }
         });
         guide.setUID(currentUser.getUid());
-        guide.setIs_actived(true);
+        //guide.setIs_actived(true);
         NetworkUtils networkUtils=new NetworkUtils();
         guide.setOnline(false);
         if(networkUtils.isNetworkConnected(currentContext)){
@@ -293,5 +265,6 @@ public class MainModel {
 
         }
     }
+    */
 }
 

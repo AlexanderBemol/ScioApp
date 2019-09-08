@@ -11,13 +11,5 @@ public class AppConstants {
     public static final String CLOUD_USER_BIRTHDAY="Birthday";
     public static final String CLOUD_USER_EDUCATIONAL_LEVEL="Level";
 
-    public static final String CLOUD_GUIDES="Guides";
-    public static final String CLOUD_CATEGORIES="Categories";//borrar después
-    public static final String CLOUD_GUIDES_CATEGORY="Category";
-    public static final String CLOUD_GUIDES_TOPIC="Topic";
-    public static final String CLOUD_GUIDES_DATETIME="Datetime";
-    public static final String CLOUD_GUIDES_UID="UID";
-
-    public static final String CLOUD_QUESTIONS="Questions";
 
 }
