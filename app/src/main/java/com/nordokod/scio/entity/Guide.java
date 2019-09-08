@@ -5,52 +5,32 @@ import android.graphics.Bitmap;
 import java.util.Date;
 
 public class Guide {
+    public static String KEY_GUIDES="GUIDES";
+    public static String KEY_PERSONAL_GUIDES="PERSONAL_GUIDES";
     public static String KEY_UID="UID";
-    public static String KEY_ONLINE="Online";
-    public static String KEY_CATEGORY="Category";
-    public static String KEY_ID="Id";
-    public static String KEY_TOPIC="Topic";
-    public static String KEY_DATETIME="Datetime";
-    public static String KEY_DATE="Date";
-    public static String KEY_TIME="Time";
-    public static String KEY_ACTIVATED="Activated";
+    public static String KEY_ONLINE="ONLINE";
+    public static String KEY_CATEGORY="CATEGORY";
+    public static String KEY_ID="ID";
+    public static String KEY_TOPIC="TOPIC";
+    public static String KEY_DATETIME="DATETIME";
+    public static String KEY_ACTIVATED="ACTIVATED";
+
     private int category;
     private String id;
     private String topic;
-    private String date;
-    private String time;
     private String UID;
-    private boolean Online;
-    private boolean is_actived;
+    private boolean online;
+    private boolean activated;
     private Date datetime;
 
-    private String user_Name;
-    private Bitmap user_photo;
-
-    public Guide(int category, String id, String topic, String date, String time, boolean is_actived) {
+    public Guide(int category, String id, String topic, String UID, boolean online, boolean activated, Date datetime) {
         this.category = category;
         this.id = id;
         this.topic = topic;
-        this.date = date;
-        this.time = time;
-        this.is_actived = is_actived;
-    }
-
-    public Guide() {
-
-    }
-
-    public void setUserData(String user_Name, Bitmap user_photo) {
-        this.user_Name = user_Name;
-        this.user_photo = user_photo;
-    }
-
-    public String getUser_Name() {
-        return user_Name;
-    }
-
-    public Bitmap getUser_photo() {
-        return user_photo;
+        this.UID = UID;
+        this.online = online;
+        this.activated = activated;
+        this.datetime = datetime;
     }
 
     public int getCategory() {
@@ -61,30 +41,6 @@ public class Guide {
         this.category = category;
     }
 
-    public String getTopic() {
-        return topic;
-    }
-
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     public String getId() {
         return id;
     }
@@ -93,16 +49,12 @@ public class Guide {
         this.id = id;
     }
 
-    public boolean isIs_actived() {
-        return is_actived;
+    public String getTopic() {
+        return topic;
     }
 
-    public void setIs_actived(boolean is_actived) {
-        this.is_actived = is_actived;
-    }
-
-    public int getDaysLeft() {
-        return 0;
+    public void setTopic(String topic) {
+        this.topic = topic;
     }
 
     public String getUID() {
@@ -114,11 +66,19 @@ public class Guide {
     }
 
     public boolean isOnline() {
-        return Online;
+        return online;
     }
 
     public void setOnline(boolean online) {
-        Online = online;
+        this.online = online;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
     }
 
     public Date getDatetime() {

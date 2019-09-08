@@ -6,6 +6,12 @@ import com.nordokod.scio.constants.UserState;
 import com.nordokod.scio.constants.Utilities;
 
 public class User {
+    public static String KEY_USERS="USERS";
+    public static String KEY_BIRTHDAY="BIRTHDAY";
+    public static String KEY_STUDY_LEVEL="STUDY_LEVEL";
+    public static String KEY_STATE="STATE";
+    public static String KEY_PROFILE_PHOTO="PROFILE_PHOTOS";
+
     private String uid;
     private String username;
     private String email;

@@ -1,4 +1,5 @@
 package com.nordokod.scio.entity;
 
-public class PermissionException {
+public class PermissionException extends Exception {
+
 }
