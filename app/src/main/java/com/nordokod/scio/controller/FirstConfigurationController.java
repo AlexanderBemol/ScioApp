@@ -61,7 +61,7 @@ public class FirstConfigurationController {
         fcModel.uploadPhoto(photo);
     }
     public void uploadComplete(){
-        fcActivity.updatePhoto();
+        //fcActivity.updatePhoto();
     }
     public void uploadCanceled(){
         Error error=new Error();

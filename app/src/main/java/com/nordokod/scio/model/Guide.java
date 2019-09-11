@@ -1,7 +1,12 @@
 package com.nordokod.scio.model;
 
+import android.net.Uri;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.dynamiclinks.DynamicLink;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -61,5 +66,16 @@ public class Guide {
     public Task<QuerySnapshot> getAllGuides(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).get();
+    }
+
+    public Task<ShortDynamicLink> generateGuideLink(com.nordokod.scio.entity.Guide guide){
+        String uri="https://sendosg.com/guides?user="+ Objects.requireNonNull(mAuth.getCurrentUser()).getUid()+"&guide="+guide.getId();
+        String domain="https://sendosg.com";
+        return FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLink(Uri.parse(uri))
+                .setDomainUriPrefix(domain)
+                .setAndroidParameters(
+                        new DynamicLink.AndroidParameters.Builder("com.nordokod.scio").build()
+                ).buildShortDynamicLink();
     }
 }

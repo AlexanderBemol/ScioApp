@@ -22,5 +22,6 @@ public enum ErrorMessage {
     INVALID_PASSWORD,
     INVALID_USERNAME,
     PASSWORDS_DONT_MATCH,
+    EMPTY_FIELD,
     UNKNOW_EXCEPTION;
 }

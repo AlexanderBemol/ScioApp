@@ -63,6 +63,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:3.0.2"
     androidTestImplementation 'org.mockito:mockito-android:2.27.0'
+    implementation 'com.google.firebase:firebase-invites:17.0.0'
 
 }
 apply plugin: 'com.google.gms.google-services'
