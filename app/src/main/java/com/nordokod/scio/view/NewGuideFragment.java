@@ -23,15 +23,18 @@ import android.view.animation.AnimationUtils;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.nordokod.scio.R;
-import com.nordokod.scio.controller.MainController;
+import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.InputDataException;
+import com.nordokod.scio.process.ExceptionManager;
 
+import java.nio.charset.IllegalCharsetNameException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import static com.nordokod.scio.R.attr.iconNormalColor;
@@ -40,8 +43,8 @@ import static com.nordokod.scio.R.attr.iconSelectedColor;
 public class NewGuideFragment extends BottomSheetDialogFragment implements BasicFragment {
 
     private Context context;
-    private MainController mainController;
-    AppCompatEditText ET_Topic;
+    //private MainController mainController;
+    private AppCompatEditText ET_Topic;
     private LinearLayout LL_Date, LL_Time, LL_Categories;
     private AppCompatTextView TV_Month, TV_Day, TV_Time, TV_Hour;
     private AppCompatButton BTN_Cancel, BTN_Create;
@@ -55,9 +58,8 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
 
     // TODO: Agregar al constructor el parametro del controllador
     @SuppressLint("ValidFragment")
-    public NewGuideFragment(Context context, MainController mc) {
+    public NewGuideFragment(Context context) {
         this.context = context;
-        this.mainController=mc;
     }
 
     @Override
@@ -142,46 +144,84 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
             @Override
             public void onClick(View v) {
                 BTN_Create.startAnimation(press);
-                mainController.createGuide(category_selected_id, ET_Topic.getText(), date_selected, time_selected);
+
+                if (category_selected_id == 0) {
+                    showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // ===== No seleccionó ninguna categoría
+                } else {
+                    if (ET_Topic.getText() == null) {
+                        showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // = No escribió el tema de la guía
+                    } else {
+                        if (date_selected.length() < 2 || time_selected.length() < 2) {
+                            showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // No eligió fecha y/o hora
+                        } else {
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.ENGLISH);
+                            String datetime = date_selected + " " + time_selected;
+
+                            Date date = null;
+                            try {
+                                date = sdf.parse(datetime);
+                            } catch (ParseException e) {
+                                showError(e); // ===================================================
+                            }
+
+                            Date dateToday = new Date();
+
+                            if (date.before(dateToday)){
+                                showError(new InputDataException(InputDataException.Code.DATETIME_BEFORE)); // La fecha elegida es del pasado. ¡Oh por Dios, Doc, viajamos al pasado!
+                            } else {
+                                Guide guide = new Guide(category_selected_id, "", ET_Topic.getText().toString(), "", false, true, date);
+
+                                com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
+                                guideModel.createGuide(guide);
+                            }
+                        }
+                    }
+                }
             }
         });
-        //
+
         CL_Exacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickCategoryListener(v);
             }
         });
+
         CL_Socials.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickCategoryListener(v);
             }
         });
+
         CL_Sports.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickCategoryListener(v);
             }
         });
+
         CL_Art.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickCategoryListener(v);
             }
         });
+
         CL_Tech.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickCategoryListener(v);
             }
         });
+
         CL_Entertainment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickCategoryListener(v);
             }
         });
+
         CL_Others.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -216,6 +256,11 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
 
             preview_Category_View_Selected = view.getId();
         }
+    }
+
+    private void showError(Exception exception){
+        ExceptionManager exceptionManager = new ExceptionManager();
+        exceptionManager.showErrorMessage(context, exceptionManager.categorizeException(exception), null);
     }
 
     private int getCategoryId(int view_selected_id) {

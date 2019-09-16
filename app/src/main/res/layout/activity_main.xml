@@ -17,6 +17,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
+
+        <com.nordokod.scio.view.NoSwipePager
+            android:id="@+id/VP_Main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/NAV_Bar"
+            >
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/backgroundColor"
+                />
+        </com.nordokod.scio.view.NoSwipePager>
+        <!--
         <FrameLayout
             android:id="@+id/FL_Main"
             android:layout_width="match_parent"
@@ -31,7 +47,15 @@
                 android:background="@color/backgroundColor"
                 />
         </FrameLayout>
+        -->
 
+        <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+            android:id="@+id/NAV_Bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            />
+        <!--
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/NAV_Bar"
             android:layout_width="match_parent"
@@ -45,7 +69,7 @@
             app:menu="@menu/navigation_bar_items"
             >
         </android.support.design.widget.BottomNavigationView>
-
+        -->
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

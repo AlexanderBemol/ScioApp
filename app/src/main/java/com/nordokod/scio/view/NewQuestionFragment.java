@@ -17,7 +17,7 @@ import com.nordokod.scio.entity.Guide;
 public class NewQuestionFragment extends BottomSheetDialogFragment implements BasicFragment {
 
     private Context context;
-    private MainController mainController;
+    private MainActivity activity;
     private Guide guide;
 
     private AppCompatImageView IV_Multiple_Choice, IV_Open_Answer, IV_True_False;
@@ -25,9 +25,9 @@ public class NewQuestionFragment extends BottomSheetDialogFragment implements Ba
     public NewQuestionFragment() { }
 
     @SuppressLint("ValidFragment")
-    public NewQuestionFragment(Context context, MainController mainController, Guide guide) {
+    public NewQuestionFragment(Context context, MainActivity activity, Guide guide) {
         this.context = context;
-        this.mainController = mainController;
+        this.activity = activity;
         this.guide = guide;
     }
 
@@ -53,24 +53,24 @@ public class NewQuestionFragment extends BottomSheetDialogFragment implements Ba
         IV_Multiple_Choice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainController.onCloseFragment("New Question");
-                mainController.onNewMultipleChoiceQuestionDialog(guide);
+                activity.onCloseFragment("New Question");
+                activity.onNewMultipleChoiceQuestionDialog(guide);
             }
         });
 
         IV_True_False.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainController.onCloseFragment("New Question");
-                mainController.onNewTrueFalseQuestionDialog(guide);
+                activity.onCloseFragment("New Question");
+                activity.onNewTrueFalseQuestionDialog(guide);
             }
         });
 
         IV_Open_Answer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainController.onCloseFragment("New Question");
-                mainController.onNewOpenAnswerQuestionDialog(guide);
+                activity.onCloseFragment("New Question");
+                activity.onNewOpenAnswerQuestionDialog(guide);
             }
         });
     }

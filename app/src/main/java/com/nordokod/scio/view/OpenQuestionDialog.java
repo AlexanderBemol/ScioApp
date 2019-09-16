@@ -105,7 +105,7 @@ public class OpenQuestionDialog extends BroadcastReceiver implements BasicDialog
 
     @Override
     public void showDialog() {
-        if (!dialog.isShowing()) {
+        /*if (!dialog.isShowing()) {
             TV_Category.setText(getCategoryResId(question.getCategory()));
             TV_Topic.setText(question.getTopic());
             TV_Question.setText(question.getQuestion());
@@ -123,7 +123,7 @@ public class OpenQuestionDialog extends BroadcastReceiver implements BasicDialog
             dialog.show();
         } else {
             dialog.dismiss();
-        }
+        }*/
     }
 
 

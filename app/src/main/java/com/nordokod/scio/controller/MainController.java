@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MainController {
+    /*
     private MainActivity mainActivity;
     private MainModel mainModel;
     private Context currentContext;
@@ -208,4 +209,5 @@ public class MainController {
     public void refreshGuides() {
         mainActivity.refreshGuides();
     }
+    */
 }

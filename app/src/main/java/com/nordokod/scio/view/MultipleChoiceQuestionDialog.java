@@ -120,7 +120,7 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
 
     @Override
     public void showDialog() {
-        if (!dialog.isShowing()) {
+        /*if (!dialog.isShowing()) {
             TV_Category.setText(getCategoryResId(question.getCategory()));
             TV_Topic.setText(question.getTopic());
             TV_Question.setText(question.getQuestion());
@@ -144,7 +144,7 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
             dialog.show();
         } else {
             dialog.dismiss();
-        }
+        }*/
     }
 
 

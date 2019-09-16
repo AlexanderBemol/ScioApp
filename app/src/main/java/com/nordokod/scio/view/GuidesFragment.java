@@ -17,13 +17,17 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.nordokod.scio.R;
 import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Guide;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
+import bolts.Task;
 import es.dmoral.toasty.Toasty;
 
 import static com.nordokod.scio.R.attr.iconNormalColor;
@@ -33,7 +37,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
     private Context context;
     private MainActivity mainActivity;
-    private MainController mainController;
+    private com.nordokod.scio.model.Guide mGuide;
     private RecyclerView RV_Guides;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -42,14 +46,15 @@ public class GuidesFragment extends Fragment implements BasicFragment {
     private LinearLayout LL_Categories;
     private AppCompatTextView TV_Topic, TV_Cateoory, TV_Days;
 
+    private ArrayList<Guide> guides;
+
     private int preview_Category_View_Selected = 0;
 
     public GuidesFragment() { }
 
     @SuppressLint("ValidFragment")
-    public GuidesFragment(Context context, MainController mainController, MainActivity mainActivity) {
+    public GuidesFragment(Context context, MainActivity mainActivity) {
         this.context = context;
-        this.mainController = mainController;
         this.mainActivity = mainActivity;
     }
 
@@ -84,7 +89,9 @@ public class GuidesFragment extends Fragment implements BasicFragment {
         CL_Entertainment    = view.findViewById(R.id.CL_Entertainment);
         CL_Others           = view.findViewById(R.id.CL_Others);
 
-        //mainController.loadGuides();
+        mGuide = new com.nordokod.scio.model.Guide();
+
+        getAllGuides();
 
         RV_Guides = view.findViewById(R.id.FGuides_RV_Guides);
 
@@ -164,7 +171,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
             preview_Category_View_Selected = view.getId();
 
             mAdapter = new GuidesRecyclerViewAdapter(getListOfGuides(category), category, context, mainActivity);
-            ((GuidesRecyclerViewAdapter) mAdapter).configAdapter(mainController);
+            ((GuidesRecyclerViewAdapter) mAdapter).configAdapter(mGuide);
 
             RV_Guides.setAdapter(mAdapter);
         }
@@ -172,8 +179,30 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
     }
 
+    private void getAllGuides() {
+        for (QueryDocumentSnapshot document : Objects.requireNonNull(mGuide.getAllGuides().getResult())) {
+            Guide guide = new Guide(
+                    (int)       document.getData().get(Guide.KEY_CATEGORY),
+                    (String)    document.getData().get(Guide.KEY_ID),
+                    (String)    document.getData().get(Guide.KEY_TOPIC),
+                    (String)    document.getData().get(Guide.KEY_UID),
+                    (boolean)   document.getData().get(Guide.KEY_ONLINE),
+                    (boolean)   document.getData().get(Guide.KEY_ACTIVATED),
+                    (Date)      document.getData().get(Guide.KEY_DATETIME)
+            );
+
+            guides.add(guide);
+        }
+    }
+
     private ArrayList<Guide> getListOfGuides(int category) {
-        return mainController.getListOfGuides(category);
+        ArrayList<Guide> guidesAux = new ArrayList<>();
+        for (Guide guide : guides) {
+            if (guide.getCategory() == category)
+                guidesAux.add(guide);
+        }
+
+        return guidesAux;
     }
 
     private int getCategoryId(int view_selected_id) {

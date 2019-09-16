@@ -224,7 +224,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         });
     }
 
-    @Override
+
     public void showErrorNoticeDialog(Error error) {
 
     }
@@ -233,7 +233,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
 
     }
 
-    @Override
+
     public void showSuccessNoticeDialog(String task) {
         if (noticeDialog == null)
             noticeDialog = new Dialog(this);
