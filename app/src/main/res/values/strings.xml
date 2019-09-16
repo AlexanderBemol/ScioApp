@@ -279,6 +279,9 @@
     <string name="EMPTY_FIELD_TITLE">Valor Inválido</string>
     <string name="EMPTY_FIELD_MESSAGE">Ningún campo obligatorio puede estar vacío.</string>
 
+    <string name="NO_GUIDES_EXCEPTION_TITLE">Ups!</string>
+    <string name="NO_GUIDES_EXCEPTION_MESSAGE">Aún no has creado ninguna guía.</string>
+
 
 
 
