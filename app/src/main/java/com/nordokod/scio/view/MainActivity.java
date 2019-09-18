@@ -4,11 +4,13 @@ package com.nordokod.scio.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -57,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private AppCompatTextView TV_Name, BTN_Logout;
 
     private HomeFragment homeFragment;
-    private NewGuideFragment createFragment;
+    private CreateFragment createFragment;
+    private NewGuideFragment newGuideFragment;
     private GuidesFragment guidesFragment;
     private DialogFragment dialogFragment;
     private Fragment selectedFragment = null;
@@ -86,10 +89,14 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         bottomNavigation.addItem(itemHome);
         bottomNavigation.addItem(itemCreate);
         bottomNavigation.addItem(itemGuides);
-        bottomNavigation.setCurrentItem(0);
-        bottomNavigation.setColored(true);
-        bottomNavigation.setDefaultBackgroundColor(R.color.backgroundColor);
-        bottomNavigation.setColoredModeColors(R.color.iconSelectedColor, R.color.iconNormalColor);
+        //bottomNavigation.setTranslucentNavigationEnabled(true);
+        //bottomNavigation.setCurrentItem(0);
+        //bottomNavigation.setColored(true);
+        //bottomNavigation.setDefaultBackgroundResource(R.color.backgroundColor);
+        bottomNavigation.setColoredModeColors(Color.WHITE, R.color.iconNormalColor);
+        bottomNavigation.setForceTint(true);
+        //bottomNavigation.setAccentColor(R.color.iconSelectedColor);
+        //bottomNavigation.setInactiveColor(R.color.iconNormalColor);
         bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
 
         viewPager       = findViewById(R.id.VP_Main);
@@ -97,12 +104,13 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         pagerAdapter    = new BottomBarAdapter(getSupportFragmentManager());
 
         homeFragment    = new HomeFragment(this, this);
-        createFragment  = new NewGuideFragment(this);
-        guidesFragment  = new GuidesFragment(this, this);
-
         pagerAdapter.addFragment(homeFragment);
+        createFragment  = new CreateFragment(this, this);
         pagerAdapter.addFragment(createFragment);
+        guidesFragment  = new GuidesFragment(this, this);
         pagerAdapter.addFragment(guidesFragment);
+
+        newGuideFragment = new NewGuideFragment(this, this);
 
         viewPager.setAdapter(pagerAdapter);
 
@@ -135,25 +143,25 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
-                switch (position){
-                    case 0: // Pantalla Home
-                        if (!wasSelected){
+                switch (position) {
+                    case 0:
+                        if (!wasSelected) {
                             viewPager.setCurrentItem(position);
-                        }else{
+                        } else {
 
                         }
                         return true;
-                    case 1: // Pantalla Crear Guia
-                        if (!wasSelected){
-                            viewPager.setCurrentItem(position);
-                        }else{
+                    case 1:
+                        viewPager.setCurrentItem(position);
 
-                        }
+                        dialogFragment = newGuideFragment;
+
+                        dialogFragment.show(getSupportFragmentManager(), "New Guide");
                         return true;
-                    case 2: // Pantalla Tus Guias
-                        if (!wasSelected){
+                    case 2:
+                        if (!wasSelected) {
                             viewPager.setCurrentItem(position);
-                        }else{
+                        } else {
 
                         }
                         return true;
@@ -231,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     }
 
     public void onClickCategoryListener(View view) {
-        createFragment.onClickCategoryListener(view);
+        //createFragment.onClickCategoryListener(view);
     }
 
     @Override
@@ -280,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
      *
      */
     abstract class SmartFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
-        private SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+        private SparseArray<Fragment> registeredFragments = new SparseArray<>(3);
 
         public SmartFragmentStatePagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
