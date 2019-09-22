@@ -42,6 +42,7 @@ import static com.nordokod.scio.R.attr.iconSelectedColor;
 
 public class NewGuideFragment extends BottomSheetDialogFragment implements BasicFragment {
 
+    private  MainActivity mainActivity;
     private Context context;
     //private MainController mainController;
     private AppCompatEditText ET_Topic;
@@ -58,8 +59,9 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
 
     // TODO: Agregar al constructor el parametro del controllador
     @SuppressLint("ValidFragment")
-    public NewGuideFragment(Context context) {
+    public NewGuideFragment(Context context, MainActivity mainActivity) {
         this.context = context;
+        this.mainActivity = mainActivity;
     }
 
     @Override

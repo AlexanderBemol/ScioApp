@@ -91,7 +91,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
         mGuide = new com.nordokod.scio.model.Guide();
 
-        getAllGuides();
+        //getAllGuides();
 
         RV_Guides = view.findViewById(R.id.FGuides_RV_Guides);
 
@@ -169,18 +169,18 @@ public class GuidesFragment extends Fragment implements BasicFragment {
             }
 
             preview_Category_View_Selected = view.getId();
-
+/*
             mAdapter = new GuidesRecyclerViewAdapter(getListOfGuides(category), category, context, mainActivity);
             ((GuidesRecyclerViewAdapter) mAdapter).configAdapter(mGuide);
 
-            RV_Guides.setAdapter(mAdapter);
+            RV_Guides.setAdapter(mAdapter);*/
         }
 
 
     }
 
     private void getAllGuides() {
-        for (QueryDocumentSnapshot document : Objects.requireNonNull(mGuide.getAllGuides().getResult())) {
+        /*for (QueryDocumentSnapshot document : Objects.requireNonNull(mGuide.getAllGuides().getResult())) {
             Guide guide = new Guide(
                     (int)       document.getData().get(Guide.KEY_CATEGORY),
                     (String)    document.getData().get(Guide.KEY_ID),
@@ -192,7 +192,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
             );
 
             guides.add(guide);
-        }
+        }*/
     }
 
     private ArrayList<Guide> getListOfGuides(int category) {
