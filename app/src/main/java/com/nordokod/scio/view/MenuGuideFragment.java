@@ -1,7 +1,9 @@
 package com.nordokod.scio.view;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Entity;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.AppCompatImageView;
@@ -15,19 +17,20 @@ import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Guide;
 
 public class MenuGuideFragment extends BottomSheetDialogFragment implements BasicFragment {
-
+    private MainActivity activity;
     private Context context;
-    private MainController mainController;
     private Guide guide;
+    private com.nordokod.scio.model.Guide mGuide;
     private AppCompatTextView TV_Study_Guide, TV_Edit_Guide, TV_Delete_Guide, TV_Share_Guide, TV_Add_Question, TV_Edit_Question, TV_Delete_Question, TV_Topic;
     private AppCompatImageView IV_Icon;
 
     public MenuGuideFragment() { }
 
     @SuppressLint("ValidFragment")
-    public MenuGuideFragment(Context context, MainController mainController, Guide guide) {
+    public MenuGuideFragment(Context context, MainActivity activity, com.nordokod.scio.model.Guide mGuide, Guide guide) {
+        this.activity = activity;
         this.context = context;
-        this.mainController = mainController;
+        this.mGuide = mGuide;
         this.guide = guide;
     }
 
@@ -98,8 +101,8 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
         TV_Add_Question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainController.onCloseFragment("Menu Guide");
-                mainController.onNewQuestionDialog(guide);
+                activity.onCloseFragment("Menu Guide");
+                activity.onNewQuestionDialog(guide);
             }
         });
 

@@ -1,35 +1,40 @@
 package com.nordokod.scio.view;
 
 
-import android.app.Dialog;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
+import android.util.SparseArray;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
+import android.view.ViewGroup;
 
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
+import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.nordokod.scio.R;
-import com.nordokod.scio.controller.MainController;
-import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.model.User;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -39,25 +44,26 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationMenu;
-    private BottomNavigationView navigationBar;
-    private FrameLayout frameLayout;
     private Toolbar toolbar;
     private ActionBar actionBar;
+
+    private User user;
+
+    // Objetos para el menú de navegación inferior
+    private AHBottomNavigation bottomNavigation;
+    private AHBottomNavigationItem itemHome, itemCreate, itemGuides;
+    private NoSwipePager viewPager;
+    private BottomBarAdapter pagerAdapter;
 
     private CircleImageView CIV_Photo;
     private AppCompatTextView TV_Name, BTN_Logout;
 
-    private HomeFragment    homeFragment;
-    private NewGuideFragment createFragment;
-    private GuidesFragment  guidesFragment;
+    private HomeFragment homeFragment;
+    private CreateFragment createFragment;
+    private NewGuideFragment newGuideFragment;
+    private GuidesFragment guidesFragment;
     private DialogFragment dialogFragment;
     private Fragment selectedFragment = null;
-
-
-    private MainController mainController;
-
-    private Dialog noticeDialog;
-    private static final int NOTICE_DIALOG_TIME = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,31 +72,59 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
         initComponents();
         initListeners();
-
-        navigationBar.setSelectedItemId(R.id.NAV_Home);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void initComponents() {
-        drawerLayout    = findViewById(R.id.DrawerLayout);
-        navigationMenu  = findViewById(R.id.NAV_Menu);
-        navigationBar   = findViewById(R.id.NAV_Bar);
-        frameLayout     = findViewById(R.id.FL_Main);
+        drawerLayout        = findViewById(R.id.DrawerLayout);
+        navigationMenu      = findViewById(R.id.NAV_Menu);
+
+        // Bottom Navigation Bar
+        itemHome            = new AHBottomNavigationItem(R.string.navbar_title_home, R.drawable.ic_home, R.color.onSurfaceColor);
+        itemCreate          = new AHBottomNavigationItem(R.string.navbar_title_create, R.drawable.ic_new, R.color.onSurfaceColor);
+        itemGuides          = new AHBottomNavigationItem(R.string.navbar_title_guides, R.drawable.ic_my_guides, R.color.onSurfaceColor);
+
+        bottomNavigation    = findViewById(R.id.NAV_Bar);
+        bottomNavigation.addItem(itemHome);
+        bottomNavigation.addItem(itemCreate);
+        bottomNavigation.addItem(itemGuides);
+        //bottomNavigation.setTranslucentNavigationEnabled(true);
+        //bottomNavigation.setCurrentItem(0);
+        //bottomNavigation.setColored(true);
+        //bottomNavigation.setDefaultBackgroundResource(R.color.backgroundColor);
+        bottomNavigation.setColoredModeColors(Color.WHITE, R.color.iconNormalColor);
+        bottomNavigation.setForceTint(true);
+        //bottomNavigation.setAccentColor(R.color.iconSelectedColor);
+        //bottomNavigation.setInactiveColor(R.color.iconNormalColor);
+        bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
+
+        viewPager       = findViewById(R.id.VP_Main);
+        viewPager.setPagingEnabled(false);
+        pagerAdapter    = new BottomBarAdapter(getSupportFragmentManager());
+
+        homeFragment    = new HomeFragment(this, this);
+        pagerAdapter.addFragment(homeFragment);
+        createFragment  = new CreateFragment(this, this);
+        pagerAdapter.addFragment(createFragment);
+        guidesFragment  = new GuidesFragment(this, this);
+        pagerAdapter.addFragment(guidesFragment);
+
+        newGuideFragment = new NewGuideFragment(this, this);
+
+        viewPager.setAdapter(pagerAdapter);
+
         toolbar         = findViewById(R.id.Toolbar);
 
-        mainController  = new MainController(this,this);
-        homeFragment    = new HomeFragment(this, this);
-        createFragment  = new NewGuideFragment(this,mainController );
-        guidesFragment  = new GuidesFragment(this, mainController, this);
+        // Botón para cerrar sesión
+        BTN_Logout      = navigationMenu.findViewById(R.id.BTN_Logout);
 
-        BTN_Logout = navigationMenu.findViewById(R.id.BTN_Logout);
+        View header     = navigationMenu.getHeaderView(0);
 
-        View header=navigationMenu.getHeaderView(0);
+        CIV_Photo       = header.findViewById(R.id.CIV_Photo);
+        TV_Name         = header.findViewById(R.id.TV_Name);
 
-        CIV_Photo = header.findViewById(R.id.CIV_Photo);
-        TV_Name = header.findViewById(R.id.TV_Name);
-
-        mainController.loadGuides();
+        //mainController.loadGuides();
 
         // Toolbar
         setSupportActionBar(toolbar);
@@ -99,64 +133,88 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
-        mainController.requestPhoto();
+        //mainController.requestPhoto();
 
-        TV_Name.setText(mainController.getName());
+        //TV_Name.setText(mainController.getName());
     }
 
     @Override
     public void initListeners() {
-        navigationBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.NAV_Home:
-                        selectedFragment = new HomeFragment();
-                        break;
-                    case R.id.NAV_Create:
-                        dialogFragment = createFragment;
+            public boolean onTabSelected(int position, boolean wasSelected) {
+                switch (position) {
+                    case 0:
+                        if (!wasSelected) {
+                            viewPager.setCurrentItem(position);
+                        } else {
+
+                        }
+                        return true;
+                    case 1:
+                        viewPager.setCurrentItem(position);
+
+                        dialogFragment = newGuideFragment;
 
                         dialogFragment.show(getSupportFragmentManager(), "New Guide");
-                        break;
-                    case R.id.NAV_Guides:
-                        selectedFragment = guidesFragment;
-                        break;
+                        return true;
+                    case 2:
+                        if (!wasSelected) {
+                            viewPager.setCurrentItem(position);
+                        } else {
+
+                        }
+                        return true;
                 }
-
-                getSupportFragmentManager().beginTransaction().replace(R.id.FL_Main, selectedFragment).commit();
-
-                return true;
+                return false;
             }
         });
 
         BTN_Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mainController.logOut();
+                user = new User();
+                user.logOut();
             }
         });
     }
 
     public void onNewQuestionDialog(Guide guide) {
-        dialogFragment = new NewQuestionFragment(this, mainController, guide);
+        dialogFragment = new NewQuestionFragment(this, this, guide);
         dialogFragment.show(getSupportFragmentManager(), "New Question");
     }
 
+    /**
+     * Método para inicializar Fragment para la pregunta de tipo Opción muultiple y mostrarlo.
+     * @param guide
+     */
     public void onNewMultipleChoiceQuestionDialog(Guide guide) {
-        dialogFragment = new NewMultipleChoiceQuestionFragment(this, mainController, guide);
+        dialogFragment = new NewMultipleChoiceQuestionFragment(this, this, guide);
         dialogFragment.show(getSupportFragmentManager(), "New Multiple Choice");
     }
 
+    /**
+     * Método para inicializar Fragment para la pregunta de tipo Respuesta abierta y mostrarlo.
+     * @param guide
+     */
     public void onNewOpenAnswerQuestionDialog(Guide guide) {
-        dialogFragment = new NewOpenAnswerQuestionFragment(this, mainController, guide);
+        dialogFragment = new NewOpenAnswerQuestionFragment(this, this, guide);
         dialogFragment.show(getSupportFragmentManager(), "New Open Answer");
     }
 
+    /**
+     * Método para inicializar Fragment para la pregunta de tipo Verdadero/Falso y mostrarlo.
+     * @param guide
+     */
     public void onNewTrueFalseQuestionDialog(Guide guide) {
-        dialogFragment = new NewTrueFalseQuestionFragment(this, mainController, guide);
+        dialogFragment = new NewTrueFalseQuestionFragment(this, this, guide);
         dialogFragment.show(getSupportFragmentManager(), "New TrueFalse");
     }
 
+    /**
+     * Método para cerrar Fragments según su tag.
+     * @param tag
+     */
     public void onCloseFragment(String tag) {
         switch (tag) {
             case "New Guide":
@@ -181,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     }
 
     public void onClickCategoryListener(View view) {
-        createFragment.onClickCategoryListener(view);
+        //createFragment.onClickCategoryListener(view);
     }
 
     @Override
@@ -210,107 +268,6 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         Toasty.warning(this, R.string.message_unselected_answer_warning).show();
     }
 
-    @Override
-    public void showSuccessNoticeDialog(String task) {
-        if (noticeDialog == null)
-            noticeDialog = new Dialog(this);
-        else if (noticeDialog.isShowing()) {
-            noticeDialog.dismiss();
-        }
-
-        noticeDialog.setContentView(R.layout.dialog_success);
-        noticeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
-        noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
-        noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
-
-        AppCompatTextView message = noticeDialog.findViewById(R.id.TV_Message);
-        message.setText(R.string.message_save_success);
-
-        noticeDialog.show();
-
-        Handler handler;
-        handler = new Handler();
-        handler.postDelayed(new Runnable(){
-            public void run(){
-                noticeDialog.cancel();
-                noticeDialog.dismiss();
-                noticeDialog = null;
-            }
-        }, 1000);
-
-        handler = null;
-        if(dialogFragment!=null)
-            dialogFragment.dismiss();
-    }
-
-    @Override
-    public void showErrorNoticeDialog(Error error) {
-
-        if (noticeDialog == null)
-            noticeDialog = new Dialog(this);
-        else if (noticeDialog.isShowing()) {
-            noticeDialog.dismiss();
-        }
-
-        noticeDialog.setContentView(R.layout.dialog_error);
-        Objects.requireNonNull(noticeDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
-        noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
-        noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
-
-        AppCompatTextView errorMessage  = noticeDialog.findViewById(R.id.TV_Message);
-        AppCompatImageView image        = noticeDialog.findViewById(R.id.IV_Error);
-
-        if (error.getDescriptionResource() != 0) {
-            AppCompatTextView errorDescription = noticeDialog.findViewById(R.id.TV_Description);
-            errorDescription.setVisibility(View.VISIBLE);
-            errorDescription.setText(error.getDescriptionResource());
-        }else if (error.getDescriptionText() != null) {
-            AppCompatTextView errorDescription = noticeDialog.findViewById(R.id.TV_Description);
-            errorDescription.setVisibility(View.VISIBLE);
-            errorDescription.setText(error.getDescriptionText());
-        }
-
-        switch (error.getType()) {
-            case Error.EMPTY_FIELD:
-                image.setVisibility(View.GONE);
-                errorMessage.setText(R.string.message_emptyfields_error);
-                break;
-            case Error.CONNECTION:
-                image.setVisibility(View.GONE);
-                errorMessage.setText(R.string.message_connection_error);
-                break;
-            case  Error.GUY_FROM_THE_FUTURE:
-                image.setVisibility(View.GONE);
-                errorMessage.setText(R.string.message_from_the_future_error);
-                break;
-            case  Error.WHEN_SAVING_ON_DATABASE:
-                image.setVisibility(View.GONE);
-                errorMessage.setText("Error Guardando la guía");
-                break;
-            default:
-                image.setVisibility(View.GONE);
-                errorMessage.setText(R.string.message_error);
-                break;
-        }
-        noticeDialog.show();
-
-        Handler handler;
-        handler = new Handler();
-        handler.postDelayed(new Runnable(){
-            public void run(){
-                if (noticeDialog != null) {
-                    noticeDialog.cancel();
-                    noticeDialog.dismiss();
-                    noticeDialog = null;
-                }
-            }
-        }, NOTICE_DIALOG_TIME);
-
-        handler = null;
-    }
-
     public void setUserPhoto(Bitmap photo){
         CIV_Photo.setImageBitmap(photo);
     }
@@ -319,17 +276,6 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         CIV_Photo.setImageResource(R.drawable.default_photo);
     }
 
-    @Override
-    protected void onDestroy() {
-        dismissProgressDialog();
-        super.onDestroy();
-    }
-
-    private void dismissProgressDialog() {
-        if (noticeDialog != null && noticeDialog.isShowing()) {
-            noticeDialog.dismiss();
-        }
-    }
     public void refreshGuides(){
         Log.d("testeo","refresh");
         if(guidesFragment!=null&&selectedFragment==guidesFragment){
@@ -337,4 +283,65 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
             guidesFragment.onBackFragment();
         }
     }
+
+    /**
+     *
+     */
+    abstract class SmartFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
+        private SparseArray<Fragment> registeredFragments = new SparseArray<>(3);
+
+        public SmartFragmentStatePagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            registeredFragments.put(position, fragment);
+            return fragment;
+        }
+
+        // Remueve el Fragment cuando está inactivo.
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            registeredFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
+
+        // Regresa el Fragment de la pocisión especificada si está instanciado.
+        public Fragment getRegisteredFragment(int position) {
+            return registeredFragments.get(position);
+        }
+    }
+
+    /**
+     *
+     */
+    public class BottomBarAdapter extends SmartFragmentStatePagerAdapter {
+        private final List<Fragment> fragments = new ArrayList<>();
+
+        public BottomBarAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        public void addFragment(Fragment fragment) {
+            fragments.add(fragment);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
+
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+    }
+
+    /**
+     * ViewPager personalizado para desactivar el swipe.
+     */
+
 }

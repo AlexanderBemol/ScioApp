@@ -12,6 +12,8 @@ import android.widget.DatePicker;
 
 import com.nordokod.scio.R;
 
+import java.util.Objects;
+
 public class FirstConfigurationBirthdayFragment extends Fragment implements BasicFragment{
 
     private AppCompatEditText ET_Birthday;
@@ -49,12 +51,11 @@ public class FirstConfigurationBirthdayFragment extends Fragment implements Basi
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 final String selectedDate = twoDigits(dayOfMonth) + "/" + twoDigits(month + 1) + "/" + year;
-
                 ET_Birthday.setText(selectedDate);
             }
         });
 
-        datePickerFragment.show(getActivity().getFragmentManager(), "datePicker");
+        datePickerFragment.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "datePicker");
     }
 
     /**
@@ -68,6 +69,6 @@ public class FirstConfigurationBirthdayFragment extends Fragment implements Basi
     }
 
     public String getBirthday() {
-        return ET_Birthday.getText().toString();
+        return Objects.requireNonNull(ET_Birthday.getText()).toString();
     }
 }

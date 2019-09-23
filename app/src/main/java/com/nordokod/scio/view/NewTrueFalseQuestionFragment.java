@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -16,15 +15,18 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.constants.KindOfQuestion;
 import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.TrueFalseQuestion;
+import com.nordokod.scio.model.Question;
 
 import java.util.Objects;
 
 public class NewTrueFalseQuestionFragment extends BottomSheetDialogFragment implements BasicFragment {
 
     private Context context;
-    private MainController mainController;
+    private MainActivity activity;
     private Guide guide;
 
     private AppCompatEditText ET_Question;
@@ -38,9 +40,9 @@ public class NewTrueFalseQuestionFragment extends BottomSheetDialogFragment impl
     public NewTrueFalseQuestionFragment() { }
 
     @SuppressLint("ValidFragment")
-    public NewTrueFalseQuestionFragment(Context context, MainController mainController, Guide guide) {
+    public NewTrueFalseQuestionFragment(Context context, MainActivity activity, Guide guide) {
         this.context = context;
-        this.mainController = mainController;
+        this.activity = activity;
         this.guide = guide;
     }
 
@@ -90,7 +92,7 @@ public class NewTrueFalseQuestionFragment extends BottomSheetDialogFragment impl
             @Override
             public void onClick(View v) {
                 BTN_Cancel.startAnimation(press);
-                mainController.onCloseFragment("New TrueFalse");
+                activity.onCloseFragment("New TrueFalse");
             }
         });
 
@@ -98,10 +100,13 @@ public class NewTrueFalseQuestionFragment extends BottomSheetDialogFragment impl
             @Override
             public void onClick(View v) {
                 BTN_Create.startAnimation(press);
-                if (preview_answer > 0)
-                    mainController.onSaveTrueFalseQuestion(guide, Objects.requireNonNull(ET_Question.getText()).toString(), answer);
-                else
-                    mainController.onUnselectedAnswer();
+                if (preview_answer > 0) {
+                    TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion(0, Objects.requireNonNull(ET_Question.getText().toString()), KindOfQuestion.TRUE_FALSE.getCode(), answer);
+
+                    Question question = new Question();
+                    question.addQuestion(KindOfQuestion.TRUE_FALSE, guide, trueFalseQuestion);
+                }else
+                    activity.onUnselectedAnswer();
             }
         });
     }

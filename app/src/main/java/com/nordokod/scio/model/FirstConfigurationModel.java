@@ -132,7 +132,7 @@ public class FirstConfigurationModel {
         intent.setType("image/*");
         String[] mimeTypes = {"image/jpeg", "image/png"};
         intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
-        currentActivity.startActivityForResult(intent, AppConstants.GALLERY_REQUEST_CODE);//lanzar selector
+        //currentActivity.startActivityForResult(intent, AppConstants.GALLERY_REQUEST_CODE);//lanzar selector
     }
 
     /**

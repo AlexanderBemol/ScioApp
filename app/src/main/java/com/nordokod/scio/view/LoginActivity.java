@@ -35,21 +35,19 @@ import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseError;
-import com.google.firebase.FirebaseException;
-import com.google.firebase.FirebaseNetworkException;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
-import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
+import com.nordokod.scio.entity.InputDataException;
+import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.User;
+import com.nordokod.scio.process.ExceptionManager;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.CancellationException;
+
 import com.nordokod.scio.constants.*;
 
 import javax.annotation.Nullable;
@@ -127,7 +125,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                 }).addOnCanceledListener(new OnCanceledListener() {
                     @Override
                     public void onCanceled() {
-                        showError(new Exception());
+                        showError(new OperationCanceledException());
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -175,10 +173,39 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         BTN_Login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                BTN_Login.startAnimation(press);
-                //programar lógica de iniciar sesión, usar userModel.signInWithMail, revisar vacíos etc.
-                //showLoginLoadingDialog();
-
+                try{
+                    BTN_Login.startAnimation(press);
+                    showLoginLoadingDialog();
+                    if(Objects.requireNonNull(ET_Mail.getText()).toString().length()==0 || Objects.requireNonNull(ET_Password.getText()).toString().length()==0){
+                        showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
+                    }else {
+                        com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
+                        user.setEmail(ET_Mail.getText().toString());
+                        user.setPassword(ET_Password.getText().toString());
+                        userModel.signInWithMail(user).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                if (authResult.getAdditionalUserInfo().isNewUser()) {
+                                    goToFirstConfigurationView();
+                                } else {
+                                    goToMainView();
+                                }
+                            }
+                        }).addOnCanceledListener(new OnCanceledListener() {
+                            @Override
+                            public void onCanceled() {
+                                showError(new OperationCanceledException());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                showError(e);
+                            }
+                        });
+                    }
+                }catch(Exception e){
+                    showError(e);
+                }
             }
         });
 
@@ -214,7 +241,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                         }).addOnCanceledListener(new OnCanceledListener() {
                             @Override
                             public void onCanceled() {
-                                showError(new Exception());
+                                showError(new OperationCanceledException());
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -225,11 +252,11 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                     }
                     @Override
                     public void onCancel() {
-                        showError(new Exception());
+                        showError(new OperationCanceledException());
                     }
                     @Override
                     public void onError(FacebookException error) {
-                        showError(new Exception());
+                        showError(error);
                     }
                 });
             }
@@ -255,7 +282,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
 
     @Override
     public void showErrorNoticeDialog(Error error) {
-
+        /*
         if (noticeDialog == null)
             noticeDialog = new Dialog(this);
         else if (noticeDialog.isShowing()) {
@@ -320,7 +347,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
             }
         }, NOTICE_DIALOG_TIME);
 
-        handler = null;
+        handler = null;*/
     }
 
     @Override
@@ -361,14 +388,14 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
 
     private void goToFirstConfigurationView(){
         Intent firstConfigurationIntent = new Intent(this,FirstConfigurationActivity.class);
-        startActivity(firstConfigurationIntent);
         dismissProgressDialog();
+        startActivity(firstConfigurationIntent);
     }
 
     private void goToMainView(){
         Intent mainIntent = new Intent(this,MainActivity.class);
-        startActivity(mainIntent);
         dismissProgressDialog();
+        startActivity(mainIntent);
     }
     private void goToSignUpView(){
         Intent signUpIntent = new Intent(this,SignupActivity.class);
@@ -376,20 +403,8 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         dismissProgressDialog();
     }
     private void showError(Exception exception){
-        Log.d("testing",exception.getLocalizedMessage());
-        ErrorMessage errorMessage;
-        if(exception instanceof FirebaseAuthInvalidCredentialsException){
-            errorMessage=ErrorMessage.E_03;
-        }
-        else if(exception instanceof FirebaseAuthInvalidUserException){
-            errorMessage=ErrorMessage.E_03;
-        }
-        else if(exception instanceof FirebaseAuthUserCollisionException){
-            errorMessage=ErrorMessage.E_13;
-        }
-        else if(exception instanceof FirebaseNetworkException){
-            errorMessage=ErrorMessage.E_02;
-        }
+        ExceptionManager exceptionManager = new ExceptionManager();
+        exceptionManager.showErrorMessage(this,exceptionManager.categorizeException(exception),noticeDialog);
         dismissProgressDialog();
     }
 

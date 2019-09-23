@@ -88,4 +88,8 @@ public class Guide {
     public void setDatetime(Date datetime) {
         this.datetime = datetime;
     }
+
+    public int getDaysLeft(){
+        return this.datetime.compareTo(new Date());
+    }
 }

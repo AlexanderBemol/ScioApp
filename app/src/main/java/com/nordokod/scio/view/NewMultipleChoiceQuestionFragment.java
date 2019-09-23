@@ -1,11 +1,9 @@
 package com.nordokod.scio.view;
 
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.SwitchCompat;
@@ -16,15 +14,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.nordokod.scio.R;
-import com.nordokod.scio.controller.MainController;
+import com.nordokod.scio.constants.KindOfQuestion;
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.MultipleChoiceQuestion;
+import com.nordokod.scio.model.Question;
 
 import java.util.Objects;
 
 public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment implements BasicFragment {
 
     private Context context;
-    private MainController mainController;
+    private MainActivity activity;
     private Guide guide;
 
     private AppCompatEditText ET_Question, ET_Option_1, ET_Option_2, ET_Option_3, ET_Option_4;
@@ -36,9 +36,9 @@ public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment
     public NewMultipleChoiceQuestionFragment() { }
 
     @SuppressLint("ValidFragment")
-    public NewMultipleChoiceQuestionFragment(Context context, MainController mainController, Guide guide) {
+    public NewMultipleChoiceQuestionFragment(Context context, MainActivity activity, Guide guide) {
         this.context = context;
-        this.mainController = mainController;
+        this.activity = activity;
         this.guide = guide;
     }
 
@@ -77,7 +77,7 @@ public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment
             @Override
             public void onClick(View v) {
                 BTN_Cancel.startAnimation(press);
-                mainController.onCloseFragment("New Multiple Choice");
+                activity.onCloseFragment("New Multiple Choice");
             }
         });
 
@@ -85,17 +85,18 @@ public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment
             @Override
             public void onClick(View v) {
                 BTN_Create.startAnimation(press);
-                mainController.onSaveMultipleChoiceQuestion(
+
+                MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion(0, Objects.requireNonNull(ET_Question.getText()).toString(), KindOfQuestion.MULTIPLE_CHOICE.getCode());
+                multipleChoiceQuestion.addAnswer(Objects.requireNonNull(ET_Option_1.getText()).toString(), Switch_Option_1.isChecked());
+                multipleChoiceQuestion.addAnswer(Objects.requireNonNull(ET_Option_2.getText()).toString(), Switch_Option_2.isChecked());
+                multipleChoiceQuestion.addAnswer(Objects.requireNonNull(ET_Option_3.getText()).toString(), Switch_Option_3.isChecked());
+                multipleChoiceQuestion.addAnswer(Objects.requireNonNull(ET_Option_4.getText()).toString(), Switch_Option_4.isChecked());
+
+                Question question = new Question();
+                question.addQuestion(
+                        KindOfQuestion.MULTIPLE_CHOICE,
                         guide,
-                        Objects.requireNonNull(ET_Question.getText()).toString(),
-                        Objects.requireNonNull(ET_Option_1.getText()).toString(),
-                        Objects.requireNonNull(ET_Option_2.getText()).toString(),
-                        Objects.requireNonNull(ET_Option_3.getText()).toString(),
-                        Objects.requireNonNull(ET_Option_4.getText()).toString(),
-                        Switch_Option_1.isChecked(),
-                        Switch_Option_2.isChecked(),
-                        Switch_Option_3.isChecked(),
-                        Switch_Option_4.isChecked()
+                        multipleChoiceQuestion
                 );
             }
         });

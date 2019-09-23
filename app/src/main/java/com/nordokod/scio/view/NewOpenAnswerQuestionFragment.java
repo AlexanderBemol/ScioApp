@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
@@ -14,13 +13,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.constants.KindOfQuestion;
 import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.OpenQuestion;
+import com.nordokod.scio.model.Question;
 
 public class NewOpenAnswerQuestionFragment extends BottomSheetDialogFragment implements BasicFragment {
 
     private Context context;
-    private MainController mainController;
+    private MainActivity activity;
     private Guide guide;
 
     private AppCompatEditText ET_Question, ET_Answer;
@@ -31,9 +33,9 @@ public class NewOpenAnswerQuestionFragment extends BottomSheetDialogFragment imp
     public NewOpenAnswerQuestionFragment() { }
 
     @SuppressLint("ValidFragment")
-    public NewOpenAnswerQuestionFragment(Context context, MainController mainController, Guide guide) {
+    public NewOpenAnswerQuestionFragment(Context context, MainActivity activity, Guide guide) {
         this.context = context;
-        this.mainController = mainController;
+        this.activity = activity;
         this.guide = guide;
     }
 
@@ -63,7 +65,7 @@ public class NewOpenAnswerQuestionFragment extends BottomSheetDialogFragment imp
             @Override
             public void onClick(View v) {
                 BTN_Cancel.startAnimation(press);
-                mainController.onCloseFragment("New Open Answer");
+                activity.onCloseFragment("New Open Answer");
             }
         });
 
@@ -71,7 +73,11 @@ public class NewOpenAnswerQuestionFragment extends BottomSheetDialogFragment imp
             @Override
             public void onClick(View v) {
                 BTN_Create.startAnimation(press);
-                mainController.onSaveOpenAnswerQuestion(guide, ET_Question.getText().toString(), ET_Answer.getText().toString());
+
+                OpenQuestion openQuestion = new OpenQuestion(0, ET_Question.getText().toString(), KindOfQuestion.OPEN.getCode(), ET_Answer.getText().toString());
+
+                Question question = new Question();
+                question.addQuestion(KindOfQuestion.OPEN, guide, openQuestion);
             }
         });
     }

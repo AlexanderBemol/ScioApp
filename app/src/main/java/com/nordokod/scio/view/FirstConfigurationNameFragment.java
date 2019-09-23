@@ -1,5 +1,6 @@
 package com.nordokod.scio.view;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,14 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.nordokod.scio.R;
 import com.nordokod.scio.controller.FirstConfigurationController;
+import com.nordokod.scio.entity.InvalidValueException;
+import com.nordokod.scio.entity.OperationCanceledException;
+import com.nordokod.scio.model.User;
+
+import java.util.Objects;
 
 public class FirstConfigurationNameFragment extends Fragment implements BasicFragment {
 
     private AppCompatEditText ET_Name;
-    private FirstConfigurationController firstConfigurationController;
-
+    private FirstConfigurationActivity firstConfigurationActivity;
+    private User userModel;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle s) {
@@ -28,6 +36,7 @@ public class FirstConfigurationNameFragment extends Fragment implements BasicFra
     @Override
     public void initComponents(View view) {
         ET_Name = view.findViewById(R.id.txtName);
+        userModel = new User();
     }
 
     @Override
@@ -35,20 +44,35 @@ public class FirstConfigurationNameFragment extends Fragment implements BasicFra
 
     }
 
-    protected void configFragment(FirstConfigurationController controller) {
-        this.firstConfigurationController = controller;
+    protected void configFragment(FirstConfigurationActivity firstConfigurationActivity) {
+        this.firstConfigurationActivity=firstConfigurationActivity;
     }
+
     public void loadDefaultName(){
-        setName(this.firstConfigurationController.getName());
+        try {
+            setName(userModel.getBasicUserInfo().getUsername());
+        } catch (Exception e) {
+            firstConfigurationActivity.showError(e);
+        }
     }
     public void setName(String name) {
         ET_Name.setText(name);
     }
     public String getName(){
-        return ET_Name.getText().toString();
+        return Objects.requireNonNull(ET_Name.getText()).toString();
     }
-    public void updateName(){
-        String name=ET_Name.getText().toString();
 
+    public void updateName() {
+        userModel.updateUsername(getName()).addOnCanceledListener(new OnCanceledListener() {
+            @Override
+            public void onCanceled() {
+                firstConfigurationActivity.showError(new OperationCanceledException());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                firstConfigurationActivity.showError(e);
+            }
+        });
     }
 }

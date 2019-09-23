@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -21,15 +22,29 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Gallery;
 
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.UploadTask;
+import com.nordokod.scio.constants.RequestCode;
+import com.nordokod.scio.constants.Utilities;
 import com.nordokod.scio.controller.FirstConfigurationController;
 import com.nordokod.scio.entity.AppConstants;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
 //import com.soundcloud.android.crop.Crop;
+import com.nordokod.scio.entity.InputDataException;
+import com.nordokod.scio.entity.OperationCanceledException;
+import com.nordokod.scio.model.User;
+import com.nordokod.scio.process.ExceptionManager;
 import com.soundcloud.android.crop.Crop;
 import com.victor.loading.newton.NewtonCradleLoading;
 
+import java.io.File;
+import java.util.Date;
 import java.util.Objects;
+import java.util.logging.ErrorManager;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -61,7 +76,8 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
     /**
      * Obejeto del controlador perteneciente a esta Activity.
      */
-    private FirstConfigurationController firstConfigurationController;
+    //private FirstConfigurationController firstConfigurationController;
+    private User userModel;
 
     //==============================================================================================
     // ON CREATE
@@ -94,10 +110,8 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         viewPager.setAdapter(fragmentStatePagerAdapter);
         circleIndicator.setViewPager(viewPager);
 
-        firstConfigurationController = new FirstConfigurationController(this, this, this);
-
-        photoFragment.configFragment(firstConfigurationController);
-        nameFragment.configFragment(firstConfigurationController);
+        photoFragment.configFragment(this);
+        nameFragment.configFragment(this);
         //birthdayFragment.configFragment(firstConfigurationController);
         //educationFragment.configFragment(firstConfigurationController);
         //appBlockFragment.configAdapter(firstConfigurationController,this);
@@ -123,7 +137,6 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                 int screen_number = viewPager.getCurrentItem();
                 switch (screen_number) {
                     case 0:
-                        photoFragment.skip();
                         viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
                         break;
                     /*case 4:
@@ -181,11 +194,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                         break;*/
                     case 4:
                         BTN_Next.setVisibility(View.GONE);
-                        if (validateFields(nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation()))
-                            completeFragment.onComplete();
-                        else
-                            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
-                        //BTN_Skip.setText(R.string.txt_btnDone);
+                        //validar
                         break;
                     default:
                         BTN_Skip.setText(R.string.txt_BTN_Skip);
@@ -196,11 +205,18 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
 
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position == 4)
-                    if (validateFields(nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation()))
-                        saveConfiguration(nameFragment.getName(), birthdayFragment.getBirthday(), educationFragment.getEducation());
-                    else
-                        viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
+                switch (position){
+                    case 2:
+                        if (validateUsername(nameFragment.getName()))
+                            nameFragment.updateName();
+                        else
+                            showError(new InputDataException(InputDataException.Code.INVALID_USERNAME));
+                        break;
+                    case 3:
+
+                        break;
+                }
+
             }
 
             @Override
@@ -208,83 +224,16 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
         });
     }
 
-    @Override
+
     public void showErrorNoticeDialog(Error error) {
-        if (noticeDialog == null)
-            noticeDialog = new Dialog(this);
-        else if (noticeDialog.isShowing()) {
-            noticeDialog.dismiss();
-        }
 
-        noticeDialog.setContentView(R.layout.dialog_error);
-        Objects.requireNonNull(noticeDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
-        noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
-        noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
-
-        AppCompatTextView errorMessage  = noticeDialog.findViewById(R.id.TV_Message);
-        AppCompatImageView image        = noticeDialog.findViewById(R.id.IV_Error);
-
-        if (error.getDescriptionResource() != 0) {
-            AppCompatTextView errorDescription = noticeDialog.findViewById(R.id.TV_Description);
-            errorDescription.setVisibility(View.VISIBLE);
-            errorDescription.setText(error.getDescriptionResource());
-        }
-
-        switch (error.getType()) {
-            case Error.GENERAL:
-                image.setVisibility(View.GONE);
-                errorMessage.setText(R.string.message_error);
-                break;
-            case Error.EMPTY_FIELD:
-                image.setVisibility(View.GONE);
-                errorMessage.setText(R.string.message_emptyfields_error);
-                break;
-            case Error.GUY_FROM_THE_FUTURE:
-                image.setVisibility(View.GONE);
-                errorMessage.setText(R.string.message_from_the_future_error);
-                viewPager.setCurrentItem(3);
-                break;
-            case Error.WHEN_SAVING_ON_DEVICE:
-                errorMessage.setText(R.string.message_save_error);
-                break;
-            case Error.WHEN_SAVING_ON_DATABASE:
-                errorMessage.setText(R.string.message_save_error);
-                break;
-            case Error.CONNECTION:
-                errorMessage.setText(R.string.message_connection_error);
-                break;
-            case Error.MAXIMUM_NUMBER_OF_APPS_REACHED:
-                errorMessage.setText(R.string.message_max_apps_reached_error);
-                break;
-            case Error.INVALID_USER_NAME:
-                //errorMessage.setText(R.string.message_invalid_name);
-                viewPager.setCurrentItem(2);
-                break;
-            default:
-                image.setVisibility(View.GONE);
-                errorMessage.setText(R.string.message_error);
-                break;
-        }
-
-        noticeDialog.show();
-
-        Handler handler;
-        handler = new Handler();
-        handler.postDelayed(new Runnable(){
-            public void run(){
-                if (noticeDialog != null) {
-                    noticeDialog.cancel();
-                    noticeDialog.dismiss();
-                    noticeDialog = null;
-                }
-            }
-        }, 1500);
-
-        handler = null;
     }
 
-    @Override
+    public void validatePage(int index){
+
+    }
+
+
     public void showSuccessNoticeDialog(String task) {
         if (noticeDialog == null)
             noticeDialog = new Dialog(this);
@@ -352,48 +301,72 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
     };
 
     /**
-     *  Método que manda a guardar los datos del usuario.
+     * Validar el nombre de usuario
+     * @param username nombre de usuario
+     * @return true=valido
      */
-    private void saveConfiguration(String name, String birthday, int education) {
-        firstConfigurationController.saveConfiguration(name,birthday,education);
-        //completeFragment.onComplete();
+    private boolean validateUsername(String username){
+        return Utilities.USER_REGULAR_EXPRESSION.matches(username);
     }
 
-    /**
-     * Método que válida si el usuario introdujo los datos necesarios.
-     *
-     * @param name          String - Nombre tecleado por el usuario en la pantalla 1.
-     * @param birthday      String - Fecha elegida por el usuario en la pantalla 2.
-     * @param education     Object - Escolaridad elegida por el usuario en la pantalla 3.
-     *
-     * @return  true    = Todos los datos son válidos.
-     *          false   = Al menos un dato no fué válido.
-     */
-    private boolean validateFields(String name, String birthday, Integer education) {
-        return firstConfigurationController.validateFields(name, birthday, education);
+    private boolean validateBirthday(Date date){
+        return date.before(new Date());
     }
 
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Result code is RESULT_OK only if the user selects an Image
-        if (resultCode == Activity.RESULT_OK)
-            switch (requestCode){
-                case AppConstants.GALLERY_REQUEST_CODE:
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == RequestCode.RC_GALLERY.getCode()) {
+                try{
                     Uri selectedImage = data.getData();
-                    firstConfigurationController.trimPhoto(selectedImage);
-                    break;
-                case Crop.REQUEST_CROP:
+                    String pictureFile = "userPhoto-" +userModel.getBasicUserInfo().getUid()+".jpg";
+                    File storageDir = getFilesDir();
+                    File file=new File(storageDir,pictureFile);    //se crea archivo local para almacenar foto del resultado
+                    if(file.exists()){
+                        file.delete();
+                    }
+                    Crop.of(selectedImage,Uri.fromFile(file)).asSquare().withMaxSize(512,512) .start(this);
+                }catch (Exception e){
+                    showError(e);
+                }
+            } else if (requestCode == Crop.REQUEST_CROP) {
+                try{
                     Uri resultUri = Crop.getOutput(data);
-                    firstConfigurationController.uploadPhoto(resultUri);
-                    break;
+                    userModel.uploadProfilePhoto(resultUri,this).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            photoFragment.setDefaultPhoto();
+                        }
+                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+
+                        }
+                    }).addOnCanceledListener(new OnCanceledListener() {
+                        @Override
+                        public void onCanceled() {
+                            showError(new OperationCanceledException());
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            showError(e);
+                        }
+                    });
+                }catch (Exception e){
+                    showError(e);
+                }
             }
+        }
     }
 
-    public void updatePhoto(){
-        photoFragment.defaultPhoto();
+    public void showError(Exception e){
+        ExceptionManager exceptionManager=new ExceptionManager();
+        exceptionManager.showErrorMessage(this,exceptionManager.categorizeException(e),noticeDialog);
     }
+
     @Override
     protected void onDestroy() {
         dismissProgressDialog();

@@ -17,7 +17,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -30,6 +29,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -166,7 +166,7 @@ public class User {
     /**
      * establecer la información no basica del usuario
      * @param user entidad usuario (se requiere cumpleaños y nivel de estudios)
-     * @return Task con el resultado
+     * @return Task con el resultado0
      */
     public Task<Void> setUserInformation(com.nordokod.scio.entity.User user){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -224,20 +224,19 @@ public class User {
      * @return FileDownload task con el resultado
      * @throws IOException en error en uri, o almacenamiento.
      */
-    public FileDownloadTask getFirebaseProfilePhoto() throws IOException {
+    public Task<byte[]> getFirebaseProfilePhoto() throws IOException {
         String photoPath = Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getPhotoUrl()).toString();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();//obtenemos referencia a la bd
         StorageReference sRef = storage.getReferenceFromUrl(photoPath);//obtenemos la referencia al link
-        File localFile = File.createTempFile("Images", "bmp");//archivo temporal
-        return sRef.getFile(localFile);
+        return sRef.getBytes(1024);
     }
 
     /**
      * Obtener foto de perfil de usuario de Facebook o Google
      * @param customListener listener con acciones de exito o error
      */
-    public void getExternProfilePhoto(DownloadImageProcess.CustomListener customListener){
+    public void getExternalProfilePhoto(DownloadImageProcess.CustomListener customListener){
         String photoPath = Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getPhotoUrl()).toString();
         for (UserInfo profile : Objects.requireNonNull(mAuth.getCurrentUser()).getProviderData()) {
             // check if the provider id matches "facebook.com"
@@ -265,6 +264,16 @@ public class User {
         }else{
             return null;
         }
+    }
+
+    public void saveProfilePhotoInLocal(Context context,Bitmap photo) throws IOException {
+        String pictureFile = "userPhoto-" + Objects.requireNonNull(mAuth.getCurrentUser()).getUid()+".JPEG";
+        File storageDir = context.getFilesDir();
+        File file=new File(storageDir,pictureFile);
+        OutputStream os = new FileOutputStream(file);
+        photo.compress(Bitmap.CompressFormat.JPEG,100,os);
+        os.flush();
+        os.close();
     }
     /**
      * Cerrar Sesión

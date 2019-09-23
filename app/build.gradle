@@ -54,6 +54,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.0.0'
     implementation 'com.roughike:swipe-selector:1.0.6'
     implementation 'com.github.GrenderG:Toasty:1.4.2'
+    implementation 'com.aurelhubert:ahbottomnavigation:2.2.0'
 
     implementation 'com.soundcloud.android:android-crop:1.0.1@aar'
 
@@ -63,6 +64,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:3.0.2"
     androidTestImplementation 'org.mockito:mockito-android:2.27.0'
+    implementation 'com.google.firebase:firebase-invites:17.0.0'
 
 }
 apply plugin: 'com.google.gms.google-services'

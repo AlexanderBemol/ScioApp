@@ -9,10 +9,11 @@ public class InputDataException extends Exception {
         INVALID_MAIL,
         INVALID_PASSWORD,
         INVALID_USERNAME,
-        PASSWORDS_DONT_MATCH;
+        PASSWORDS_DONT_MATCH,
+        EMPTY_FIELD;
     }
     private Code code;
-    InputDataException(Code code){
+    public InputDataException(Code code){
         this.code=code;
     }
 

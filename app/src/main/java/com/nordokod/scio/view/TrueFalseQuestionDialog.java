@@ -127,7 +127,7 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
 
     @Override
     public void showDialog() {
-        if (!dialog.isShowing()) {
+        /*if (!dialog.isShowing()) {
             TV_Category.setText(getCategoryResId(question.getCategory()));
             TV_Topic.setText(question.getTopic());
             TV_Question.setText(question.getQuestion());
@@ -145,7 +145,7 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
             dialog.show();
         } else {
             dialog.dismiss();
-        }
+        }*/
     }
 
 

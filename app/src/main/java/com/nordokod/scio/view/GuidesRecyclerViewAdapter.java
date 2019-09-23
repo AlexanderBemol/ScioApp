@@ -22,7 +22,7 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
 
     private Context context;
     private MainActivity activity;
-    private MainController mainController;
+    private com.nordokod.scio.model.Guide mGuide;
     private ArrayList<Guide> guideArrayList;
     private DialogFragment dialogFragment;
     private int category;
@@ -48,7 +48,7 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
         holder.TV_Topic.setText(guideArrayList.get(position).getTopic());
         holder.TV_Category.setText(getCategoryName());
         holder.TV_Days.setText(context.getResources().getString(R.string.txt_days_left, guideArrayList.get(position).getDaysLeft()));
-        holder.Switch_State.setChecked(guideArrayList.get(position).isIs_actived());
+        holder.Switch_State.setChecked(guideArrayList.get(position).isActivated());
 
         initListeners(holder, position);
     }
@@ -57,7 +57,7 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
         holder.CL_Guide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogFragment = new MenuGuideFragment(context, mainController, guideArrayList.get(position));
+                dialogFragment = new MenuGuideFragment(context, activity, mGuide, guideArrayList.get(position));
                 dialogFragment.show(activity.getSupportFragmentManager(), "Menu Guide");
             }
         });
@@ -79,8 +79,8 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
      * @param //firstConfigurationController - Controlador del Activity.
      */
 
-    public void configAdapter(MainController mainController) {
-        this.mainController = mainController;
+    public void configAdapter(com.nordokod.scio.model.Guide mGuide) {
+        this.mGuide = mGuide;
     }
 
 
