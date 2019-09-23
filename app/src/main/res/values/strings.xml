@@ -202,14 +202,111 @@
     <string name="txt_edittext_mail_hint">Teclea tu correo</string>
     <string name="txt_textview_password_title">Contreseña</string>
     <string name="txt_edittext_password_hint">Teclea tu contraseña</string>
-    <string name="txt_textview_confirm_password_title">Confirmar Constraseña</string>
+    <string name="txt_textview_confirm_password_title">Confirmar Contraseña</string>
     <string name="txt_edittext_confirm_password_hint">Vuelve a teclear tu contraseña</string>
     <string name="txt_textview_notice_terms">Al crear tu cuenta aceptas nuestros terminos y condiciones, y el aviso de privacidad</string>
 
     <!-- ======================================================================================= -->
     <!-- Mensajes de error para usuario -->
     <!-- ======================================================================================= -->
-    
+
+    <string name="NETWORK_PHONE_TITLE">Error de conexión</string>
+    <string name="NETWORK_PHONE_MESSAGE">Para continuar se necesita conexión a internet.</string>
+
+    <string name="NETWORK_FIREBASE_TITLE">Error de conexión</string>
+    <string name="NETWORK_FIREBASE_MESSAGE">Los servidores no están disponibles en éste momento.</string>
+
+    <string name="AUTH_INVALID_CREDENTIALS_TITLE">Error de Autenticación</string>
+    <string name="AUTH_INVALID_CREDENTIALS_MESSAGE">El usuario no está registrado o las credenciales son incorrectas.</string>
+
+    <string name="AUTH_SEND_MAIL_TITLE">Error de Autenticación</string>
+    <string name="AUTH_SEND_MAIL_MESSAGE">No se pudo enviar el correo, reintente más tarde.</string>
+
+    <string name="AUTH_INVALID_USER_TITLE">Error de Autenticación</string>
+    <string name="AUTH_INVALID_USER_MESSAGE">El usuario se encuentra inhabilitado, contacte a soporte.</string>
+
+    <string name="AUTH_USER_COLLISION_TITLE">Error de Autenticación</string>
+    <string name="AUTH_USER_COLLISION_MESSAGE">El correo ya se encuentra registrado.</string>
+
+    <string name="AUTH_UNKNOW_TITLE">Error de Autenticación</string>
+    <string name="AUTH_UNKNOW_MESSAGE">Ocurrió un error, reintente más tarde.</string>
+
+    <string name="FIRESTORE_EXCEPTION_TITLE">Error de Almacenamiento</string>
+    <string name="FIRESTORE_EXCEPTION_MESSAGE">Error al realizar la operación, reintente más tarde.</string>
+
+    <string name="STORAGE_EXCEPTION_TITLE">Error de Almacenamiento</string>
+    <string name="STORAGE_EXCEPTION_MESSAGE">Error al realizar la operación, reintente más tarde.</string>
+
+    <string name="FIREBASE_EXCEPTION_TITLE">Error en los Servidores</string>
+    <string name="FIREBASE_EXCEPTION_MESSAGE">Error al realizar la operación, reintente más tarde.</string>
+
+    <string name="FACEBOOK_EXCEPTION_TITLE">Error de Autenticación</string>
+    <string name="FACEBOOK_EXCEPTION_MESSAGE">Ocurrió un error al iniciar sesión con Facebook.</string>
+
+    <string name="GOOGLE_EXCEPTION_TITLE">Error de Autenticación</string>
+    <string name="GOOGLE_EXCEPTION_MESSAGE">Ocurrió un error al iniciar sesión con Google.</string>
+
+    <string name="USER_PERMISSION_TITLE">Característica Premium</string>
+    <string name="USER_PERMISSION_MESSAGE">Suscribete para acceder a esta característica.</string>
+
+    <string name="CANCELED_OPERATION_TITLE">Operación Cancelada</string>
+    <string name="CANCELED_OPERATION_MESSAGE">Operación cancelada por el usuario.</string>
+
+    <string name="INVALID_INTERN_VALUE_TITLE">Error Interno</string>
+    <string name="INVALID_INTERN_VALUE_MESSAGE">Ocurrió un error, reintente más tarde.</string>
+
+    <string name="DATETIME_AFTER_TITLE">Valor Inválido</string>
+    <string name="DATETIME_AFTER_MESSAGE">La fecha no puede ser despues al día actual.</string>
+
+    <string name="DATETIME_BEFORE_TITLE">Valor Inválido</string>
+    <string name="DATETIME_BEFORE_MESSAGE">La fecha no puede ser anterior al día actual.</string>
+
+    <string name="INVALID_MAIL_TITLE">Valor Inválido</string>
+    <string name="INVALID_MAIL_MESSAGE">El correo introducido es inválido</string>
+
+    <string name="INVALID_PASSWORD_TITLE">Valor Inválido</string>
+    <string name="INVALID_PASSWORD_MESSAGE">La contraseña indtroducida es inválida.</string>
+
+    <string name="INVALID_USERNAME_TITLE">Valor Inválido</string>
+    <string name="INVALID_USERNAME_MESSAGE">El nombre de usuario es inválido.</string>
+
+    <string name="PASSWORDS_DONT_MATCH_TITLE">Valor Inválido</string>
+    <string name="PASSWORDS_DONT_MATCH_MESSAGE">Las contraseñas no coinciden.</string>
+
+    <string name="UNKNOW_EXCEPTION_TITLE">Error Interno</string>
+    <string name="UNKNOW_EXCEPTION_MESSAGE">Ocurrió un error, reintente más tarde.</string>
+
+    <string name="EMPTY_FIELD_TITLE">Valor Inválido</string>
+    <string name="EMPTY_FIELD_MESSAGE">Ningún campo obligatorio puede estar vacío.</string>
+
+    <string name="NO_GUIDES_EXCEPTION_TITLE">Ups!</string>
+    <string name="NO_GUIDES_EXCEPTION_MESSAGE">Aún no has creado ninguna guía.</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </resources>

@@ -16,6 +16,7 @@ import com.google.firebase.storage.StorageException;
 import com.nordokod.scio.constants.ErrorMessage;
 import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.InvalidValueException;
+import com.nordokod.scio.entity.NoGuidesException;
 import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.entity.PermissionException;
 import com.nordokod.scio.entity.PhoneNetworkException;
@@ -127,6 +128,11 @@ public class ExceptionManager {
                 case INVALID_USERNAME:return ErrorMessage.INVALID_USERNAME;
                 case PASSWORDS_DONT_MATCH:return ErrorMessage.PASSWORDS_DONT_MATCH;
             }
+        }
+        else if(exception instanceof NoGuidesException){
+            //el usuario no tiene guias para estudiar
+
+            return  ErrorMessage.NO_GUIDES_EXCEPTION;
         }
         else{
             //cualquier otro error
