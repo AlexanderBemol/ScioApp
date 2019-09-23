@@ -26,6 +26,7 @@ import com.nordokod.scio.R;
 import com.nordokod.scio.constants.ErrorMessage;
 import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.InvalidValueException;
+import com.nordokod.scio.entity.NoGuidesException;
 import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.entity.PermissionException;
 import com.nordokod.scio.entity.PhoneNetworkException;
@@ -141,6 +142,11 @@ public class ExceptionManager {
                 case PASSWORDS_DONT_MATCH:return ErrorMessage.PASSWORDS_DONT_MATCH;
                 case EMPTY_FIELD:return ErrorMessage.EMPTY_FIELD;
             }
+        }
+        else if(exception instanceof NoGuidesException){
+            //el usuario no tiene guias para estudiar
+
+            return  ErrorMessage.NO_GUIDES_EXCEPTION;
         }
         else{
             //cualquier otro error
