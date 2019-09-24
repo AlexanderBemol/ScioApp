@@ -1,19 +1,17 @@
 package com.nordokod.scio.view;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +22,17 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.nordokod.scio.R;
+import com.nordokod.scio.constants.UserOperations;
 import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.entity.InputDataException;
-import com.nordokod.scio.process.ExceptionManager;
+import com.nordokod.scio.entity.OperationCanceledException;
+import com.nordokod.scio.process.UserMessage;
 
-import java.nio.charset.IllegalCharsetNameException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -174,7 +177,23 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
                                 Guide guide = new Guide(category_selected_id, "", ET_Topic.getText().toString(), "", false, true, date);
 
                                 com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
-                                guideModel.createGuide(guide);
+                                guideModel.createGuide(guide).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        showSuccessfulMessage(UserOperations.CREATE_GUIDE);
+                                        mainActivity.onCloseFragment("New Guide");
+                                    }
+                                }).addOnCanceledListener(new OnCanceledListener() {
+                                    @Override
+                                    public void onCanceled() {
+                                        showError(new OperationCanceledException());
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        showError(e);
+                                    }
+                                });
                             }
                         }
                     }
@@ -261,8 +280,12 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
     }
 
     private void showError(Exception exception){
-        ExceptionManager exceptionManager = new ExceptionManager();
-        exceptionManager.showErrorMessage(context, exceptionManager.categorizeException(exception), null);
+        UserMessage userMessage = new UserMessage();
+        userMessage.showErrorMessage(context, userMessage.categorizeException(exception));
+    }
+    private void showSuccessfulMessage(UserOperations userOperations){
+        UserMessage userMessage = new UserMessage();
+        userMessage.showSuccessfulOperationMessage(getContext(),userOperations);
     }
 
     private int getCategoryId(int view_selected_id) {

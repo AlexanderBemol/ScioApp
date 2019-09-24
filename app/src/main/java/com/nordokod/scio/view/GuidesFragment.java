@@ -4,6 +4,7 @@ package com.nordokod.scio.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
@@ -17,11 +18,19 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.nordokod.scio.R;
 import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.InvalidValueException;
+import com.nordokod.scio.entity.NoGuidesException;
+import com.nordokod.scio.entity.OperationCanceledException;
+import com.nordokod.scio.model.User;
+import com.nordokod.scio.process.UserMessage;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +46,8 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
     private Context context;
     private MainActivity mainActivity;
-    private com.nordokod.scio.model.Guide mGuide;
+    private com.nordokod.scio.model.Guide guideModel;
+    private User userModel;
     private RecyclerView RV_Guides;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -89,9 +99,10 @@ public class GuidesFragment extends Fragment implements BasicFragment {
         CL_Entertainment    = view.findViewById(R.id.CL_Entertainment);
         CL_Others           = view.findViewById(R.id.CL_Others);
 
-        mGuide = new com.nordokod.scio.model.Guide();
+        guideModel = new com.nordokod.scio.model.Guide();
+        userModel = new User();
 
-        //getAllGuides();
+        getAllGuides();
 
         RV_Guides = view.findViewById(R.id.FGuides_RV_Guides);
 
@@ -169,39 +180,73 @@ public class GuidesFragment extends Fragment implements BasicFragment {
             }
 
             preview_Category_View_Selected = view.getId();
-/*
-            mAdapter = new GuidesRecyclerViewAdapter(getListOfGuides(category), category, context, mainActivity);
-            ((GuidesRecyclerViewAdapter) mAdapter).configAdapter(mGuide);
 
-            RV_Guides.setAdapter(mAdapter);*/
+            try {
+                mAdapter = new GuidesRecyclerViewAdapter(getListOfGuides(category), category, context, mainActivity);
+                ((GuidesRecyclerViewAdapter) mAdapter).configAdapter(guideModel);
+                RV_Guides.setAdapter(mAdapter);
+            } catch (Exception e) {
+                showError(e);
+            }
+
         }
 
 
     }
 
     private void getAllGuides() {
-        /*for (QueryDocumentSnapshot document : Objects.requireNonNull(mGuide.getAllGuides().getResult())) {
-            Guide guide = new Guide(
-                    (int)       document.getData().get(Guide.KEY_CATEGORY),
-                    (String)    document.getData().get(Guide.KEY_ID),
-                    (String)    document.getData().get(Guide.KEY_TOPIC),
-                    (String)    document.getData().get(Guide.KEY_UID),
-                    (boolean)   document.getData().get(Guide.KEY_ONLINE),
-                    (boolean)   document.getData().get(Guide.KEY_ACTIVATED),
-                    (Date)      document.getData().get(Guide.KEY_DATETIME)
-            );
+        guides = new ArrayList<>();
 
-            guides.add(guide);
-        }*/
+        guideModel.getAllGuides().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(queryDocumentSnapshots.isEmpty()){
+                    showError(new NoGuidesException());
+                }else{
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        Guide guide = null;
+                        try {
+                            guide = new Guide(
+                                    Integer.parseInt(Objects.requireNonNull(document.getData().get(Guide.KEY_CATEGORY)).toString()),
+                                    (String)    document.getData().get(Guide.KEY_ID),
+                                    (String)    document.getData().get(Guide.KEY_TOPIC),
+                                    userModel.getBasicUserInfo().getUid(),
+                                    (boolean)   document.getData().get(Guide.KEY_ONLINE),
+                                    (boolean)   document.getData().get(Guide.KEY_ACTIVATED),
+                                    Objects.requireNonNull(document.getTimestamp(Guide.KEY_DATETIME)).toDate()
+                            );
+                        } catch (Exception e) {
+                            showError(e);
+                        }
+                        guides.add(guide);
+                    }
+                }
+            }
+        }).addOnCanceledListener(new OnCanceledListener() {
+            @Override
+            public void onCanceled() {
+                showError(new OperationCanceledException());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                showError(e);
+            }
+        });
     }
 
-    private ArrayList<Guide> getListOfGuides(int category) {
+    private void showError(Exception e) {
+        UserMessage userMessage = new UserMessage();
+        userMessage.showErrorMessage(getContext(),userMessage.categorizeException(e));
+    }
+
+    private ArrayList<Guide> getListOfGuides(int category) throws NoGuidesException{
         ArrayList<Guide> guidesAux = new ArrayList<>();
         for (Guide guide : guides) {
             if (guide.getCategory() == category)
                 guidesAux.add(guide);
         }
-
+        if(guidesAux.isEmpty())throw new NoGuidesException();
         return guidesAux;
     }
 

@@ -31,6 +31,8 @@ public class Guide {
         Map<String, Object> data = new HashMap<>();
         data.put(com.nordokod.scio.entity.Guide.KEY_CATEGORY,guide.getCategory());
         data.put(com.nordokod.scio.entity.Guide.KEY_TOPIC,guide.getTopic());
+        data.put(com.nordokod.scio.entity.Guide.KEY_ONLINE,false);
+        data.put(com.nordokod.scio.entity.Guide.KEY_ACTIVATED,true);
         data.put(com.nordokod.scio.entity.Guide.KEY_DATETIME,guide.getDatetime());
         return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).add(data);
     }
@@ -46,6 +48,8 @@ public class Guide {
         data.put(com.nordokod.scio.entity.Guide.KEY_CATEGORY,guide.getCategory());
         data.put(com.nordokod.scio.entity.Guide.KEY_TOPIC,guide.getTopic());
         data.put(com.nordokod.scio.entity.Guide.KEY_DATETIME,guide.getDatetime());
+        data.put(com.nordokod.scio.entity.Guide.KEY_ONLINE,guide.isOnline());
+        data.put(com.nordokod.scio.entity.Guide.KEY_ACTIVATED,guide.isActivated());
         return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).document(guide.getId()).update(data);
     }
 

@@ -49,18 +49,6 @@ public class PermissionActivity extends AppCompatActivity implements BasicActivi
         });
     }
 
-    @Override
-    public void showErrorNoticeDialog(Error error) {
-        changeStateBtnActivate(checkPermissions());
-    }
-
-    @Override
-    public void showSuccessNoticeDialog(String task) {
-        changeStateBtnActivate(checkPermissions());
-        
-        finishActivity();
-    }
-
     /**
      * Método usado para validar que los permisos estén activos.
      *

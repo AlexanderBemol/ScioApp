@@ -3,8 +3,10 @@ package com.nordokod.scio.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
@@ -29,10 +31,19 @@ import android.view.ViewGroup;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.InvalidValueException;
+import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.User;
+import com.nordokod.scio.process.DownloadImageProcess;
+import com.nordokod.scio.process.MediaProcess;
+import com.nordokod.scio.process.UserMessage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -46,8 +57,6 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private NavigationView navigationMenu;
     private Toolbar toolbar;
     private ActionBar actionBar;
-
-    private User user;
 
     // Objetos para el menú de navegación inferior
     private AHBottomNavigation bottomNavigation;
@@ -64,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private GuidesFragment guidesFragment;
     private DialogFragment dialogFragment;
     private Fragment selectedFragment = null;
+
+    private User userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,10 +144,68 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
-        //mainController.requestPhoto();
+        userModel = new User();
+        //obtener foto de usuario
+        Bitmap localPhoto = userModel.getLocalProfilePhoto(getApplicationContext());
+        if(localPhoto==null) {
+            switch (userModel.getProfilePhotoHost()) {
+                case GOOGLE_OR_FACEBOOK_STORAGE:
+                    userModel.getExternalProfilePhoto(new DownloadImageProcess.CustomListener() {
+                        @Override
+                        public void onCompleted(Bitmap photo) {
+                            try {
+                                userModel.saveProfilePhotoInLocal(MainActivity.this, photo);
+                                setUserPhoto(photo);
+                            } catch (Exception e) {
+                                //showError(e);
+                            }
+                        }
 
-        //TV_Name.setText(mainController.getName());
+                        @Override
+                        public void onError(Exception e) {
+                            //showError(e);
+                        }
+                    });
+                    break;
+                case FIREBASE_STORAGE:
+                    try {
+                        userModel.getFirebaseProfilePhoto().addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                            @Override
+                            public void onSuccess(byte[] bytes) {
+                                try {
+                                    Bitmap userPhoto = new MediaProcess().createBitmapWithBytes(bytes);
+                                    userModel.saveProfilePhotoInLocal(MainActivity.this, userPhoto);
+                                    setUserPhoto(userPhoto);
+                                } catch (Exception e) {
+                                    //showError(e);
+                                }
+                            }
+                        }).addOnCanceledListener(new OnCanceledListener() {
+                            @Override
+                            public void onCanceled() {
+                                showError(new OperationCanceledException());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                //showError(e);
+                            }
+                        });
+                    } catch (Exception e) {
+                        //showError(e);
+                    }
+            }
+        }
+        else{
+            setUserPhoto(localPhoto);
+        }
+        try {
+            TV_Name.setText(userModel.getBasicUserInfo().getUsername());
+        } catch (Exception e) {
+            showError(e);
+        }
     }
+
 
     @Override
     public void initListeners() {
@@ -173,8 +242,8 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         BTN_Logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user = new User();
-                user.logOut();
+                userModel.logOut();
+                goToLoginActivity();
             }
         });
     }
@@ -186,7 +255,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     /**
      * Método para inicializar Fragment para la pregunta de tipo Opción muultiple y mostrarlo.
-     * @param guide
+     * @param guide entidad de la guía
      */
     public void onNewMultipleChoiceQuestionDialog(Guide guide) {
         dialogFragment = new NewMultipleChoiceQuestionFragment(this, this, guide);
@@ -195,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     /**
      * Método para inicializar Fragment para la pregunta de tipo Respuesta abierta y mostrarlo.
-     * @param guide
+     * @param guide entidad de la guía
      */
     public void onNewOpenAnswerQuestionDialog(Guide guide) {
         dialogFragment = new NewOpenAnswerQuestionFragment(this, this, guide);
@@ -204,7 +273,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     /**
      * Método para inicializar Fragment para la pregunta de tipo Verdadero/Falso y mostrarlo.
-     * @param guide
+     * @param guide entidad de la guía
      */
     public void onNewTrueFalseQuestionDialog(Guide guide) {
         dialogFragment = new NewTrueFalseQuestionFragment(this, this, guide);
@@ -213,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     /**
      * Método para cerrar Fragments según su tag.
-     * @param tag
+     * @param tag tag
      */
     public void onCloseFragment(String tag) {
         switch (tag) {
@@ -252,18 +321,6 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onSuccessSaveQuestion() {
-        Toasty.success(this, R.string.message_save_question_success).show();
-    }
-
-    public void onErrorSaveQuestion() {
-        Toasty.error(this, R.string.message_save_question_error).show();
-    }
-
-    public void onEmptyField() {
-        Toasty.warning(this, R.string.message_emptyfields_error).show();
-    }
-
     public void onUnselectedAnswer() {
         Toasty.warning(this, R.string.message_unselected_answer_warning).show();
     }
@@ -277,11 +334,19 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     }
 
     public void refreshGuides(){
-        Log.d("testeo","refresh");
         if(guidesFragment!=null&&selectedFragment==guidesFragment){
-            Log.d("testeo","selcted");
             guidesFragment.onBackFragment();
         }
+    }
+
+    private void goToLoginActivity(){
+        Intent loginIntent = new Intent(this,LoginActivity.class);
+        startActivity(loginIntent);
+    }
+
+    private void showError(Exception e) {
+        UserMessage userMessage = new UserMessage();
+        userMessage.showErrorMessage(this,userMessage.categorizeException(e));
     }
 
     /**

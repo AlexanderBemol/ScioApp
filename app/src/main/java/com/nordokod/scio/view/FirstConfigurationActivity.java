@@ -15,12 +15,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Gallery;
 
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,22 +27,18 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.UploadTask;
 import com.nordokod.scio.constants.RequestCode;
 import com.nordokod.scio.constants.Utilities;
-import com.nordokod.scio.controller.FirstConfigurationController;
-import com.nordokod.scio.entity.AppConstants;
 import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
 //import com.soundcloud.android.crop.Crop;
 import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.User;
-import com.nordokod.scio.process.ExceptionManager;
+import com.nordokod.scio.process.UserMessage;
 import com.soundcloud.android.crop.Crop;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.io.File;
 import java.util.Date;
-import java.util.Objects;
-import java.util.logging.ErrorManager;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -363,8 +357,8 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
     }
 
     public void showError(Exception e){
-        ExceptionManager exceptionManager=new ExceptionManager();
-        exceptionManager.showErrorMessage(this,exceptionManager.categorizeException(e),noticeDialog);
+        UserMessage userMessage =new UserMessage();
+        userMessage.showErrorMessage(this, userMessage.categorizeException(e));
     }
 
     @Override
