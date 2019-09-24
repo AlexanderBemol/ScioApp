@@ -8,6 +8,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 public class MediaProcess {
+    /**
+     * Método para comprimir foto
+     * @param photo uri de la foto
+     * @return bitmap de la foto comprimida
+     */
     public Bitmap compressPhoto(Uri photo){
         Bitmap compresedPhoto;
         String format= photo.toString().substring(photo.toString().lastIndexOf(".")).toLowerCase();
@@ -23,5 +28,16 @@ public class MediaProcess {
         }
         compresedPhoto=BitmapFactory.decodeStream(new ByteArrayInputStream(out.toByteArray()));
         return compresedPhoto;
+    }
+
+    /**
+     * Método para convertir arreglo de bytes a bitmap
+     * @param bytes bytes de la foto
+     * @return bitmap de la foto
+     */
+    public Bitmap createBitmapWithBytes(byte[] bytes){
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inMutable = true;
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
     }
 }

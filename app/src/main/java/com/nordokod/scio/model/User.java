@@ -224,7 +224,7 @@ public class User {
      * @return FileDownload task con el resultado
      * @throws IOException en error en uri, o almacenamiento.
      */
-    public Task<byte[]> getFirebaseProfilePhoto() throws IOException {
+    public Task<byte[]> getFirebaseProfilePhoto(){
         String photoPath = Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getPhotoUrl()).toString();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();//obtenemos referencia a la bd
@@ -256,7 +256,7 @@ public class User {
      * @return la foto en formato bitmap o nulo si no se encontró
      */
     public Bitmap getLocalProfilePhoto(Context context){
-        String pictureFile = "userPhoto-" +mAuth.getCurrentUser().getUid()+".jpg";
+        String pictureFile = "userPhoto-" + Objects.requireNonNull(mAuth.getCurrentUser()).getUid()+".JPEG";
         File storageDir = context.getFilesDir();
         File file=new File(storageDir,pictureFile);
         if(file.exists()){

@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.StorageException;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.ErrorMessage;
+import com.nordokod.scio.constants.UserOperations;
 import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.InvalidValueException;
 import com.nordokod.scio.entity.NoGuidesException;
@@ -33,8 +34,10 @@ import com.nordokod.scio.entity.PhoneNetworkException;
 
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
 
-public class ExceptionManager {
+
+public class UserMessage {
     private static int DIALOG_ERROR_TIME=2000;
     public ErrorMessage categorizeException(Exception exception){
         //errores de conexión
@@ -145,7 +148,6 @@ public class ExceptionManager {
         }
         else if(exception instanceof NoGuidesException){
             //el usuario no tiene guias para estudiar
-
             return  ErrorMessage.NO_GUIDES_EXCEPTION;
         }
         else{
@@ -154,35 +156,24 @@ public class ExceptionManager {
         }
         return ErrorMessage.UNKNOW_EXCEPTION;
     }
-    public void showErrorMessage(Context context, ErrorMessage errorMessage, Dialog dialog){
-        //error message tendra los int de los titulos, descripción del error e icono
+
+    /**
+     * mostrar mensaje de error
+     * @param context contexto actual
+     * @param errorMessage Enum de error, se puede obtener de excepción con  categorizeException
+     */
+    public void showErrorMessage(Context context, ErrorMessage errorMessage){
         if(errorMessage!=ErrorMessage.CANCELED_OPERATION){//MOSTRAR SÓLO SI NO ES OPERACIÓN CANCELADA POR USUARIO
-            if (dialog == null)
-                dialog = new Dialog(context);
-            else if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
-            dialog.setContentView(R.layout.dialog_error);
-            Objects.requireNonNull(dialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
-            dialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
-            dialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
-
-            AppCompatTextView TVErrorTitle  = dialog.findViewById(R.id.TV_Message);
-            AppCompatImageView IVErrorImage        = dialog.findViewById(R.id.IV_Error);
-            AppCompatTextView TVErrorDescription = dialog.findViewById(R.id.TV_Description);
-
-            //asi se van a pasar los datos
-            //TVErrorDescription.setText(context.getText(errorMessage.getDescription()));
-            //TVErrorTitle.setText(context.getText(errorMessage.getDescription()));
-            //IVErrorImage.setText(context.getText(errorMessage.getImage()));
-            
-            //prueba temporal
-            TVErrorTitle.setText("Titulo Error");
-            TVErrorDescription.setText("Descripcion Error");
-
-            //mostrar aqui error
-            Log.d("testing",errorMessage.toString());
+           Toasty.error(context,context.getString(errorMessage.getMessageCode())).show();
         }
+    }
+
+    /**
+     * mostrar mensaje de operación correcta
+     * @param context contexto actual
+     * @param userOperations enum de la operación
+     */
+    public void showSuccessfulOperationMessage(Context context, UserOperations userOperations){
+        Toasty.success(context,context.getString(userOperations.getMessageCode())).show();
     }
 }

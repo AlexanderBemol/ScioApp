@@ -4,16 +4,13 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatImageButton;
-import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,7 +22,6 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -36,44 +32,38 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.User;
-import com.nordokod.scio.process.ExceptionManager;
+import com.nordokod.scio.process.UserMessage;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.Arrays;
 import java.util.Objects;
-import java.util.concurrent.CancellationException;
 
 import com.nordokod.scio.constants.*;
-
-import javax.annotation.Nullable;
 
 public class LoginActivity extends AppCompatActivity implements BasicActivity {
     // Botones de Inicio de Sesion y Registrarse
     private AppCompatButton BTN_Login, BTN_Signup;
     // Facebook and Google Buttons
     private AppCompatImageButton BTN_Google, BTN_FB;
-    private LoginButton BTN_Facebook;
     // Recover password TextView
     private AppCompatTextView txtRecuperar;
     // User and Password EditTexts
     private AppCompatEditText ET_Mail, ET_Password;
     //Facebook
     private CallbackManager callbackManager;
-    //Google
-    private GoogleSignInOptions googleSignInOptions;
     private GoogleSignInClient mGoogleSignInClient;
     //Model
     private User userModel;
     // Animations
     private Animation press;
     // Dialogs
-    private Dialog loginErrorDialog, noticeDialog;
-    private static final int NOTICE_DIALOG_TIME = 2000;
+    private Dialog  noticeDialog;
+    //Mensajes de usuario
+    private UserMessage userMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         }
 
         noticeDialog.setContentView(R.layout.dialog_progress);
-        noticeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Objects.requireNonNull(noticeDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
         noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
         noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
@@ -104,7 +94,6 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         loading.start();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -119,6 +108,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                             goToFirstConfigurationView();
                         }
                         else{
+                            showSuccessfulMessage(UserOperations.LOGIN_USER);
                             goToMainView();
                         }
                     }
@@ -134,7 +124,6 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                     }
                 });
             } catch (Exception e) {
-                Log.d("testing","error en result: "+e.toString());
                 dismissProgressDialog();
             }
         }
@@ -158,13 +147,15 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
 
         callbackManager = CallbackManager.Factory.create();
 
-        googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        //Google
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
         userModel = new User();
+        userMessage = new UserMessage();
     }
 
     @Override
@@ -188,6 +179,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                                 if (authResult.getAdditionalUserInfo().isNewUser()) {
                                     goToFirstConfigurationView();
                                 } else {
+                                    showSuccessfulMessage(UserOperations.LOGIN_USER);
                                     goToMainView();
                                 }
                             }
@@ -235,6 +227,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                                 if(authResult.getAdditionalUserInfo().isNewUser()){
                                     goToFirstConfigurationView();
                                 }else{
+                                    showSuccessfulMessage(UserOperations.LOGIN_USER);
                                     goToMainView();
                                 }
                             }
@@ -280,108 +273,6 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         });
     }
 
-    @Override
-    public void showErrorNoticeDialog(Error error) {
-        /*
-        if (noticeDialog == null)
-            noticeDialog = new Dialog(this);
-        else if (noticeDialog.isShowing()) {
-            noticeDialog.dismiss();
-        }
-
-        noticeDialog.setContentView(R.layout.dialog_error);
-        Objects.requireNonNull(noticeDialog.getWindow()).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
-        noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
-        noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
-
-        AppCompatTextView errorMessage  = noticeDialog.findViewById(R.id.TV_Message);
-        AppCompatImageView image        = noticeDialog.findViewById(R.id.IV_Error);
-
-        if (error.getDescriptionResource() != 0) {
-            AppCompatTextView errorDescription = noticeDialog.findViewById(R.id.TV_Description);
-            errorDescription.setVisibility(View.VISIBLE);
-            errorDescription.setText(error.getDescriptionResource());
-        }else if (error.getDescriptionText() != null) {
-            AppCompatTextView errorDescription = noticeDialog.findViewById(R.id.TV_Description);
-            errorDescription.setVisibility(View.VISIBLE);
-            errorDescription.setText(error.getDescriptionText());
-        }
-
-        switch (error.getType()) {
-            case Error.EMPTY_FIELD:
-                image.setVisibility(View.GONE);
-                errorMessage.setText(R.string.message_emptyfields_error);
-                break;
-            case Error.LOGIN_MAIL:
-                image.setImageResource(R.drawable.ic_mail);
-                errorMessage.setText(R.string.error_mail);
-                break;
-            case Error.LOGIN_FACEBOOK:
-                image.setImageResource(R.drawable.ic_facebook);
-                errorMessage.setText(R.string.error_facebook);
-                break;
-            case Error.LOGIN_GOOGLE:
-                image.setImageResource(R.drawable.ic_google);
-                errorMessage.setText(R.string.error_google);
-                break;
-            case Error.CONNECTION:
-                errorMessage.setText(R.string.message_connection_error);
-                break;
-            default:
-                image.setVisibility(View.GONE);
-                errorMessage.setText(R.string.message_error);
-                break;
-        }
-        noticeDialog.show();
-
-        Handler handler;
-        handler = new Handler();
-        handler.postDelayed(new Runnable(){
-            public void run(){
-                if (noticeDialog != null) {
-                    noticeDialog.cancel();
-                    noticeDialog.dismiss();
-                    noticeDialog = null;
-                }
-            }
-        }, NOTICE_DIALOG_TIME);
-
-        handler = null;*/
-    }
-
-    @Override
-    public void showSuccessNoticeDialog(String task) {
-        if (noticeDialog == null)
-            noticeDialog = new Dialog(this);
-        else if (noticeDialog.isShowing()) {
-            noticeDialog.dismiss();
-        }
-
-        noticeDialog.setContentView(R.layout.dialog_success);
-        noticeDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        noticeDialog.getWindow().getAttributes().width = WindowManager.LayoutParams.MATCH_PARENT;
-        noticeDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
-        noticeDialog.getWindow().getAttributes().windowAnimations = R.style.NoticeDialogAnimation;
-
-        AppCompatTextView message = noticeDialog.findViewById(R.id.TV_Message);
-        message.setText(R.string.message_login_success);
-
-        noticeDialog.show();
-
-        Handler handler;
-        handler = new Handler();
-        handler.postDelayed(new Runnable(){
-            public void run(){
-                noticeDialog.cancel();
-                noticeDialog.dismiss();
-                noticeDialog = null;
-            }
-        }, 1000);
-
-        handler = null;
-    }
-
     private void initAnimations(){
         press = AnimationUtils.loadAnimation(this, R.anim.press);
     }
@@ -389,25 +280,27 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
     private void goToFirstConfigurationView(){
         Intent firstConfigurationIntent = new Intent(this,FirstConfigurationActivity.class);
         dismissProgressDialog();
+        showSuccessfulMessage(UserOperations.SIGN_UP_USER);
         startActivity(firstConfigurationIntent);
     }
 
     private void goToMainView(){
-        Intent mainIntent = new Intent(this,MainActivity.class);
+        Intent mainIntent = new Intent(getApplicationContext(),MainActivity.class);
         dismissProgressDialog();
         startActivity(mainIntent);
     }
     private void goToSignUpView(){
-        Intent signUpIntent = new Intent(this,SignupActivity.class);
+        Intent signUpIntent = new Intent(getApplicationContext(),SignupActivity.class);
         startActivity(signUpIntent);
         dismissProgressDialog();
     }
     private void showError(Exception exception){
-        ExceptionManager exceptionManager = new ExceptionManager();
-        exceptionManager.showErrorMessage(this,exceptionManager.categorizeException(exception),noticeDialog);
+        userMessage.showErrorMessage(this, userMessage.categorizeException(exception));
         dismissProgressDialog();
     }
-
+    private void showSuccessfulMessage(UserOperations userOperations){
+        userMessage.showSuccessfulOperationMessage(this,userOperations);
+    }
     @Override
     protected void onDestroy() {
         dismissProgressDialog();
