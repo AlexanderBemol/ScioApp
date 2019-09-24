@@ -283,6 +283,22 @@
     <string name="NO_GUIDES_EXCEPTION_MESSAGE">Aún no has creado ninguna guía.</string>
 
 
+    <!-- ======================================================================================= -->
+    <!-- Mensajes de operaciones para usuario -->
+    <!-- ======================================================================================= -->
+
+    <string name="CREATE_GUIDE">¡Se guardó la guía correctamente!</string>
+    <string name="UPDATE_GUIDE">¡Se actualizó la guía correctamente!</string>
+    <string name="DELETE_GUIDE">¡Se eliminó la guía correctamente!</string>
+    <string name="CREATE_QUESTION">¡Se guardó la pregunta correctamente!</string>
+    <string name="UPDATE_QUESTION">¡Se actualizó la pregunta correctamente!</string>
+    <string name="DELETE_QUESTION">¡Se eliminó la pregunta correctamente!</string>
+    <string name="CREATE_USER">¡Se guardó correctamente tu información!</string>
+    <string name="UPDATE_USER">¡Se actualizó correctamente tu información!</string>
+    <string name="DELETE_USER">Eliminamos toda tu información de la plataforma, regresa pronto</string>
+    <string name="SIGN_UP_USER">¡Se registró tu usuario correctamente!</string>
+    <string name="LOGIN_USER">Inicio de sesión satisfactorio.</string>
+
 
 
 
