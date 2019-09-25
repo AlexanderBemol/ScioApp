@@ -31,7 +31,7 @@ public class Question {
      */
     public Task<DocumentReference> addQuestion(KindOfQuestion kindOfQuestion, Guide guide, com.nordokod.scio.entity.Question question){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference questionCollection=db.collection(Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(Guide.KEY_GUIDES).document(guide.getId()).collection(com.nordokod.scio.entity.Question.KEY_QUESTION);
+        CollectionReference questionCollection=db.collection(Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(Guide.KEY_PERSONAL_GUIDES).document(guide.getId()).collection(com.nordokod.scio.entity.Question.KEY_QUESTIONS);
         Map<String, Object> data = new HashMap<>();
         data.put(com.nordokod.scio.entity.Question.KEY_QUESTION,question.getQuestion());
         data.put(com.nordokod.scio.entity.Question.KEY_KIND_OF_QUESTION,question.getKindOfQuestion());

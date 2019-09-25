@@ -7,10 +7,8 @@ import java.util.Date;
 public class Guide {
     public static String KEY_GUIDES="GUIDES";
     public static String KEY_PERSONAL_GUIDES="PERSONAL_GUIDES";
-    public static String KEY_UID="UID";
     public static String KEY_ONLINE="ONLINE";
     public static String KEY_CATEGORY="CATEGORY";
-    public static String KEY_ID="ID";
     public static String KEY_TOPIC="TOPIC";
     public static String KEY_DATETIME="DATETIME";
     public static String KEY_ACTIVATED="ACTIVATED";

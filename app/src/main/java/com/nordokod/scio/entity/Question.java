@@ -4,6 +4,7 @@ public class Question {
     private int id;
     private String question;
     private int kindOfQuestion;
+    public static String KEY_QUESTIONS="QUESTIONS";
     public static String KEY_QUESTION="QUESTION";
     public static String KEY_KIND_OF_QUESTION="KIND_OF_QUESTION";
     public Question(int id, String question, int kindOfQuestion) {

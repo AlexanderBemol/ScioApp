@@ -208,7 +208,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
                         try {
                             guide = new Guide(
                                     Integer.parseInt(Objects.requireNonNull(document.getData().get(Guide.KEY_CATEGORY)).toString()),
-                                    (String)    document.getData().get(Guide.KEY_ID),
+                                    document.getId(),
                                     (String)    document.getData().get(Guide.KEY_TOPIC),
                                     userModel.getBasicUserInfo().getUid(),
                                     (boolean)   document.getData().get(Guide.KEY_ONLINE),
