@@ -1,15 +1,6 @@
 package com.nordokod.scio.process;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Handler;
-import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.WindowManager;
 
 import com.facebook.FacebookException;
 import com.google.android.gms.auth.GoogleAuthException;
@@ -22,9 +13,9 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.StorageException;
-import com.nordokod.scio.R;
 import com.nordokod.scio.constants.ErrorMessage;
 import com.nordokod.scio.constants.UserOperations;
+import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.InvalidValueException;
 import com.nordokod.scio.entity.NoGuidesException;
@@ -32,13 +23,10 @@ import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.entity.PermissionException;
 import com.nordokod.scio.entity.PhoneNetworkException;
 
-import java.util.Objects;
-
 import es.dmoral.toasty.Toasty;
 
 
 public class UserMessage {
-    private static int DIALOG_ERROR_TIME=2000;
     public ErrorMessage categorizeException(Exception exception){
         //errores de conexión
         if(exception instanceof PhoneNetworkException){
@@ -144,6 +132,8 @@ public class UserMessage {
                 case INVALID_USERNAME:return ErrorMessage.INVALID_USERNAME;
                 case PASSWORDS_DONT_MATCH:return ErrorMessage.PASSWORDS_DONT_MATCH;
                 case EMPTY_FIELD:return ErrorMessage.EMPTY_FIELD;
+                case NOT_ENOUGH_OPTIONS:return ErrorMessage.NOT_ENOUGH_OPTIONS;
+                case NOT_CORRECT_OPTION_SELECTED:return ErrorMessage.NOT_CORRECT_OPTION_SELECTED;
             }
         }
         else if(exception instanceof NoGuidesException){
@@ -152,9 +142,9 @@ public class UserMessage {
         }
         else{
             //cualquier otro error
-            return ErrorMessage.UNKNOW_EXCEPTION;
+            return ErrorMessage.UNKNOWN_EXCEPTION;
         }
-        return ErrorMessage.UNKNOW_EXCEPTION;
+        return ErrorMessage.UNKNOWN_EXCEPTION;
     }
 
     /**

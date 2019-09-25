@@ -10,7 +10,9 @@ public class InputDataException extends Exception {
         INVALID_PASSWORD,
         INVALID_USERNAME,
         PASSWORDS_DONT_MATCH,
-        EMPTY_FIELD;
+        EMPTY_FIELD,
+        NOT_ENOUGH_OPTIONS,
+        NOT_CORRECT_OPTION_SELECTED
     }
     private Code code;
     public InputDataException(Code code){

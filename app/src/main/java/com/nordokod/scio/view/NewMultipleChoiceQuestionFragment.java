@@ -3,6 +3,7 @@ package com.nordokod.scio.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
@@ -13,12 +14,21 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.KindOfQuestion;
+import com.nordokod.scio.constants.UserOperations;
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.MultipleChoiceQuestion;
+import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.Question;
+import com.nordokod.scio.process.UserMessage;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment implements BasicFragment {
@@ -85,21 +95,66 @@ public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment
             @Override
             public void onClick(View v) {
                 BTN_Create.startAnimation(press);
+                if(Objects.requireNonNull(ET_Question.getText()).length()!=0){
+                    AppCompatEditText[] editTextArray = {ET_Option_1,ET_Option_2,ET_Option_3,ET_Option_4};
+                    SwitchCompat[] switchCompatArray = {Switch_Option_1,Switch_Option_2,Switch_Option_3,Switch_Option_4};
 
-                MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion(0, Objects.requireNonNull(ET_Question.getText()).toString(), KindOfQuestion.MULTIPLE_CHOICE.getCode());
-                multipleChoiceQuestion.addAnswer(Objects.requireNonNull(ET_Option_1.getText()).toString(), Switch_Option_1.isChecked());
-                multipleChoiceQuestion.addAnswer(Objects.requireNonNull(ET_Option_2.getText()).toString(), Switch_Option_2.isChecked());
-                multipleChoiceQuestion.addAnswer(Objects.requireNonNull(ET_Option_3.getText()).toString(), Switch_Option_3.isChecked());
-                multipleChoiceQuestion.addAnswer(Objects.requireNonNull(ET_Option_4.getText()).toString(), Switch_Option_4.isChecked());
+                    int optionCounter=0;
+                    boolean correctOptionSelected=false;
+                    for (int i=0;i<editTextArray.length;i++){
+                       if(Objects.requireNonNull(editTextArray[i].getText()).length()!=0){
+                           optionCounter++;
+                           correctOptionSelected=switchCompatArray[i].isSelected();
+                       }
+                    }
+                    if(optionCounter<2)showError(new InputDataException(InputDataException.Code.NOT_ENOUGH_OPTIONS));
+                    else if(!correctOptionSelected)showError(new InputDataException(InputDataException.Code.NOT_CORRECT_OPTION_SELECTED));
+                    else{
+                        MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion(0, Objects.requireNonNull(ET_Question.getText()).toString(), KindOfQuestion.MULTIPLE_CHOICE.getCode());
+                        for(int i = 0;i<editTextArray.length;i++){
+                            if(Objects.requireNonNull(editTextArray[i].getText()).length()!=0){
+                                multipleChoiceQuestion.addAnswer(Objects.requireNonNull(editTextArray[i].getText()).toString(),switchCompatArray[i].isSelected());
+                            }
+                        }
+                        Question question = new Question();
 
-                Question question = new Question();
-                question.addQuestion(
-                        KindOfQuestion.MULTIPLE_CHOICE,
-                        guide,
-                        multipleChoiceQuestion
-                );
+                        question.addQuestion(
+                                KindOfQuestion.MULTIPLE_CHOICE,
+                                guide,
+                                multipleChoiceQuestion
+                        ).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                showSuccessfulMessage(UserOperations.CREATE_QUESTION);
+                            }
+                        }).addOnCanceledListener(new OnCanceledListener() {
+                            @Override
+                            public void onCanceled() {
+                                showError(new OperationCanceledException());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                showError(e);
+                            }
+                        });
+                    }
+                }else{
+                    showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
+                }
+
+
             }
         });
+    }
+    private void showError(Exception e){
+        UserMessage userMessage = new UserMessage();
+        userMessage.showErrorMessage(context,userMessage.categorizeException(e));
+    }
+    private void showSuccessfulMessage(UserOperations userOperations){
+        UserMessage userMessage = new UserMessage();
+        userMessage.showSuccessfulOperationMessage(context,userOperations);
+        activity.onCloseFragment("New Multiple Choice");
     }
 
     private void initAnimations(){

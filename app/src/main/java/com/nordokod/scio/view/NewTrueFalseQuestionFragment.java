@@ -14,12 +14,20 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.KindOfQuestion;
+import com.nordokod.scio.constants.UserOperations;
 import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.InputDataException;
+import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.entity.TrueFalseQuestion;
 import com.nordokod.scio.model.Question;
+import com.nordokod.scio.process.UserMessage;
 
 import java.util.Objects;
 
@@ -101,14 +109,44 @@ public class NewTrueFalseQuestionFragment extends BottomSheetDialogFragment impl
             public void onClick(View v) {
                 BTN_Create.startAnimation(press);
                 if (preview_answer > 0) {
-                    TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion(0, Objects.requireNonNull(ET_Question.getText().toString()), KindOfQuestion.TRUE_FALSE.getCode(), answer);
+                    if(Objects.requireNonNull(ET_Question.getText()).length()>0){
+                        TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion(0, Objects.requireNonNull(ET_Question.getText().toString()), KindOfQuestion.TRUE_FALSE.getCode(), answer);
 
-                    Question question = new Question();
-                    question.addQuestion(KindOfQuestion.TRUE_FALSE, guide, trueFalseQuestion);
+                        Question question = new Question();
+                        question.addQuestion(KindOfQuestion.TRUE_FALSE, guide, trueFalseQuestion).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                showSuccessfulMessage(UserOperations.CREATE_QUESTION);
+                            }
+                        }).addOnCanceledListener(new OnCanceledListener() {
+                            @Override
+                            public void onCanceled() {
+                                showError(new OperationCanceledException());
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                showError(e);
+                            }
+                        });
+                    }else{
+                        showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
+                    }
+
                 }else
                     activity.onUnselectedAnswer();
             }
         });
+    }
+
+    private void showError(Exception e){
+        UserMessage userMessage = new UserMessage();
+        userMessage.showErrorMessage(context,userMessage.categorizeException(e));
+    }
+    private void showSuccessfulMessage(UserOperations userOperations){
+        UserMessage userMessage = new UserMessage();
+        userMessage.showSuccessfulOperationMessage(context,userOperations);
+        activity.onCloseFragment("New TrueFalse");
     }
 
     private void initAnimations(){
