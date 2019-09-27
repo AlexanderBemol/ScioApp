@@ -51,25 +51,7 @@ git reset --hard origin/mybranch
 	        nordokod@gmail.com
 	        </td>
 	         <td align="center" width="200px">
-	        Cat05wX25*
-	        </td>
-	        </tr>
-			</table>
-		</td>
-	</tr>
-	<!-- ENEIT -->
-	<tr>
-		<td align="center">
-			<a href="http://registroeneit.tecnm.mx/" target="_blank">
-		          <img width="160px" src="http://registroeneit.tecnm.mx/Content/Project/Imagenes/Logo.png">
-	        </a>
-	        <table width="400px">
-	        <tr>
-	        <td align="center" width="200px">
-	        16540291
-	        </td>
-	         <td align="center" width="200px">
-	        8AKJ2C2p4z
+	        Cat05...
 	        </td>
 	        </tr>
 			</table>
@@ -87,7 +69,7 @@ git reset --hard origin/mybranch
 	        nordokod@gmail.com
 	        </td>
 	         <td align="center" width="200px">
-	        Cat05wX25*
+	        Cat05...
 	        </td>
 	        </tr>
 			</table>
