@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         if(authResult.getAdditionalUserInfo().isNewUser()){
-                            goToFirstConfigurationView();
+                            goToMainView();
                         }
                         else{
                             showSuccessfulMessage(UserOperations.LOGIN_USER);
@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                             @Override
                             public void onSuccess(AuthResult authResult) {
                                 if (authResult.getAdditionalUserInfo().isNewUser()) {
-                                    goToFirstConfigurationView();
+                                    goToMainView();
                                 } else {
                                     showSuccessfulMessage(UserOperations.LOGIN_USER);
                                     goToMainView();
@@ -225,7 +225,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                             @Override
                             public void onSuccess(AuthResult authResult) {
                                 if(authResult.getAdditionalUserInfo().isNewUser()){
-                                    goToFirstConfigurationView();
+                                    goToMainView();
                                 }else{
                                     showSuccessfulMessage(UserOperations.LOGIN_USER);
                                     goToMainView();

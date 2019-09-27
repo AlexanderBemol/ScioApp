@@ -27,10 +27,8 @@ public class ImportGuideDialog implements BasicDialog {
     private AppCompatButton BTN_Import;
     private CircleImageView CI_User_Photo;
 
-    public ImportGuideDialog(Context context, MainController mainController) {
+    public ImportGuideDialog(Context context) {
         this.context = context;
-        this.mainController = mainController;
-
         initDialog();
         initComponents();
         initListeners();
@@ -80,21 +78,16 @@ public class ImportGuideDialog implements BasicDialog {
 
     @Override
     public void showDialog() {
-        if (!dialog.isShowing()) {
 
-            // TODO: Hacer el método que traiga la información de la guía que va a importar.
-            //  Deberá traer:
-            //              -Nombre del usuario.
-            //              -Foto del usuario.
-            //              -Categoria
-            //              -Tema
-            //              -Fecha y Hora
-            //Guide guide = mainController.
+    }
+
+    public void showDialog(Guide guide) {
+        if (!dialog.isShowing()) {
 
             //CI_User_Photo.setImageBitmap(guide.getUser_photo());
             //TV_User.setText(guide.getUser_Name());
-            //TV_Category.setText(getCategoryResId(question.getCategory()));
-            //TV_Topic.setText(question.getTopic());
+            TV_Category.setText(getCategoryResId(guide.getCategory()));
+            TV_Topic.setText(guide.getTopic());
             // TODO: Agregar para la fecha y hora.
 
 

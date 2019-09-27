@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -127,7 +128,6 @@ public class User {
          */
         StorageReference sRef = storageReference.child(com.nordokod.scio.entity.User.KEY_USERS).child(com.nordokod.scio.entity.User.KEY_PROFILE_PHOTO).child("userPhoto-"+mAuth.getCurrentUser().getUid());
         return sRef.putFile(Uri.fromFile(file));
-
     }
 
     /**
@@ -139,15 +139,10 @@ public class User {
          * se obtiene link de la foto
          */
         StorageReference sRef = storageReference.child(com.nordokod.scio.entity.User.KEY_USERS).child(com.nordokod.scio.entity.User.KEY_PROFILE_PHOTO).child("userPhoto-"+ Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
-        /*
-         * se actualiza link de foto del usario
-         */
+
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setPhotoUri(Uri.parse(sRef.toString()))
                 .build();
-        /*
-         * listener para saber cuando se actalizó el link correctamente
-         */
         return mAuth.getCurrentUser().updateProfile(profileUpdates);
     }
 
@@ -162,18 +157,47 @@ public class User {
                 .build();
         return Objects.requireNonNull(mAuth.getCurrentUser()).updateProfile(profileUpdates);
     }
-
     /**
-     * establecer la información no basica del usuario
-     * @param user entidad usuario (se requiere cumpleaños y nivel de estudios)
+     * Crear o acatualiza nodo con la información del usuario
+     * @param user entidad usuario
      * @return Task con el resultado0
      */
-    public Task<Void> setUserInformation(com.nordokod.scio.entity.User user){
+    public Task<Void> createUserInformation(com.nordokod.scio.entity.User user){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> data = new HashMap<>();
+        data.put(com.nordokod.scio.entity.User.KEY_EMAIL,user.getEmail());
+        data.put(com.nordokod.scio.entity.User.KEY_USERNAME,user.getUsername());
+        data.put(com.nordokod.scio.entity.User.KEY_PHOTO_PATH,user.getPhotoPath());
         data.put(com.nordokod.scio.entity.User.KEY_BIRTHDAY,user.getBirthdayDate());
         data.put(com.nordokod.scio.entity.User.KEY_STUDY_LEVEL,user.getStudyLevel());
+        data.put(com.nordokod.scio.entity.User.KEY_STATE,user.getState());
         return  db.collection(com.nordokod.scio.entity.User.KEY_USERS).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).set(data);
+    }
+    /**
+     * Crear o acatualiza nodo con la información del usuario
+     * @param user entidad usuario
+     * @return Task con el resultado0
+     */
+    public Task<Void> updateUserInformation(com.nordokod.scio.entity.User user){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> data = new HashMap<>();
+        data.put(com.nordokod.scio.entity.User.KEY_EMAIL,user.getEmail());
+        data.put(com.nordokod.scio.entity.User.KEY_USERNAME,user.getUsername());
+        data.put(com.nordokod.scio.entity.User.KEY_PHOTO_PATH,user.getPhotoPath());
+        data.put(com.nordokod.scio.entity.User.KEY_BIRTHDAY,user.getBirthdayDate());
+        data.put(com.nordokod.scio.entity.User.KEY_STUDY_LEVEL,user.getStudyLevel());
+        data.put(com.nordokod.scio.entity.User.KEY_STATE,user.getState());
+        return  db.collection(com.nordokod.scio.entity.User.KEY_USERS).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).update(data);
+    }
+
+    /**
+     * Obtener toda información del usuario
+     * @param user user con UID
+     * @return task con resultado
+     */
+    public Task<DocumentSnapshot> getUserInformation(com.nordokod.scio.entity.User user){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        return db.collection(com.nordokod.scio.entity.User.KEY_USERS).document(Objects.requireNonNull(user.getUid())).get();
     }
 
     /**
@@ -182,20 +206,6 @@ public class User {
      * @throws InvalidValueException (valores inválidos)
      */
     public com.nordokod.scio.entity.User getBasicUserInfo() throws InvalidValueException {
-        com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
-        user.setUsername(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
-        user.setEmail(mAuth.getCurrentUser().getEmail());
-        user.setUid(mAuth.getCurrentUser().getUid());
-        user.setPhotoPath(Objects.requireNonNull(mAuth.getCurrentUser().getPhotoUrl()).getPath());
-        return user;
-    }
-
-    /**
-     * Obtener toda la información del usuario
-     * @return entidad usaurio
-     * @throws InvalidValueException dato inválido
-     */
-    public com.nordokod.scio.entity.User getAllUserInfo() throws InvalidValueException {
         com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
         user.setUsername(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
         user.setEmail(mAuth.getCurrentUser().getEmail());
@@ -282,5 +292,22 @@ public class User {
         mAuth.signOut();
     }
 
+    /**
+     * convertir documentsnapchot en usuario
+     * @param documentSnapshot DocumentSnapchot no nulo
+     * @return entidad User con el usuario
+     */
+
+    public com.nordokod.scio.entity.User getUserFromDocument(DocumentSnapshot documentSnapshot){
+        return new com.nordokod.scio.entity.User(
+                        documentSnapshot.getId(),
+                (String)documentSnapshot.get(com.nordokod.scio.entity.User.KEY_USERNAME),
+                (String)documentSnapshot.get(com.nordokod.scio.entity.User.KEY_EMAIL),
+                (String)documentSnapshot.get(com.nordokod.scio.entity.User.KEY_PHOTO_PATH),
+                        documentSnapshot.getDate(com.nordokod.scio.entity.User.KEY_BIRTHDAY),
+                (int)   documentSnapshot.get(com.nordokod.scio.entity.User.KEY_STUDY_LEVEL),
+                (int)   documentSnapshot.get(com.nordokod.scio.entity.User.KEY_STATE)
+        );
+    }
 
 }

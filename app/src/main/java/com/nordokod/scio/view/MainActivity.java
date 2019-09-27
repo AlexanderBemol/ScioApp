@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -34,6 +35,9 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.google.android.gms.tasks.OnCanceledListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.entity.InvalidValueException;
@@ -145,6 +149,25 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
         userModel = new User();
+        if(!userModel.isUserLogged())goToLoginActivity();
+        //link dinámico
+        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(new OnSuccessListener<PendingDynamicLinkData>() {
+            @Override
+            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                final com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
+                if(pendingDynamicLinkData!=null){
+                    guideModel.getPublicGuide(pendingDynamicLinkData).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            Guide guide = guideModel.getGuideFromDocument(documentSnapshot);
+                            ImportGuideDialog importGuideDialog = new ImportGuideDialog(getApplicationContext());
+                            importGuideDialog.showDialog(guide);
+                        }
+                    });
+                }
+            }
+        });
+
         //obtener foto de usuario
         Bitmap localPhoto = userModel.getLocalProfilePhoto(getApplicationContext());
         if(localPhoto==null) {
@@ -336,6 +359,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     public void refreshGuides(){
         if(guidesFragment!=null&&selectedFragment==guidesFragment){
             guidesFragment.onBackFragment();
+            guidesFragment.getAllGuides();
         }
     }
 

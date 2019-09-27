@@ -4,14 +4,18 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Entity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.nordokod.scio.R;
 import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Guide;
@@ -94,7 +98,17 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
         TV_Share_Guide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //guideController.shareGuide(guide.getId());
+                mGuide.generateGuideLink(guide).addOnSuccessListener(new OnSuccessListener<ShortDynamicLink>() {
+                    @Override
+                    public void onSuccess(ShortDynamicLink shortDynamicLink) {
+                        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                        sharingIntent.setType("text/plain");
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "GUIDE");
+                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shortDynamicLink.getShortLink().toString());
+
+                        context.startActivity(sharingIntent);
+                    }
+                });
             }
         });
 

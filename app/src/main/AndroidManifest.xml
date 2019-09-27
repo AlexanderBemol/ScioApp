@@ -104,7 +104,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/DefaultTheme"
             >
-
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:host="sendosg.com"
+                    android:scheme="https"/>
+            </intent-filter>
         </activity>
     </application>
 

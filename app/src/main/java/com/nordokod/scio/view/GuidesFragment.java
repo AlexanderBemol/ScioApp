@@ -194,7 +194,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
     }
 
-    private void getAllGuides() {
+    public void getAllGuides() {
         guides = new ArrayList<>();
 
         guideModel.getAllGuides().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

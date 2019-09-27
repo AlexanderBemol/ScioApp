@@ -171,7 +171,7 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
 
                             Date dateToday = new Date();
 
-                            if (date.before(dateToday)){
+                            if (Objects.requireNonNull(date).before(dateToday)){
                                 showError(new InputDataException(InputDataException.Code.DATETIME_BEFORE)); // La fecha elegida es del pasado. ¡Oh por Dios, Doc, viajamos al pasado!
                             } else {
                                 Guide guide = new Guide(category_selected_id, "", ET_Topic.getText().toString(), "", false, true, date);
@@ -181,6 +181,7 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
                                         showSuccessfulMessage(UserOperations.CREATE_GUIDE);
+                                        mainActivity.refreshGuides();
                                         mainActivity.onCloseFragment("New Guide");
                                     }
                                 }).addOnCanceledListener(new OnCanceledListener() {

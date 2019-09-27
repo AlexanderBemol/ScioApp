@@ -6,8 +6,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -72,14 +74,51 @@ public class Guide {
         return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).get();
     }
 
+    /**
+     * Generar link para compartir guía
+     * @param guide guía a compartir
+     * @return task con link corto
+     */
     public Task<ShortDynamicLink> generateGuideLink(com.nordokod.scio.entity.Guide guide){
-        String uri="https://sendosg.com/guides?user="+ Objects.requireNonNull(mAuth.getCurrentUser()).getUid()+"&guide="+guide.getId();
-        String domain="https://sendosg.com";
+        String uri="https://sendosg.com/?user="+ Objects.requireNonNull(mAuth.getCurrentUser()).getUid()+"&guide="+guide.getId();
+        String domain="https://sendosg.com/guides";
         return FirebaseDynamicLinks.getInstance().createDynamicLink()
                 .setLink(Uri.parse(uri))
                 .setDomainUriPrefix(domain)
                 .setAndroidParameters(
                         new DynamicLink.AndroidParameters.Builder("com.nordokod.scio").build()
-                ).buildShortDynamicLink();
+                ).setSocialMetaTagParameters(
+                        new DynamicLink.SocialMetaTagParameters.Builder().setTitle("¡Aquí te va una guía de "+mAuth.getCurrentUser().getDisplayName()+"!")
+                            .setDescription("Descarga esta guía sobre "+guide.getTopic())
+                            .setImageUrl(Uri.parse("https://res.cloudinary.com/teepublic/image/private/s--tWLvXpQb--/t_Preview/b_rgb:d1d1d1,c_limit,f_jpg,h_630,q_90,w_630/v1524281456/production/designs/2612742_0.jpg"))
+                            .build()
+                )
+                .buildShortDynamicLink();
     }
+
+    public Task<DocumentSnapshot> getPublicGuide(PendingDynamicLinkData pendingDynamicLinkData){
+        Uri deepLink = null;
+        if (pendingDynamicLinkData != null) {
+            deepLink = pendingDynamicLinkData.getLink();
+        }
+        if(deepLink!=null){
+            String uid = deepLink.getQueryParameter("user");
+            String guideID = deepLink.getQueryParameter("guide");
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(uid)).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).document(Objects.requireNonNull(guideID)).get();
+        }
+        return null;
+    }
+    public com.nordokod.scio.entity.Guide getGuideFromDocument(DocumentSnapshot document){
+        return new com.nordokod.scio.entity.Guide(
+                Integer.parseInt(Objects.requireNonNull(document.getData().get(com.nordokod.scio.entity.Guide.KEY_CATEGORY)).toString()),
+                document.getId(),
+                (String)    document.getData().get(com.nordokod.scio.entity.Guide.KEY_TOPIC),
+                Objects.requireNonNull(document.getReference().getParent().getParent()).getId(),
+                (boolean)   document.getData().get(com.nordokod.scio.entity.Guide.KEY_ONLINE),
+                (boolean)   document.getData().get(com.nordokod.scio.entity.Guide.KEY_ACTIVATED),
+                Objects.requireNonNull(document.getTimestamp(com.nordokod.scio.entity.Guide.KEY_DATETIME)).toDate()
+        );
+    }
+
 }
