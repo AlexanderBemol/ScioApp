@@ -14,8 +14,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -108,7 +108,7 @@ public class User {
          * se crea un archivo en la memoria interna que alojará la foto comprimida
          * se hace referencia al archivo que se llamará userPhoto- concatenada al UID (id del user)
          */
-        String pictureFile = "userPhoto-" +mAuth.getCurrentUser().getUid()+".jpg";
+        String pictureFile = "userPhoto-" + Objects.requireNonNull(mAuth.getCurrentUser()).getUid()+".jpg";
         File storageDir = context.getFilesDir();
         File file=new File(storageDir,pictureFile);
         if(file.exists()){
@@ -127,89 +127,87 @@ public class User {
          */
         StorageReference sRef = storageReference.child(com.nordokod.scio.entity.User.KEY_USERS).child(com.nordokod.scio.entity.User.KEY_PROFILE_PHOTO).child("userPhoto-"+mAuth.getCurrentUser().getUid());
         return sRef.putFile(Uri.fromFile(file));
-
     }
 
     /**
-     * actualiza el link de la foto de perfil del usuario con la actual guardada en storage.
-     * @return Task, o nulo si hay error
+     * Crear nodo con la información del usuario
+     * @param user entidad usuario
+     * @return Task con el resultado
      */
-    public Task<Void> updateProfilePhotoLink(){
-        /*
-         * se obtiene link de la foto
-         */
-        StorageReference sRef = storageReference.child(com.nordokod.scio.entity.User.KEY_USERS).child(com.nordokod.scio.entity.User.KEY_PROFILE_PHOTO).child("userPhoto-"+ Objects.requireNonNull(mAuth.getCurrentUser()).getUid());
-        /*
-         * se actualiza link de foto del usario
-         */
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setPhotoUri(Uri.parse(sRef.toString()))
-                .build();
-        /*
-         * listener para saber cuando se actalizó el link correctamente
-         */
-        return mAuth.getCurrentUser().updateProfile(profileUpdates);
-    }
-
-    /**
-     * actualizar nombre de usuario
-     * @param username nuevo nombre de usuario
-     * @return Task del resultado
-     */
-    public Task<Void> updateUsername(String username){
-        UserProfileChangeRequest profileUpdates= new UserProfileChangeRequest.Builder()
-                .setDisplayName(username)
-                .build();
-        return Objects.requireNonNull(mAuth.getCurrentUser()).updateProfile(profileUpdates);
-    }
-
-    /**
-     * establecer la información no basica del usuario
-     * @param user entidad usuario (se requiere cumpleaños y nivel de estudios)
-     * @return Task con el resultado0
-     */
-    public Task<Void> setUserInformation(com.nordokod.scio.entity.User user){
+    public Task<Void> createUserInformation(com.nordokod.scio.entity.User user){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> data = new HashMap<>();
+        data.put(com.nordokod.scio.entity.User.KEY_EMAIL,user.getEmail());
+        data.put(com.nordokod.scio.entity.User.KEY_USERNAME,user.getUsername());
+        data.put(com.nordokod.scio.entity.User.KEY_PHOTO_PATH,user.getPhotoPath());
         data.put(com.nordokod.scio.entity.User.KEY_BIRTHDAY,user.getBirthdayDate());
         data.put(com.nordokod.scio.entity.User.KEY_STUDY_LEVEL,user.getStudyLevel());
+        data.put(com.nordokod.scio.entity.User.KEY_PROFILE_PROVIDER,user.getProvider());
+        data.put(com.nordokod.scio.entity.User.KEY_STATE,user.getState());
         return  db.collection(com.nordokod.scio.entity.User.KEY_USERS).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).set(data);
+    }
+    /**
+     * Actualiza nodo con la información del usuario
+     * @param user entidad usuario
+     * @return Task con el resultado
+     */
+    public Task<Void> updateUserInformation(com.nordokod.scio.entity.User user){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> data = new HashMap<>();
+        data.put(com.nordokod.scio.entity.User.KEY_EMAIL,user.getEmail());
+        data.put(com.nordokod.scio.entity.User.KEY_USERNAME,user.getUsername());
+        data.put(com.nordokod.scio.entity.User.KEY_PHOTO_PATH,user.getPhotoPath());
+        data.put(com.nordokod.scio.entity.User.KEY_BIRTHDAY,user.getBirthdayDate());
+        data.put(com.nordokod.scio.entity.User.KEY_STUDY_LEVEL,user.getStudyLevel());
+        data.put(com.nordokod.scio.entity.User.KEY_PROFILE_PROVIDER,user.getProvider());
+        data.put(com.nordokod.scio.entity.User.KEY_STATE,user.getState());
+        return  db.collection(com.nordokod.scio.entity.User.KEY_USERS).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).update(data);
     }
 
     /**
-     * obtener la entidad usuario con la info basica (no firestore) del usuario
+     * Obtener toda la información del usuario
+     * @param user user con UID
+     * @return task con resultado
+     */
+    public Task<DocumentSnapshot> getUserInformation(com.nordokod.scio.entity.User user){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        return db.collection(com.nordokod.scio.entity.User.KEY_USERS).document(Objects.requireNonNull(user.getUid())).get();
+    }
+
+    /**
+     * obtener la entidad usuario con la info basica (no firestore) del usuario (ya no usar)
      * @return entidad usuario
      * @throws InvalidValueException (valores inválidos)
      */
     public com.nordokod.scio.entity.User getBasicUserInfo() throws InvalidValueException {
         com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
-        user.setUsername(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
+        user.setUsername(Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName()));
         user.setEmail(mAuth.getCurrentUser().getEmail());
         user.setUid(mAuth.getCurrentUser().getUid());
-        user.setPhotoPath(Objects.requireNonNull(mAuth.getCurrentUser().getPhotoUrl()).getPath());
+        user.setPhotoPath(Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser().getPhotoUrl()).toString()));
         return user;
     }
 
     /**
-     * Obtener toda la información del usuario
-     * @return entidad usaurio
-     * @throws InvalidValueException dato inválido
+     * Actualiza la información básica del usuario en el servicio privado
+     * @param user usuario (nombre y foto)
+     * @return task con resultado
      */
-    public com.nordokod.scio.entity.User getAllUserInfo() throws InvalidValueException {
-        com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
-        user.setUsername(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
-        user.setEmail(mAuth.getCurrentUser().getEmail());
-        user.setUid(mAuth.getCurrentUser().getUid());
-        user.setPhotoPath(Objects.requireNonNull(mAuth.getCurrentUser().getPhotoUrl()).getPath());
-        return user;
+    public Task<Void> updateBasicUserInfo(com.nordokod.scio.entity.User user){
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(user.getUsername())
+                .setPhotoUri(Uri.parse(user.getPhotoPath()))
+                .build();
+        return Objects.requireNonNull(mAuth.getCurrentUser()).updateProfile(profileUpdates);
     }
 
     /**
      * Obtiene en que servicio se encuentra alojada la foto del usuario
+     * @param user usuario
      * @return enum ProfilePhotoHost con respuesta
      */
-    public ProfilePhotoHost getProfilePhotoHost (){
-        String photoPath = Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getPhotoUrl()).toString();//obtener link de la foto
+    public ProfilePhotoHost getProfilePhotoHost (com.nordokod.scio.entity.User user){
+        String photoPath = user.getPhotoPath();//obtener link de la foto
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();//obtenemos referencia a la bd
         if(photoPath.contains(storageReference.toString()))
@@ -224,8 +222,8 @@ public class User {
      * @return FileDownload task con el resultado
      * @throws IOException en error en uri, o almacenamiento.
      */
-    public Task<byte[]> getFirebaseProfilePhoto(){
-        String photoPath = Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getPhotoUrl()).toString();
+    public Task<byte[]> getFirebaseProfilePhoto(com.nordokod.scio.entity.User user){
+        String photoPath = user.getPhotoPath();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();//obtenemos referencia a la bd
         StorageReference sRef = storage.getReferenceFromUrl(photoPath);//obtenemos la referencia al link
@@ -235,15 +233,13 @@ public class User {
     /**
      * Obtener foto de perfil de usuario de Facebook o Google
      * @param customListener listener con acciones de exito o error
+     * @param user usuario
      */
-    public void getExternalProfilePhoto(DownloadImageProcess.CustomListener customListener){
-        String photoPath = Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getPhotoUrl()).toString();
-        for (UserInfo profile : Objects.requireNonNull(mAuth.getCurrentUser()).getProviderData()) {
-            // check if the provider id matches "facebook.com"
-            if (profile.getProviderId().equals("facebook.com")) {
-                String facebookUserId = profile.getUid();
-                photoPath = "https://graph.facebook.com/" + facebookUserId + "/picture?type=medium";
-            }
+    public void getExternalProfilePhoto(DownloadImageProcess.CustomListener customListener, com.nordokod.scio.entity.User user){
+        String photoPath = user.getPhotoPath();
+        if (user.getProvider().equals("facebook.com")) {
+            String facebookUserId = user.getUid();
+            photoPath = "https://graph.facebook.com/" + facebookUserId + "/picture?type=medium";
         }
         DownloadImageProcess dip = new DownloadImageProcess();
         dip.setListener(customListener);
@@ -253,10 +249,11 @@ public class User {
     /**
      * Obtener la foto de perfil de los archivos locales
      * @param context contexto actual
+     * @param user usuario
      * @return la foto en formato bitmap o nulo si no se encontró
      */
-    public Bitmap getLocalProfilePhoto(Context context){
-        String pictureFile = "userPhoto-" + Objects.requireNonNull(mAuth.getCurrentUser()).getUid()+".JPEG";
+    public Bitmap getLocalProfilePhoto(Context context, com.nordokod.scio.entity.User user){
+        String pictureFile = "userPhoto-" + user.getUid()+".JPEG";
         File storageDir = context.getFilesDir();
         File file=new File(storageDir,pictureFile);
         if(file.exists()){
@@ -266,8 +263,15 @@ public class User {
         }
     }
 
-    public void saveProfilePhotoInLocal(Context context,Bitmap photo) throws IOException {
-        String pictureFile = "userPhoto-" + Objects.requireNonNull(mAuth.getCurrentUser()).getUid()+".JPEG";
+    /**
+     * Guardar foto de perfil de usuario en local
+     * @param context contexto actual
+     * @param photo Bitmap de la foto
+     * @param user usuario
+     * @throws IOException excepción de tipo IOException
+     */
+    public void saveProfilePhotoInLocal(Context context, Bitmap photo, com.nordokod.scio.entity.User user) throws IOException {
+        String pictureFile = "userPhoto-" + user.getUid()+".JPEG";
         File storageDir = context.getFilesDir();
         File file=new File(storageDir,pictureFile);
         OutputStream os = new FileOutputStream(file);
@@ -282,5 +286,23 @@ public class User {
         mAuth.signOut();
     }
 
+    /**
+     * convertir documentSnapshot en usuario
+     * @param documentSnapshot DocumentSnapchot no nulo
+     * @return entidad User con el usuario
+     */
+
+    public com.nordokod.scio.entity.User getUserFromDocument(DocumentSnapshot documentSnapshot){
+        return new com.nordokod.scio.entity.User(
+                        documentSnapshot.getId(),
+                (String)documentSnapshot.get(com.nordokod.scio.entity.User.KEY_USERNAME),
+                (String)documentSnapshot.get(com.nordokod.scio.entity.User.KEY_EMAIL),
+                (String)documentSnapshot.get(com.nordokod.scio.entity.User.KEY_PHOTO_PATH),
+                        documentSnapshot.getDate(com.nordokod.scio.entity.User.KEY_BIRTHDAY),
+                        Integer.parseInt(String.valueOf(documentSnapshot.get(com.nordokod.scio.entity.User.KEY_STUDY_LEVEL))),
+                        Integer.parseInt(String.valueOf(documentSnapshot.get(com.nordokod.scio.entity.User.KEY_STATE))),
+                (String) documentSnapshot.get(com.nordokod.scio.entity.User.KEY_PROFILE_PROVIDER)
+        );
+    }
 
 }

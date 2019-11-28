@@ -89,26 +89,10 @@ public class NewOpenAnswerQuestionFragment extends BottomSheetDialogFragment imp
                     OpenQuestion openQuestion = new OpenQuestion(0, ET_Question.getText().toString(), KindOfQuestion.OPEN.getCode(), ET_Answer.getText().toString());
 
                     Question question = new Question();
-                    question.addQuestion(KindOfQuestion.OPEN, guide, openQuestion).addOnSuccessListener(
-                            new OnSuccessListener<DocumentReference>() {
-                                @Override
-                                public void onSuccess(DocumentReference documentReference) {
-                                    showSuccessfulMessage(UserOperations.CREATE_QUESTION);
-                                }
-                            }
-                    ).addOnCanceledListener(new OnCanceledListener() {
-                        @Override
-                        public void onCanceled() {
-                            showError(new OperationCanceledException());
-                        }
-                    }).addOnFailureListener(
-                            new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    showError(e);
-                                }
-                            }
-                    );
+                    question.addQuestion(KindOfQuestion.OPEN, guide, openQuestion)
+                            .addOnSuccessListener(documentReference -> showSuccessfulMessage(UserOperations.CREATE_QUESTION))
+                            .addOnCanceledListener(() -> showError(new OperationCanceledException()))
+                            .addOnFailureListener(e -> showError(e));
                 }else{
                     showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
                 }

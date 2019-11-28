@@ -122,27 +122,14 @@ public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment
                                 KindOfQuestion.MULTIPLE_CHOICE,
                                 guide,
                                 multipleChoiceQuestion
-                        ).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                showSuccessfulMessage(UserOperations.CREATE_QUESTION);
-                            }
-                        }).addOnCanceledListener(new OnCanceledListener() {
-                            @Override
-                            public void onCanceled() {
-                                showError(new OperationCanceledException());
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                showError(e);
-                            }
-                        });
+                        )
+                                .addOnSuccessListener(documentReference -> showSuccessfulMessage(UserOperations.CREATE_QUESTION))
+                                .addOnCanceledListener(() -> showError(new OperationCanceledException()))
+                                .addOnFailureListener(e -> showError(e));
                     }
                 }else{
                     showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
                 }
-
 
             }
         });

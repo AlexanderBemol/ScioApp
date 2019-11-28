@@ -63,7 +63,7 @@ public class FirstConfigurationNameFragment extends Fragment implements BasicFra
     }
 
     public void updateName() {
-        userModel.updateUsername(getName()).addOnCanceledListener(new OnCanceledListener() {
+        /*userModel.updateUsername(getName()).addOnCanceledListener(new OnCanceledListener() {
             @Override
             public void onCanceled() {
                 firstConfigurationActivity.showError(new OperationCanceledException());
@@ -73,6 +73,6 @@ public class FirstConfigurationNameFragment extends Fragment implements BasicFra
             public void onFailure(@NonNull Exception e) {
                 firstConfigurationActivity.showError(e);
             }
-        });
+        });*/
     }
 }

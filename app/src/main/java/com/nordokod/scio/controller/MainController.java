@@ -1,26 +1,5 @@
 package com.nordokod.scio.controller;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.text.Editable;
-import android.util.Log;
-
-
-import com.nordokod.scio.entity.Error;
-
-import com.nordokod.scio.entity.Guide;
-import com.nordokod.scio.entity.MultipleChoiceQuestion;
-import com.nordokod.scio.entity.Question;
-import com.nordokod.scio.model.MainModel;
-import com.nordokod.scio.view.LoginActivity;
-import com.nordokod.scio.view.MainActivity;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-
 public class MainController {
     /*
     private MainActivity mainActivity;

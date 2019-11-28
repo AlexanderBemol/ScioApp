@@ -53,7 +53,7 @@ public class FirstConfigurationPhotoFragment extends Fragment implements BasicFr
         CIV_Photo = view.findViewById(R.id.photo);
         CIV_Photo.setImageResource(R.drawable.default_photo);
         userModel=new User();
-        setDefaultPhoto();
+        //setDefaultPhoto();
 
     }
 
@@ -74,7 +74,7 @@ public class FirstConfigurationPhotoFragment extends Fragment implements BasicFr
     /**
      * Obtener foto por defecto del usuario
      */
-    protected void setDefaultPhoto() {
+    /*protected void setDefaultPhoto() {
         try{
             switch (userModel.getProfilePhotoHost()){
                 case FIREBASE_STORAGE:
@@ -123,7 +123,7 @@ public class FirstConfigurationPhotoFragment extends Fragment implements BasicFr
             firstConfigurationActivity.showError(e);
         }
 
-    }
+    }*/
 
     /**
      * Método que define la foto elegida por el usuario.

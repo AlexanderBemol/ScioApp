@@ -1,16 +1,24 @@
 package com.nordokod.scio.entity;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
-import com.nordokod.scio.constants.StudyLevel;
-import com.nordokod.scio.constants.UserState;
 import com.nordokod.scio.constants.Utilities;
 
 public class User {
     public static String KEY_USERS="USERS";
+    public static String KEY_USERNAME="USERNAME";
+    public static String KEY_EMAIL="EMAIL";
+    public static String KEY_PHOTO_PATH="PHOTOPATH";
     public static String KEY_BIRTHDAY="BIRTHDAY";
     public static String KEY_STUDY_LEVEL="STUDY_LEVEL";
     public static String KEY_STATE="STATE";
     public static String KEY_PROFILE_PHOTO="PROFILE_PHOTOS";
+    public static String KEY_PROFILE_PROVIDER="PROVIDER";
+
+    public static String DEFAULT_USERNAME="USUARIO DE SENDO SG";
+    public static String DEFAULT_EMAIL="SIN INFORMACIÓN";
+    public static Date DEFAULT_BIRTHDAY= new Date();
 
     private String uid;
     private String username;
@@ -19,8 +27,32 @@ public class User {
     private String password2;
     private String photoPath;
     private Date birthdayDate;
+    private String provider;
     private int studyLevel;
     private int state;
+
+    public User (){
+        this.uid="";
+        this.username = DEFAULT_USERNAME;
+        this.email = DEFAULT_EMAIL;
+        this.password="";
+        this.password2="";
+        this.photoPath="";
+        this.birthdayDate = DEFAULT_BIRTHDAY;
+        this.provider="";
+    }
+
+    public User (String uid,String username,String email,String photoPath, Date birthdayDate, int studyLevel, int state, String provider){
+        this.uid=uid;
+        this.username=username;
+        this.email=email;
+        this.photoPath=photoPath;
+        this.birthdayDate=birthdayDate;
+        this.studyLevel=studyLevel;
+        this.state=state;
+        this.provider = provider;
+    }
+
 
     public String getUid() {
         return uid;
@@ -45,10 +77,7 @@ public class User {
         return email;
     }
 
-    public void setEmail(String email) throws InvalidValueException {
-        if(!email.matches(Utilities.EMAIL_REGULAR_EXPRESSION))
-            throw new InvalidValueException();
-        else
+    public void setEmail(String email){
             this.email = email;
     }
 
@@ -56,10 +85,7 @@ public class User {
         return password;
     }
 
-    public void setPassword(String password) throws InvalidValueException {
-        if(password.length()<8)
-            throw new InvalidValueException();
-        else
+    public void setPassword(String password){
             this.password = password;
     }
 
@@ -67,10 +93,7 @@ public class User {
         return password2;
     }
 
-    public void setPassword2(String password2) throws InvalidValueException {
-        if(password2.length()<8)
-            throw new InvalidValueException();
-        else
+    public void setPassword2(String password2) {
             this.password2 = password2;
     }
 
@@ -94,26 +117,23 @@ public class User {
         return studyLevel;
     }
 
-    public void setStudyLevel(int studyLevel) throws InvalidValueException {
-        try{
-            StudyLevel studyLevel1 = StudyLevel.values()[studyLevel+1];
+    public void setStudyLevel(int studyLevel) {
             this.studyLevel = studyLevel;
-        }catch (ArrayIndexOutOfBoundsException e){
-            throw new InvalidValueException();
-        }
     }
 
     public int getState() {
         return state;
     }
 
-    public void setState(int state) throws InvalidValueException {
-        try{
-            UserState userState = UserState.values()[state+1];
+    public void setState(int state) {
             this.state = state;
-        }catch (ArrayIndexOutOfBoundsException e){
-            throw new InvalidValueException();
-        }
     }
 
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
 }
