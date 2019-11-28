@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.InputDataException;
+import com.nordokod.scio.entity.InvalidValueException;
 import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.User;
 import com.nordokod.scio.process.UserMessage;
@@ -101,23 +102,23 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-                userModel.signInWithGoogle(account).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                    @Override
-                    public void onSuccess(AuthResult authResult) {
-                        if(authResult.getAdditionalUserInfo().isNewUser()){
-                            goToMainView();
+                assert account != null;
+                userModel.signInWithGoogle(account).addOnSuccessListener(authResult -> {
+                    if(authResult.getAdditionalUserInfo().isNewUser()){
+                        User userModel = new User();
+                        com.nordokod.scio.entity.User userEntity = new com.nordokod.scio.entity.User();
+                        try {
+                            userEntity = userModel.getBasicUserInfo();
+                        } catch (InvalidValueException e) {
+                            showError(e);
                         }
-                        else{
-                            showSuccessfulMessage(UserOperations.LOGIN_USER);
-                            goToMainView();
-                        }
+                        userModel.createUserInformation(userEntity).addOnSuccessListener(aVoid -> goToMainView());
                     }
-                }).addOnCanceledListener(new OnCanceledListener() {
-                    @Override
-                    public void onCanceled() {
-                        showError(new OperationCanceledException());
+                    else{
+                        showSuccessfulMessage(UserOperations.LOGIN_USER);
+                        goToMainView();
                     }
-                }).addOnFailureListener(new OnFailureListener() {
+                }).addOnCanceledListener(() -> showError(new OperationCanceledException())).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         showError(e);
@@ -173,22 +174,22 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                         com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
                         user.setEmail(ET_Mail.getText().toString());
                         user.setPassword(ET_Password.getText().toString());
-                        userModel.signInWithMail(user).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                if (authResult.getAdditionalUserInfo().isNewUser()) {
-                                    goToMainView();
-                                } else {
-                                    showSuccessfulMessage(UserOperations.LOGIN_USER);
-                                    goToMainView();
+                        userModel.signInWithMail(user).addOnSuccessListener(authResult -> {
+                            if (authResult.getAdditionalUserInfo().isNewUser()) {
+                                try {
+                                    com.nordokod.scio.entity.User auxUser = new com.nordokod.scio.entity.User();
+                                    auxUser=userModel.getBasicUserInfo();
+                                    userModel.createUserInformation(auxUser);
+                                } catch (InvalidValueException e) {
+                                    showError(e);
                                 }
+                                showSuccessfulMessage(UserOperations.SIGN_UP_USER);
+                                goToMainView();
+                            } else {
+                                showSuccessfulMessage(UserOperations.LOGIN_USER);
+                                goToMainView();
                             }
-                        }).addOnCanceledListener(new OnCanceledListener() {
-                            @Override
-                            public void onCanceled() {
-                                showError(new OperationCanceledException());
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
+                        }).addOnCanceledListener(() -> showError(new OperationCanceledException())).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 showError(e);
@@ -202,74 +203,54 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         });
 
         //Google
-        BTN_Google.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                BTN_Google.startAnimation(press);
-                showLoginLoadingDialog();
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent,RequestCode.RC_GOOGLE.getCode());
-            }
+        BTN_Google.setOnClickListener(v -> {
+            BTN_Google.startAnimation(press);
+            showLoginLoadingDialog();
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent,RequestCode.RC_GOOGLE.getCode());
         });
 
         //Facebook
-        BTN_FB.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                showLoginLoadingDialog();
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email","public_profile","user_birthday"));
-                LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        userModel.signInWithFacebook(loginResult.getAccessToken()).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                if(authResult.getAdditionalUserInfo().isNewUser()){
-                                    goToMainView();
-                                }else{
-                                    showSuccessfulMessage(UserOperations.LOGIN_USER);
-                                    goToMainView();
-                                }
-                            }
-                        }).addOnCanceledListener(new OnCanceledListener() {
-                            @Override
-                            public void onCanceled() {
-                                showError(new OperationCanceledException());
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                showError(e);
-                            }
-                        });
-                    }
-                    @Override
-                    public void onCancel() {
-                        showError(new OperationCanceledException());
-                    }
-                    @Override
-                    public void onError(FacebookException error) {
-                        showError(error);
-                    }
-                });
-            }
+        BTN_FB.setOnClickListener(v -> {
+            showLoginLoadingDialog();
+            LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email","public_profile","user_birthday"));
+            LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                @Override
+                public void onSuccess(LoginResult loginResult) {
+                    userModel.signInWithFacebook(loginResult.getAccessToken()).addOnSuccessListener(authResult -> {
+                        if(authResult.getAdditionalUserInfo().isNewUser()){
+                            goToMainView();
+                        }else{
+                            showSuccessfulMessage(UserOperations.LOGIN_USER);
+                            goToMainView();
+                        }
+                    }).addOnCanceledListener(() -> showError(new OperationCanceledException())).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            showError(e);
+                        }
+                    });
+                }
+                @Override
+                public void onCancel() {
+                    showError(new OperationCanceledException());
+                }
+                @Override
+                public void onError(FacebookException error) {
+                    showError(error);
+                }
+            });
         });
 
         //Registrarse
-        BTN_Signup.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                BTN_Signup.startAnimation(press);
-                goToSignUpView();
-            }
+        BTN_Signup.setOnClickListener(v -> {
+            BTN_Signup.startAnimation(press);
+            goToSignUpView();
         });
 
         //Recuperar Contraseña
-        txtRecuperar.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                //activity restore password
-            }
+        txtRecuperar.setOnClickListener(v -> {
+            //activity restore password
         });
     }
 
@@ -288,6 +269,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         Intent mainIntent = new Intent(getApplicationContext(),MainActivity.class);
         dismissProgressDialog();
         startActivity(mainIntent);
+        finish();
     }
     private void goToSignUpView(){
         Intent signUpIntent = new Intent(getApplicationContext(),SignupActivity.class);

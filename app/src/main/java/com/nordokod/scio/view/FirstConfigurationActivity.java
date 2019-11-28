@@ -331,7 +331,7 @@ public class FirstConfigurationActivity extends AppCompatActivity implements Bas
                     userModel.uploadProfilePhoto(resultUri,this).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            photoFragment.setDefaultPhoto();
+                            //photoFragment.setDefaultPhoto();
                         }
                     }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override

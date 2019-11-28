@@ -14,6 +14,7 @@ public class User {
     public static String KEY_STUDY_LEVEL="STUDY_LEVEL";
     public static String KEY_STATE="STATE";
     public static String KEY_PROFILE_PHOTO="PROFILE_PHOTOS";
+    public static String KEY_PROFILE_PROVIDER="PROVIDER";
 
     public static String DEFAULT_USERNAME="USUARIO DE SENDO SG";
     public static String DEFAULT_EMAIL="SIN INFORMACIÓN";
@@ -26,12 +27,22 @@ public class User {
     private String password2;
     private String photoPath;
     private Date birthdayDate;
+    private String provider;
     private int studyLevel;
     private int state;
 
-    public User (){ }
+    public User (){
+        this.uid="";
+        this.username = DEFAULT_USERNAME;
+        this.email = DEFAULT_EMAIL;
+        this.password="";
+        this.password2="";
+        this.photoPath="";
+        this.birthdayDate = DEFAULT_BIRTHDAY;
+        this.provider="";
+    }
 
-    public User (String uid,String username,String email,String photoPath, Date birthdayDate, int studyLevel, int state){
+    public User (String uid,String username,String email,String photoPath, Date birthdayDate, int studyLevel, int state, String provider){
         this.uid=uid;
         this.username=username;
         this.email=email;
@@ -39,6 +50,7 @@ public class User {
         this.birthdayDate=birthdayDate;
         this.studyLevel=studyLevel;
         this.state=state;
+        this.provider = provider;
     }
 
 
@@ -117,4 +129,11 @@ public class User {
             this.state = state;
     }
 
+    public String getProvider() {
+        return provider;
+    }
+
+    public void setProvider(String provider) {
+        this.provider = provider;
+    }
 }

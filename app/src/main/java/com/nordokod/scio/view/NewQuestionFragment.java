@@ -50,28 +50,19 @@ public class NewQuestionFragment extends BottomSheetDialogFragment implements Ba
 
     @Override
     public void initListeners() {
-        IV_Multiple_Choice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.onCloseFragment("New Question");
-                activity.onNewMultipleChoiceQuestionDialog(guide);
-            }
+        IV_Multiple_Choice.setOnClickListener(v -> {
+            activity.onCloseFragment("New Question");
+            activity.onNewMultipleChoiceQuestionDialog(guide);
         });
 
-        IV_True_False.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.onCloseFragment("New Question");
-                activity.onNewTrueFalseQuestionDialog(guide);
-            }
+        IV_True_False.setOnClickListener(v -> {
+            activity.onCloseFragment("New Question");
+            activity.onNewTrueFalseQuestionDialog(guide);
         });
 
-        IV_Open_Answer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.onCloseFragment("New Question");
-                activity.onNewOpenAnswerQuestionDialog(guide);
-            }
+        IV_Open_Answer.setOnClickListener(v -> {
+            activity.onCloseFragment("New Question");
+            activity.onNewOpenAnswerQuestionDialog(guide);
         });
     }
 }

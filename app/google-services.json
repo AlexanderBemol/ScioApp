@@ -15,59 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1038530395665-ppq8or506agf183mmv3vv4efbs11c8er.apps.googleusercontent.com",
+          "client_id": "1038530395665-a65fv4dfb0n1mtvenb02de3bgn0pr3aj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.nordokod.scio",
-            "certificate_hash": "972ebafd2c6011c9e20c66e0d736f4a254a50c8c"
-          }
-        },
-        {
-          "client_id": "1038530395665-he0if8bkmllk5blhrtjsv4n82f3j1fvp.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.nordokod.scio",
-            "certificate_hash": "9a3a8c686eb084a4b2d1971735be28bfe7e1f355"
-          }
-        },
-        {
-          "client_id": "1038530395665-vm88dlevp3o3auhhf8mv5erhdc4p4rkt.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.nordokod.scio",
-            "certificate_hash": "321cd0d76784e6f16c1adff545ddd19dccf2fed7"
-          }
-        },
-        {
-          "client_id": "1038530395665-bdifgm9hfucv5et33mqbktq21dkpn9g7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.nordokod.scio",
-            "certificate_hash": "851ae20778ab8a8e179240c3540a446f0381f6c2"
-          }
-        },
-        {
-          "client_id": "1038530395665-nc4e8bfg7oa53vtht8p35o513pjbslnl.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.nordokod.scio",
-            "certificate_hash": "8e346a87ff4602bec6dcc29c15d3229bd1901426"
-          }
-        },
-        {
-          "client_id": "1038530395665-8touuemang4bu15mlg10muqltvdrkp08.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.nordokod.scio",
-            "certificate_hash": "3d33ac49c9df38daba6c81c04c97ef41d3e6b02f"
-          }
-        },
-        {
-          "client_id": "1038530395665-bjr2bl69mt9m7mlep7rq2h7ac7lhipcd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.nordokod.scio",
-            "certificate_hash": "474d1ef29e4be5815ffd7264fccffa70fb44feb7"
+            "certificate_hash": "c17c2fe2e234cb76cf716facc1a980be01a34e71"
           }
         },
         {

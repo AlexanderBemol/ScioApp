@@ -1,57 +1,38 @@
 package com.nordokod.scio.view;
 
-
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
-import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.Guide;
-import com.nordokod.scio.entity.InvalidValueException;
 import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.User;
 import com.nordokod.scio.process.DownloadImageProcess;
 import com.nordokod.scio.process.MediaProcess;
 import com.nordokod.scio.process.UserMessage;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
@@ -79,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private Fragment selectedFragment = null;
 
     private User userModel;
-
+    private com.nordokod.scio.entity.User actualUserEntity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,71 +131,66 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
         userModel = new User();
         if(!userModel.isUserLogged())goToLoginActivity();
+
+        actualUserEntity = new com.nordokod.scio.entity.User();
+        try {
+            actualUserEntity = userModel.getBasicUserInfo();
+            userModel.getUserInformation(actualUserEntity).addOnSuccessListener(documentSnapshot -> actualUserEntity = userModel.getUserFromDocument(documentSnapshot))
+                    .addOnCanceledListener(() -> showError(new OperationCanceledException()))
+                    .addOnFailureListener(this::showError);
+        } catch (Exception e) {
+            showError(e);
+        }
+
         //link dinámico
-        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(new OnSuccessListener<PendingDynamicLinkData>() {
-            @Override
-            public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
-                final com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
-                if(pendingDynamicLinkData!=null){
-                    guideModel.getPublicGuide(pendingDynamicLinkData).addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(
+                pendingDynamicLinkData -> {
+                    if(pendingDynamicLinkData!=null){
+                        com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
+                        guideModel.getPublicGuide(pendingDynamicLinkData).addOnSuccessListener(documentSnapshot -> {
                             Guide guide = guideModel.getGuideFromDocument(documentSnapshot);
                             ImportGuideDialog importGuideDialog = new ImportGuideDialog(getApplicationContext());
                             importGuideDialog.showDialog(guide);
-                        }
-                    });
+                        });
+                    }
                 }
-            }
-        });
+        );
 
         //obtener foto de usuario
-        Bitmap localPhoto = userModel.getLocalProfilePhoto(getApplicationContext());
+        Bitmap localPhoto = userModel.getLocalProfilePhoto(getApplicationContext(),actualUserEntity);
         if(localPhoto==null) {
-            switch (userModel.getProfilePhotoHost()) {
+            switch (userModel.getProfilePhotoHost(actualUserEntity)) {
                 case GOOGLE_OR_FACEBOOK_STORAGE:
                     userModel.getExternalProfilePhoto(new DownloadImageProcess.CustomListener() {
                         @Override
                         public void onCompleted(Bitmap photo) {
                             try {
-                                userModel.saveProfilePhotoInLocal(MainActivity.this, photo);
+                                userModel.saveProfilePhotoInLocal(MainActivity.this, photo, actualUserEntity);
                                 setUserPhoto(photo);
                             } catch (Exception e) {
-                                //showError(e);
+                                setDefaultUserPhoto();
                             }
                         }
 
                         @Override
                         public void onError(Exception e) {
-                            //showError(e);
+                            setDefaultUserPhoto();
                         }
-                    });
+                    }, actualUserEntity);
                     break;
                 case FIREBASE_STORAGE:
                     try {
-                        userModel.getFirebaseProfilePhoto().addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                            @Override
-                            public void onSuccess(byte[] bytes) {
-                                try {
-                                    Bitmap userPhoto = new MediaProcess().createBitmapWithBytes(bytes);
-                                    userModel.saveProfilePhotoInLocal(MainActivity.this, userPhoto);
-                                    setUserPhoto(userPhoto);
-                                } catch (Exception e) {
-                                    //showError(e);
-                                }
+                        userModel.getFirebaseProfilePhoto(actualUserEntity).addOnSuccessListener(bytes -> {
+                            try{
+                                Bitmap userPhoto = new MediaProcess().createBitmapWithBytes(bytes);
+                                userModel.saveProfilePhotoInLocal(MainActivity.this, userPhoto,actualUserEntity);
+                                setUserPhoto(userPhoto);
+                            }catch (Exception e){
+                                setDefaultUserPhoto();
                             }
-                        }).addOnCanceledListener(new OnCanceledListener() {
-                            @Override
-                            public void onCanceled() {
-                                showError(new OperationCanceledException());
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                //showError(e);
-                            }
-                        });
+                        }).addOnCanceledListener(this::setDefaultUserPhoto).addOnFailureListener(ex -> setDefaultUserPhoto());
                     } catch (Exception e) {
+                        setDefaultUserPhoto();
                         //showError(e);
                     }
             }
@@ -253,8 +229,6 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                     case 2:
                         if (!wasSelected) {
                             viewPager.setCurrentItem(position);
-                        } else {
-
                         }
                         return true;
                 }
@@ -262,12 +236,9 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
             }
         });
 
-        BTN_Logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userModel.logOut();
-                goToLoginActivity();
-            }
+        BTN_Logout.setOnClickListener(v -> {
+            userModel.logOut();
+            goToLoginActivity();
         });
     }
 

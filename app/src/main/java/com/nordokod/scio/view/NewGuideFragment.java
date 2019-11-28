@@ -122,134 +122,71 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
 
     @Override
     public void initListeners() {
-        LL_Date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
+        LL_Date.setOnClickListener(v -> showDatePickerDialog());
+
+        LL_Time.setOnClickListener(v -> showTimePickerDialog());
+
+        BTN_Cancel.setOnClickListener(v -> {
+            BTN_Cancel.startAnimation(press);
+            Objects.requireNonNull(getFragmentManager()).beginTransaction().remove(NewGuideFragment.this).commit();
         });
 
-        LL_Time.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showTimePickerDialog();
-            }
-        });
-
-        BTN_Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BTN_Cancel.startAnimation(press);
-                Objects.requireNonNull(getFragmentManager()).beginTransaction().remove(NewGuideFragment.this).commit();
-
-            }
-        });
-
-        BTN_Create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BTN_Create.startAnimation(press);
-
-                if (category_selected_id == 0) {
-                    showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // ===== No seleccionó ninguna categoría
+        BTN_Create.setOnClickListener(v -> {
+            BTN_Create.startAnimation(press);
+            if (category_selected_id == 0) {
+                showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // ===== No seleccionó ninguna categoría
+            } else {
+                if (ET_Topic.getText() == null) {
+                    showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // = No escribió el tema de la guía
                 } else {
-                    if (ET_Topic.getText() == null) {
-                        showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // = No escribió el tema de la guía
+                    if (date_selected.length() < 2 || time_selected.length() < 2) {
+                        showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // No eligió fecha y/o hora
                     } else {
-                        if (date_selected.length() < 2 || time_selected.length() < 2) {
-                            showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // No eligió fecha y/o hora
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.ENGLISH);
+                        String datetime = date_selected + " " + time_selected;
+
+                        Date date = null;
+                        try {
+                            date = sdf.parse(datetime);
+                        } catch (ParseException e) {
+                            showError(e); // ===================================================
+                        }
+
+                        Date dateToday = new Date();
+
+                        if (Objects.requireNonNull(date).before(dateToday)){
+                            showError(new InputDataException(InputDataException.Code.DATETIME_BEFORE)); // La fecha elegida es del pasado. ¡Oh por Dios, Doc, viajamos al pasado!
                         } else {
-                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.ENGLISH);
-                            String datetime = date_selected + " " + time_selected;
+                            Guide guide = new Guide(category_selected_id, "", ET_Topic.getText().toString(), "", false, true, date);
 
-                            Date date = null;
-                            try {
-                                date = sdf.parse(datetime);
-                            } catch (ParseException e) {
-                                showError(e); // ===================================================
-                            }
-
-                            Date dateToday = new Date();
-
-                            if (Objects.requireNonNull(date).before(dateToday)){
-                                showError(new InputDataException(InputDataException.Code.DATETIME_BEFORE)); // La fecha elegida es del pasado. ¡Oh por Dios, Doc, viajamos al pasado!
-                            } else {
-                                Guide guide = new Guide(category_selected_id, "", ET_Topic.getText().toString(), "", false, true, date);
-
-                                com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
-                                guideModel.createGuide(guide).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
+                            com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
+                            guideModel.createGuide(guide)
+                                    .addOnSuccessListener(documentReference -> {
                                         showSuccessfulMessage(UserOperations.CREATE_GUIDE);
                                         mainActivity.refreshGuides();
                                         mainActivity.onCloseFragment("New Guide");
-                                    }
-                                }).addOnCanceledListener(new OnCanceledListener() {
-                                    @Override
-                                    public void onCanceled() {
-                                        showError(new OperationCanceledException());
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        showError(e);
-                                    }
-                                });
-                            }
+                                    })
+                                    .addOnCanceledListener(() -> showError(new OperationCanceledException()))
+                                    .addOnFailureListener(this::showError);
                         }
                     }
                 }
             }
         });
 
-        CL_Exacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v);
-            }
-        });
+        CL_Exacts.setOnClickListener(this::onClickCategoryListener);
 
-        CL_Socials.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v);
-            }
-        });
+        CL_Socials.setOnClickListener(this::onClickCategoryListener);
 
-        CL_Sports.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v);
-            }
-        });
+        CL_Sports.setOnClickListener(this::onClickCategoryListener);
 
-        CL_Art.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v);
-            }
-        });
+        CL_Art.setOnClickListener(this::onClickCategoryListener);
 
-        CL_Tech.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v);
-            }
-        });
+        CL_Tech.setOnClickListener(this::onClickCategoryListener);
 
-        CL_Entertainment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v);
-            }
-        });
+        CL_Entertainment.setOnClickListener(this::onClickCategoryListener);
 
-        CL_Others.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v);
-            }
-        });
+        CL_Others.setOnClickListener(this::onClickCategoryListener);
     }
 
     @SuppressLint("ResourceType")
@@ -326,37 +263,32 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
     }
 
     private void showDatePickerDialog() {
-        DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                TV_Month.setText(getMonthName(month));
-                TV_Day.setText(twoDigits(dayOfMonth));
+        DatePickerFragment datePickerFragment = DatePickerFragment.newInstance((view, year, month, dayOfMonth) -> {
+            TV_Month.setText(getMonthName(month));
+            TV_Day.setText(twoDigits(dayOfMonth));
 
-                date_selected = twoDigits(dayOfMonth) + "/" + twoDigits(month + 1) + "/" + year;
-            }
+            date_selected = twoDigits(dayOfMonth) + "/" + twoDigits(month + 1) + "/" + year;
         });
 
         datePickerFragment.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "datePicker");
     }
 
     private void showTimePickerDialog() {
-        TimePickerFragment timePickerFragment = TimePickerFragment.newInstance(new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                TV_Time.setText((hourOfDay < 12) ? "AM" : "PM");
-                time_selected = twoDigits(hourOfDay) + ":" +twoDigits(minute);
+        TimePickerFragment timePickerFragment = TimePickerFragment.newInstance((view, hourOfDay, minute) -> {
+            TV_Time.setText((hourOfDay < 12) ? "AM" : "PM");
+            time_selected = twoDigits(hourOfDay) + ":" +twoDigits(minute);
 
-                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat12 = new SimpleDateFormat("h:mm");
-                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat24 = new SimpleDateFormat("HH:mm");
-                Date date = null;
-                try {
-                    date = simpleDateFormat24.parse(hourOfDay + ":" + minute);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                String hour = simpleDateFormat12.format(date);
-                TV_Hour.setText(hour);
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat12 = new SimpleDateFormat("h:mm");
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat24 = new SimpleDateFormat("HH:mm");
+            Date date = null;
+            try {
+                date = simpleDateFormat24.parse(hourOfDay + ":" + minute);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+            assert date != null;
+            String hour = simpleDateFormat12.format(date);
+            TV_Hour.setText(hour);
         });
 
         timePickerFragment.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "timePicker");

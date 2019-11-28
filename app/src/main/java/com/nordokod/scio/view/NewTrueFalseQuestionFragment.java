@@ -80,62 +80,38 @@ public class NewTrueFalseQuestionFragment extends BottomSheetDialogFragment impl
 
     @Override
     public void initListeners() {
-        TV_True_Answer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                answer = true;
-                onChooseAnswer();
-            }
+        TV_True_Answer.setOnClickListener(v -> {
+            answer = true;
+            onChooseAnswer();
         });
 
-        TV_False_Answer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                answer = false;
-                onChooseAnswer();
-            }
+        TV_False_Answer.setOnClickListener(v -> {
+            answer = false;
+            onChooseAnswer();
         });
 
-        BTN_Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BTN_Cancel.startAnimation(press);
-                activity.onCloseFragment("New TrueFalse");
-            }
+        BTN_Cancel.setOnClickListener(v -> {
+            BTN_Cancel.startAnimation(press);
+            activity.onCloseFragment("New TrueFalse");
         });
 
-        BTN_Create.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BTN_Create.startAnimation(press);
-                if (preview_answer > 0) {
-                    if(Objects.requireNonNull(ET_Question.getText()).length()>0){
-                        TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion(0, Objects.requireNonNull(ET_Question.getText().toString()), KindOfQuestion.TRUE_FALSE.getCode(), answer);
+        BTN_Create.setOnClickListener(v -> {
+            BTN_Create.startAnimation(press);
+            if (preview_answer > 0) {
+                if(Objects.requireNonNull(ET_Question.getText()).length()>0){
+                    TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion(0, Objects.requireNonNull(ET_Question.getText().toString()), KindOfQuestion.TRUE_FALSE.getCode(), answer);
 
-                        Question question = new Question();
-                        question.addQuestion(KindOfQuestion.TRUE_FALSE, guide, trueFalseQuestion).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                showSuccessfulMessage(UserOperations.CREATE_QUESTION);
-                            }
-                        }).addOnCanceledListener(new OnCanceledListener() {
-                            @Override
-                            public void onCanceled() {
-                                showError(new OperationCanceledException());
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                showError(e);
-                            }
-                        });
-                    }else{
-                        showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
-                    }
+                    Question question = new Question();
+                    question.addQuestion(KindOfQuestion.TRUE_FALSE, guide, trueFalseQuestion)
+                            .addOnSuccessListener(documentReference -> showSuccessfulMessage(UserOperations.CREATE_QUESTION))
+                            .addOnCanceledListener(() -> showError(new OperationCanceledException()))
+                            .addOnFailureListener(this::showError);
+                }else{
+                    showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
+                }
 
-                }else
-                    activity.onUnselectedAnswer();
-            }
+            }else
+                activity.onUnselectedAnswer();
         });
     }
 
