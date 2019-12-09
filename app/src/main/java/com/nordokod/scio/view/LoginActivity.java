@@ -105,14 +105,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                 assert account != null;
                 userModel.signInWithGoogle(account).addOnSuccessListener(authResult -> {
                     if(authResult.getAdditionalUserInfo().isNewUser()){
-                        User userModel = new User();
-                        com.nordokod.scio.entity.User userEntity = new com.nordokod.scio.entity.User();
-                        try {
-                            userEntity = userModel.getBasicUserInfo();
-                        } catch (InvalidValueException e) {
-                            showError(e);
-                        }
-                        userModel.createUserInformation(userEntity).addOnSuccessListener(aVoid -> goToMainView());
+                        newUser();
                     }
                     else{
                         showSuccessfulMessage(UserOperations.LOGIN_USER);
@@ -176,15 +169,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                         user.setPassword(ET_Password.getText().toString());
                         userModel.signInWithMail(user).addOnSuccessListener(authResult -> {
                             if (authResult.getAdditionalUserInfo().isNewUser()) {
-                                try {
-                                    com.nordokod.scio.entity.User auxUser = new com.nordokod.scio.entity.User();
-                                    auxUser=userModel.getBasicUserInfo();
-                                    userModel.createUserInformation(auxUser);
-                                } catch (InvalidValueException e) {
-                                    showError(e);
-                                }
-                                showSuccessfulMessage(UserOperations.SIGN_UP_USER);
-                                goToMainView();
+                                newUser();
                             } else {
                                 showSuccessfulMessage(UserOperations.LOGIN_USER);
                                 goToMainView();
@@ -213,13 +198,13 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         //Facebook
         BTN_FB.setOnClickListener(v -> {
             showLoginLoadingDialog();
-            LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email","public_profile","user_birthday"));
+            LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email","public_profile"));
             LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
                 @Override
                 public void onSuccess(LoginResult loginResult) {
                     userModel.signInWithFacebook(loginResult.getAccessToken()).addOnSuccessListener(authResult -> {
                         if(authResult.getAdditionalUserInfo().isNewUser()){
-                            goToMainView();
+                            newUser();
                         }else{
                             showSuccessfulMessage(UserOperations.LOGIN_USER);
                             goToMainView();
@@ -263,6 +248,19 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         dismissProgressDialog();
         showSuccessfulMessage(UserOperations.SIGN_UP_USER);
         startActivity(firstConfigurationIntent);
+    }
+
+    private void newUser(){
+        User userModel = new User();
+        com.nordokod.scio.entity.User userEntity = new com.nordokod.scio.entity.User();
+        try {
+            userEntity = userModel.getBasicUserInfo();
+        } catch (InvalidValueException e) {
+            showError(e);
+        }
+        userModel.createUserInformation(userEntity).addOnSuccessListener(aVoid -> {
+            showSuccessfulMessage(UserOperations.SIGN_UP_USER);
+            goToMainView();});
     }
 
     private void goToMainView(){

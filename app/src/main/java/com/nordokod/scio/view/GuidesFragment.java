@@ -112,47 +112,13 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
     @Override
     public void initListeners() {
-        CL_Exacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v, 1);
-            }
-        });
-        CL_Socials.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v, 2);
-            }
-        });
-        CL_Sports.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v, 3);
-            }
-        });
-        CL_Art.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v, 4);
-            }
-        });
-        CL_Tech.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v, 5);
-            }
-        });
-        CL_Entertainment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { onClickCategoryListener(v, 6);
-            }
-        });
-        CL_Others.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickCategoryListener(v, 7);
-            }
-        });
+        CL_Exacts.setOnClickListener(v -> onClickCategoryListener(v, 1));
+        CL_Socials.setOnClickListener(v -> onClickCategoryListener(v, 2));
+        CL_Sports.setOnClickListener(v -> onClickCategoryListener(v, 3));
+        CL_Art.setOnClickListener(v -> onClickCategoryListener(v, 4));
+        CL_Tech.setOnClickListener(v -> onClickCategoryListener(v, 5));
+        CL_Entertainment.setOnClickListener(v -> onClickCategoryListener(v, 6));
+        CL_Others.setOnClickListener(v -> onClickCategoryListener(v, 7));
 
         onBackFragment();
     }
@@ -197,42 +163,33 @@ public class GuidesFragment extends Fragment implements BasicFragment {
     public void getAllGuides() {
         guides = new ArrayList<>();
 
-        guideModel.getAllGuides().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if(queryDocumentSnapshots.isEmpty()){
-                    showError(new NoGuidesException());
-                }else{
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        Guide guide = null;
-                        try {
-                            guide = new Guide(
-                                    Integer.parseInt(Objects.requireNonNull(document.getData().get(Guide.KEY_CATEGORY)).toString()),
-                                    document.getId(),
-                                    (String)    document.getData().get(Guide.KEY_TOPIC),
-                                    userModel.getBasicUserInfo().getUid(),
-                                    (boolean)   document.getData().get(Guide.KEY_ONLINE),
-                                    (boolean)   document.getData().get(Guide.KEY_ACTIVATED),
-                                    Objects.requireNonNull(document.getTimestamp(Guide.KEY_DATETIME)).toDate()
-                            );
-                        } catch (Exception e) {
-                            showError(e);
+        guideModel.getAllGuides()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if(queryDocumentSnapshots.isEmpty()){
+                        showError(new NoGuidesException());
+                    }else{
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Guide guide = null;
+                            try {
+                                guide = new Guide(
+                                        Integer.parseInt(Objects.requireNonNull(document.getData().get(Guide.KEY_CATEGORY)).toString()),
+                                        document.getId(),
+                                        (String)    document.getData().get(Guide.KEY_TOPIC),
+                                        userModel.getBasicUserInfo().getUid(),
+                                        (boolean)   document.getData().get(Guide.KEY_ONLINE),
+                                        (boolean)   document.getData().get(Guide.KEY_ACTIVATED),
+                                        (boolean)   document.getData().get(Guide.KEY_PERSONAL),
+                                        Objects.requireNonNull(document.getTimestamp(Guide.KEY_DATETIME)).toDate()
+                                );
+                            } catch (Exception e) {
+                                showError(e);
+                            }
+                            guides.add(guide);
                         }
-                        guides.add(guide);
                     }
-                }
-            }
-        }).addOnCanceledListener(new OnCanceledListener() {
-            @Override
-            public void onCanceled() {
-                showError(new OperationCanceledException());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                showError(e);
-            }
-        });
+                })
+                .addOnCanceledListener(() -> showError(new OperationCanceledException()))
+                .addOnFailureListener(this::showError);
     }
 
     private void showError(Exception e) {
@@ -258,7 +215,6 @@ public class GuidesFragment extends Fragment implements BasicFragment {
             case R.id.CL_Art:           return 4;
             case R.id.CL_Tech:          return 5;
             case R.id.CL_Entertainment: return 6;
-            case R.id.CL_Others:        return 7;
             default:                    return 7;
         }
     }
@@ -278,10 +234,6 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
     public void onBackFragment() {
         switch (preview_Category_View_Selected) {
-            case R.id.CL_Exacts:
-                preview_Category_View_Selected = 0;
-                CL_Exacts.performClick();
-                break;
             case R.id.CL_Socials:
                 preview_Category_View_Selected = 0;
                 CL_Socials.performClick();

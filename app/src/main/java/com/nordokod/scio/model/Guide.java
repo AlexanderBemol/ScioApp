@@ -36,6 +36,7 @@ public class Guide {
         data.put(com.nordokod.scio.entity.Guide.KEY_ONLINE,false);
         data.put(com.nordokod.scio.entity.Guide.KEY_ACTIVATED,true);
         data.put(com.nordokod.scio.entity.Guide.KEY_DATETIME,guide.getDatetime());
+        data.put(com.nordokod.scio.entity.Guide.KEY_PERSONAL,true);
         return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).add(data);
     }
 
@@ -52,6 +53,7 @@ public class Guide {
         data.put(com.nordokod.scio.entity.Guide.KEY_DATETIME,guide.getDatetime());
         data.put(com.nordokod.scio.entity.Guide.KEY_ONLINE,guide.isOnline());
         data.put(com.nordokod.scio.entity.Guide.KEY_ACTIVATED,guide.isActivated());
+        data.put(com.nordokod.scio.entity.Guide.KEY_PERSONAL,guide.isPersonal());
         return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).document(guide.getId()).update(data);
     }
 
@@ -110,15 +112,22 @@ public class Guide {
         return null;
     }
     public com.nordokod.scio.entity.Guide getGuideFromDocument(DocumentSnapshot document){
-        return new com.nordokod.scio.entity.Guide(
-                Integer.parseInt(Objects.requireNonNull(document.getData().get(com.nordokod.scio.entity.Guide.KEY_CATEGORY)).toString()),
+        com.nordokod.scio.entity.Guide guide = new com.nordokod.scio.entity.Guide(
+                Integer.parseInt(Objects.requireNonNull(Objects.requireNonNull(document.getData()).get(com.nordokod.scio.entity.Guide.KEY_CATEGORY)).toString()),
                 document.getId(),
                 (String)    document.getData().get(com.nordokod.scio.entity.Guide.KEY_TOPIC),
                 Objects.requireNonNull(document.getReference().getParent().getParent()).getId(),
                 (boolean)   document.getData().get(com.nordokod.scio.entity.Guide.KEY_ONLINE),
                 (boolean)   document.getData().get(com.nordokod.scio.entity.Guide.KEY_ACTIVATED),
+                (boolean)   document.getData().get(com.nordokod.scio.entity.Guide.KEY_PERSONAL),
                 Objects.requireNonNull(document.getTimestamp(com.nordokod.scio.entity.Guide.KEY_DATETIME)).toDate()
         );
+        return guide;
     }
-
+    public Task<DocumentReference> importGuide (DocumentSnapshot documentSnapshot){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Map<String, Object> data = documentSnapshot.getData();
+        Objects.requireNonNull(data).put(com.nordokod.scio.entity.Guide.KEY_PERSONAL,false);
+        return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getUid())).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).add(Objects.requireNonNull(data));
+    }
 }

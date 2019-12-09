@@ -1,11 +1,8 @@
 package com.nordokod.scio.view;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.AppCompatButton;
@@ -18,26 +15,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.TimePicker;
-
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.UserOperations;
+import com.nordokod.scio.constants.Utilities;
 import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.process.UserMessage;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Objects;
 
 import static com.nordokod.scio.R.attr.iconNormalColor;
@@ -53,7 +42,8 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
     private AppCompatTextView TV_Month, TV_Day, TV_Time, TV_Hour;
     private AppCompatButton BTN_Cancel, BTN_Create;
     private int preview_Category_View_Selected = 0, category_selected_id;
-    private String date_selected, time_selected;
+    //private String date_selected, time_selected;
+    private Date date_selected;
     // Animations
     private Animation press;
     private ConstraintLayout CL_Exacts, CL_Socials, CL_Sports, CL_Art, CL_Tech, CL_Entertainment, CL_Others;
@@ -109,15 +99,15 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
         CL_Others = view.findViewById(R.id.CL_Others);
 
         Calendar calendar = Calendar.getInstance();
-        TV_Month.setText(getMonthName(calendar.get(Calendar.MONTH)));
-        TV_Day.setText(String.valueOf(calendar.get(Calendar.DAY_OF_MONTH)));
-        date_selected = twoDigits(calendar.get(Calendar.DAY_OF_MONTH))+"/"+twoDigits(calendar.get(Calendar.MONTH)+1)+"/"+twoDigits(calendar.get(Calendar.YEAR));
+        Date date = calendar.getTime();
+        TV_Month.setText(Utilities.getMonthNameFromDate(date));
+        TV_Day.setText(Utilities.getTwoDigitsFromDate(date,Calendar.DAY_OF_MONTH));
 
-        int minute = Integer.parseInt(twoDigits(calendar.get(Calendar.MINUTE)));
-        String hour = twoDigits(calendar.get(Calendar.HOUR)) + ":" + twoDigits(minute);
-        TV_Hour.setText(hour);
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat12 = new SimpleDateFormat("hh:mm");
+        TV_Hour.setText(simpleDateFormat12.format(date));
         TV_Time.setText((calendar.get(Calendar.AM_PM) < 1) ? "AM" : "PM");
-        time_selected = hour;
+        date_selected = date;
     }
 
     @Override
@@ -128,6 +118,7 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
 
         BTN_Cancel.setOnClickListener(v -> {
             BTN_Cancel.startAnimation(press);
+            ET_Topic.setText("");
             Objects.requireNonNull(getFragmentManager()).beginTransaction().remove(NewGuideFragment.this).commit();
         });
 
@@ -136,39 +127,27 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
             if (category_selected_id == 0) {
                 showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // ===== No seleccionó ninguna categoría
             } else {
-                if (ET_Topic.getText() == null) {
+                if (Objects.requireNonNull(ET_Topic.getText()).length()==0) {
                     showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // = No escribió el tema de la guía
                 } else {
-                    if (date_selected.length() < 2 || time_selected.length() < 2) {
-                        showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // No eligió fecha y/o hora
+                    Date date = date_selected;
+                    Date dateToday = new Date();
+
+                    if (Objects.requireNonNull(date).before(dateToday)){
+                        showError(new InputDataException(InputDataException.Code.DATETIME_BEFORE)); // La fecha elegida es del pasado. ¡Oh por Dios, Doc, viajamos al pasado!
                     } else {
-                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm", Locale.ENGLISH);
-                        String datetime = date_selected + " " + time_selected;
+                        Guide guide = new Guide(category_selected_id, "", ET_Topic.getText().toString(), "", false, true,true, date);
 
-                        Date date = null;
-                        try {
-                            date = sdf.parse(datetime);
-                        } catch (ParseException e) {
-                            showError(e); // ===================================================
-                        }
-
-                        Date dateToday = new Date();
-
-                        if (Objects.requireNonNull(date).before(dateToday)){
-                            showError(new InputDataException(InputDataException.Code.DATETIME_BEFORE)); // La fecha elegida es del pasado. ¡Oh por Dios, Doc, viajamos al pasado!
-                        } else {
-                            Guide guide = new Guide(category_selected_id, "", ET_Topic.getText().toString(), "", false, true, date);
-
-                            com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
-                            guideModel.createGuide(guide)
-                                    .addOnSuccessListener(documentReference -> {
-                                        showSuccessfulMessage(UserOperations.CREATE_GUIDE);
-                                        mainActivity.refreshGuides();
-                                        mainActivity.onCloseFragment("New Guide");
-                                    })
-                                    .addOnCanceledListener(() -> showError(new OperationCanceledException()))
-                                    .addOnFailureListener(this::showError);
-                        }
+                        com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
+                        guideModel.createGuide(guide)
+                                .addOnSuccessListener(documentReference -> {
+                                    showSuccessfulMessage();
+                                    mainActivity.refreshGuides();
+                                    mainActivity.onCloseFragment("New Guide");
+                                    ET_Topic.setText("");
+                                })
+                                .addOnCanceledListener(() -> showError(new OperationCanceledException()))
+                                .addOnFailureListener(this::showError);
                     }
                 }
             }
@@ -221,9 +200,9 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
         UserMessage userMessage = new UserMessage();
         userMessage.showErrorMessage(context, userMessage.categorizeException(exception));
     }
-    private void showSuccessfulMessage(UserOperations userOperations){
+    private void showSuccessfulMessage(){
         UserMessage userMessage = new UserMessage();
-        userMessage.showSuccessfulOperationMessage(getContext(),userOperations);
+        userMessage.showSuccessfulOperationMessage(getContext(), UserOperations.CREATE_GUIDE);
     }
 
     private int getCategoryId(int view_selected_id) {
@@ -234,7 +213,6 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
             case R.id.CL_Art:           return 4;
             case R.id.CL_Tech:          return 5;
             case R.id.CL_Entertainment: return 6;
-            case R.id.CL_Others:        return 7;
             default:                    return 7;
         }
     }
@@ -251,66 +229,34 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
             default:                    return 0;
         }
     }
-
-    /**
-     * Método para agregar un 0 en caso de ser número de un digito.
-     *
-     * @param number
-     * @return el número con un '0' al inicio o son modificar.
-     */
-    private String twoDigits(int number) {
-        return (number < 10) ? ("0" + String.valueOf(number)) : String.valueOf(number);
-    }
-
     private void showDatePickerDialog() {
         DatePickerFragment datePickerFragment = DatePickerFragment.newInstance((view, year, month, dayOfMonth) -> {
-            TV_Month.setText(getMonthName(month));
-            TV_Day.setText(twoDigits(dayOfMonth));
-
-            date_selected = twoDigits(dayOfMonth) + "/" + twoDigits(month + 1) + "/" + year;
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year,month,dayOfMonth);
+            Date date = calendar.getTime();
+            TV_Month.setText(Utilities.getMonthNameFromDate(date));
+            TV_Day.setText(Utilities.getTwoDigitsFromDate(date,Calendar.DAY_OF_MONTH));
+            date_selected = date;
         });
-
         datePickerFragment.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "datePicker");
     }
 
     private void showTimePickerDialog() {
         TimePickerFragment timePickerFragment = TimePickerFragment.newInstance((view, hourOfDay, minute) -> {
             TV_Time.setText((hourOfDay < 12) ? "AM" : "PM");
-            time_selected = twoDigits(hourOfDay) + ":" +twoDigits(minute);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date_selected);
+            calendar.set(calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH),hourOfDay,minute);
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat12 = new SimpleDateFormat("hh:mm");
 
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat12 = new SimpleDateFormat("h:mm");
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat24 = new SimpleDateFormat("HH:mm");
-            Date date = null;
-            try {
-                date = simpleDateFormat24.parse(hourOfDay + ":" + minute);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            assert date != null;
-            String hour = simpleDateFormat12.format(date);
+            date_selected = calendar.getTime();
+            String hour = simpleDateFormat12.format(date_selected);
             TV_Hour.setText(hour);
         });
 
         timePickerFragment.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "timePicker");
     }
 
-    private int getMonthName(int month) {
-        switch (month) {
-            case 0:     return R.string.month_january;
-            case 1:     return R.string.month_february;
-            case 2:     return R.string.month_march;
-            case 3:     return R.string.month_april;
-            case 4:     return R.string.month_may;
-            case 5:     return R.string.month_june;
-            case 6:     return R.string.month_july;
-            case 7:     return R.string.month_august;
-            case 8:     return R.string.month_september;
-            case 9:     return R.string.month_october;
-            case 10:    return R.string.month_november;
-            case 11:    return R.string.month_december;
-            default:    return R.string.month_january;
-        }
-    }
 
     private void initAnimations(){
         press = AnimationUtils.loadAnimation(context, R.anim.press);

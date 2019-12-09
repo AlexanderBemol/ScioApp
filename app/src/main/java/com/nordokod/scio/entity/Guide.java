@@ -1,8 +1,13 @@
 package com.nordokod.scio.entity;
-
-import android.graphics.Bitmap;
-
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import static java.time.temporal.ChronoUnit.DAYS;
+
 
 public class Guide {
     public static String KEY_GUIDES="GUIDES";
@@ -12,6 +17,7 @@ public class Guide {
     public static String KEY_TOPIC="TOPIC";
     public static String KEY_DATETIME="DATETIME";
     public static String KEY_ACTIVATED="ACTIVATED";
+    public static String KEY_PERSONAL="PERSONAL";
 
     private int category;
     private String id;
@@ -19,9 +25,12 @@ public class Guide {
     private String UID;
     private boolean online;
     private boolean activated;
+    private boolean personal;
     private Date datetime;
 
-    public Guide(int category, String id, String topic, String UID, boolean online, boolean activated, Date datetime) {
+    private ArrayList<Question> questions;
+
+    public Guide(int category, String id, String topic, String UID, boolean online, boolean activated,boolean personal, Date datetime) {
         this.category = category;
         this.id = id;
         this.topic = topic;
@@ -29,6 +38,8 @@ public class Guide {
         this.online = online;
         this.activated = activated;
         this.datetime = datetime;
+        this.personal = personal;
+        this.questions = new ArrayList<>();
     }
 
     public int getCategory() {
@@ -88,6 +99,26 @@ public class Guide {
     }
 
     public int getDaysLeft(){
-        return this.datetime.compareTo(new Date());
+        return (int)( (datetime.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
     }
+
+    public boolean isPersonal() {
+        return personal;
+    }
+
+    public void setPersonal(boolean personal) {
+        this.personal = personal;
+    }
+
+    public ArrayList<Question> getQuestions() {
+        return this.questions;
+    }
+
+    public void setQuestions(ArrayList<Question> questions) {
+        this.questions = questions;
+    }
+    public void addQuestion(Question question){
+        this.questions.add(question);
+    }
+
 }
