@@ -16,7 +16,8 @@ public enum UserOperations {
     UPDATE_USER(R.string.UPDATE_USER),
     DELETE_USER(R.string.DELETE_USER),
     SIGN_UP_USER(R.string.SIGN_UP_USER),
-    LOGIN_USER(R.string.LOGIN_USER);
+    LOGIN_USER(R.string.LOGIN_USER),
+    IMPORT_GUIDE(R.string.IMPORT_GUIDE);
 
     private int messageCode;
 

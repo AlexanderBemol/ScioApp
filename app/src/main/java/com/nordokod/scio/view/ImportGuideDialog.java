@@ -1,5 +1,6 @@
 package com.nordokod.scio.view;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,15 +12,21 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.nordokod.scio.R;
-import com.nordokod.scio.controller.MainController;
+import com.nordokod.scio.constants.UserOperations;
+import com.nordokod.scio.constants.Utilities;
 import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.model.User;
 import com.nordokod.scio.process.DownloadImageProcess;
 import com.nordokod.scio.process.MediaProcess;
+import com.nordokod.scio.process.UserMessage;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicReference;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -33,7 +40,10 @@ public class ImportGuideDialog implements BasicDialog {
     private AppCompatButton BTN_Import;
     private CircleImageView CI_User_Photo;
 
-    public ImportGuideDialog(Context context) {
+    private User userModel;
+    private DocumentSnapshot externalDocumentSnapshot;
+
+    ImportGuideDialog(Context context) {
         this.context = context;
         initDialog();
         initComponents();
@@ -63,22 +73,20 @@ public class ImportGuideDialog implements BasicDialog {
         TV_Hour         = dialog.findViewById(R.id.DIGuide_TV_Hour);
 
         BTN_Import      = dialog.findViewById(R.id.DIguide_BTN_Import);
+
+        userModel = new User();
     }
 
     @Override
     public void initListeners() {
-        IV_Close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-        BTN_Import.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: Mandar a llamar al método del controlador para que haga la importación.
-            }
+        IV_Close.setOnClickListener(v -> dialog.dismiss());
+        BTN_Import.setOnClickListener(v -> {
+            com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
+            guideModel.importGuide(externalDocumentSnapshot)
+                    .addOnSuccessListener(documentReference -> {
+                        new UserMessage().showSuccessfulOperationMessage(context, UserOperations.IMPORT_GUIDE);
+                        dialog.dismiss();
+                    });
         });
     }
 
@@ -87,9 +95,9 @@ public class ImportGuideDialog implements BasicDialog {
 
     }
 
-    void showDialog(Guide guide) {
+    void showDialog(Guide guide, DocumentSnapshot document) {
         if (!dialog.isShowing()) {
-            User userModel = new User();
+            this.externalDocumentSnapshot = document;
             final com.nordokod.scio.entity.User userEntity = new com.nordokod.scio.entity.User();
             userEntity.setUid(guide.getUID());
             userModel.getUserInformation(userEntity).addOnSuccessListener(documentSnapshot -> {
@@ -115,9 +123,16 @@ public class ImportGuideDialog implements BasicDialog {
                 }
             });
 
-
             TV_Category.setText(getCategoryResId(guide.getCategory()));
             TV_Topic.setText(guide.getTopic());
+            TV_Month.setText(Utilities.getMonthNameFromDate(guide.getDatetime()));
+            TV_Day.setText(Utilities.getTwoDigitsFromDate(guide.getDatetime(), Calendar.DAY_OF_MONTH));
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat12 = new SimpleDateFormat("hh:mm");
+            TV_Hour.setText(simpleDateFormat12.format(guide.getDatetime()));
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(guide.getDatetime());
+            TV_Time.setText((calendar.get(Calendar.AM_PM) < 1) ? "AM" : "PM");
+
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <Build.VERSION_CODES.O){
                 Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_TOAST);

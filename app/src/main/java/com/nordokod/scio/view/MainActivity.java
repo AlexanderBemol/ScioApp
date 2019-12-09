@@ -143,18 +143,19 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         }
 
         //link dinámico
-        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(
-                pendingDynamicLinkData -> {
-                    if(pendingDynamicLinkData!=null){
-                        com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
-                        guideModel.getPublicGuide(pendingDynamicLinkData).addOnSuccessListener(documentSnapshot -> {
-                            Guide guide = guideModel.getGuideFromDocument(documentSnapshot);
-                            ImportGuideDialog importGuideDialog = new ImportGuideDialog(getApplicationContext());
-                            importGuideDialog.showDialog(guide);
-                        });
+        FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent())
+                .addOnSuccessListener(
+                    pendingDynamicLinkData -> {
+                        if(pendingDynamicLinkData!=null){
+                            com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
+                            guideModel.getPublicGuide(pendingDynamicLinkData).addOnSuccessListener(documentSnapshot -> {
+                                Guide guide = guideModel.getGuideFromDocument(documentSnapshot);
+                                ImportGuideDialog importGuideDialog = new ImportGuideDialog(getApplicationContext());
+                                importGuideDialog.showDialog(guide,documentSnapshot);
+                            });
+                        }
                     }
-                }
-        );
+                );
 
         //obtener foto de usuario
         Bitmap localPhoto = userModel.getLocalProfilePhoto(getApplicationContext(),actualUserEntity);
