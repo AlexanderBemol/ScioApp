@@ -17,14 +17,14 @@
         android:paddingBottom="@dimen/activity_padding"
         >
         <!-- ======================================================================================= C. Exactas -->
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/CL_Exacts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="100dp"
             >
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/IV_Exacts"
                 android:layout_width="@dimen/icon_category_size"
                 android:layout_height="@dimen/icon_category_size"
@@ -38,7 +38,7 @@
                 app:srcCompat="@drawable/ic_flask"
                 />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/TV_Exacts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,10 +51,10 @@
 
                 style="@style/categoryTextView"
                 />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- ======================================================================================= C. Sociales -->
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/CL_Socials"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
             android:onClick="onClickCategoryListener"
             >
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/IV_Socials"
                 android:layout_width="@dimen/icon_category_size"
                 android:layout_height="@dimen/icon_category_size"
@@ -76,7 +76,7 @@
                 app:srcCompat="@drawable/ic_globe"
                 />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/TV_Socials"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -89,10 +89,10 @@
 
                 style="@style/categoryTextView"
                 />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- ======================================================================================= Deportes -->
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/CL_Sports"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
             android:onClick="onClickCategoryListener"
             >
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/IV_Sports"
                 android:layout_width="@dimen/icon_category_size"
                 android:layout_height="@dimen/icon_category_size"
@@ -114,7 +114,7 @@
                 app:srcCompat="@drawable/ic_ball"
                 />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/TV_Sports"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,10 +127,10 @@
 
                 style="@style/categoryTextView"
                 />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- ======================================================================================= Arte -->
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/CL_Art"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -138,7 +138,7 @@
             android:onClick="onClickCategoryListener"
             >
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/IV_Art"
                 android:layout_width="@dimen/icon_category_size"
                 android:layout_height="@dimen/icon_category_size"
@@ -152,7 +152,7 @@
                 app:srcCompat="@drawable/ic_palette"
                 />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/TV_Art"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -165,10 +165,10 @@
 
                 style="@style/categoryTextView"
                 />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- ======================================================================================= Tecnología -->
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/CL_Tech"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
             android:onClick="onClickCategoryListener"
             >
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/IV_Tech"
                 android:layout_width="@dimen/icon_category_size"
                 android:layout_height="@dimen/icon_category_size"
@@ -190,7 +190,7 @@
                 app:srcCompat="@drawable/ic_code"
                 />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/TV_Tech"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -203,10 +203,10 @@
 
                 style="@style/categoryTextView"
                 />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- ======================================================================================= Entretenimineto -->
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/CL_Entertainment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -214,7 +214,7 @@
             android:onClick="onClickCategoryListener"
             >
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/IV_Entertainment"
                 android:layout_width="@dimen/icon_category_size"
                 android:layout_height="@dimen/icon_category_size"
@@ -228,7 +228,7 @@
                 app:srcCompat="@drawable/ic_theatre"
                 />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/TV_Entertainment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -241,10 +241,10 @@
 
                 style="@style/categoryTextView"
                 />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- ======================================================================================= Otros -->
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/CL_Others"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -252,7 +252,7 @@
             android:onClick="onClickCategoryListener"
             >
 
-            <android.support.v7.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/IV_Others"
                 android:layout_width="@dimen/icon_category_size"
                 android:layout_height="@dimen/icon_category_size"
@@ -266,7 +266,7 @@
                 app:srcCompat="@drawable/ic_scio_face"
                 />
 
-            <android.support.v7.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/TV_Others"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -279,6 +279,6 @@
 
                 style="@style/categoryTextView"
                 />
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </HorizontalScrollView>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     android:background="?attr/backgroundColor"
     >
 
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/TFQuestion_IV_Close"
         android:layout_width="@dimen/icon_size_star"
         android:layout_height="@dimen/icon_size_star"
@@ -21,7 +21,7 @@
         />
 
     <!-- =========================================================================================== Categoria -->
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/TFQuestion_TV_Category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
         />
 
     <!-- =========================================================================================== Tema -->
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/TFQuestion_TV_Topic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
         />
 
     <!-- =========================================================================================== Estrellas -->
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/TFQuestion_IV_Star_1"
         android:layout_width="@dimen/icon_size_star"
         android:layout_height="@dimen/icon_size_star"
@@ -62,7 +62,7 @@
         app:srcCompat="@drawable/ic_star"
         />
 
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/TFQuestion_IV_Star_2"
         android:layout_width="@dimen/icon_size_star"
         android:layout_height="@dimen/icon_size_star"
@@ -75,7 +75,7 @@
         app:srcCompat="@drawable/ic_star"
         />
 
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/TFQuestion_IV_Star_3"
         android:layout_width="@dimen/icon_size_star"
         android:layout_height="@dimen/icon_size_star"
@@ -89,7 +89,7 @@
         />
 
     <!-- =========================================================================================== Pregunta -->
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/TFQuestion_TV_Question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
         />
 
     <!-- =========================================================================================== Respuestas -->
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/TFQuestion_Answer_True"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
         app:layout_constraintTop_toBottomOf="@id/TFQuestion_TV_Question"
         />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/TFQuestion_Answer_False"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -130,4 +130,4 @@
         app:layout_constraintTop_toBottomOf="@id/TFQuestion_Answer_True"
         app:layout_constraintBottom_toBottomOf="parent"
         />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

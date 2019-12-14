@@ -1,7 +1,7 @@
 package com.nordokod.scio.model;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -11,7 +11,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.nordokod.scio.controller.SignUpController;
 import com.nordokod.scio.entity.User;
-import com.nordokod.scio.view.SignupActivity;
 
 public class SignUpModel {
     private FirebaseAuth mAuth;

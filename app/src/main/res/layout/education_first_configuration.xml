@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,7 +8,7 @@
     android:padding="@dimen/activity_padding"
     >
 
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="@dimen/first_configuration_img_size"
         android:layout_height="@dimen/first_configuration_img_size"
         android:tint="@color/colorGreenDark"
@@ -19,7 +19,7 @@
         app:layout_constraintBottom_toTopOf="@+id/title"
         app:srcCompat="@drawable/img_education" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"
         style="@style/FirstConfiguration_Title"
         android:text="@string/title_school_first_configuration"
@@ -51,4 +51,4 @@
         >
 
     </com.roughike.swipeselector.SwipeSelector>
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

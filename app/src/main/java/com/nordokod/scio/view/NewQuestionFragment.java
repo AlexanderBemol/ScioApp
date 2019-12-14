@@ -3,15 +3,14 @@ package com.nordokod.scio.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatImageView;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+
+import androidx.appcompat.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.nordokod.scio.R;
-import com.nordokod.scio.controller.MainController;
 import com.nordokod.scio.entity.Guide;
 
 public class NewQuestionFragment extends BottomSheetDialogFragment implements BasicFragment {

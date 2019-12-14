@@ -6,7 +6,7 @@
     tools:context=".view.NewMultipleChoiceQuestionFragment"
     >
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         android:padding="@dimen/activity_padding"
         >
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FNewMCQuestion_TV_Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             style="@style/titleTextView"
             />
         <!-- ========================================================================== Pregunta -->
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FNewMCQuestion_TV_Title_Question"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             style="@style/normalTextView"
             />
 
-        <android.support.v7.widget.AppCompatEditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/FNewMCQuestion_ET_Question"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             />
 
         <!-- ========================================================================== Opciones -->
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FNewMCQuestion_TV_Title_Options"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             style="@style/normalTextView"
             />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FNewMCQuestion_TV_Hint_Options"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
             style="@style/hintTextview"
             />
 
-        <android.support.v7.widget.AppCompatEditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/FNewMCQuestion_ET_Option_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
             style="@style/EditText_Option"
             />
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/FNewMCQuestion_Switch_Option_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
             app:layout_constraintBottom_toBottomOf="@id/FNewMCQuestion_ET_Option_1"
             />
 
-        <android.support.v7.widget.AppCompatEditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/FNewMCQuestion_ET_Option_2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
             style="@style/EditText_Option"
             />
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/FNewMCQuestion_Switch_Option_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
             app:layout_constraintBottom_toBottomOf="@id/FNewMCQuestion_ET_Option_2"
             />
 
-        <android.support.v7.widget.AppCompatEditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/FNewMCQuestion_ET_Option_3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -146,7 +146,7 @@
             style="@style/EditText_Option"
             />
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/FNewMCQuestion_Switch_Option_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -156,7 +156,7 @@
             app:layout_constraintBottom_toBottomOf="@id/FNewMCQuestion_ET_Option_3"
             />
 
-        <android.support.v7.widget.AppCompatEditText
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/FNewMCQuestion_ET_Option_4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -172,7 +172,7 @@
             style="@style/EditText_Option"
             />
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/FNewMCQuestion_Switch_Option_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
             />
 
         <!-- =========================================================================== Botones -->
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/FNewMCQuestion_BTN_Cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -197,7 +197,7 @@
             style="@style/cancelButton"
             />
 
-        <android.support.v7.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/FNewMCQuestion_BTN_Create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -211,6 +211,6 @@
             style="@style/normalButton"
             />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

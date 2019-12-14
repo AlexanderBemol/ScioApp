@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".view.NewQuestionFragment">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,7 +14,7 @@
         android:padding="@dimen/activity_padding"
         >
         <!-- FMTypeQuestion_ -->
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FNewQuestion_TV_Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
             style="@style/titleTextView"
             />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FNewQuestion_TV_Hint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             style="@style/infoGuideTextView"
             />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FNewQuestion_TV_Multiple"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             app:layout_constraintRight_toRightOf="@id/FNewQuestion_IV_Multiple"
             />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FNewQuestion_TV_TrueFalse"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
             app:layout_constraintRight_toRightOf="@id/FNewQuestion_IV_TrueFalse"
             />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FNewQuestion_TV_Open"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
             app:layout_constraintRight_toRightOf="@id/FNewQuestion_IV_Open"
             />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/FNewQuestion_IV_Multiple"
             android:layout_width="@dimen/icon_question_size"
             android:layout_height="@dimen/icon_question_size"
@@ -87,7 +87,7 @@
             app:srcCompat="@drawable/ic_multiple_option"
             />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/FNewQuestion_IV_TrueFalse"
             android:layout_width="@dimen/icon_question_size"
             android:layout_height="@dimen/icon_question_size"
@@ -100,7 +100,7 @@
             app:srcCompat="@drawable/ic_true_false"
             />
 
-        <android.support.v7.widget.AppCompatImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/FNewQuestion_IV_Open"
             android:layout_width="@dimen/icon_question_size"
             android:layout_height="@dimen/icon_question_size"
@@ -113,6 +113,6 @@
             app:srcCompat="@drawable/ic_open"
             />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
