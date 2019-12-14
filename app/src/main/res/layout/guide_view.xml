@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/CL_Guide"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,7 +11,7 @@
 
     >
 
-    <android.support.v7.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/IV_Icon"
         android:layout_width="@dimen/icon_category_size"
         android:layout_height="@dimen/icon_category_size"
@@ -24,7 +24,7 @@
 
         app:srcCompat="@drawable/ic_flask" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/TV_Topic"
         style="@style/titleGuideTextView"
         android:layout_width="0dp"
@@ -37,7 +37,7 @@
 
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/TV_Category"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
         style="@style/infoGuideTextView"
         />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/TV_Days"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
         style="@style/infoGuideTextView"
         />
 
-    <android.support.v7.widget.SwitchCompat
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/Switch_ActivateGuide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,6 +74,6 @@
         app:layout_constraintBottom_toBottomOf="@id/TV_Days"
         >
 
-    </android.support.v7.widget.SwitchCompat>
+    </androidx.appcompat.widget.SwitchCompat>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

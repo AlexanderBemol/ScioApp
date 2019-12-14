@@ -1,20 +1,15 @@
 package com.nordokod.scio.view;
 
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.AppCompatEditText;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.nordokod.scio.R;
-import com.nordokod.scio.controller.FirstConfigurationController;
-import com.nordokod.scio.entity.InvalidValueException;
-import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.User;
 
 import java.util.Objects;

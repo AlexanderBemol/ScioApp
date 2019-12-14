@@ -3,21 +3,17 @@ package com.nordokod.scio.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.SwitchCompat;
+import androidx.annotation.NonNull;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.KindOfQuestion;
 import com.nordokod.scio.constants.UserOperations;
@@ -28,7 +24,6 @@ import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.Question;
 import com.nordokod.scio.process.UserMessage;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment implements BasicFragment {

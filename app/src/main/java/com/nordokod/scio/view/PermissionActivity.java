@@ -2,13 +2,12 @@ package com.nordokod.scio.view;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatButton;
 import android.view.View;
 
-import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.R;
 
 public class PermissionActivity extends AppCompatActivity implements BasicActivity {

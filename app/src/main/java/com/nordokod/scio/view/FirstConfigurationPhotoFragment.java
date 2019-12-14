@@ -2,29 +2,19 @@ package com.nordokod.scio.view;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.OperationCanceledException;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.AppCompatImageView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.widget.AppCompatImageView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.tasks.OnCanceledListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.OnProgressListener;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.RequestCode;
 import com.nordokod.scio.model.User;
-import com.nordokod.scio.process.DownloadImageProcess;
-
-import java.io.IOException;
-import java.math.BigInteger;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
