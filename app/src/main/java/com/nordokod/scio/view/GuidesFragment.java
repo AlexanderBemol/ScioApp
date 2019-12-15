@@ -11,13 +11,19 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.core.Query;
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.entity.NoGuidesException;
@@ -26,7 +32,9 @@ import com.nordokod.scio.model.User;
 import com.nordokod.scio.process.UserMessage;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.nordokod.scio.R.attr.iconNormalColor;
 import static com.nordokod.scio.R.attr.iconSelectedColor;
@@ -46,6 +54,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
     private AppCompatTextView TV_Topic, TV_Cateoory, TV_Days;
 
     private ArrayList<Guide> guides;
+    private Task<QuerySnapshot> taskGetAllGuides;
 
     private int preview_Category_View_Selected = 0;
 
@@ -149,12 +158,12 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
     }
 
-    public void getAllGuides() {
+    void getAllGuides() {
         guides = new ArrayList<>();
 
-        guideModel.getAllGuides()
+         taskGetAllGuides=guideModel.getAllGuides()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                    if(queryDocumentSnapshots.isEmpty()){
+                    if(queryDocumentSnapshots.getDocuments().isEmpty()){
                         showError(new NoGuidesException());
                     }else{
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
@@ -175,6 +184,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
                             }
                             guides.add(guide);
                         }
+                        //actualizar lista
                     }
                 })
                 .addOnCanceledListener(() -> showError(new OperationCanceledException()))
@@ -182,18 +192,19 @@ public class GuidesFragment extends Fragment implements BasicFragment {
     }
 
     private void showError(Exception e) {
+        Log.d("testing","error "+e.getMessage());
         UserMessage userMessage = new UserMessage();
         userMessage.showErrorMessage(getContext(),userMessage.categorizeException(e));
     }
 
     private ArrayList<Guide> getListOfGuides(int category) throws NoGuidesException{
-        ArrayList<Guide> guidesAux = new ArrayList<>();
-        for (Guide guide : guides) {
-            if (guide.getCategory() == category)
-                guidesAux.add(guide);
+        if(taskGetAllGuides.isComplete())
+            if(guides.isEmpty())throw new NoGuidesException();
+        ArrayList<Guide> aux = new ArrayList<>();
+        for (Guide guide : guides){
+            if(guide.getCategory()==category)aux.add(guide);
         }
-        if(guidesAux.isEmpty())throw new NoGuidesException();
-        return guidesAux;
+        return aux;
     }
 
     private int getCategoryId(int view_selected_id) {

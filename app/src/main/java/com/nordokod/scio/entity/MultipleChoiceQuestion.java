@@ -8,7 +8,7 @@ public class MultipleChoiceQuestion extends Question {
     public static String KEY_CORRECT="CORRECT";
     private ArrayList<Answer> answers;
 
-    public MultipleChoiceQuestion(int id, String question, int kindOfQuestions) {
+    public MultipleChoiceQuestion(String id, String question, int kindOfQuestions) {
         super(id, question,kindOfQuestions);
         answers=new ArrayList<>();
     }

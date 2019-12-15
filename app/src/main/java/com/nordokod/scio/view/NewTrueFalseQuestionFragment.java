@@ -94,7 +94,7 @@ public class NewTrueFalseQuestionFragment extends BottomSheetDialogFragment impl
             BTN_Create.startAnimation(press);
             if (preview_answer > 0) {
                 if(Objects.requireNonNull(ET_Question.getText()).length()>0){
-                    TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion(0, Objects.requireNonNull(ET_Question.getText().toString()), KindOfQuestion.TRUE_FALSE.getCode(), answer);
+                    TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion("", Objects.requireNonNull(ET_Question.getText().toString()), KindOfQuestion.TRUE_FALSE.getCode(), answer);
 
                     Question question = new Question();
                     question.addQuestion(KindOfQuestion.TRUE_FALSE, guide, trueFalseQuestion)

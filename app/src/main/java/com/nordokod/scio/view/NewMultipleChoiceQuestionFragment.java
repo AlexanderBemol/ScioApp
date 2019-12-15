@@ -3,7 +3,7 @@ package com.nordokod.scio.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
@@ -99,28 +99,27 @@ public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment
                     for (int i=0;i<editTextArray.length;i++){
                        if(Objects.requireNonNull(editTextArray[i].getText()).length()!=0){
                            optionCounter++;
-                           correctOptionSelected=switchCompatArray[i].isSelected();
+                           correctOptionSelected= switchCompatArray[i].isChecked() || correctOptionSelected;
                        }
                     }
                     if(optionCounter<2)showError(new InputDataException(InputDataException.Code.NOT_ENOUGH_OPTIONS));
                     else if(!correctOptionSelected)showError(new InputDataException(InputDataException.Code.NOT_CORRECT_OPTION_SELECTED));
                     else{
-                        MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion(0, Objects.requireNonNull(ET_Question.getText()).toString(), KindOfQuestion.MULTIPLE_CHOICE.getCode());
+                        MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("", Objects.requireNonNull(ET_Question.getText()).toString(), KindOfQuestion.MULTIPLE_CHOICE.getCode());
                         for(int i = 0;i<editTextArray.length;i++){
                             if(Objects.requireNonNull(editTextArray[i].getText()).length()!=0){
-                                multipleChoiceQuestion.addAnswer(Objects.requireNonNull(editTextArray[i].getText()).toString(),switchCompatArray[i].isSelected());
+                                multipleChoiceQuestion.addAnswer(Objects.requireNonNull(editTextArray[i].getText()).toString(),switchCompatArray[i].isChecked());
                             }
                         }
                         Question question = new Question();
 
-                        question.addQuestion(
-                                KindOfQuestion.MULTIPLE_CHOICE,
-                                guide,
-                                multipleChoiceQuestion
-                        )
-                                .addOnSuccessListener(documentReference -> showSuccessfulMessage(UserOperations.CREATE_QUESTION))
-                                .addOnCanceledListener(() -> showError(new OperationCanceledException()))
-                                .addOnFailureListener(e -> showError(e));
+                        question.addQuestion(KindOfQuestion.MULTIPLE_CHOICE,guide, multipleChoiceQuestion)
+                            .addOnSuccessListener(documentReference -> question.addMultipleAnswersToQuestion(multipleChoiceQuestion.getAnswers(),documentReference)
+                                    .addOnSuccessListener(x -> showSuccessfulMessage())
+                                    .addOnCanceledListener(() -> showError(new OperationCanceledException()))
+                                    .addOnFailureListener(e -> showError(e)))
+                            .addOnCanceledListener(() -> showError(new OperationCanceledException()))
+                            .addOnFailureListener(e -> showError(e));
                     }
                 }else{
                     showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
@@ -133,9 +132,9 @@ public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment
         UserMessage userMessage = new UserMessage();
         userMessage.showErrorMessage(context,userMessage.categorizeException(e));
     }
-    private void showSuccessfulMessage(UserOperations userOperations){
+    private void showSuccessfulMessage(){
         UserMessage userMessage = new UserMessage();
-        userMessage.showSuccessfulOperationMessage(context,userOperations);
+        userMessage.showSuccessfulOperationMessage(context, UserOperations.CREATE_QUESTION);
         activity.onCloseFragment("New Multiple Choice");
     }
 
