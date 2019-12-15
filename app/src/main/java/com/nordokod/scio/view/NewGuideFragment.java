@@ -9,6 +9,8 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -197,6 +199,7 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
     }
 
     private void showError(Exception exception){
+        Log.d("testing","Aqui "+ exception.getMessage());
         UserMessage userMessage = new UserMessage();
         userMessage.showErrorMessage(context, userMessage.categorizeException(exception));
     }

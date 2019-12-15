@@ -4,7 +4,7 @@ public class TrueFalseQuestion extends Question {
     public static String KEY_ANSWER="ANSWER";
     private boolean answer;
 
-    public TrueFalseQuestion(int id, String question, int kindOfQuestion, boolean answer) {
+    public TrueFalseQuestion(String id, String question, int kindOfQuestion, boolean answer) {
         super(id, question, kindOfQuestion);
         this.answer = answer;
     }

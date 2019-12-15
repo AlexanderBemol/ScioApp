@@ -1,13 +1,13 @@
 package com.nordokod.scio.entity;
 
 public class Question {
-    private int id;
+    private String id;
     private String question;
     private int kindOfQuestion;
     public static String KEY_QUESTIONS="QUESTIONS";
     public static String KEY_QUESTION="QUESTION";
     public static String KEY_KIND_OF_QUESTION="KIND_OF_QUESTION";
-    public Question(int id, String question, int kindOfQuestion) {
+    public Question(String id, String question, int kindOfQuestion) {
         this.id = id;
         this.question = question;
         this.kindOfQuestion=kindOfQuestion;
@@ -21,11 +21,11 @@ public class Question {
         this.question = question;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

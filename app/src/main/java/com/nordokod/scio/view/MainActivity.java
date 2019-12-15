@@ -209,32 +209,29 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     @Override
     public void initListeners() {
-        bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
-            @Override
-            public boolean onTabSelected(int position, boolean wasSelected) {
-                switch (position) {
-                    case 0:
-                        if (!wasSelected) {
-                            viewPager.setCurrentItem(position);
-                        } else {
-
-                        }
-                        return true;
-                    case 1:
+        bottomNavigation.setOnTabSelectedListener((position, wasSelected) -> {
+            switch (position) {
+                case 0:
+                    if (!wasSelected) {
                         viewPager.setCurrentItem(position);
+                    } else {
 
-                        dialogFragment = newGuideFragment;
+                    }
+                    return true;
+                case 1:
+                    viewPager.setCurrentItem(position);
 
-                        dialogFragment.show(getSupportFragmentManager(), "New Guide");
-                        return true;
-                    case 2:
-                        if (!wasSelected) {
-                            viewPager.setCurrentItem(position);
-                        }
-                        return true;
-                }
-                return false;
+                    dialogFragment = newGuideFragment;
+
+                    dialogFragment.show(getSupportFragmentManager(), "New Guide");
+                    return true;
+                case 2:
+                    if (!wasSelected) {
+                        viewPager.setCurrentItem(position);
+                    }
+                    return true;
             }
+            return false;
         });
 
         BTN_Logout.setOnClickListener(v -> {
