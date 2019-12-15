@@ -10,39 +10,48 @@ import android.graphics.PorterDuffColorFilter;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+
+import android.os.Build;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.constants.Utilities;
+import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.entity.TrueFalseQuestion;
 
-public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicDialog {
+import java.util.Objects;
+
+public class TrueFalseQuestionDialog implements BasicDialog {
 
     private Context context;
     private Dialog dialog;
     private TrueFalseQuestion question;
+    private Guide guide;
 
     private AppCompatImageView IV_Star_1, IV_Star_2, IV_Star_3, IV_Close;
     private AppCompatTextView TV_Question, TV_Category, TV_Topic, TV_True, TV_False;
 
     private boolean wasAnswered = false;
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
+
+    public TrueFalseQuestionDialog(Context context) {
         this.context = context;
         initDialog();
         initComponents();
         initListeners();
     }
 
-    public void setQuestion(TrueFalseQuestion trueFalseQuestion) {
+    public void setQuestion(TrueFalseQuestion trueFalseQuestion, Guide guide) {
         this.question = trueFalseQuestion;
+        this.guide = guide;
         showDialog();
     }
 
     @Override
     public void initDialog() {
-        dialog = new Dialog(context, R.style.Theme_AppCompat_Dialog_Alert);
+        dialog = new Dialog(context, R.style.DefaultTheme);
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -74,64 +83,60 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
     */
     @Override
     public void initListeners() {
-        IV_Close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+        IV_Close.setOnClickListener(v -> dialog.dismiss());
+
+        TV_True.setOnClickListener(v -> {
+            if (question.isAnswer() && !wasAnswered) {
+                // Mostramos que eligió la respuesta correcta.
+                TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
+                TV_True.setTextAppearance(context, R.style.correctAnswer);
+
+                changeStarState(0);
+                wasAnswered = true;
+            } else if (!wasAnswered) {
+                // Mostramos que eligió la respuesta incorrecta.
+                TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_wrong_answer));
+                TV_True.setTextAppearance(context, R.style.wrongAnswer);
+                // Mostramos que Falso es la respuesta correcta.
+                TV_False.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
+                TV_False.setTextAppearance(context, R.style.correctAnswer);
             }
         });
 
-        TV_True.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (question.isAnswer() && !wasAnswered) {
-                    // Mostramos que eligió la respuesta correcta.
-                    TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
-                    TV_True.setTextAppearance(context, R.style.correctAnswer);
+        TV_False.setOnClickListener(v -> {
+            if (!question.isAnswer() && !wasAnswered) {
+                // Mostramos que eligió la respuesta correcta.
+                TV_False.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
+                TV_False.setTextAppearance(context, R.style.correctAnswer);
 
-                    changeStarState(0);
-                    wasAnswered = true;
-                } else if (!wasAnswered) {
-                    // Mostramos que eligió la respuesta incorrecta.
-                    TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_wrong_answer));
-                    TV_True.setTextAppearance(context, R.style.wrongAnswer);
-                    // Mostramos que Falso es la respuesta correcta.
-                    TV_False.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
-                    TV_False.setTextAppearance(context, R.style.correctAnswer);
-                }
-            }
-        });
-
-        TV_False.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!question.isAnswer() && !wasAnswered) {
-                    // Mostramos que eligió la respuesta correcta.
-                    TV_False.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
-                    TV_False.setTextAppearance(context, R.style.correctAnswer);
-
-                    changeStarState(0);
-                    wasAnswered = true;
-                } else if (!wasAnswered) {
-                    // Mostramos que eligió la respuesta incorrecta.
-                    TV_False.setBackgroundDrawable(context.getDrawable(R.drawable.background_wrong_answer));
-                    TV_False.setTextAppearance(context, R.style.wrongAnswer);
-                    // Mostramos que True es la respuesta correcta.
-                    TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
-                    TV_True.setTextAppearance(context, R.style.correctAnswer);
-                }
+                changeStarState(0);
+                wasAnswered = true;
+            } else if (!wasAnswered) {
+                // Mostramos que eligió la respuesta incorrecta.
+                TV_False.setBackgroundDrawable(context.getDrawable(R.drawable.background_wrong_answer));
+                TV_False.setTextAppearance(context, R.style.wrongAnswer);
+                // Mostramos que True es la respuesta correcta.
+                TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
+                TV_True.setTextAppearance(context, R.style.correctAnswer);
             }
         });
     }
 
     @Override
     public void showDialog() {
-        /*if (!dialog.isShowing()) {
-            TV_Category.setText(getCategoryResId(question.getCategory()));
-            TV_Topic.setText(question.getTopic());
+        if (!dialog.isShowing()) {
+            TV_Category.setText(Utilities.getStringFromCategory(guide.getCategory()));
+            TV_Topic.setText(guide.getTopic());
             TV_Question.setText(question.getQuestion());
 
-            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <Build.VERSION_CODES.O){
+                Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_TOAST);
+            }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+            }else{
+                Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_PHONE);
+            }
+
             WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
             Window window = dialog.getWindow();
             layoutParams.copyFrom(window.getAttributes());
@@ -141,25 +146,19 @@ public class TrueFalseQuestionDialog extends BroadcastReceiver implements BasicD
 
             window.setAttributes(layoutParams);
 
+
             dialog.show();
         } else {
             dialog.dismiss();
-        }*/
+        }
     }
 
 
 
-    public void changeStarState(int number_of_stars) {
+    private void changeStarState(int number_of_stars) {
         IV_Star_1.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
         IV_Star_2.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
         IV_Star_3.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
     }
 
-    private int getCategoryResId(int category) {
-        //TODO Agregar los casos según el ID de cada categoría para devolver el R.string....
-        switch (category) {
-            case 0: return 0;
-            default: return 0;
-        }
-    }
 }

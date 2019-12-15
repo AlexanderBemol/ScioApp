@@ -1,28 +1,34 @@
 package com.nordokod.scio.view;
 
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+
+import android.os.Build;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.constants.Utilities;
+import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.entity.OpenQuestion;
 
-public class OpenQuestionDialog extends BroadcastReceiver implements BasicDialog {
+import java.util.Objects;
+
+public class OpenQuestionDialog implements BasicDialog {
 
     private Context context;
     private Dialog dialog;
     private OpenQuestion question;
+    private Guide guide;
 
     private AppCompatImageView IV_Star_1, IV_Star_2, IV_Star_3, IV_Close;
     private AppCompatTextView TV_Question, TV_Category, TV_Topic, TV_Correct_Answer, TV_Correct_Answer_Title;
@@ -33,8 +39,7 @@ public class OpenQuestionDialog extends BroadcastReceiver implements BasicDialog
 
     private boolean wasAnswered = false;
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
+    public OpenQuestionDialog(Context context) {
         this.context = context;
         initDialog();
         initComponents();
@@ -44,7 +49,7 @@ public class OpenQuestionDialog extends BroadcastReceiver implements BasicDialog
 
     @Override
     public void initDialog() {
-        dialog = new Dialog(context, R.style.Theme_AppCompat_Dialog_Alert);
+        dialog = new Dialog(context, R.style.DefaultTheme);
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -74,42 +79,38 @@ public class OpenQuestionDialog extends BroadcastReceiver implements BasicDialog
 
     @Override
     public void initListeners() {
-        IV_Close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
+        IV_Close.setOnClickListener(v -> dialog.dismiss());
+
+        BTN_Answer.setOnClickListener(v -> {
+            BTN_Answer.startAnimation(press);
+            if (!wasAnswered) {
+                // TODO Aquí mandas la respuesta del usuario para revisarla.
+                //  Procura que devuelva un entero entre 1 y 3 para la cantidad de estrellas, y lo mandas por parametro al método de las estrellas.
+                changeStarState(0);
             }
         });
 
-        BTN_Answer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BTN_Answer.startAnimation(press);
-                if (!wasAnswered) {
-                    // TODO Aquí mandas la respuesta del usuario para revisarla.
-                    //  Procura que devuelva un entero entre 1 y 3 para la cantidad de estrellas, y lo mandas por parametro al método de las estrellas.
-                    changeStarState(0);
-                }
-            }
-        });
-
-        BTN_Skip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BTN_Skip.startAnimation(press);
-                dialog.dismiss();
-            }
+        BTN_Skip.setOnClickListener(v -> {
+            BTN_Skip.startAnimation(press);
+            dialog.dismiss();
         });
     }
 
     @Override
     public void showDialog() {
-        /*if (!dialog.isShowing()) {
-            TV_Category.setText(getCategoryResId(question.getCategory()));
-            TV_Topic.setText(question.getTopic());
+        if (!dialog.isShowing()) {
+            TV_Category.setText(Utilities.getStringFromCategory(guide.getCategory()));
+            TV_Topic.setText(guide.getTopic());
             TV_Question.setText(question.getQuestion());
 
-            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <Build.VERSION_CODES.O){
+                Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_TOAST);
+            }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+            }else{
+                Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_PHONE);
+            }
+
             WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
             Window window = dialog.getWindow();
             layoutParams.copyFrom(window.getAttributes());
@@ -122,11 +123,11 @@ public class OpenQuestionDialog extends BroadcastReceiver implements BasicDialog
             dialog.show();
         } else {
             dialog.dismiss();
-        }*/
+        }
     }
 
 
-    public void changeStarState(int number_of_stars) {
+    private void changeStarState(int number_of_stars) {
         switch (number_of_stars) {
             case 1:
                 IV_Star_1.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
@@ -151,25 +152,12 @@ public class OpenQuestionDialog extends BroadcastReceiver implements BasicDialog
 
     /**
      * Método que muestra el Pop Up.
-     * @param openQuestion
+     * @param openQuestion question
      */
-    public void setQuestion(OpenQuestion openQuestion) {
+    public void setQuestion(OpenQuestion openQuestion, Guide guide) {
         this.question = openQuestion;
+        this.guide = guide;
         showDialog();
-    }
-
-    /**
-     * Método para obtener el valor String de la categoría según el indice de la base de datos.
-     *
-     * @param category = indice de la categoría en la base de datos.
-     * @return valor int del R.string.[nombre de la categoría]
-     */
-    private int getCategoryResId(int category) {
-        //TODO Agregar los casos según el ID de cada categoría para devolver el R.string....
-        switch (category) {
-            case 0: return 0;
-            default: return 0;
-        }
     }
 
     private void showCorrectAnswer() {

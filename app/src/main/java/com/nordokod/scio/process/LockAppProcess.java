@@ -11,8 +11,13 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.nordokod.scio.constants.KindOfQuestion;
 import com.nordokod.scio.entity.ConfigurationApp;
+import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.TrueFalseQuestion;
+import com.nordokod.scio.view.TrueFalseQuestionDialog;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.SortedMap;
@@ -40,11 +45,17 @@ public class LockAppProcess extends Service {
             @Override
             public void run() {
                 handler.postDelayed(this, 1000);
-                //Log.d("testeo","working");
                 String fgApp=getForegroundApp();
-                if(confApp.getLockedApps().contains(fgApp)){//está bloqueada..
+                Log.d("testeo","working");
+                Log.d("testeo",fgApp);
+                if(fgApp.equals("com.twitter.android")){//está bloqueada..
                     //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     //startActivity(intent);
+                    Log.d("testeo","oh");
+                    TrueFalseQuestionDialog trueFalseQuestionDialog = new TrueFalseQuestionDialog(getApplicationContext());
+                    Guide guide = new Guide(1,"uid","Física de Partículas","uid",true,true,true,new Date());
+                    TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion("id","El electrón es un lepton", KindOfQuestion.TRUE_FALSE.getCode(),true);
+                    trueFalseQuestionDialog.setQuestion(trueFalseQuestion,guide);
                 }
 
             }
@@ -117,7 +128,7 @@ public class LockAppProcess extends Service {
                 mySortedMap.put(usageStats.getLastTimeUsed(), usageStats);
             }
             if (!mySortedMap.isEmpty()) {
-                currentApp = mySortedMap.get(mySortedMap.lastKey()).getPackageName();
+                currentApp = Objects.requireNonNull(mySortedMap.get(mySortedMap.lastKey())).getPackageName();
             }
         }
         return currentApp;
