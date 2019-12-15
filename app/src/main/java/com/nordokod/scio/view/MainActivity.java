@@ -3,9 +3,9 @@ package com.nordokod.scio.view;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -17,6 +17,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import android.util.SparseArray;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,9 +40,8 @@ import es.dmoral.toasty.Toasty;
 public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     private DrawerLayout drawerLayout;
-    private NavigationView navigationMenu;
-    private Toolbar toolbar;
-    private ActionBar actionBar;
+
+    private Menu MenuItems;
 
     // Objetos para el menú de navegación inferior
     private AHBottomNavigation bottomNavigation;
@@ -74,7 +74,10 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     @Override
     public void initComponents() {
         drawerLayout        = findViewById(R.id.DrawerLayout);
-        navigationMenu      = findViewById(R.id.NAV_Menu);
+        NavigationView navigationMenu = findViewById(R.id.NAV_Menu);
+
+        //Navigation menu
+        MenuItems = navigationMenu.getMenu();
 
         // Bottom Navigation Bar
         itemHome            = new AHBottomNavigationItem(R.string.navbar_title_home, R.drawable.ic_home, R.color.onSurfaceColor);
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
         viewPager.setAdapter(pagerAdapter);
 
-        toolbar         = findViewById(R.id.Toolbar);
+        Toolbar toolbar = findViewById(R.id.Toolbar);
 
         // Botón para cerrar sesión
         BTN_Logout      = navigationMenu.findViewById(R.id.BTN_Logout);
@@ -124,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
         // Toolbar
         setSupportActionBar(toolbar);
-        actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -238,6 +241,27 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
             userModel.logOut();
             goToLoginActivity();
         });
+
+        //listener de items de menú
+        /*MenuItems.findItem(R.id.Menu_Acount).setOnMenuItemClickListener(item -> {
+
+        });
+        MenuItems.findItem(R.id.Menu_Settings).setOnMenuItemClickListener(item -> {
+
+        });
+        MenuItems.findItem(R.id.Menu_Security).setOnMenuItemClickListener(item -> {
+
+        });*/
+        MenuItems.findItem(R.id.Menu_Apps).setOnMenuItemClickListener(item -> {
+                Intent intent = new Intent(MainActivity.this,LockedAppsOptionActivity.class);
+                startActivity(intent);
+                return true;
+        });
+        /*MenuItems.findItem(R.id.Menu_About).setOnMenuItemClickListener(item -> {
+
+        });*/
+
+
     }
 
     public void onNewQuestionDialog(Guide guide) {
@@ -335,6 +359,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private void goToLoginActivity(){
         Intent loginIntent = new Intent(this,LoginActivity.class);
         startActivity(loginIntent);
+        finish();
     }
 
     private void showError(Exception e) {

@@ -20,13 +20,10 @@ public class SplashActivity extends AppCompatActivity {
             startService(service);
         }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
-            }
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
         }, 1500);
     }
     private boolean isMyServiceRunning(Class<?> serviceClass) {

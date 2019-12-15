@@ -19,10 +19,7 @@ import java.util.ArrayList;
 public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<App> appArrayList;
-
-    private FirstConfigurationController firstConfigurationController;
-
-    public AppRecyclerViewAdapter(ArrayList<App> appArrayList) {
+    AppRecyclerViewAdapter(ArrayList<App> appArrayList) {
         this.appArrayList = appArrayList;
     }
 
@@ -30,7 +27,6 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.app_view, parent, false);
-
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -39,9 +35,10 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.IV_Icon.setImageDrawable(appArrayList.get(position).getIcon());
         holder.TV_Name.setText(appArrayList.get(position).getName());
-        holder.Switch_State.setChecked(appArrayList.get(position).isState());
 
         initListeners(holder, position);
+
+        holder.Switch_State.setChecked(appArrayList.get(position).isState());
     }
 
     /**
@@ -52,11 +49,9 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
      * @param position  - Posición del item (app) del RecyclerView.
      */
     private void initListeners(@NonNull ViewHolder holder, final int position) {
-        holder.Switch_State.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                buttonView.setChecked(firstConfigurationController.onStateChanged(appArrayList.get(position).getPackagePath(), isChecked));
-            }
+        holder.Switch_State.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            buttonView.setChecked(isChecked);
+            appArrayList.get(position).setState(isChecked);
         });
     }
 
@@ -65,14 +60,15 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
         return appArrayList.size();
     }
 
+    public ArrayList<App> getAppArrayList() {
+        return appArrayList;
+    }
+
     /**
      * Método para configurar este Adapter con el objeto del controlador usado por el Activity.
      *
      * @param //firstConfigurationController - Controlador del Activity.
      */
-    public void configAdapter(FirstConfigurationController controller) {
-        this.firstConfigurationController = controller;
-    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         AppCompatImageView IV_Icon;

@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.google.android.gms.common.api.Batch;
 import com.nordokod.scio.constants.KindOfQuestion;
 import com.nordokod.scio.entity.ConfigurationApp;
 import com.nordokod.scio.entity.Guide;
@@ -26,7 +27,7 @@ import java.util.TreeMap;
 public class LockAppProcess extends Service {
     Context currentContext;
     ConfigurationApp confApp;
-
+    static String prevApp;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -41,23 +42,30 @@ public class LockAppProcess extends Service {
     public int onStartCommand(Intent intentM, int flags, int idArranque) {
         Log.d("testeo","onStart");
         final Handler handler = new Handler();
+        SystemWriteProcess swp = new SystemWriteProcess(getApplicationContext());
+        ConfigurationApp configurationApp = swp.readUserConfig();
+        boolean canShow = true;
+        prevApp = "";
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 handler.postDelayed(this, 1000);
                 String fgApp=getForegroundApp();
-                Log.d("testeo","working");
+
                 Log.d("testeo",fgApp);
-                if(fgApp.equals("com.twitter.android")){//está bloqueada..
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    //startActivity(intent);
-                    Log.d("testeo","oh");
-                    TrueFalseQuestionDialog trueFalseQuestionDialog = new TrueFalseQuestionDialog(getApplicationContext());
-                    Guide guide = new Guide(1,"uid","Física de Partículas","uid",true,true,true,new Date());
-                    TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion("id","El electrón es un lepton", KindOfQuestion.TRUE_FALSE.getCode(),true);
-                    trueFalseQuestionDialog.setQuestion(trueFalseQuestion,guide);
+                if(!fgApp.equals(prevApp)){
+                    if(configurationApp.isAppLocker()){
+                        if(configurationApp.getLockedApps().contains(fgApp)){//está bloqueada..
+                            Log.d("testeo","oh");
+                            TrueFalseQuestionDialog trueFalseQuestionDialog = new TrueFalseQuestionDialog(getApplicationContext());
+                            Guide guide = new Guide(1,"uid","Física de Partículas","uid",true,true,true,new Date());
+                            TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion("id","El electrón es un lepton", KindOfQuestion.TRUE_FALSE.getCode(),true);
+                            trueFalseQuestionDialog.setQuestion(trueFalseQuestion,guide);
+                        }
+                    }
                 }
 
+                prevApp=fgApp;
             }
         };
         BroadcastReceiver myBroadCast=new BroadcastReceiver() {
