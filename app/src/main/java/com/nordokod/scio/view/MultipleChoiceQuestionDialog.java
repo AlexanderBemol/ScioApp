@@ -11,6 +11,7 @@ import android.os.Build;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.Utilities;
 import com.nordokod.scio.entity.Guide;
@@ -122,6 +123,7 @@ public class MultipleChoiceQuestionDialog implements BasicDialog {
             TV_Topic.setText(guide.getTopic());
             TV_Question.setText(question.getQuestion());
 
+
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <Build.VERSION_CODES.O){
                 Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_TOAST);
             }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -159,7 +161,13 @@ public class MultipleChoiceQuestionDialog implements BasicDialog {
     public void setQuestion(MultipleChoiceQuestion multipleChoiceQuestion, Guide guide) {
         this.question = multipleChoiceQuestion;
         this.guide = guide;
-        showDialog();
+        question.getAnswersCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for(DocumentSnapshot mcAnswer : queryDocumentSnapshots){
+                question.addAnswer(Objects.requireNonNull(mcAnswer.get(MultipleChoiceQuestion.KEY_ANSWER)).toString(), (boolean) mcAnswer.get(MultipleChoiceQuestion.KEY_CORRECT));
+            }
+            showDialog();
+        });
+
     }
 
     /**

@@ -44,7 +44,6 @@ public class LockAppProcess extends Service {
         final Handler handler = new Handler();
         SystemWriteProcess swp = new SystemWriteProcess(getApplicationContext());
         ConfigurationApp configurationApp = swp.readUserConfig();
-        boolean canShow = true;
         prevApp = "";
         final Runnable runnable = new Runnable() {
             @Override
@@ -57,10 +56,12 @@ public class LockAppProcess extends Service {
                     if(configurationApp.isAppLocker()){
                         if(configurationApp.getLockedApps().contains(fgApp)){//está bloqueada..
                             Log.d("testeo","oh");
-                            TrueFalseQuestionDialog trueFalseQuestionDialog = new TrueFalseQuestionDialog(getApplicationContext());
-                            Guide guide = new Guide(1,"uid","Física de Partículas","uid",true,true,true,new Date());
-                            TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion("id","El electrón es un lepton", KindOfQuestion.TRUE_FALSE.getCode(),true);
-                            trueFalseQuestionDialog.setQuestion(trueFalseQuestion,guide);
+                            QuestionHelper questionHelper = new QuestionHelper();
+                            try{
+                                questionHelper.showRandomQuestion(getApplicationContext());
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
@@ -86,9 +87,12 @@ public class LockAppProcess extends Service {
             }
         };
         handler.postDelayed(runnable, 1000);//cada tiempo..
-        registerReceiver(myBroadCast,new IntentFilter(Intent.ACTION_SCREEN_ON));
-
-        registerReceiver(myBroadCast,new IntentFilter(Intent.ACTION_SCREEN_OFF));
+        try{
+            registerReceiver(myBroadCast,new IntentFilter(Intent.ACTION_SCREEN_ON));
+            registerReceiver(myBroadCast,new IntentFilter(Intent.ACTION_SCREEN_OFF));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         // If we get killed, after returning from here, restart
         return START_STICKY;
     }
