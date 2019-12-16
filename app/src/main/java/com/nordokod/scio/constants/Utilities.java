@@ -48,4 +48,21 @@ public class Utilities {
         return number < 10 ? "0"+ number : String.valueOf(number);
     }
 
+    /**
+     * Obtener el res de la categoría
+     * @param category int
+     * @return int de res
+     */
+    public static int getStringFromCategory(int category){
+        switch (category) {
+            case 1:return R.string.category_exact_sciences;
+            case 2:return R.string.category_social_sciences;
+            case 3:return R.string.category_sports;
+            case 4:return R.string.category_art;
+            case 5:return R.string.category_tech;
+            case 6:return R.string.category_entertainment;
+            case 7:return R.string.category_others;
+            default: return 0;
+        }
+    }
 }

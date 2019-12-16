@@ -45,7 +45,6 @@ public class FirstConfigurationAppBlockFragment extends Fragment implements Basi
         listApps.setLayoutManager(layoutManager);
 
         mAdapter = new AppRecyclerViewAdapter(getListOfApps());
-        ((AppRecyclerViewAdapter) mAdapter).configAdapter(firstConfigurationController);
 
         listApps.setAdapter(mAdapter);
     }
@@ -53,11 +52,6 @@ public class FirstConfigurationAppBlockFragment extends Fragment implements Basi
     @Override
     public void initListeners() {
 
-    }
-
-    protected void configAdapter(FirstConfigurationController controller,FirstConfigurationActivity firstConfigurationActivity) {
-        this.firstConfigurationController = controller;
-        this.firstConfigurationActivity = firstConfigurationActivity;
     }
 
     private ArrayList<App> getListOfApps() {

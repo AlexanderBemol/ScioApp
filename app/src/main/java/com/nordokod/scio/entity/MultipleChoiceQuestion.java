@@ -1,11 +1,15 @@
 package com.nordokod.scio.entity;
 
+import com.google.firebase.firestore.CollectionReference;
+
 import java.util.ArrayList;
 
 public class MultipleChoiceQuestion extends Question {
     public static String KEY_ANSWERS="ANSWERS";
     public static String KEY_ANSWER="ANSWER";
     public static String KEY_CORRECT="CORRECT";
+
+    private CollectionReference answersCollection;
     private ArrayList<Answer> answers;
 
     public MultipleChoiceQuestion(String id, String question, int kindOfQuestions) {
@@ -19,6 +23,13 @@ public class MultipleChoiceQuestion extends Question {
 
     public ArrayList<Answer> getAnswers() {
         return answers;
+    }
+    public CollectionReference getAnswersCollection() {
+        return answersCollection;
+    }
+
+    public void setAnswersCollection(CollectionReference answersCollection) {
+        this.answersCollection = answersCollection;
     }
 
     public class Answer {
@@ -37,5 +48,7 @@ public class MultipleChoiceQuestion extends Question {
         public boolean isCorrect() {
             return correct;
         }
+
+
     }
 }

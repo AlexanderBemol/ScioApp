@@ -11,8 +11,14 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.google.android.gms.common.api.Batch;
+import com.nordokod.scio.constants.KindOfQuestion;
 import com.nordokod.scio.entity.ConfigurationApp;
+import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.TrueFalseQuestion;
+import com.nordokod.scio.view.TrueFalseQuestionDialog;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.SortedMap;
@@ -21,7 +27,7 @@ import java.util.TreeMap;
 public class LockAppProcess extends Service {
     Context currentContext;
     ConfigurationApp confApp;
-
+    static String prevApp;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -36,17 +42,31 @@ public class LockAppProcess extends Service {
     public int onStartCommand(Intent intentM, int flags, int idArranque) {
         Log.d("testeo","onStart");
         final Handler handler = new Handler();
+        SystemWriteProcess swp = new SystemWriteProcess(getApplicationContext());
+        ConfigurationApp configurationApp = swp.readUserConfig();
+        prevApp = "";
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 handler.postDelayed(this, 1000);
-                //Log.d("testeo","working");
                 String fgApp=getForegroundApp();
-                if(confApp.getLockedApps().contains(fgApp)){//está bloqueada..
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    //startActivity(intent);
+
+                Log.d("testeo",fgApp);
+                if(!fgApp.equals(prevApp)){
+                    if(configurationApp.isAppLocker()){
+                        if(configurationApp.getLockedApps().contains(fgApp)){//está bloqueada..
+                            Log.d("testeo","oh");
+                            QuestionHelper questionHelper = new QuestionHelper();
+                            try{
+                                questionHelper.showRandomQuestion(getApplicationContext());
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }
                 }
 
+                prevApp=fgApp;
             }
         };
         BroadcastReceiver myBroadCast=new BroadcastReceiver() {
@@ -67,9 +87,12 @@ public class LockAppProcess extends Service {
             }
         };
         handler.postDelayed(runnable, 1000);//cada tiempo..
-        registerReceiver(myBroadCast,new IntentFilter(Intent.ACTION_SCREEN_ON));
-
-        registerReceiver(myBroadCast,new IntentFilter(Intent.ACTION_SCREEN_OFF));
+        try{
+            registerReceiver(myBroadCast,new IntentFilter(Intent.ACTION_SCREEN_ON));
+            registerReceiver(myBroadCast,new IntentFilter(Intent.ACTION_SCREEN_OFF));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         // If we get killed, after returning from here, restart
         return START_STICKY;
     }
@@ -117,7 +140,7 @@ public class LockAppProcess extends Service {
                 mySortedMap.put(usageStats.getLastTimeUsed(), usageStats);
             }
             if (!mySortedMap.isEmpty()) {
-                currentApp = mySortedMap.get(mySortedMap.lastKey()).getPackageName();
+                currentApp = Objects.requireNonNull(mySortedMap.get(mySortedMap.lastKey())).getPackageName();
             }
         }
         return currentApp;

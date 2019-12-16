@@ -102,43 +102,4 @@ public class SystemWriteProcess {
             saveUserConfig(configApp);
         }
     }
-
-
-    public boolean saveJSON(JSONObject json,String folder,String filename){
-        boolean b=true;
-        try{
-            File file= new File(internalStorageDir,folder+filename+".json");
-            if(file.exists()){
-                file.delete();
-            }
-            file.createNewFile();
-            FileWriter fw=new FileWriter(file);
-            fw.write(json.toString());
-            fw.flush();
-            fw.close();
-        }catch (Exception e){
-            b=false;
-        }
-        return b;
-    }
-    public ArrayList<JSONObject> getJSONs(String folder){
-        ArrayList<JSONObject> jsons=new ArrayList<>();
-        try{
-            File filesFolder=new File(internalStorageDir,folder);
-            File[] files=filesFolder.listFiles();
-            for(File f:files){
-                FileInputStream fis = new FileInputStream(f);
-                int size = fis.available();
-                byte[] buffer = new byte[size];
-                fis.read(buffer);
-                fis.close();
-                String data=new String(buffer);
-                JSONObject json=new JSONObject(data);
-                jsons.add(json);
-            }
-        }catch (Exception e){
-            Log.d("testeo",e.getMessage());
-        }
-        return jsons;
-    }
 }

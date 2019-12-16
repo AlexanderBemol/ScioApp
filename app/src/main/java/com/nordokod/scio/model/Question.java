@@ -89,10 +89,9 @@ public class Question {
 
     public ArrayList<com.nordokod.scio.entity.Question> getQuestionsFromSnapshot(QuerySnapshot queryDocumentSnapshot) throws InterruptedException {
         ArrayList<com.nordokod.scio.entity.Question> questions = new ArrayList<>();
-        final Object syncObject = new Object();
         for (DocumentSnapshot documentSnapshot : queryDocumentSnapshot) {
             com.nordokod.scio.entity.Question question;
-            int kindOfQuestion = (int) documentSnapshot.get(com.nordokod.scio.entity.Question.KEY_KIND_OF_QUESTION);
+            int kindOfQuestion = ((Long) Objects.requireNonNull(documentSnapshot.get(com.nordokod.scio.entity.Question.KEY_KIND_OF_QUESTION))).intValue();
             String stringQuestion = Objects.requireNonNull(documentSnapshot.get(com.nordokod.scio.entity.Question.KEY_QUESTION)).toString();
             String id = documentSnapshot.getId();
             if (KindOfQuestion.OPEN.getCode() == kindOfQuestion) {
@@ -102,22 +101,13 @@ public class Question {
                 boolean trueFalseAnswer = (boolean) Objects.requireNonNull(documentSnapshot.get(TrueFalseQuestion.KEY_ANSWER));
                 question = new TrueFalseQuestion(id, stringQuestion, kindOfQuestion, trueFalseAnswer);
             } else {
-                CollectionReference collectionReference = (CollectionReference) documentSnapshot.get(MultipleChoiceQuestion.KEY_ANSWERS);
+                CollectionReference collectionReference = documentSnapshot.getReference().collection(MultipleChoiceQuestion.KEY_ANSWERS);
                 question = new MultipleChoiceQuestion(id,stringQuestion,kindOfQuestion);
-                Objects.requireNonNull(collectionReference).get()
-                        .addOnSuccessListener(doc->{
-                            for(DocumentSnapshot mcAnswer:doc){
-                                ((MultipleChoiceQuestion)question).addAnswer(Objects.requireNonNull(mcAnswer.get(MultipleChoiceQuestion.KEY_ANSWER)).toString(), (boolean) mcAnswer.get(MultipleChoiceQuestion.KEY_CORRECT));
-                            }
-                            synchronized (syncObject){
-                                syncObject.notify();
-                            }
-                        });
+                ((MultipleChoiceQuestion)question).setAnswersCollection(collectionReference);
             }
+            questions.add(question);
         }
-        synchronized (syncObject){
-            syncObject.wait();
-        }
+
         return questions;
     }
 

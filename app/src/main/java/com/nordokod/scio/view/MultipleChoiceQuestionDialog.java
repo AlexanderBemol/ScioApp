@@ -1,32 +1,38 @@
 package com.nordokod.scio.view;
 
 import android.app.Dialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
-import android.view.View;
-import android.view.Window;
 
+import android.os.Build;
+import android.view.Window;
+import android.view.WindowManager;
+
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.nordokod.scio.R;
+import com.nordokod.scio.constants.Utilities;
+import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.entity.MultipleChoiceQuestion;
 
-public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements BasicDialog {
+import java.util.Objects;
+
+public class MultipleChoiceQuestionDialog implements BasicDialog {
 
     private Context context;
     private Dialog dialog;
     private MultipleChoiceQuestion question;
+    private Guide guide;
 
     private AppCompatImageView IV_Star_1, IV_Star_2, IV_Star_3, IV_Close;
     private AppCompatTextView TV_Question, TV_Category, TV_Topic, TV_First_Answer, TV_Second_Answer, TV_Third_Answer, TV_Fourth_Answer;
 
     private boolean wasAnswered = false;
 
-    @Override
-    public void onReceive(Context context, Intent intent) {
+
+    public MultipleChoiceQuestionDialog(Context context) {
         this.context = context;
         initDialog();
         initComponents();
@@ -35,7 +41,7 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
 
     @Override
     public void initDialog() {
-        dialog = new Dialog(context, R.style.Theme_AppCompat_Dialog_Alert);
+        dialog = new Dialog(context, R.style.DefaultTheme);
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -62,12 +68,7 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
 
     @Override
     public void initListeners() {
-        IV_Close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        IV_Close.setOnClickListener(v -> dialog.dismiss());
         /*
         TV_First_Answer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,18 +118,20 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
 
     @Override
     public void showDialog() {
-        /*if (!dialog.isShowing()) {
-            TV_Category.setText(getCategoryResId(question.getCategory()));
-            TV_Topic.setText(question.getTopic());
+        if (!dialog.isShowing()) {
+            TV_Category.setText(Utilities.getStringFromCategory(guide.getCategory()));
+            TV_Topic.setText(guide.getTopic());
             TV_Question.setText(question.getQuestion());
 
-            ArrayList<MultipleChoiceQuestion.Option> answers = question.getAnswers();
-            TV_First_Answer.setText(answers.get(0).getOption());
-            TV_Second_Answer.setText(answers.get(1).getOption());
-            TV_Third_Answer.setText(answers.get(2).getOption());
-            TV_Fourth_Answer.setText(answers.get(3).getOption());
 
-            dialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <Build.VERSION_CODES.O){
+                Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_TOAST);
+            }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+            }else{
+                Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_PHONE);
+            }
+
             WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
             Window window = dialog.getWindow();
             layoutParams.copyFrom(window.getAttributes());
@@ -141,7 +144,7 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
             dialog.show();
         } else {
             dialog.dismiss();
-        }*/
+        }
     }
 
 
@@ -153,25 +156,18 @@ public class MultipleChoiceQuestionDialog extends BroadcastReceiver implements B
 
     /**
      * Método que muestra el Pop Up.
-     * @param multipleChoiceQuestion
+     * @param multipleChoiceQuestion question
      */
-    public void setQuestion(MultipleChoiceQuestion multipleChoiceQuestion) {
+    public void setQuestion(MultipleChoiceQuestion multipleChoiceQuestion, Guide guide) {
         this.question = multipleChoiceQuestion;
-        showDialog();
-    }
+        this.guide = guide;
+        question.getAnswersCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
+            for(DocumentSnapshot mcAnswer : queryDocumentSnapshots){
+                question.addAnswer(Objects.requireNonNull(mcAnswer.get(MultipleChoiceQuestion.KEY_ANSWER)).toString(), (boolean) mcAnswer.get(MultipleChoiceQuestion.KEY_CORRECT));
+            }
+            showDialog();
+        });
 
-    /**
-     * Método para obtener el valor String de la categoría según el indice de la base de datos.
-     *
-     * @param category = indice de la categoría en la base de datos.
-     * @return valor int del R.string.[nombre de la categoría]
-     */
-    private int getCategoryResId(int category) {
-        //TODO Agregar los casos según el ID de cada categoría para devolver el R.string....
-        switch (category) {
-            case 0: return 0;
-            default: return 0;
-        }
     }
 
     /**
