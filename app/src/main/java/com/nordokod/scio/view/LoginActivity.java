@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
     // Facebook and Google Buttons
     private AppCompatImageButton BTN_Google, BTN_FB;
     // Recover password TextView
-    private AppCompatTextView txtRecuperar;
+    private AppCompatTextView TV_Recovery_Password;
     // User and Password EditTexts
     private AppCompatEditText ET_Mail, ET_Password;
     //Facebook
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         BTN_FB = findViewById(R.id.BTN_Facebook);
         BTN_Google = findViewById(R.id.BTN_Google);
 
-        txtRecuperar    = findViewById(R.id.TV_Forgot_Password);
+        TV_Recovery_Password = findViewById(R.id.TV_Forgot_Password);
 
         ET_Mail = findViewById(R.id.ET_Mail);
         ET_Password = findViewById(R.id.ET_Password);
@@ -231,20 +231,13 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         });
 
         //Recuperar Contraseña
-        txtRecuperar.setOnClickListener(v -> {
+        TV_Recovery_Password.setOnClickListener(v -> {
             //activity restore password
         });
     }
 
     private void initAnimations(){
         press = AnimationUtils.loadAnimation(this, R.anim.press);
-    }
-
-    private void goToFirstConfigurationView(){
-        Intent firstConfigurationIntent = new Intent(this,FirstConfigurationActivity.class);
-        dismissProgressDialog();
-        showSuccessfulMessage(UserOperations.SIGN_UP_USER);
-        startActivity(firstConfigurationIntent);
     }
 
     private void newUser(){

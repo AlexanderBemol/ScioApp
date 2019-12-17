@@ -91,10 +91,8 @@
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" /> <!-- ======================================================================================= Permission -->
         <activity
             android:name=".view.PermissionActivity"
-            android:screenOrientation="portrait" /> <!-- ======================================================================================= First Configuration -->
-        <activity
-            android:name=".view.FirstConfigurationActivity"
-            android:screenOrientation="portrait" /> <!-- ======================================================================================= Main -->
+            android:screenOrientation="portrait" />
+        <!-- ======================================================================================= Main -->
         <activity
             android:name=".view.MainActivity"
             android:screenOrientation="portrait"

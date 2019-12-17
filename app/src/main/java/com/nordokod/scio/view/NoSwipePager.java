@@ -5,6 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+//TODO Revisar si esta clase se puede reutilizar en un futuro.
 public class NoSwipePager extends ViewPager {
     private boolean enabled;
 

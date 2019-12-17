@@ -8,9 +8,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
-import com.nordokod.scio.controller.FirstConfigurationController;
 import com.nordokod.scio.entity.App;
 import com.nordokod.scio.R;
 
