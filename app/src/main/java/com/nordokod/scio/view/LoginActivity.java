@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
     // Facebook and Google Buttons
     private AppCompatImageButton BTN_Google, BTN_FB;
     // Recover password TextView
-    private AppCompatTextView txtRecuperar;
+    private AppCompatTextView TV_Forgot_Password;
     // User and Password EditTexts
     private AppCompatEditText ET_Mail, ET_Password;
     //Facebook
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         BTN_FB = findViewById(R.id.BTN_Facebook);
         BTN_Google = findViewById(R.id.BTN_Google);
 
-        txtRecuperar    = findViewById(R.id.TV_Forgot_Password);
+        TV_Forgot_Password = findViewById(R.id.TV_Forgot_Password);
 
         ET_Mail = findViewById(R.id.ET_Mail);
         ET_Password = findViewById(R.id.ET_Password);
@@ -152,35 +152,32 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
     @Override
     public void initListeners(){
         //Iniciar Sesión
-        BTN_Login.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                try{
-                    BTN_Login.startAnimation(press);
-                    showLoginLoadingDialog();
-                    if(Objects.requireNonNull(ET_Mail.getText()).toString().length()==0 || Objects.requireNonNull(ET_Password.getText()).toString().length()==0){
-                        showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
-                    }else {
-                        com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
-                        user.setEmail(ET_Mail.getText().toString());
-                        user.setPassword(ET_Password.getText().toString());
-                        userModel.signInWithMail(user).addOnSuccessListener(authResult -> {
-                            if (authResult.getAdditionalUserInfo().isNewUser()) {
-                                newUser();
-                            } else {
-                                showSuccessfulMessage(UserOperations.LOGIN_USER);
-                                goToMainView();
-                            }
-                        }).addOnCanceledListener(() -> showError(new OperationCanceledException())).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                showError(e);
-                            }
-                        });
-                    }
-                }catch(Exception e){
-                    showError(e);
+        BTN_Login.setOnClickListener(v -> {
+            try{
+                BTN_Login.startAnimation(press);
+                showLoginLoadingDialog();
+                if(Objects.requireNonNull(ET_Mail.getText()).toString().length()==0 || Objects.requireNonNull(ET_Password.getText()).toString().length()==0){
+                    showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
+                }else {
+                    com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
+                    user.setEmail(ET_Mail.getText().toString());
+                    user.setPassword(ET_Password.getText().toString());
+                    userModel.signInWithMail(user).addOnSuccessListener(authResult -> {
+                        if (authResult.getAdditionalUserInfo().isNewUser()) {
+                            newUser();
+                        } else {
+                            showSuccessfulMessage(UserOperations.LOGIN_USER);
+                            goToMainView();
+                        }
+                    }).addOnCanceledListener(() -> showError(new OperationCanceledException())).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            showError(e);
+                        }
+                    });
                 }
+            }catch(Exception e){
+                showError(e);
             }
         });
 
@@ -189,11 +186,12 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
             BTN_Google.startAnimation(press);
             showLoginLoadingDialog();
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-            startActivityForResult(signInIntent,RequestCode.RC_GOOGLE.getCode());
+            startActivityForResult(signInIntent, RequestCode.RC_GOOGLE.getCode());
         });
 
         //Facebook
         BTN_FB.setOnClickListener(v -> {
+            BTN_FB.startAnimation(press);
             showLoginLoadingDialog();
             LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("email","public_profile"));
             LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -231,20 +229,13 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         });
 
         //Recuperar Contraseña
-        txtRecuperar.setOnClickListener(v -> {
+        TV_Forgot_Password.setOnClickListener(v -> {
             //activity restore password
         });
     }
 
     private void initAnimations(){
         press = AnimationUtils.loadAnimation(this, R.anim.press);
-    }
-
-    private void goToFirstConfigurationView(){
-        Intent firstConfigurationIntent = new Intent(this,FirstConfigurationActivity.class);
-        dismissProgressDialog();
-        showSuccessfulMessage(UserOperations.SIGN_UP_USER);
-        startActivity(firstConfigurationIntent);
     }
 
     private void newUser(){
@@ -261,23 +252,27 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
     }
 
     private void goToMainView(){
-        Intent mainIntent = new Intent(getApplicationContext(),MainActivity.class);
+        Intent mainIntent = new Intent(getApplicationContext(), MainActivity.class);
         dismissProgressDialog();
         startActivity(mainIntent);
         finish();
     }
+
     private void goToSignUpView(){
-        Intent signUpIntent = new Intent(getApplicationContext(),SignupActivity.class);
+        Intent signUpIntent = new Intent(getApplicationContext(), SignupActivity.class);
         startActivity(signUpIntent);
         dismissProgressDialog();
     }
+
     private void showError(Exception exception){
         userMessage.showErrorMessage(this, userMessage.categorizeException(exception));
         dismissProgressDialog();
     }
+
     private void showSuccessfulMessage(UserOperations userOperations){
         userMessage.showSuccessfulOperationMessage(this,userOperations);
     }
+
     @Override
     protected void onDestroy() {
         dismissProgressDialog();
