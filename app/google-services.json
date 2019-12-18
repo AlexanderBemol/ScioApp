@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1038530395665-7ifr64dtvph5om3cp2ibi0g0edph7nl8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nordokod.scio",
+            "certificate_hash": "53b96e6c33f40d8ed64f48623913cc1040bed7dd"
+          }
+        },
+        {
           "client_id": "1038530395665-a65fv4dfb0n1mtvenb02de3bgn0pr3aj.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

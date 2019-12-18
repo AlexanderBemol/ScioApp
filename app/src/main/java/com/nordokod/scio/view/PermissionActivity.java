@@ -79,12 +79,4 @@ public class PermissionActivity extends AppCompatActivity implements BasicActivi
     private void activatePermissions() {
         //permissionController.activatePermissions();
     }
-
-    private void finishActivity() {
-        if ("First Configuration".equals(getIntent().getAction())) {
-            Intent intent = new Intent(PermissionActivity.this, FirstConfigurationActivity.class);
-            startActivity(intent);
-        }
-        finish();
-    }
 }

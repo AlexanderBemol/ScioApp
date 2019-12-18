@@ -57,24 +57,18 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
 
     @Override
     public void initListeners() {
-        BTN_Signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BTN_Signup.startAnimation(press);
+        BTN_Signup.setOnClickListener(view -> {
+            BTN_Signup.startAnimation(press);
 
-                SignupController.signUpUser(
-                        Objects.requireNonNull(ET_Mail.getText()).toString(),
-                        Objects.requireNonNull(ET_Password.getText()).toString(),
-                        Objects.requireNonNull(ET_ConfirmPassword.getText()).toString());
-            }
+            SignupController.signUpUser(
+                    Objects.requireNonNull(ET_Mail.getText()).toString(),
+                    Objects.requireNonNull(ET_Password.getText()).toString(),
+                    Objects.requireNonNull(ET_ConfirmPassword.getText()).toString());
         });
 
-        BTN_Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BTN_Cancel.startAnimation(press);
-                onBackPressed();
-            }
+        BTN_Cancel.setOnClickListener(view -> {
+            BTN_Cancel.startAnimation(press);
+            onBackPressed();
         });
 
         // TODO: Cuando tengamos hechos los terminos y condiciones, y el aviso de privacidad
@@ -87,7 +81,8 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
 
         Toasty.success(this, R.string.message_login_success).show();
 
-        Intent intent= new Intent(this, FirstConfigurationActivity.class);
+        //TODO Queda pendiente mandar a llamar al activity para que configure su cuenta.
+        Intent intent= new Intent(this, MainActivity.class);
         this.startActivity(intent);
         finish();
     }
