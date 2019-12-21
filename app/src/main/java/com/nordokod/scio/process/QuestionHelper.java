@@ -20,7 +20,7 @@ public class QuestionHelper {
     private static Guide guide;
     private static Question question;
 
-    public void showRandomQuestion(Context context) throws InterruptedException{
+    public void showRandomQuestion(Context context){
         com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
         guideModel.getAllGuides().addOnSuccessListener(queryDocumentSnapshots -> {
             if(!queryDocumentSnapshots.getDocuments().isEmpty()){
@@ -30,30 +30,23 @@ public class QuestionHelper {
                 DocumentSnapshot documentSnapshot = queryDocumentSnapshots.getDocuments().get(index);
                 guide = guideModel.getGuideFromDocument(documentSnapshot);
                 com.nordokod.scio.model.Question questionModel = new com.nordokod.scio.model.Question();
-                questionModel.getSnapshotQuestionsOfGuide(guide).addOnSuccessListener(queryDocumentSnapshotsx -> {
-                    if(!queryDocumentSnapshotsx.getDocuments().isEmpty()){
-                        int nx = queryDocumentSnapshotsx.getDocuments().size();
-                        Random randomx = new Random();
-                        int indexx = randomx.nextInt(nx);
-                        try {
-                            ArrayList<Question> questions = questionModel.getQuestionsFromSnapshot(queryDocumentSnapshotsx);
-                            question = questions.get(indexx);
-                            if(question.getKindOfQuestion()==KindOfQuestion.MULTIPLE_CHOICE.getCode()){
-                                MultipleChoiceQuestionDialog multipleChoiceQuestionDialog = new MultipleChoiceQuestionDialog(context);
-                                multipleChoiceQuestionDialog.setQuestion((MultipleChoiceQuestion)question,guide);
-                            }else if(question.getKindOfQuestion()==KindOfQuestion.TRUE_FALSE.getCode()){
-                                TrueFalseQuestionDialog trueFalseQuestionDialog = new TrueFalseQuestionDialog(context);
-                                trueFalseQuestionDialog.setQuestion((TrueFalseQuestion)question,guide);
-                            }else {
-                                OpenQuestionDialog openQuestionDialog = new OpenQuestionDialog(context);
-                                openQuestionDialog.setQuestion((OpenQuestion) question, guide);
-                            }
-
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                guide.setQuestions(questionModel.getQuestionsFromGuide(guide));
+                if(!guide.getQuestions().isEmpty()){
+                    int nx = guide.getQuestions().size();
+                    Random randomx = new Random();
+                    int indexx = randomx.nextInt(nx);
+                    question = guide.getQuestions().get(indexx);
+                    if(question.getKindOfQuestion()==KindOfQuestion.MULTIPLE_CHOICE.getCode()){
+                        MultipleChoiceQuestionDialog multipleChoiceQuestionDialog = new MultipleChoiceQuestionDialog(context);
+                        multipleChoiceQuestionDialog.setQuestion((MultipleChoiceQuestion)question,guide);
+                    }else if(question.getKindOfQuestion()==KindOfQuestion.TRUE_FALSE.getCode()){
+                        TrueFalseQuestionDialog trueFalseQuestionDialog = new TrueFalseQuestionDialog(context);
+                        trueFalseQuestionDialog.setQuestion((TrueFalseQuestion)question,guide);
+                    }else {
+                        OpenQuestionDialog openQuestionDialog = new OpenQuestionDialog(context);
+                        openQuestionDialog.setQuestion((OpenQuestion) question, guide);
                     }
-                });
+                }
             }
         });
 

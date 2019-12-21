@@ -161,13 +161,9 @@ public class MultipleChoiceQuestionDialog implements BasicDialog {
     public void setQuestion(MultipleChoiceQuestion multipleChoiceQuestion, Guide guide) {
         this.question = multipleChoiceQuestion;
         this.guide = guide;
-        question.getAnswersCollection().get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for(DocumentSnapshot mcAnswer : queryDocumentSnapshots){
-                question.addAnswer(Objects.requireNonNull(mcAnswer.get(MultipleChoiceQuestion.KEY_ANSWER)).toString(), (boolean) mcAnswer.get(MultipleChoiceQuestion.KEY_CORRECT));
-            }
-            showDialog();
-        });
 
+
+        showDialog();
     }
 
     /**

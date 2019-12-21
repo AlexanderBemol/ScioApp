@@ -169,16 +169,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Guide guide = null;
                             try {
-                                guide = new Guide(
-                                        Integer.parseInt(Objects.requireNonNull(document.getData().get(Guide.KEY_CATEGORY)).toString()),
-                                        document.getId(),
-                                        (String)    document.getData().get(Guide.KEY_TOPIC),
-                                        userModel.getBasicUserInfo().getUid(),
-                                        (boolean)   document.getData().get(Guide.KEY_ONLINE),
-                                        (boolean)   document.getData().get(Guide.KEY_ACTIVATED),
-                                        (boolean)   document.getData().get(Guide.KEY_PERSONAL),
-                                        Objects.requireNonNull(document.getTimestamp(Guide.KEY_DATETIME)).toDate()
-                                );
+                                guide = guideModel.getGuideFromDocument(document);
                             } catch (Exception e) {
                                 showError(e);
                             }

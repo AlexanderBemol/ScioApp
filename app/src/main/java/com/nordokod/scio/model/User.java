@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -30,6 +31,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -144,6 +146,7 @@ public class User {
         data.put(com.nordokod.scio.entity.User.KEY_STUDY_LEVEL,user.getStudyLevel());
         data.put(com.nordokod.scio.entity.User.KEY_PROFILE_PROVIDER,user.getProvider());
         data.put(com.nordokod.scio.entity.User.KEY_STATE,user.getState());
+        data.put(com.nordokod.scio.entity.User.KEY_CREATION_DATE, FieldValue.serverTimestamp());
         return  db.collection(com.nordokod.scio.entity.User.KEY_USERS).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).set(data);
     }
     /**
@@ -301,7 +304,8 @@ public class User {
                         documentSnapshot.getDate(com.nordokod.scio.entity.User.KEY_BIRTHDAY),
                         Integer.parseInt(String.valueOf(documentSnapshot.get(com.nordokod.scio.entity.User.KEY_STUDY_LEVEL))),
                         Integer.parseInt(String.valueOf(documentSnapshot.get(com.nordokod.scio.entity.User.KEY_STATE))),
-                (String) documentSnapshot.get(com.nordokod.scio.entity.User.KEY_PROFILE_PROVIDER)
+                (String)documentSnapshot.get(com.nordokod.scio.entity.User.KEY_PROFILE_PROVIDER),
+                        documentSnapshot.getDate(com.nordokod.scio.entity.User.KEY_CREATION_DATE)
         );
     }
 
