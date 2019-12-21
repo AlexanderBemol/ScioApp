@@ -15,10 +15,12 @@ public class User {
     public static String KEY_STATE="STATE";
     public static String KEY_PROFILE_PHOTO="PROFILE_PHOTOS";
     public static String KEY_PROFILE_PROVIDER="PROVIDER";
+    public static String KEY_CREATION_DATE="PROVIDER";
 
-    public static String DEFAULT_USERNAME="USUARIO DE SENDO SG";
-    public static String DEFAULT_EMAIL="SIN INFORMACIÓN";
-    public static Date DEFAULT_BIRTHDAY= new Date();
+
+    private static String DEFAULT_USERNAME="USUARIO DE SENDO SG";
+    private static String DEFAULT_EMAIL="SIN INFORMACIÓN";
+    private static Date DEFAULT_BIRTHDAY= new Date();
 
     private String uid;
     private String username;
@@ -30,7 +32,7 @@ public class User {
     private String provider;
     private int studyLevel;
     private int state;
-
+    private Date creationDate;
     public User (){
         this.uid="";
         this.username = DEFAULT_USERNAME;
@@ -40,9 +42,10 @@ public class User {
         this.photoPath="";
         this.birthdayDate = DEFAULT_BIRTHDAY;
         this.provider="";
+        this.creationDate =DEFAULT_BIRTHDAY;
     }
 
-    public User (String uid,String username,String email,String photoPath, Date birthdayDate, int studyLevel, int state, String provider){
+    public User (String uid,String username,String email,String photoPath, Date birthdayDate, int studyLevel, int state, String provider, Date creationDate){
         this.uid=uid;
         this.username=username;
         this.email=email;
@@ -51,6 +54,8 @@ public class User {
         this.studyLevel=studyLevel;
         this.state=state;
         this.provider = provider;
+        this.creationDate = DEFAULT_BIRTHDAY;
+        this.creationDate = creationDate;
     }
 
 
@@ -135,5 +140,13 @@ public class User {
 
     public void setProvider(String provider) {
         this.provider = provider;
+    }
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 }

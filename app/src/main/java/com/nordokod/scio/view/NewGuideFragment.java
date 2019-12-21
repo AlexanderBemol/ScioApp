@@ -138,8 +138,7 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
                     if (Objects.requireNonNull(date).before(dateToday)){
                         showError(new InputDataException(InputDataException.Code.DATETIME_BEFORE)); // La fecha elegida es del pasado. ¡Oh por Dios, Doc, viajamos al pasado!
                     } else {
-                        Guide guide = new Guide(category_selected_id, "", ET_Topic.getText().toString(), "", false, true,true, date);
-
+                        Guide guide = new Guide(category_selected_id, "", ET_Topic.getText().toString(), "", false, true, date,new Date(),new Date(),"","");
                         com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
                         guideModel.createGuide(guide)
                                 .addOnSuccessListener(documentReference -> {

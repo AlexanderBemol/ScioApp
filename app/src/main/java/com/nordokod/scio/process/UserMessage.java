@@ -40,7 +40,8 @@ public class UserMessage {
         //errores de autenticación
         else if(exception instanceof FirebaseAuthInvalidCredentialsException){
             //credenciales invalidas al iniciar sesión
-            return ErrorMessage.AUTH_INVALID_CREDENTIALS;
+            if(((FirebaseAuthInvalidCredentialsException) exception).getErrorCode().equals("ERROR_USER_NOT_FOUND")) return ErrorMessage.AUTH_USER_NOT_FOUND;
+            else return ErrorMessage.AUTH_INVALID_CREDENTIALS;
         }
         else if(exception instanceof FirebaseAuthEmailException){
             //error al enviar email

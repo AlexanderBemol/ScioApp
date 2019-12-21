@@ -30,6 +30,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -301,7 +302,8 @@ public class User {
                         documentSnapshot.getDate(com.nordokod.scio.entity.User.KEY_BIRTHDAY),
                         Integer.parseInt(String.valueOf(documentSnapshot.get(com.nordokod.scio.entity.User.KEY_STUDY_LEVEL))),
                         Integer.parseInt(String.valueOf(documentSnapshot.get(com.nordokod.scio.entity.User.KEY_STATE))),
-                (String) documentSnapshot.get(com.nordokod.scio.entity.User.KEY_PROFILE_PROVIDER)
+                (String) documentSnapshot.get(com.nordokod.scio.entity.User.KEY_PROFILE_PROVIDER),
+                (Date) documentSnapshot.get(com.nordokod.scio.entity.User.KEY_CREATION_DATE)
         );
     }
 

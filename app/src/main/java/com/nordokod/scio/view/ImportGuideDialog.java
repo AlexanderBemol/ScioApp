@@ -123,12 +123,12 @@ public class ImportGuideDialog implements BasicDialog {
 
             TV_Category.setText(getCategoryResId(guide.getCategory()));
             TV_Topic.setText(guide.getTopic());
-            TV_Month.setText(Utilities.getMonthNameFromDate(guide.getDatetime()));
-            TV_Day.setText(Utilities.getTwoDigitsFromDate(guide.getDatetime(), Calendar.DAY_OF_MONTH));
+            TV_Month.setText(Utilities.getMonthNameFromDate(guide.getTestDatetime()));
+            TV_Day.setText(Utilities.getTwoDigitsFromDate(guide.getTestDatetime(), Calendar.DAY_OF_MONTH));
             @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat12 = new SimpleDateFormat("hh:mm");
-            TV_Hour.setText(simpleDateFormat12.format(guide.getDatetime()));
+            TV_Hour.setText(simpleDateFormat12.format(guide.getTestDatetime()));
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(guide.getDatetime());
+            calendar.setTime(guide.getTestDatetime());
             TV_Time.setText((calendar.get(Calendar.AM_PM) < 1) ? "AM" : "PM");
 
 
