@@ -15,8 +15,7 @@ public class User {
     public static String KEY_STATE="STATE";
     public static String KEY_PROFILE_PHOTO="PROFILE_PHOTOS";
     public static String KEY_PROFILE_PROVIDER="PROVIDER";
-    public static String KEY_CREATION_DATE="PROVIDER";
-
+    public static String KEY_CREATION_DATE="CREATION_DATE";
 
     private static String DEFAULT_USERNAME="USUARIO DE SENDO SG";
     private static String DEFAULT_EMAIL="SIN INFORMACIÓN";
@@ -54,7 +53,6 @@ public class User {
         this.studyLevel=studyLevel;
         this.state=state;
         this.provider = provider;
-        this.creationDate = DEFAULT_BIRTHDAY;
         this.creationDate = creationDate;
     }
 

@@ -40,8 +40,7 @@ public class UserMessage {
         //errores de autenticación
         else if(exception instanceof FirebaseAuthInvalidCredentialsException){
             //credenciales invalidas al iniciar sesión
-            if(((FirebaseAuthInvalidCredentialsException) exception).getErrorCode().equals("ERROR_USER_NOT_FOUND")) return ErrorMessage.AUTH_USER_NOT_FOUND;
-            else return ErrorMessage.AUTH_INVALID_CREDENTIALS;
+            return ErrorMessage.AUTH_INVALID_CREDENTIALS;
         }
         else if(exception instanceof FirebaseAuthEmailException){
             //error al enviar email
@@ -49,7 +48,8 @@ public class UserMessage {
         }
         else if(exception instanceof FirebaseAuthInvalidUserException){
             //usuario inactivo o eliminado, no puede iniciar sesión
-            return ErrorMessage.AUTH_INVALID_USER;
+            if(((FirebaseAuthInvalidUserException) exception).getErrorCode().equals("ERROR_USER_NOT_FOUND")) return ErrorMessage.AUTH_USER_NOT_FOUND;
+            else return ErrorMessage.AUTH_INVALID_USER;
         }
         else if(exception instanceof FirebaseAuthUserCollisionException){
             //el usuario ya se encuentra registrado

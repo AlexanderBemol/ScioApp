@@ -16,7 +16,6 @@ public class Guide {
     public static String KEY_CREATION_USER="CREATION_USER";
     public static String KEY_UPDATE_USER="UPDATE_USER";
 
-
     private int category;
     private String id;
     private String topic;
@@ -29,6 +28,7 @@ public class Guide {
     private String creationUser;
     private String updateUser;
     private ArrayList<Question> questions;
+    private ArrayList<Object> auxQuestions;
 
     public Guide(int category, String id, String topic, String UID, boolean online, boolean activated, Date testDatetime, Date creationDate, Date updateDate, String creationUser, String updateUser) {
         this.category = category;
@@ -149,5 +149,11 @@ public class Guide {
     public void addQuestion(Question question){
         this.questions.add(question);
     }
+    public ArrayList<Object> getAuxQuestions() {
+        return auxQuestions;
+    }
 
+    public void setAuxQuestions(ArrayList<Object> auxQuestions) {
+        this.auxQuestions = auxQuestions;
+    }
 }

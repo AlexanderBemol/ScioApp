@@ -15,7 +15,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firestore.v1.DocumentTransform;
+import com.nordokod.scio.entity.Question;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -43,6 +45,7 @@ public class Guide {
         data.put(com.nordokod.scio.entity.Guide.KEY_UPDATE_DATE, FieldValue.serverTimestamp());
         data.put(com.nordokod.scio.entity.Guide.KEY_CREATION_USER, mAuth.getUid());
         data.put(com.nordokod.scio.entity.Guide.KEY_UPDATE_USER, mAuth.getUid());
+        data.put(Question.KEY_QUESTIONS,guide.getQuestions());
         return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).add(data);
     }
 
@@ -119,7 +122,7 @@ public class Guide {
         return null;
     }
     public com.nordokod.scio.entity.Guide getGuideFromDocument(DocumentSnapshot document){
-        return new com.nordokod.scio.entity.Guide(
+        com.nordokod.scio.entity.Guide guide = new com.nordokod.scio.entity.Guide(
                 Integer.parseInt(Objects.requireNonNull(Objects.requireNonNull(document.getData()).get(com.nordokod.scio.entity.Guide.KEY_CATEGORY)).toString()),
                 document.getId(),
                 (String)    document.getData().get(com.nordokod.scio.entity.Guide.KEY_TOPIC),
@@ -128,10 +131,12 @@ public class Guide {
                 (boolean)   document.getData().get(com.nordokod.scio.entity.Guide.KEY_ACTIVATED),
                 Objects.requireNonNull(document.getTimestamp(com.nordokod.scio.entity.Guide.KEY_DATETIME)).toDate(),
                 Objects.requireNonNull(document.getTimestamp(com.nordokod.scio.entity.Guide.KEY_CREATION_DATE)).toDate(),
-                Objects.requireNonNull(document.getTimestamp(com.nordokod.scio.entity.Guide.KEY_CREATION_DATE)).toDate(),
+                Objects.requireNonNull(document.getTimestamp(com.nordokod.scio.entity.Guide.KEY_UPDATE_DATE)).toDate(),
                 (String)    document.getData().get(com.nordokod.scio.entity.Guide.KEY_CREATION_USER),
                 (String)    document.getData().get(com.nordokod.scio.entity.Guide.KEY_UPDATE_USER)
         );
+        guide.setAuxQuestions((ArrayList<Object>) document.get(Question.KEY_QUESTIONS));
+        return guide;
     }
     public Task<DocumentReference> importGuide (DocumentSnapshot documentSnapshot){
         FirebaseFirestore db = FirebaseFirestore.getInstance();

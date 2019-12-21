@@ -1,10 +1,13 @@
 package com.nordokod.scio.model;
 
+import android.content.Intent;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.WriteBatch;
@@ -32,9 +35,8 @@ public class Question {
      * @param question entidad pregunta
      * @return task con el resultado
      */
-    public Task<DocumentReference> addQuestion(KindOfQuestion kindOfQuestion, Guide guide, com.nordokod.scio.entity.Question question){
+    public Task<Void> addQuestion(KindOfQuestion kindOfQuestion, Guide guide, com.nordokod.scio.entity.Question question){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference questionCollection=db.collection(Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(Guide.KEY_PERSONAL_GUIDES).document(guide.getId()).collection(com.nordokod.scio.entity.Question.KEY_QUESTIONS);
         Map<String, Object> data = new HashMap<>();
         data.put(com.nordokod.scio.entity.Question.KEY_QUESTION,question.getQuestion());
         data.put(com.nordokod.scio.entity.Question.KEY_KIND_OF_QUESTION,question.getKindOfQuestion());
@@ -47,65 +49,61 @@ public class Question {
                 OpenQuestion openQuestion=(OpenQuestion)question;
                 data.put(OpenQuestion.KEY_ANSWER,openQuestion.getAnswer());
                 break;
+            case MULTIPLE_CHOICE:
+                int index=0;
+                MultipleChoiceQuestion multipleChoiceQuestion =(MultipleChoiceQuestion)question;
+                Map<String,Object> map = new HashMap<>();
+                for (MultipleChoiceQuestion.Answer answer : multipleChoiceQuestion.getAnswers()){
+                    map.put(String.valueOf(index),answer);
+                    index++;
+                }
+                data.put(MultipleChoiceQuestion.KEY_ANSWERS,map);
+                break;
         }
-        return questionCollection.add(data);
+        return db.collection(Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getUid())).collection(Guide.KEY_PERSONAL_GUIDES).document(guide.getId()).update(com.nordokod.scio.entity.Question.KEY_QUESTIONS, FieldValue.arrayUnion(data));
     }
 
-    public Task<Void> addMultipleAnswersToQuestion (ArrayList<MultipleChoiceQuestion.Answer> answers, DocumentReference questionDocument){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        WriteBatch batch = db.batch();
-
-        for (MultipleChoiceQuestion.Answer x : answers) {
-            DocumentReference documentReference = questionDocument.collection(MultipleChoiceQuestion.KEY_ANSWERS).document();
-            Map<String,Object> data = new HashMap<>();
-            data.put(MultipleChoiceQuestion.KEY_ANSWER,x.getAnswer());
-            data.put(MultipleChoiceQuestion.KEY_CORRECT,x.isCorrect());
-            batch.set(documentReference,data);
-        }
-        return batch.commit();
-    }
     /**
      * eliminar pregunta de la guía
      * @param guide entidad guide con id de guia
      * @param question entidad question con id de pregunta
      * @return task con el resultado
      */
-    public Task<Void> deleteQuestion(Guide guide, com.nordokod.scio.entity.Question question) {
+    public Task<Void> deleteQuestion(Guide guide, Map<String, Object> question) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference questionCollection = db.collection(Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(Guide.KEY_PERSONAL_GUIDES).document(guide.getId()).collection(com.nordokod.scio.entity.Question.KEY_QUESTIONS);
-        return questionCollection.document(String.valueOf(question.getId())).delete();
+        return db.collection(Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(Guide.KEY_PERSONAL_GUIDES).document(guide.getId()).update(com.nordokod.scio.entity.Question.KEY_QUESTIONS,FieldValue.arrayRemove(question));
     }
 
     /**
      * obtiene todas las preguntas de una guía
      * @param guide entidad guide con su id
-     * @return task con el resultado
+     * @return Arraylist con preguntas
      */
-    public Task<QuerySnapshot> getSnapshotQuestionsOfGuide(Guide guide){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference questionCollection = db.collection(Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(Guide.KEY_PERSONAL_GUIDES).document(guide.getId()).collection(com.nordokod.scio.entity.Question.KEY_QUESTIONS);
-        return questionCollection.get();
-    }
-
-    public ArrayList<com.nordokod.scio.entity.Question> getQuestionsFromSnapshot(QuerySnapshot queryDocumentSnapshot) throws InterruptedException {
+    public ArrayList<com.nordokod.scio.entity.Question> getQuestionsFromGuide(Guide guide){
         ArrayList<com.nordokod.scio.entity.Question> questions = new ArrayList<>();
-        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshot) {
+        int index1=0;
+        for (Object aux : guide.getAuxQuestions()) {
             com.nordokod.scio.entity.Question question;
-            int kindOfQuestion = ((Long) Objects.requireNonNull(documentSnapshot.get(com.nordokod.scio.entity.Question.KEY_KIND_OF_QUESTION))).intValue();
-            String stringQuestion = Objects.requireNonNull(documentSnapshot.get(com.nordokod.scio.entity.Question.KEY_QUESTION)).toString();
-            String id = documentSnapshot.getId();
+            int kindOfQuestion = ((Long)((HashMap<String,Object>)aux).get(com.nordokod.scio.entity.Question.KEY_KIND_OF_QUESTION)).intValue();
+            String stringQuestion = Objects.requireNonNull(((HashMap<String, Object>) aux).get(com.nordokod.scio.entity.Question.KEY_QUESTION)).toString();
+            String id = String.valueOf(index1);
             if (KindOfQuestion.OPEN.getCode() == kindOfQuestion) {
-                String openAnswer = Objects.requireNonNull(documentSnapshot.get(OpenQuestion.KEY_ANSWER)).toString();
+                String openAnswer = Objects.requireNonNull(((HashMap<String, Object>) aux).get(OpenQuestion.KEY_ANSWER)).toString();
                 question = new OpenQuestion(id, stringQuestion, kindOfQuestion, openAnswer);
             } else if (KindOfQuestion.TRUE_FALSE.getCode() == kindOfQuestion) {
-                boolean trueFalseAnswer = (boolean) Objects.requireNonNull(documentSnapshot.get(TrueFalseQuestion.KEY_ANSWER));
+                boolean trueFalseAnswer = (boolean) ((HashMap<String,Object>)aux).get(TrueFalseQuestion.KEY_ANSWER);
                 question = new TrueFalseQuestion(id, stringQuestion, kindOfQuestion, trueFalseAnswer);
             } else {
-                CollectionReference collectionReference = documentSnapshot.getReference().collection(MultipleChoiceQuestion.KEY_ANSWERS);
+                HashMap<String,MultipleChoiceQuestion.Answer> answers = (HashMap<String, MultipleChoiceQuestion.Answer>) ((HashMap<String,Object>)aux).get(MultipleChoiceQuestion.KEY_ANSWERS);
                 question = new MultipleChoiceQuestion(id,stringQuestion,kindOfQuestion);
-                ((MultipleChoiceQuestion)question).setAnswersCollection(collectionReference);
+                ArrayList<MultipleChoiceQuestion.Answer> answerArrayList = new ArrayList<>();
+                for(int i = 0; i< Objects.requireNonNull(answers).size(); i++){
+                    answerArrayList.add(answers.get(String.valueOf(i)));
+                }
+                ((MultipleChoiceQuestion)question).setAnswers(answerArrayList);
             }
             questions.add(question);
+            index1++;
         }
 
         return questions;
