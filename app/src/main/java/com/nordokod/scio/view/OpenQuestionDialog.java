@@ -19,7 +19,10 @@ import android.view.animation.AnimationUtils;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.Utilities;
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.OpenQuestion;
+import com.nordokod.scio.process.QualifyMethod;
+import com.nordokod.scio.process.UserMessage;
 
 import java.util.Objects;
 
@@ -53,7 +56,7 @@ public class OpenQuestionDialog implements BasicDialog {
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
-        dialog.setContentView(R.layout.dialog_true_false_question);
+        dialog.setContentView(R.layout.dialog_open_question);
     }
 
     @Override
@@ -84,9 +87,12 @@ public class OpenQuestionDialog implements BasicDialog {
         BTN_Answer.setOnClickListener(v -> {
             BTN_Answer.startAnimation(press);
             if (!wasAnswered) {
-                // TODO Aquí mandas la respuesta del usuario para revisarla.
-                //  Procura que devuelva un entero entre 1 y 3 para la cantidad de estrellas, y lo mandas por parametro al método de las estrellas.
-                changeStarState(0);
+                if(Objects.requireNonNull(ET_Answer.getText()).length()==0)showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
+                else{
+                    changeStarState(QualifyMethod.getStars(question.getAnswer(),ET_Answer.getText().toString()));
+                    showCorrectAnswer();
+                }
+
             }
         });
 
@@ -99,10 +105,11 @@ public class OpenQuestionDialog implements BasicDialog {
     @Override
     public void showDialog() {
         if (!dialog.isShowing()) {
+            hideStars();
             TV_Category.setText(Utilities.getStringFromCategory(guide.getCategory()));
             TV_Topic.setText(guide.getTopic());
             TV_Question.setText(question.getQuestion());
-
+            TV_Question.setText(question.getAnswer());
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <Build.VERSION_CODES.O){
                 Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_TOAST);
             }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -128,6 +135,7 @@ public class OpenQuestionDialog implements BasicDialog {
 
 
     private void changeStarState(int number_of_stars) {
+        showStars();
         switch (number_of_stars) {
             case 1:
                 IV_Star_1.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
@@ -167,5 +175,21 @@ public class OpenQuestionDialog implements BasicDialog {
 
     private void initAnimations(){
         press = AnimationUtils.loadAnimation(context, R.anim.press);
+    }
+
+    private void showError(Exception e){
+        UserMessage userMessage = new UserMessage();
+        userMessage.showErrorMessage(context,userMessage.categorizeException(e));
+    }
+
+    private void hideStars(){
+        IV_Star_1.setVisibility(View.INVISIBLE);
+        IV_Star_2.setVisibility(View.INVISIBLE);
+        IV_Star_3.setVisibility(View.INVISIBLE);
+    }
+    private void showStars(){
+        IV_Star_1.setVisibility(View.VISIBLE);
+        IV_Star_2.setVisibility(View.VISIBLE);
+        IV_Star_3.setVisibility(View.VISIBLE);
     }
 }
