@@ -52,6 +52,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:17.0.0'
     implementation 'com.google.firebase:firebase-firestore:19.0.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
 
     implementation 'com.victor:lib:1.0.4'
     implementation 'me.relex:circleindicator:1.2.2'

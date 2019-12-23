@@ -52,7 +52,7 @@ public class LockAppProcess extends Service {
                 String fgApp=getForegroundApp();
 
                 Log.d("testeo",fgApp);
-                if(!fgApp.equals(prevApp)){
+                if(!fgApp.equals(prevApp)&&!prevApp.equals("android")){
                     if(configurationApp.isAppLocker()){
                         if(configurationApp.getLockedApps().contains(fgApp)){//está bloqueada..
                             Log.d("testeo","oh");
