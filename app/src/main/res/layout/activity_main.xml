@@ -18,20 +18,14 @@
         android:layout_height="match_parent"
         >
 
-        <com.nordokod.scio.view.NoSwipePager
+        <FrameLayout
             android:id="@+id/VP_Main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/NAV_Bar"
             >
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/Toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/backgroundColor"
-                />
-        </com.nordokod.scio.view.NoSwipePager>
+        </FrameLayout>
         <!--
         <FrameLayout
             android:id="@+id/FL_Main"
@@ -49,30 +43,46 @@
         </FrameLayout>
         -->
 
-        <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+        <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/NAV_Bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:backgroundTint="?backgroundColor"
 
-            app:itemIconTint="@color/navigation_bar_colors"
-            />
-        <!--
-        <android.support.design.widget.BottomNavigationView
-            android:id="@+id/NAV_Bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_alignParentBottom="true"
-
-            app:itemBackground="@color/surfaceColor"
+            app:itemTextAppearanceInactive="@style/BottomNavigationView_Inactive"
+            app:itemTextAppearanceActive="@style/BottomNavigationView_Active"
             app:itemIconTint="@color/navigation_bar_colors"
             app:itemTextColor="@color/navigation_bar_colors"
-            app:menu="@menu/navigation_bar_items"
+            app:menu="@menu/bottom_navigation_menu_items"
             >
-        </android.support.design.widget.BottomNavigationView>
-        -->
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+        <!--
+                <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+                    android:id="@+id/NAV_Bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:backgroundTint="?backgroundColor"
+
+                    app:itemIconTint="@color/navigation_bar_colors"
+                    />
+
+                <android.support.design.widget.BottomNavigationView
+                    android:id="@+id/NAV_Bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_alignParentBottom="true"
+
+                    app:itemBackground="@color/surfaceColor"
+                    app:itemIconTint="@color/navigation_bar_colors"
+                    app:itemTextColor="@color/navigation_bar_colors"
+                    app:menu="@menu/navigation_bar_items"
+                    >
+                </android.support.design.widget.BottomNavigationView>
+                -->
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

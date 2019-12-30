@@ -3,26 +3,26 @@ package com.nordokod.scio.view;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
+
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
-import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.Guide;
@@ -44,16 +44,12 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private Menu MenuItems;
 
     // Objetos para el menú de navegación inferior
-    private AHBottomNavigation bottomNavigation;
-    private AHBottomNavigationItem itemHome, itemCreate, itemGuides;
-    private NoSwipePager viewPager;
-    private BottomBarAdapter pagerAdapter;
+    private BottomNavigationView bottomNavigation;
+    private NavigationView navigationMenu;
 
     private CircleImageView CIV_Photo;
     private AppCompatTextView TV_Name, BTN_Logout;
 
-    private HomeFragment homeFragment;
-    private CreateFragment createFragment;
     private NewGuideFragment newGuideFragment;
     private GuidesFragment guidesFragment;
     private DialogFragment dialogFragment;
@@ -65,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Toasty.success(this, "Se crea").show();
         initComponents();
         initListeners();
     }
@@ -74,63 +70,17 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     @Override
     public void initComponents() {
         drawerLayout        = findViewById(R.id.DrawerLayout);
-        NavigationView navigationMenu = findViewById(R.id.NAV_Menu);
-
-        //Navigation menu
-        MenuItems = navigationMenu.getMenu();
-
-        // Bottom Navigation Bar
-        itemHome            = new AHBottomNavigationItem(R.string.navbar_title_home, R.drawable.ic_home, R.color.onSurfaceColor);
-        itemCreate          = new AHBottomNavigationItem(R.string.navbar_title_create, R.drawable.ic_new, R.color.onSurfaceColor);
-        itemGuides          = new AHBottomNavigationItem(R.string.navbar_title_guides, R.drawable.ic_my_guides, R.color.onSurfaceColor);
+        navigationMenu      = findViewById(R.id.NAV_Menu);
+        MenuItems           = navigationMenu.getMenu();
 
         bottomNavigation    = findViewById(R.id.NAV_Bar);
-        bottomNavigation.addItem(itemHome);
-        bottomNavigation.addItem(itemCreate);
-        bottomNavigation.addItem(itemGuides);
-        //bottomNavigation.setTranslucentNavigationEnabled(true);
-        //bottomNavigation.setCurrentItem(0);
-        //bottomNavigation.setColored(true);
-        //bottomNavigation.setDefaultBackgroundResource(R.color.backgroundColor);
-        //bottomNavigation.setColoredModeColors(Color.WHITE, R.color.iconNormalColor);
-        //bottomNavigation.setForceTint(true);
-        bottomNavigation.setAccentColor(R.color.iconSelectedColor);
-        //bottomNavigation.setInactiveColor(R.color.iconNormalColor);
-        bottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
 
-        viewPager       = findViewById(R.id.VP_Main);
-        viewPager.setPagingEnabled(false);
-        pagerAdapter    = new BottomBarAdapter(getSupportFragmentManager());
-
-        homeFragment    = new HomeFragment(this, this);
-        pagerAdapter.addFragment(homeFragment);
-        createFragment  = new CreateFragment(this, this);
-        pagerAdapter.addFragment(createFragment);
-        guidesFragment  = new GuidesFragment(this, this);
-        pagerAdapter.addFragment(guidesFragment);
-
-        newGuideFragment = new NewGuideFragment(this, this);
-
-        viewPager.setAdapter(pagerAdapter);
-
-        Toolbar toolbar = findViewById(R.id.Toolbar);
-
-        // Botón para cerrar sesión
         BTN_Logout      = navigationMenu.findViewById(R.id.BTN_Logout);
 
         View header     = navigationMenu.getHeaderView(0);
 
         CIV_Photo       = header.findViewById(R.id.CIV_Photo);
         TV_Name         = header.findViewById(R.id.TV_Name);
-
-        //mainController.loadGuides();
-
-        // Toolbar
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
         userModel = new User();
         if(!userModel.isUserLogged())goToLoginActivity();
@@ -161,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                 );
 
         //obtener foto de usuario
-        Bitmap localPhoto = userModel.getLocalProfilePhoto(getApplicationContext(),actualUserEntity);
+        Bitmap localPhoto = userModel.getLocalProfilePhoto(getApplicationContext(), actualUserEntity);
         if(localPhoto==null) {
             switch (userModel.getProfilePhotoHost(actualUserEntity)) {
                 case GOOGLE_OR_FACEBOOK_STORAGE:
@@ -207,34 +157,32 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         } catch (Exception e) {
             showError(e);
         }
-    }
 
+        openFragmentOfBottomNavigationBar(new HomeFragment(this, this));
+    }
 
     @Override
     public void initListeners() {
-        bottomNavigation.setOnTabSelectedListener((position, wasSelected) -> {
-            switch (position) {
-                case 0:
-                    if (!wasSelected) {
-                        viewPager.setCurrentItem(position);
-                    } else {
-
-                    }
+        bottomNavigation.setOnNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.Menu_New_Guide:
+                    openFragmentOfBottomNavigationBar(new CreateFragment());
+                    openFragmentToCreateNewGuide();
                     return true;
-                case 1:
-                    viewPager.setCurrentItem(position);
-
-                    dialogFragment = newGuideFragment;
-
-                    dialogFragment.show(getSupportFragmentManager(), "New Guide");
+                case R.id.Menu_Guides:
+                    openFragmentOfBottomNavigationBar(new GuidesFragment(this, this));
                     return true;
-                case 2:
-                    if (!wasSelected) {
-                        viewPager.setCurrentItem(position);
-                    }
+                case R.id.Menu_Home: default:
+                    openFragmentOfBottomNavigationBar(new HomeFragment(this, this));
                     return true;
             }
-            return false;
+        });
+
+        bottomNavigation.setOnNavigationItemReselectedListener(menuItem -> {
+            if (menuItem.getItemId() == R.id.Menu_New_Guide) {
+                openFragmentOfBottomNavigationBar(new CreateFragment());
+                openFragmentToCreateNewGuide();
+            }
         });
 
         BTN_Logout.setOnClickListener(v -> {
@@ -253,8 +201,9 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
         });*/
         MenuItems.findItem(R.id.Menu_Apps).setOnMenuItemClickListener(item -> {
-                Intent intent = new Intent(MainActivity.this,LockedAppsOptionActivity.class);
+                Intent intent = new Intent(MainActivity.this, LockedAppsOptionActivity.class);
                 startActivity(intent);
+                finish();
                 return true;
         });
         /*MenuItems.findItem(R.id.Menu_About).setOnMenuItemClickListener(item -> {
@@ -262,6 +211,18 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         });*/
 
 
+    }
+
+    private void openFragmentOfBottomNavigationBar(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.VP_Main, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private void openFragmentToCreateNewGuide() {
+        dialogFragment = new NewGuideFragment(this, this);
+        dialogFragment.show(getSupportFragmentManager(), "New Guide");
     }
 
     public void onNewQuestionDialog(Guide guide) {
@@ -301,6 +262,13 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
      * @param tag tag
      */
     public void onCloseFragment(String tag) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .remove(Objects
+                        .requireNonNull(getSupportFragmentManager()
+                                .findFragmentByTag(tag)))
+                .commit();
+        /*
         switch (tag) {
             case "New Guide":
                 getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("New Guide"))).commit();
@@ -321,6 +289,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                 getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("New Open Answer"))).commit();
                 break;
         }
+        */
     }
 
     public void onClickCategoryListener(View view) {
@@ -351,7 +320,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     public void refreshGuides(){
         if(guidesFragment!=null&&selectedFragment==guidesFragment){
-            guidesFragment.onBackFragment();
+            //guidesFragment.onBackFragment();
             guidesFragment.getAllGuides();
         }
     }
@@ -403,11 +372,11 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     public class BottomBarAdapter extends SmartFragmentStatePagerAdapter {
         private final List<Fragment> fragments = new ArrayList<>();
 
-        public BottomBarAdapter(FragmentManager fragmentManager) {
+        BottomBarAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
         }
 
-        public void addFragment(Fragment fragment) {
+        void addFragment(Fragment fragment) {
             fragments.add(fragment);
         }
 

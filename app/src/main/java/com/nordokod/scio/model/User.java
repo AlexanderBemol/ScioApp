@@ -237,10 +237,8 @@ public class User {
      */
     public void getExternalProfilePhoto(DownloadImageProcess.CustomListener customListener, com.nordokod.scio.entity.User user){
         String photoPath = user.getPhotoPath();
-        if (user.getProvider().equals("facebook.com")) {
-            String facebookUserId = user.getUid();
-            photoPath = "https://graph.facebook.com/" + facebookUserId + "/picture?type=medium";
-        }
+        if (photoPath.contains("facebook.com")) photoPath += "?type=large";
+
         DownloadImageProcess dip = new DownloadImageProcess();
         dip.setListener(customListener);
         dip.execute(photoPath);

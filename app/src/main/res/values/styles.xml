@@ -127,6 +127,14 @@
 
     </style>
 
+    <style name="BottomNavigationView_Inactive" parent="DefaultTheme">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="BottomNavigationView_Active" parent="DefaultTheme">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
     <!-- ======================================================================================= -->
     <!-- ESTILOS PARA LOS COMPONENTES REFERENTES A FirstConfigurationActivity -->
     <!-- ======================================================================================= -->

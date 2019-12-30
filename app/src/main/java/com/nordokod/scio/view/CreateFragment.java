@@ -13,17 +13,7 @@ import com.nordokod.scio.R;
 
 public class CreateFragment extends Fragment implements BasicFragment {
 
-    private Context context;
-    private Activity activity;
-    //private HomeController homeController;
-
     public CreateFragment() { }
-
-    @SuppressLint("ValidFragment")
-    public CreateFragment(Context context, Activity activity) {
-        this.context = context;
-        this.activity = activity;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
