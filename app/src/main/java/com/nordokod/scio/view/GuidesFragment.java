@@ -11,6 +11,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.util.TypedValue;
@@ -36,6 +37,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import es.dmoral.toasty.Toasty;
+
 import static com.nordokod.scio.R.attr.iconNormalColor;
 import static com.nordokod.scio.R.attr.iconSelectedColor;
 
@@ -51,7 +54,7 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
     private ConstraintLayout CL_Exacts, CL_Socials, CL_Sports, CL_Art, CL_Tech, CL_Entertainment, CL_Others;
     private LinearLayout LL_Categories;
-    private AppCompatTextView TV_Topic, TV_Cateoory, TV_Days;
+    private SwipeRefreshLayout Swipe_Guides;
 
     private ArrayList<Guide> guides;
     private Task<QuerySnapshot> taskGetAllGuides;
@@ -83,11 +86,9 @@ public class GuidesFragment extends Fragment implements BasicFragment {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void initComponents(View view) {
-        TV_Topic            = view.findViewById(R.id.TV_Topic);
-        TV_Cateoory         = view.findViewById(R.id.TV_Category);
-        TV_Days             = view.findViewById(R.id.TV_Days);
-
         LL_Categories       = view.findViewById(R.id.LL_Categories);
+
+        Swipe_Guides        = view.findViewById(R.id.FGuides_Swipe);
 
         CL_Exacts           = view.findViewById(R.id.CL_Exacts);
         CL_Socials          = view.findViewById(R.id.CL_Socials);
@@ -97,15 +98,12 @@ public class GuidesFragment extends Fragment implements BasicFragment {
         CL_Entertainment    = view.findViewById(R.id.CL_Entertainment);
         CL_Others           = view.findViewById(R.id.CL_Others);
 
-        guideModel = new com.nordokod.scio.model.Guide();
-        userModel = new User();
-
-        getAllGuides();
-
-        RV_Guides = view.findViewById(R.id.FGuides_RV_Guides);
-
-        layoutManager = new LinearLayoutManager(getContext());
+        RV_Guides           = view.findViewById(R.id.FGuides_RV_Guides);
+        layoutManager       = new LinearLayoutManager(getContext());
         RV_Guides.setLayoutManager(layoutManager);
+
+        guideModel          = new com.nordokod.scio.model.Guide();
+        userModel           = new User();
     }
 
     @Override
@@ -118,7 +116,13 @@ public class GuidesFragment extends Fragment implements BasicFragment {
         CL_Entertainment.setOnClickListener(v -> onClickCategoryListener(v, 6));
         CL_Others.setOnClickListener(v -> onClickCategoryListener(v, 7));
 
-        onBackFragment();
+        Swipe_Guides.setOnRefreshListener(this::getAllGuides);
+    }
+
+    @Override
+    public void onStart() {
+        getAllGuides();
+        super.onStart();
     }
 
     @SuppressLint("ResourceType")
@@ -175,11 +179,14 @@ public class GuidesFragment extends Fragment implements BasicFragment {
                             }
                             guides.add(guide);
                         }
-                        //actualizar lista
+                        guides.add(guide);
                     }
-                })
-                .addOnCanceledListener(() -> showError(new OperationCanceledException()))
-                .addOnFailureListener(this::showError);
+                    CL_Exacts.performClick();
+                    if (Swipe_Guides.isRefreshing()) Swipe_Guides.setRefreshing(false);
+                }
+            })
+            .addOnCanceledListener(() -> showError(new OperationCanceledException()))
+            .addOnFailureListener(this::showError);
     }
 
     private void showError(Exception e) {
@@ -190,24 +197,12 @@ public class GuidesFragment extends Fragment implements BasicFragment {
 
     private ArrayList<Guide> getListOfGuides(int category) throws NoGuidesException{
         if(taskGetAllGuides.isComplete())
-            if(guides.isEmpty())throw new NoGuidesException();
+            if(guides.isEmpty()) throw new NoGuidesException();
         ArrayList<Guide> aux = new ArrayList<>();
         for (Guide guide : guides){
             if(guide.getCategory()==category)aux.add(guide);
         }
         return aux;
-    }
-
-    private int getCategoryId(int view_selected_id) {
-        switch (view_selected_id) {
-            case R.id.CL_Exacts:        return 1;
-            case R.id.CL_Socials:       return 2;
-            case R.id.CL_Sports:        return 3;
-            case R.id.CL_Art:           return 4;
-            case R.id.CL_Tech:          return 5;
-            case R.id.CL_Entertainment: return 6;
-            default:                    return 7;
-        }
     }
 
     private int getCategoryImageViewId(int view_id) {
@@ -220,39 +215,6 @@ public class GuidesFragment extends Fragment implements BasicFragment {
             case R.id.CL_Entertainment: return R.id.IV_Entertainment;
             case R.id.CL_Others:        return R.id.IV_Others;
             default:                    return 0;
-        }
-    }
-
-    public void onBackFragment() {
-        switch (preview_Category_View_Selected) {
-            case R.id.CL_Socials:
-                preview_Category_View_Selected = 0;
-                CL_Socials.performClick();
-                break;
-            case R.id.CL_Sports:
-                preview_Category_View_Selected = 0;
-                CL_Sports.performClick();
-                break;
-            case R.id.CL_Art:
-                preview_Category_View_Selected = 0;
-                CL_Art.performClick();
-                break;
-            case R.id.CL_Tech:
-                preview_Category_View_Selected = 0;
-                CL_Tech.performClick();
-                break;
-            case R.id.CL_Entertainment:
-                preview_Category_View_Selected = 0;
-                CL_Entertainment.performClick();
-                break;
-            case R.id.CL_Others:
-                preview_Category_View_Selected = 0;
-                CL_Others.performClick();
-                break;
-            default:
-                preview_Category_View_Selected = 0;
-                CL_Exacts.performClick();
-                break;
         }
     }
 }

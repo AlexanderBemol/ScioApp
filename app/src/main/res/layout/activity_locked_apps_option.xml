@@ -20,7 +20,7 @@
         />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/AppBlocked_TV_Description"
+        android:id="@+id/Apps_TV_Description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Elige las apps que te distraen más."
@@ -30,39 +30,18 @@
         app:layout_constraintTop_toBottomOf="@id/AppBlocked_TV_Title"
         />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/AppBlocked_TV_Activate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Activar"
-        android:layout_marginTop="@dimen/space_2"
-
-        app:layout_constraintTop_toBottomOf="@id/AppBlocked_TV_Description"
-        />
-
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/AppBlocked_SC_Activated"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_2"
-
-        app:layout_constraintTop_toBottomOf="@id/AppBlocked_TV_Description"
-        app:layout_constraintLeft_toRightOf="@id/AppBlocked_TV_Activate"
-        />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/AppBlocked_RV_listApps"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_2"
+        android:layout_marginBottom="@dimen/space_2"
         android:background="@xml/background_simple"
-        android:layout_marginTop="@dimen/space_3"
-        android:layout_marginBottom="@dimen/first_configuration_max_space"
-        android:scrollbars="vertical"
         android:backgroundTint="@color/backgroundColor"
+        android:scrollbars="vertical"
 
-        app:layout_constraintTop_toBottomOf="@id/AppBlocked_SC_Activated"
         app:layout_constraintBottom_toTopOf="@id/AppBlocked_BTN_Save"
+        app:layout_constraintTop_toBottomOf="@id/Apps_TV_Description"
         />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -70,18 +49,12 @@
         style="@style/cancelButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/space_3"
         android:text="@string/txt_BTN_Cancel"
         android:layout_marginTop="@dimen/space_3"
+        android:layout_marginRight="@dimen/space_2"
 
-        android:tooltipText="@string/txt_BTN_Cancel"
-
-
-
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/AppBlocked_BTN_Save"
-
         />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -89,14 +62,9 @@
         style="@style/normalButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="@dimen/space_3"
         android:text="@string/txt_BTN_Save"
 
-        app:layout_constraintLeft_toRightOf="@id/AppBlocked_BTN_Cancel"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

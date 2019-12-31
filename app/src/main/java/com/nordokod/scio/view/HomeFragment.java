@@ -1,7 +1,6 @@
 package com.nordokod.scio.view;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -14,15 +13,15 @@ import com.nordokod.scio.R;
 public class HomeFragment extends Fragment implements BasicFragment {
 
     private Context context;
-    private Activity activity;
+    private MainActivity mainActivity;
     //private HomeController homeController;
 
     public HomeFragment() { }
 
     @SuppressLint("ValidFragment")
-    public HomeFragment(Context context, Activity activity) {
+    public HomeFragment(Context context, MainActivity mainActivity) {
         this.context = context;
-        this.activity = activity;
+        this.mainActivity = mainActivity;
     }
 
     @Override

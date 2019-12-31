@@ -18,7 +18,6 @@ import androidx.appcompat.widget.AppCompatTextView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
