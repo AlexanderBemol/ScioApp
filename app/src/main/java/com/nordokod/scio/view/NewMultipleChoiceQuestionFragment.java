@@ -114,10 +114,7 @@ public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment
                         Question question = new Question();
 
                         question.addQuestion(KindOfQuestion.MULTIPLE_CHOICE,guide, multipleChoiceQuestion)
-                            .addOnSuccessListener(documentReference -> question.addMultipleAnswersToQuestion(multipleChoiceQuestion.getAnswers(),documentReference)
-                                    .addOnSuccessListener(x -> showSuccessfulMessage())
-                                    .addOnCanceledListener(() -> showError(new OperationCanceledException()))
-                                    .addOnFailureListener(e -> showError(e)))
+                            .addOnSuccessListener(documentReference -> showSuccessfulMessage())
                             .addOnCanceledListener(() -> showError(new OperationCanceledException()))
                             .addOnFailureListener(e -> showError(e));
                     }

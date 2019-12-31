@@ -10,9 +10,14 @@ import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.ServerTimestamp;
+import com.google.firestore.v1.DocumentTransform;
+import com.nordokod.scio.entity.Question;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -35,8 +40,12 @@ public class Guide {
         data.put(com.nordokod.scio.entity.Guide.KEY_TOPIC,guide.getTopic());
         data.put(com.nordokod.scio.entity.Guide.KEY_ONLINE,false);
         data.put(com.nordokod.scio.entity.Guide.KEY_ACTIVATED,true);
-        data.put(com.nordokod.scio.entity.Guide.KEY_DATETIME,guide.getDatetime());
-        data.put(com.nordokod.scio.entity.Guide.KEY_PERSONAL,true);
+        data.put(com.nordokod.scio.entity.Guide.KEY_DATETIME,guide.getTestDatetime());
+        data.put(com.nordokod.scio.entity.Guide.KEY_CREATION_DATE, FieldValue.serverTimestamp());
+        data.put(com.nordokod.scio.entity.Guide.KEY_UPDATE_DATE, FieldValue.serverTimestamp());
+        data.put(com.nordokod.scio.entity.Guide.KEY_CREATION_USER, mAuth.getUid());
+        data.put(com.nordokod.scio.entity.Guide.KEY_UPDATE_USER, mAuth.getUid());
+        data.put(Question.KEY_QUESTIONS,guide.getQuestions());
         return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).add(data);
     }
 
@@ -50,10 +59,11 @@ public class Guide {
         Map<String, Object> data = new HashMap<>();
         data.put(com.nordokod.scio.entity.Guide.KEY_CATEGORY,guide.getCategory());
         data.put(com.nordokod.scio.entity.Guide.KEY_TOPIC,guide.getTopic());
-        data.put(com.nordokod.scio.entity.Guide.KEY_DATETIME,guide.getDatetime());
+        data.put(com.nordokod.scio.entity.Guide.KEY_DATETIME,guide.getTestDatetime());
         data.put(com.nordokod.scio.entity.Guide.KEY_ONLINE,guide.isOnline());
         data.put(com.nordokod.scio.entity.Guide.KEY_ACTIVATED,guide.isActivated());
-        data.put(com.nordokod.scio.entity.Guide.KEY_PERSONAL,guide.isPersonal());
+        data.put(com.nordokod.scio.entity.Guide.KEY_UPDATE_DATE, FieldValue.serverTimestamp());
+        data.put(com.nordokod.scio.entity.Guide.KEY_UPDATE_USER, mAuth.getUid());
         return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).document(guide.getId()).update(data);
     }
 
@@ -119,15 +129,20 @@ public class Guide {
                 Objects.requireNonNull(document.getReference().getParent().getParent()).getId(),
                 (boolean)   document.getData().get(com.nordokod.scio.entity.Guide.KEY_ONLINE),
                 (boolean)   document.getData().get(com.nordokod.scio.entity.Guide.KEY_ACTIVATED),
-                (boolean)   document.getData().get(com.nordokod.scio.entity.Guide.KEY_PERSONAL),
-                Objects.requireNonNull(document.getTimestamp(com.nordokod.scio.entity.Guide.KEY_DATETIME)).toDate()
+                Objects.requireNonNull(document.getTimestamp(com.nordokod.scio.entity.Guide.KEY_DATETIME)).toDate(),
+                Objects.requireNonNull(document.getTimestamp(com.nordokod.scio.entity.Guide.KEY_CREATION_DATE)).toDate(),
+                Objects.requireNonNull(document.getTimestamp(com.nordokod.scio.entity.Guide.KEY_UPDATE_DATE)).toDate(),
+                (String)    document.getData().get(com.nordokod.scio.entity.Guide.KEY_CREATION_USER),
+                (String)    document.getData().get(com.nordokod.scio.entity.Guide.KEY_UPDATE_USER)
         );
+        guide.setAuxQuestions((ArrayList<Object>) document.get(Question.KEY_QUESTIONS));
         return guide;
     }
     public Task<DocumentReference> importGuide (DocumentSnapshot documentSnapshot){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Map<String, Object> data = documentSnapshot.getData();
-        Objects.requireNonNull(data).put(com.nordokod.scio.entity.Guide.KEY_PERSONAL,false);
+        Objects.requireNonNull(data).put(com.nordokod.scio.entity.Guide.KEY_UPDATE_DATE,FieldValue.serverTimestamp());
+        Objects.requireNonNull(data).put(com.nordokod.scio.entity.Guide.KEY_UPDATE_USER,mAuth.getUid());
         return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getUid())).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).add(Objects.requireNonNull(data));
     }
 }

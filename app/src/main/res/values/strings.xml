@@ -288,6 +288,9 @@
     <string name="NOT_CORRECT_OPTION_SELECTED_TITLE">Valor Inválido</string>
     <string name="NOT_CORRECT_OPTION_SELECTED_MESSAGE">Se debe elegir una opción correcta que no sea vacía.</string>
 
+    <string name="AUTH_USER_NOT_FOUND_TITLE">Error de Autenticación</string>
+    <string name="AUTH_USER_NOT_FOUND_MESSAGE">El usuario ingresado no está registrado</string>
+
 
     <!-- ======================================================================================= -->
     <!-- Mensajes de operaciones para usuario -->

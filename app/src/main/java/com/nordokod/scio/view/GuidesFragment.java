@@ -165,26 +165,19 @@ public class GuidesFragment extends Fragment implements BasicFragment {
     void getAllGuides() {
         guides = new ArrayList<>();
 
-        taskGetAllGuides = guideModel.getAllGuides()
-            .addOnSuccessListener(queryDocumentSnapshots -> {
-                if(queryDocumentSnapshots.getDocuments().isEmpty()){
-                    showError(new NoGuidesException());
-                }else{
-                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        Guide guide = null;
-                        try {
-                            guide = new Guide(
-                                    Integer.parseInt(Objects.requireNonNull(document.getData().get(Guide.KEY_CATEGORY)).toString()),
-                                    document.getId(),
-                                    (String)    document.getData().get(Guide.KEY_TOPIC),
-                                    userModel.getBasicUserInfo().getUid(),
-                                    (boolean)   document.getData().get(Guide.KEY_ONLINE),
-                                    (boolean)   document.getData().get(Guide.KEY_ACTIVATED),
-                                    (boolean)   document.getData().get(Guide.KEY_PERSONAL),
-                                    Objects.requireNonNull(document.getTimestamp(Guide.KEY_DATETIME)).toDate()
-                            );
-                        } catch (Exception e) {
-                            showError(e);
+         taskGetAllGuides=guideModel.getAllGuides()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if(queryDocumentSnapshots.getDocuments().isEmpty()){
+                        showError(new NoGuidesException());
+                    }else{
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Guide guide = null;
+                            try {
+                                guide = guideModel.getGuideFromDocument(document);
+                            } catch (Exception e) {
+                                showError(e);
+                            }
+                            guides.add(guide);
                         }
                         guides.add(guide);
                     }

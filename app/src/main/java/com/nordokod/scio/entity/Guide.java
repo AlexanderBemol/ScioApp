@@ -1,12 +1,6 @@
 package com.nordokod.scio.entity;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import static java.time.temporal.ChronoUnit.DAYS;
 
 
 public class Guide {
@@ -17,7 +11,10 @@ public class Guide {
     public static String KEY_TOPIC="TOPIC";
     public static String KEY_DATETIME="DATETIME";
     public static String KEY_ACTIVATED="ACTIVATED";
-    public static String KEY_PERSONAL="PERSONAL";
+    public static String KEY_CREATION_DATE="CREATION_DATE";
+    public static String KEY_UPDATE_DATE="UPDATE_DATE";
+    public static String KEY_CREATION_USER="CREATION_USER";
+    public static String KEY_UPDATE_USER="UPDATE_USER";
 
     private int category;
     private String id;
@@ -25,20 +22,26 @@ public class Guide {
     private String UID;
     private boolean online;
     private boolean activated;
-    private boolean personal;
-    private Date datetime;
-
+    private Date testDatetime;
+    private Date creationDate;
+    private Date updateDate;
+    private String creationUser;
+    private String updateUser;
     private ArrayList<Question> questions;
+    private ArrayList<Object> auxQuestions;
 
-    public Guide(int category, String id, String topic, String UID, boolean online, boolean activated,boolean personal, Date datetime) {
+    public Guide(int category, String id, String topic, String UID, boolean online, boolean activated, Date testDatetime, Date creationDate, Date updateDate, String creationUser, String updateUser) {
         this.category = category;
         this.id = id;
         this.topic = topic;
         this.UID = UID;
         this.online = online;
         this.activated = activated;
-        this.datetime = datetime;
-        this.personal = personal;
+        this.testDatetime = testDatetime;
+        this.creationDate = creationDate;
+        this.updateDate = updateDate;
+        this.creationUser = creationUser;
+        this.updateUser = updateUser;
         this.questions = new ArrayList<>();
     }
 
@@ -90,25 +93,51 @@ public class Guide {
         this.activated = activated;
     }
 
-    public Date getDatetime() {
-        return datetime;
+    public Date getTestDatetime() {
+        return testDatetime;
     }
 
-    public void setDatetime(Date datetime) {
-        this.datetime = datetime;
+    public void setTestDatetime(Date testDatetime) {
+        this.testDatetime = testDatetime;
     }
 
     public int getDaysLeft(){
-        return (int)( (datetime.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
+        return (int)( (testDatetime.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24));
     }
 
-    public boolean isPersonal() {
-        return personal;
+    public Date getCreationDate() {
+        return creationDate;
     }
 
-    public void setPersonal(boolean personal) {
-        this.personal = personal;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public String getCreationUser() {
+        return creationUser;
+    }
+
+    public void setCreationUser(String creationUser) {
+        this.creationUser = creationUser;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
+    }
+
+
 
     public ArrayList<Question> getQuestions() {
         return this.questions;
@@ -120,5 +149,11 @@ public class Guide {
     public void addQuestion(Question question){
         this.questions.add(question);
     }
+    public ArrayList<Object> getAuxQuestions() {
+        return auxQuestions;
+    }
 
+    public void setAuxQuestions(ArrayList<Object> auxQuestions) {
+        this.auxQuestions = auxQuestions;
+    }
 }

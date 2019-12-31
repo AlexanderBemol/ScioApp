@@ -1,4 +1,7 @@
+//noinspection GradleDynamicVersion
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 
 android {
@@ -52,6 +55,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:17.0.0'
     implementation 'com.google.firebase:firebase-firestore:19.0.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
 
     implementation 'com.victor:lib:1.0.4'
     implementation 'me.relex:circleindicator:1.2.2'
@@ -69,7 +73,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
     androidTestImplementation 'org.mockito:mockito-android:2.27.0'
     implementation 'com.google.firebase:firebase-invites:17.0.0'
+    implementation "androidx.core:core-ktx:1.1.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 
 }
 apply plugin: 'com.google.gms.google-services'
+repositories {
+    mavenCentral()
+}

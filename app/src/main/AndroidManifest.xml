@@ -4,7 +4,6 @@
     package="com.nordokod.scio">
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
@@ -22,7 +21,16 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/DefaultTheme">
-        <activity android:name=".view.LockedAppsOptionActivity"></activity>
+        <service
+            android:name=".process.PushNotifications"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".view.LockedAppsOptionActivity" />
         <activity android:name=".view.SignupActivity" />
 
         <receiver
@@ -87,12 +95,13 @@
 
         <service
             android:name=".process.LockAppProcess"
-            android:stopWithTask="false" /> <!-- ============================================================================== Crop Recortes -->
+            android:stopWithTask="false" />
+
+        <!-- ============================================================================== Crop Recortes -->
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" /> <!-- ======================================================================================= Permission -->
         <activity
             android:name=".view.PermissionActivity"
-            android:screenOrientation="portrait" />
-        <!-- ======================================================================================= Main -->
+            android:screenOrientation="portrait" /> <!-- ======================================================================================= Main -->
         <activity
             android:name=".view.MainActivity"
             android:screenOrientation="portrait"
