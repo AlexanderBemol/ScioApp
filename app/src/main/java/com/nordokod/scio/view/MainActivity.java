@@ -54,14 +54,12 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private GuidesFragment guidesFragment;
     private DialogFragment dialogFragment;
     private Fragment selectedFragment = null;
-
     private User userModel;
     private com.nordokod.scio.entity.User actualUserEntity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toasty.success(this, "Se crea").show();
         initComponents();
         initListeners();
     }
@@ -81,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
         CIV_Photo       = header.findViewById(R.id.CIV_Photo);
         TV_Name         = header.findViewById(R.id.TV_Name);
+
 
         userModel = new User();
         if(!userModel.isUserLogged())goToLoginActivity();

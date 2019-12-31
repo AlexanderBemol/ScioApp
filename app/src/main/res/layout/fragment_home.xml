@@ -46,6 +46,7 @@
         </androidx.appcompat.widget.AppCompatTextView>
 
         <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/FHome_SW_ActivateStudyMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 

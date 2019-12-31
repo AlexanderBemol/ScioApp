@@ -26,7 +26,7 @@ public class LockedAppsOptionActivity extends AppCompatActivity implements Basic
 
     private RecyclerView listApps;
     private RecyclerView.Adapter mAdapter;
-    private SwitchCompat switchCompat;
+    //private SwitchCompat switchCompat;
     private AppCompatButton BTN_Save;
     private AppCompatButton BTN_Cancel;
     private SystemWriteProcess systemWriteProcess;
@@ -43,7 +43,6 @@ public class LockedAppsOptionActivity extends AppCompatActivity implements Basic
 
     @Override
     public void initComponents() {
-        switchCompat = findViewById(R.id.AppBlocked_SC_Activated);
         listApps = findViewById(R.id.AppBlocked_RV_listApps);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -58,7 +57,6 @@ public class LockedAppsOptionActivity extends AppCompatActivity implements Basic
         configurationApp = systemWriteProcess.readUserConfig();
 
         listApps.setActivated(configurationApp.isAppLocker());
-        switchCompat.setChecked(configurationApp.isAppLocker());
 
         for (App app : appArrayList){
             if(configurationApp.getLockedApps().contains(app.getPackagePath())){
@@ -71,9 +69,7 @@ public class LockedAppsOptionActivity extends AppCompatActivity implements Basic
 
     @Override
     public void initListeners() {
-        switchCompat.setOnCheckedChangeListener((buttonView, isChecked) ->listApps.setActivated(isChecked));
         BTN_Save.setOnClickListener(l->{
-            configurationApp.setAppLocker(switchCompat.isChecked());
             ArrayList<String> lockedApps = new ArrayList<>();
             for (App app :((AppRecyclerViewAdapter)mAdapter).getAppArrayList()){
                 if(app.isState())lockedApps.add(app.getPackagePath());

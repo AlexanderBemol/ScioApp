@@ -179,12 +179,10 @@ public class GuidesFragment extends Fragment implements BasicFragment {
                             }
                             guides.add(guide);
                         }
-                        guides.add(guide);
                     }
                     CL_Exacts.performClick();
                     if (Swipe_Guides.isRefreshing()) Swipe_Guides.setRefreshing(false);
-                }
-            })
+                })
             .addOnCanceledListener(() -> showError(new OperationCanceledException()))
             .addOnFailureListener(this::showError);
     }
