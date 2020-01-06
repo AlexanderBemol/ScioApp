@@ -1,25 +1,30 @@
 package com.nordokod.scio.view;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import androidx.core.content.ContextCompat;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
+
 import android.view.View;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.process.PermissionCheck;
 
-public class PermissionActivity extends AppCompatActivity implements BasicActivity {
+public class PermissionActivity extends AppCompatActivity implements BasicActivity, LifecycleObserver {
     /**
      * Objeto del botón usado para activar los permisos.
      */
-    private AppCompatButton BTN_Activate;
+    private AppCompatButton BTN_Overlay;
+    private AppCompatButton BTN_Usage;
+    private AppCompatButton BTN_Autostart;
+    private AppCompatButton BTN_Skip;
 
-    /**
-     * Objeto del controlador perteneciente a este módulo.
-     */
-    //private PermissionController permissionController;
+    private PermissionCheck permissionCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,55 +33,54 @@ public class PermissionActivity extends AppCompatActivity implements BasicActivi
         initComponents();
         initListeners();
     }
-
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        checkPermissionState();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkPermissionState();
+    }
     @Override
     public void initComponents() {
-        BTN_Activate = findViewById(R.id.BTN_Activate);
+        BTN_Overlay = findViewById(R.id.BTN_Overlay_permission);
+        BTN_Usage = findViewById(R.id.BTN_Usage_access_permission);
+        BTN_Autostart = findViewById(R.id.BTN_Autostart_permission);
+        BTN_Skip = findViewById(R.id.BTN_Permission_skip);
 
-        //permissionController = new PermissionController();
+        permissionCheck = new PermissionCheck();
 
-        changeStateBtnActivate(checkPermissions());
+        if(!permissionCheck.haveAutostart())BTN_Autostart.setVisibility(View.INVISIBLE);
+
+        checkPermissionState();
     }
 
     @Override
     public void initListeners() {
-        BTN_Activate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activatePermissions();
-            }
-        });
+        BTN_Usage.setOnClickListener((view)->permissionCheck.askForPermission(PermissionCheck.PermissionEnum.USAGE_STATS,this));
+        BTN_Overlay.setOnClickListener(view -> permissionCheck.askForPermission(PermissionCheck.PermissionEnum.SYSTEM_ALERT_WINDOW,this));
+        BTN_Autostart.setOnClickListener(view -> permissionCheck.askForPermission(PermissionCheck.PermissionEnum.AUTO_START,this));
+        BTN_Skip.setOnClickListener(view->goToMain());
     }
 
-    /**
-     * Método usado para validar que los permisos estén activos.
-     *
-     * @return  true    = Todos los permisos están activados.
-     *          false   = Hay al menos un permiso desactivado.
-     */
-    private boolean checkPermissions() {
-        //return permissionController.checkPermissions();
-        return true;
+
+
+
+
+    private void checkPermissionState(){
+        if(permissionCheck.permissionIsGranted(PermissionCheck.PermissionEnum.SYSTEM_ALERT_WINDOW,this,this))BTN_Overlay.setSupportBackgroundTintList(ContextCompat.getColorStateList(PermissionActivity.this, R.color.correctColor));
+        else BTN_Overlay.setSupportBackgroundTintList(ContextCompat.getColorStateList(PermissionActivity.this, R.color.errorColor));
+        if(permissionCheck.permissionIsGranted(PermissionCheck.PermissionEnum.USAGE_STATS,this,this))BTN_Usage.setSupportBackgroundTintList(ContextCompat.getColorStateList(PermissionActivity.this, R.color.correctColor));
+        else BTN_Usage.setSupportBackgroundTintList(ContextCompat.getColorStateList(PermissionActivity.this, R.color.errorColor));
     }
 
-    /**
-     * Método usado para cambiar el color del botón.
-     *
-     * @param isActivated   true    = Todos los permisos están activados.
-     *                      false   = Hay al menos un permiso desactivado.
-     */
-    @SuppressLint({"ResourceAsColor", "RestrictedApi"})
-    private void changeStateBtnActivate(boolean isActivated) {
-        if (isActivated)
-            BTN_Activate.setSupportBackgroundTintList(ContextCompat.getColorStateList(PermissionActivity.this, R.color.correctColor));
-        else
-            BTN_Activate.setSupportBackgroundTintList(ContextCompat.getColorStateList(PermissionActivity.this, R.color.errorColor));
+    private void goToMain(){
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
     }
 
-    /**
-     * Método usado para mandar a activar los permisos.
-     */
-    private void activatePermissions() {
-        //permissionController.activatePermissions();
-    }
+
+
 }
