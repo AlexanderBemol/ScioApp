@@ -1,5 +1,6 @@
 package com.nordokod.scio.view;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -39,6 +40,7 @@ import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.InvalidValueException;
 import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.User;
+import com.nordokod.scio.process.UpdateCheck;
 import com.nordokod.scio.process.UserMessage;
 import com.victor.loading.newton.NewtonCradleLoading;
 
@@ -124,6 +126,12 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                 dismissProgressDialog();
             }
         }
+        else if (requestCode==RequestCode.RC_UPDATE_INMEDIATE.getCode()){
+            if(resultCode!= Activity.RESULT_OK){
+                UpdateCheck updateCheck = new UpdateCheck();
+                updateCheck.checkUpdateAvailability(this,this);
+            }
+        }
         else{
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
@@ -153,6 +161,9 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
 
         userModel = new User();
         userMessage = new UserMessage();
+
+        UpdateCheck updateCheck = new UpdateCheck();
+        updateCheck.checkUpdateAvailability(this,this);
     }
 
     @Override
@@ -254,7 +265,8 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         }
         userModel.createUserInformation(userEntity).addOnSuccessListener(aVoid -> {
             showSuccessfulMessage(UserOperations.SIGN_UP_USER);
-            goToMainView();});
+            goToPermissionView();
+        });
     }
 
     private void goToMainView(){
@@ -268,6 +280,13 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         Intent signUpIntent = new Intent(getApplicationContext(), SignupActivity.class);
         startActivity(signUpIntent);
         dismissProgressDialog();
+    }
+
+    private void goToPermissionView(){
+        Intent intent = new Intent(getApplicationContext(),PermissionActivity.class);
+        dismissProgressDialog();
+        startActivity(intent);
+        finish();
     }
 
     private void showError(Exception exception){

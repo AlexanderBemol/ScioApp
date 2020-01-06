@@ -49,7 +49,12 @@
     <dimen name="first_configuration_photo_size">200dp</dimen>
     <dimen name="first_configuration_text_size_title">24dp</dimen>
     <dimen name="first_configuration_text_size_description">17dp</dimen>
+    <dimen  name="first_configuration_space_between_buttons">15dp</dimen>
     <dimen name="first_configuration_max_space">150dp</dimen>
+    <!-- ======================================================================================= -->
+    <!-- Permissions -->
+    <!-- ======================================================================================= -->
+    <dimen name="permissions_max_space">80dp</dimen>
 
     <!-- ======================================================================================= -->
     <!-- Notice Dialog -->

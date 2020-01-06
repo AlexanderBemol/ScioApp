@@ -31,7 +31,7 @@
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_permission -->
     <!-- ======================================================================================= -->
-    <string name="description_permission">Necesitamos que nos des permisos…no te preocupes, no haremos nada malo.</string>
+    <string name="description_permission">Necesitamos de algunos permisos para que puedas acceder a todas las caracteristícas</string>
 
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_first_configuration -->

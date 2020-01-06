@@ -8,7 +8,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Settings
-import androidx.annotation.RequiresApi
 import android.content.ComponentName
 import java.lang.Exception
 
@@ -46,13 +45,15 @@ class PermissionCheck {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
+
     fun askForPermission(permission : PermissionEnum, activity : Activity){
         when(permission){
             PermissionEnum.AUTO_START -> autostartPermission(activity)
             PermissionEnum.SYSTEM_ALERT_WINDOW -> {
-                val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-                activity.startActivity(intent)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+                    activity.startActivity(intent)
+                }
             }
             PermissionEnum.USAGE_STATS -> {
                 val intent = Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS)
@@ -87,6 +88,17 @@ class PermissionCheck {
 
     }
 
+    fun haveAutostart() : Boolean{
+        val manufacturer = Build.MANUFACTURER
+        return when {
+            "xiaomi".equals(manufacturer, ignoreCase = true) -> true
+            "oppo".equals(manufacturer, ignoreCase = true) -> true
+            "vivo".equals(manufacturer, ignoreCase = true) -> true
+            "Letv".equals(manufacturer, ignoreCase = true) -> true
+            "Honor".equals(manufacturer, ignoreCase = true) -> true
+            else -> false
+        }
+    }
     enum class PermissionEnum{
         AUTO_START,
         SYSTEM_ALERT_WINDOW,

@@ -28,7 +28,7 @@
         android:layout_width="@dimen/first_configuration_img_size"
         android:layout_height="@dimen/first_configuration_img_size"
         app:srcCompat="@drawable/ic_puzzle"
-        android:tint="?attr/onBackgroundColor"
+        android:tint="?attr/onPrimaryColor"
 
         app:layout_constraintTop_toBottomOf="@+id/title"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -45,27 +45,68 @@
         android:fontFamily="sans-serif-light"
         android:textSize="@dimen/text_size_normal"
         android:textAlignment="center"
-        android:layout_marginBottom="@dimen/space_3"
+        android:layout_marginBottom="@dimen/space_2"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/BTN_Activate"
+        app:layout_constraintBottom_toTopOf="@+id/BTN_Overlay_permission"
         />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/BTN_Activate"
+        android:id="@+id/BTN_Overlay_permission"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Activar"
+        android:text="Superposición de pantalla"
         android:backgroundTint="@color/errorColor"
         android:textColor="@color/onErrorTextColor"
         android:background="@xml/background_solid_round"
-        android:layout_marginBottom="@dimen/first_configuration_max_space"
+        android:layout_marginBottom="@dimen/first_configuration_space_between_buttons"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/BTN_Usage_access_permission"
+
+        style="?android:attr/borderlessButtonStyle"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BTN_Usage_access_permission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Acceso a datos de uso"
+        android:backgroundTint="@color/errorColor"
+        android:textColor="@color/onErrorTextColor"
+        android:background="@xml/background_solid_round"
+        android:layout_marginBottom="@dimen/first_configuration_space_between_buttons"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/BTN_Autostart_permission"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BTN_Autostart_permission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Inicio automático"
+        android:backgroundTint="@color/onBackgroundColor"
+        android:textColor="@color/onErrorTextColor"
+        android:background="@xml/background_solid_round"
+        android:layout_marginBottom="@dimen/permissions_max_space"
 
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-
-        style="?android:attr/borderlessButtonStyle"
         />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BTN_Permission_skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continuar"
+        android:textColor="?attr/onBackgroundColor"
+        android:fontFamily="sans-serif-light"
+        style="@style/button"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
