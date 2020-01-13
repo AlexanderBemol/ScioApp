@@ -51,17 +51,17 @@ public class NewQuestionFragment extends BottomSheetDialogFragment implements Ba
     public void initListeners() {
         IV_Multiple_Choice.setOnClickListener(v -> {
             activity.onCloseFragment("New Question");
-            activity.onNewMultipleChoiceQuestionDialog(guide);
+            activity.showNewMultipleChoiceQuestionDialog(guide);
         });
 
         IV_True_False.setOnClickListener(v -> {
             activity.onCloseFragment("New Question");
-            activity.onNewTrueFalseQuestionDialog(guide);
+            activity.showNewTrueFalseQuestionDialog(guide);
         });
 
         IV_Open_Answer.setOnClickListener(v -> {
             activity.onCloseFragment("New Question");
-            activity.onNewOpenAnswerQuestionDialog(guide);
+            activity.showNewOpenAnswerQuestionDialog(guide);
         });
     }
 }

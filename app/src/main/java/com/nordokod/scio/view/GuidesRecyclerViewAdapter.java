@@ -10,7 +10,6 @@ import androidx.appcompat.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.Guide;
@@ -53,22 +52,16 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
     }
 
     private void initListeners(GuidesRecyclerViewAdapter.ViewHolder holder, final int position) {
-        holder.CL_Guide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialogFragment = new MenuGuideFragment(context, activity, mGuide, guideArrayList.get(position));
-                dialogFragment.show(activity.getSupportFragmentManager(), "Menu Guide");
-            }
+        holder.CL_Guide.setOnClickListener(v -> {
+            dialogFragment = new MenuGuideFragment(context, activity, mGuide, guideArrayList.get(position));
+            dialogFragment.show(activity.getSupportFragmentManager(), "Menu Guide");
         });
 
-        holder.Switch_State.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                // TODO Crear un método par que cuando el usaurio active o desactive la guía mande a
-                //  llamar un método al backend que haga el cambio en la base de datos o donde sea que se almacene esa guía.
-                //  Debe mandar por parametro el ID y el estado.
-                // buttonView.setChecked(firstConfigurationController.onStateChanged(appArrayList.get(position).getPackagePath(), isChecked));
-            }
+        holder.Switch_State.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            // TODO Crear un método par que cuando el usaurio active o desactive la guía mande a
+            //  llamar un método al backend que haga el cambio en la base de datos o donde sea que se almacene esa guía.
+            //  Debe mandar por parametro el ID y el estado.
+            // buttonView.setChecked(firstConfigurationController.onStateChanged(appArrayList.get(position).getPackagePath(), isChecked));
         });
     }
 
@@ -96,7 +89,6 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
             case 4:     return R.string.category_art;
             case 5:     return R.string.category_tech;
             case 6:     return R.string.category_entertainment;
-            case 7:     return R.string.category_others;
             default:    return R.string.category_others;
         }
     }
@@ -109,7 +101,6 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
             case 4:     return R.drawable.ic_palette;
             case 5:     return R.drawable.ic_code;
             case 6:     return R.drawable.ic_theatre;
-            case 7:     return R.drawable.ic_scio_face;
             default:    return R.drawable.ic_scio_face;
         }
     }
