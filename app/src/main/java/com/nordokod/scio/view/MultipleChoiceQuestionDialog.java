@@ -11,7 +11,6 @@ import android.os.Build;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.Utilities;
 import com.nordokod.scio.entity.Guide;
@@ -119,7 +118,7 @@ public class MultipleChoiceQuestionDialog implements BasicDialog {
     @Override
     public void showDialog() {
         if (!dialog.isShowing()) {
-            TV_Category.setText(Utilities.getStringFromCategory(guide.getCategory()));
+            TV_Category.setText(Utilities.getCategoryStringResource(guide.getCategory()));
             TV_Topic.setText(guide.getTopic());
             TV_Question.setText(question.getQuestion());
 

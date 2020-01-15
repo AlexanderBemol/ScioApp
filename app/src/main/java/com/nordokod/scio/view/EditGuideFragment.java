@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -30,9 +28,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 
-import static com.nordokod.scio.R.attr.iconNormalColor;
-import static com.nordokod.scio.R.attr.iconSelectedColor;
-
 public class EditGuideFragment extends BottomSheetDialogFragment implements BasicFragment {
 
     private Context context;
@@ -40,7 +35,7 @@ public class EditGuideFragment extends BottomSheetDialogFragment implements Basi
     private Guide guide;
     private Animation press_button;
     private Date date_selected;
-    private int preview_Category_View_Selected = 0, category_selected_id;
+    private int preview_Category_View_Selected = 0;
     private AppCompatTextView FEditGuide_TV_Month;
     private AppCompatTextView FEditGuide_TV_Day;
     private AppCompatTextView FEditGuide_TV_Time;
@@ -124,13 +119,13 @@ public class EditGuideFragment extends BottomSheetDialogFragment implements Basi
             Objects.requireNonNull(getFragmentManager()).beginTransaction().remove(EditGuideFragment.this).commit();
         });
 
-        FEditGuide_CL_Exacts.setOnClickListener(this::onClickCategoryListener);
-        FEditGuide_CL_Socials.setOnClickListener(this::onClickCategoryListener);
-        FEditGuide_CL_Sports.setOnClickListener(this::onClickCategoryListener);
-        FEditGuide_CL_Art.setOnClickListener(this::onClickCategoryListener);
-        FEditGuide_CL_Tech.setOnClickListener(this::onClickCategoryListener);
-        FEditGuide_CL_Entertainment.setOnClickListener(this::onClickCategoryListener);
-        FEditGuide_CL_Others.setOnClickListener(this::onClickCategoryListener);
+        FEditGuide_CL_Exacts.setOnClickListener(v -> preview_Category_View_Selected = Utilities.onClickCategoryListener(v, mainActivity, preview_Category_View_Selected, FEditGuide_LL_Categories));
+        FEditGuide_CL_Socials.setOnClickListener(v -> preview_Category_View_Selected = Utilities.onClickCategoryListener(v, mainActivity, preview_Category_View_Selected, FEditGuide_LL_Categories));
+        FEditGuide_CL_Sports.setOnClickListener(v -> preview_Category_View_Selected = Utilities.onClickCategoryListener(v, mainActivity, preview_Category_View_Selected, FEditGuide_LL_Categories));
+        FEditGuide_CL_Art.setOnClickListener(v -> preview_Category_View_Selected = Utilities.onClickCategoryListener(v, mainActivity, preview_Category_View_Selected, FEditGuide_LL_Categories));
+        FEditGuide_CL_Tech.setOnClickListener(v -> preview_Category_View_Selected = Utilities.onClickCategoryListener(v, mainActivity, preview_Category_View_Selected, FEditGuide_LL_Categories));
+        FEditGuide_CL_Entertainment.setOnClickListener(v -> preview_Category_View_Selected = Utilities.onClickCategoryListener(v, mainActivity, preview_Category_View_Selected, FEditGuide_LL_Categories));
+        FEditGuide_CL_Others.setOnClickListener(v -> preview_Category_View_Selected = Utilities.onClickCategoryListener(v, mainActivity, preview_Category_View_Selected, FEditGuide_LL_Categories));
     }
 
     private void initAnimations(){
@@ -155,18 +150,6 @@ public class EditGuideFragment extends BottomSheetDialogFragment implements Basi
         super.onStart();
     }
 
-    private void showDatePickerDialog() {
-        DatePickerFragment datePickerFragment = DatePickerFragment.newInstance((view, year, month, dayOfMonth) -> {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(year,month,dayOfMonth);
-            Date date = calendar.getTime();
-            FEditGuide_TV_Month.setText(Utilities.getMonthNameFromDate(date));
-            FEditGuide_TV_Day.setText(Utilities.getTwoDigitsFromDate(date,Calendar.DAY_OF_MONTH));
-            date_selected = date;
-        });
-        datePickerFragment.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "datePicker");
-    }
-
     private void showTimePickerDialog() {
         TimePickerFragment timePickerFragment = TimePickerFragment.newInstance((view, hourOfDay, minute) -> {
             FEditGuide_TV_Time.setText((hourOfDay < 12) ? "AM" : "PM");
@@ -183,57 +166,16 @@ public class EditGuideFragment extends BottomSheetDialogFragment implements Basi
         timePickerFragment.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "timePicker");
     }
 
-    @SuppressLint("ResourceType")
-    private void onClickCategoryListener(View view) {
-        AppCompatImageView categoryIcon = view.findViewById(getCategoryImageViewId(view.getId()));
-
-        if (preview_Category_View_Selected != view.getId()) {
-            if(categoryIcon != null) {
-                TypedValue typedValue = new TypedValue();
-                Objects.requireNonNull(getActivity()).getTheme().resolveAttribute(iconSelectedColor, typedValue, true);
-
-                categoryIcon.setColorFilter(typedValue.data);
-            }
-
-            category_selected_id = getCategoryId(view.getId());
-
-            // A la categoria anterior se le devuelve su color de icono normal
-            if(preview_Category_View_Selected != 0) {
-                categoryIcon = FEditGuide_LL_Categories.findViewById(getCategoryImageViewId(preview_Category_View_Selected));
-
-                TypedValue typedValue = new TypedValue();
-                Objects.requireNonNull(getActivity()).getTheme().resolveAttribute(iconNormalColor, typedValue, true);
-
-                categoryIcon.setColorFilter(typedValue.data);
-            }
-
-            preview_Category_View_Selected = view.getId();
-        }
-    }
-
-    private int getCategoryId(int view_selected_id) {
-        switch (view_selected_id) {
-            case R.id.CL_Exacts:        return 1;
-            case R.id.CL_Socials:       return 2;
-            case R.id.CL_Sports:        return 3;
-            case R.id.CL_Art:           return 4;
-            case R.id.CL_Tech:          return 5;
-            case R.id.CL_Entertainment: return 6;
-            default:                    return 7;
-        }
-    }
-
-    private int getCategoryImageViewId(int view_id) {
-        switch (view_id) {
-            case R.id.CL_Exacts:        return R.id.IV_Exacts;
-            case R.id.CL_Socials:       return R.id.IV_Socials;
-            case R.id.CL_Sports:        return R.id.IV_Sports;
-            case R.id.CL_Art:           return R.id.IV_Art;
-            case R.id.CL_Tech:          return R.id.IV_Tech;
-            case R.id.CL_Entertainment: return R.id.IV_Entertainment;
-            case R.id.CL_Others:        return R.id.IV_Others;
-            default:                    return 0;
-        }
+    private void showDatePickerDialog() {
+        DatePickerFragment datePickerFragment = DatePickerFragment.newInstance((view, year, month, dayOfMonth) -> {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year,month,dayOfMonth);
+            Date date = calendar.getTime();
+            FEditGuide_TV_Month.setText(Utilities.getMonthNameFromDate(date));
+            FEditGuide_TV_Day.setText(Utilities.getTwoDigitsFromDate(date,Calendar.DAY_OF_MONTH));
+            date_selected = date;
+        });
+        datePickerFragment.show(Objects.requireNonNull(mainActivity).getFragmentManager(), "datePicker");
     }
 
     private void setGuideCategorySelected(int guide_category_selected_id) {
@@ -246,8 +188,6 @@ public class EditGuideFragment extends BottomSheetDialogFragment implements Basi
             case 6: FEditGuide_CL_Entertainment.performClick(); break;
             default: FEditGuide_CL_Others.performClick();       break;
         }
-
-        category_selected_id = guide_category_selected_id;
     }
 
     private void showError(Exception exception){
