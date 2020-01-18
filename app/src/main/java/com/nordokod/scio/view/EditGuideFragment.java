@@ -21,6 +21,8 @@ import com.nordokod.scio.R;
 import com.nordokod.scio.constants.UserOperations;
 import com.nordokod.scio.constants.Utilities;
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.InputDataException;
+import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.process.UserMessage;
 
 import java.text.SimpleDateFormat;
@@ -53,6 +55,7 @@ public class EditGuideFragment extends BottomSheetDialogFragment implements Basi
     private ConstraintLayout FEditGuide_CL_Tech;
     private ConstraintLayout FEditGuide_CL_Entertainment;
     private ConstraintLayout FEditGuide_CL_Others;
+    private com.nordokod.scio.model.Guide guideModel;
 
     public EditGuideFragment() {
         // Required empty public constructor
@@ -102,6 +105,8 @@ public class EditGuideFragment extends BottomSheetDialogFragment implements Basi
         FEditGuide_CL_Tech          = view.findViewById(R.id.CL_Tech);
         FEditGuide_CL_Entertainment = view.findViewById(R.id.CL_Entertainment);
         FEditGuide_CL_Others        = view.findViewById(R.id.CL_Others);
+
+        guideModel = new com.nordokod.scio.model.Guide();
     }
 
     @Override
@@ -111,7 +116,35 @@ public class EditGuideFragment extends BottomSheetDialogFragment implements Basi
 
         FEditGuide_BTN_Save.setOnClickListener(v -> {
             FEditGuide_BTN_Save.startAnimation(press_button);
-            //TODO: Agregar la logica
+            int category_selected = Utilities.getCategoryId(preview_Category_View_Selected);
+            if (category_selected == 0) {
+                showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // ===== No seleccionó ninguna categoría
+            } else {
+                if (Objects.requireNonNull(FEditGuide_ET_Topic.getText()).length()==0) {
+                    showError(new InputDataException(InputDataException.Code.EMPTY_FIELD)); // = No escribió el tema de la guía
+                } else {
+                    Date date = date_selected;
+                    Date dateToday = new Date();
+
+                    if (Objects.requireNonNull(date).before(dateToday)){
+                        showError(new InputDataException(InputDataException.Code.DATETIME_BEFORE));
+                    } else {
+                        guide.setCategory(category_selected);
+                        guide.setTopic(FEditGuide_ET_Topic.getText().toString());
+                        guide.setTestDatetime(date);
+                        guide.setUpdateDate(new Date());
+                        guideModel.updateGuide(guide)
+                                .addOnSuccessListener(documentReference -> {
+                                    showSuccessfullMessage();
+                                    mainActivity.refreshGuides();
+                                    mainActivity.onCloseFragment("Edit Guide");
+                                    FEditGuide_ET_Topic.setText("");
+                                })
+                                .addOnCanceledListener(() -> showError(new OperationCanceledException()))
+                                .addOnFailureListener(this::showError);
+                    }
+                }
+            }
         });
 
         FEditGuide_BTN_Cancel.setOnClickListener(v -> {
