@@ -86,4 +86,11 @@
     <string name="txt_BTN_Import">Import</string>
     <string name="txt_import_guide_dialog_title">Import Guide</string>
     <string name="txt_hint_TV_Options">Select the correct answers.</string>
+    <string name="txt_TV_EditGuide">Edit Guide</string>
+    <string name="txt_textview_password_title">Password</string>
+    <string name="txt_textview_mail_title">E-mail</string>
+    <string name="txt_textview_confirm_password_title">Retype password</string>
+    <string name="txt_edittext_password_hint">Type password</string>
+    <string name="txt_edittext_mail_hint">Type e-mail</string>
+    <string name="txt_edittext_confirm_password_hint">Retype password</string>
 </resources>

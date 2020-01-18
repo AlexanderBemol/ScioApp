@@ -77,39 +77,27 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
 
     @Override
     public void initComponents(View view) {
-        LL_Date         = view.findViewById(R.id.LL_Date);
-        LL_Time         = view.findViewById(R.id.LL_Time);
-        LL_Categories   = view.findViewById(R.id.LL_Categories);
+        LL_Date             = view.findViewById(R.id.FNewGuide_LL_Date);
+        LL_Time             = view.findViewById(R.id.FNewGuide_LL_Time);
+        LL_Categories       = view.findViewById(R.id.LL_Categories);
 
-        TV_Day          = view.findViewById(R.id.TV_Day);
-        TV_Month        = view.findViewById(R.id.TV_Month);
-        TV_Time         = view.findViewById(R.id.TV_Time);
-        TV_Hour         = view.findViewById(R.id.TV_Hour);
+        TV_Day              = view.findViewById(R.id.FNewGuide_TV_Day);
+        TV_Month            = view.findViewById(R.id.FNewGuide_TV_Month);
+        TV_Time             = view.findViewById(R.id.FNewGuide_TV_Time);
+        TV_Hour             = view.findViewById(R.id.FNewGuide_TV_Hour);
 
-        BTN_Cancel      = view.findViewById(R.id.BTN_Cancel);
-        BTN_Create      = view.findViewById(R.id.BTN_Create);
+        BTN_Cancel          = view.findViewById(R.id.FNewGuide_BTN_Cancel);
+        BTN_Create          = view.findViewById(R.id.FNewGuide_BTN_Create);
 
-        ET_Topic        = view.findViewById(R.id.ET_Topic);
-        ET_Topic.setText("");
+        ET_Topic            = view.findViewById(R.id.FNewGuide_ET_Topic);
 
-        CL_Exacts = view.findViewById(R.id.CL_Exacts);
-        CL_Socials = view.findViewById(R.id.CL_Socials);
-        CL_Sports = view.findViewById(R.id.CL_Sports);
-        CL_Art = view.findViewById(R.id.CL_Art);
-        CL_Tech = view.findViewById(R.id.CL_Tech);
-        CL_Entertainment = view.findViewById(R.id.CL_Entertainment);
-        CL_Others = view.findViewById(R.id.CL_Others);
-
-        Calendar calendar = Calendar.getInstance();
-        Date date = calendar.getTime();
-        TV_Month.setText(Utilities.getMonthNameFromDate(date));
-        TV_Day.setText(Utilities.getTwoDigitsFromDate(date,Calendar.DAY_OF_MONTH));
-
-
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat12 = new SimpleDateFormat("hh:mm");
-        TV_Hour.setText(simpleDateFormat12.format(date));
-        TV_Time.setText((calendar.get(Calendar.AM_PM) < 1) ? "AM" : "PM");
-        date_selected = date;
+        CL_Exacts           = view.findViewById(R.id.CL_Exacts);
+        CL_Socials          = view.findViewById(R.id.CL_Socials);
+        CL_Sports           = view.findViewById(R.id.CL_Sports);
+        CL_Art              = view.findViewById(R.id.CL_Art);
+        CL_Tech             = view.findViewById(R.id.CL_Tech);
+        CL_Entertainment    = view.findViewById(R.id.CL_Entertainment);
+        CL_Others           = view.findViewById(R.id.CL_Others);
     }
 
     @Override
@@ -169,11 +157,28 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
         CL_Others.setOnClickListener(this::onClickCategoryListener);
     }
 
-    @SuppressLint("ResourceType")
-    public void onClickCategoryListener(View view) {
-        AppCompatImageView categoryIcon = view.findViewById(getCategoryImageViewId(view.getId()));
+    @Override
+    public void onStart() {
+        ET_Topic.setText("");
 
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        TV_Month.setText(Utilities.getMonthNameFromDate(date));
+        TV_Day.setText(Utilities.getTwoDigitsFromDate(date,Calendar.DAY_OF_MONTH));
+
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat12 = new SimpleDateFormat("hh:mm");
+        TV_Hour.setText(simpleDateFormat12.format(date));
+        TV_Time.setText((calendar.get(Calendar.AM_PM) < 1) ? "AM" : "PM");
+        date_selected = date;
+
+        super.onStart();
+    }
+
+    @SuppressLint("ResourceType")
+    private void onClickCategoryListener(View view) {
         if (preview_Category_View_Selected != view.getId()) {
+            AppCompatImageView categoryIcon = view.findViewById(Utilities.getCategoryImageViewId(view.getId()));
+
             if(categoryIcon != null) {
                 TypedValue typedValue = new TypedValue();
                 Objects.requireNonNull(getActivity()).getTheme().resolveAttribute(iconSelectedColor, typedValue, true);
@@ -181,11 +186,11 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
                 categoryIcon.setColorFilter(typedValue.data);
             }
 
-            category_selected_id = getCategoryId(view.getId());
+            category_selected_id = Utilities.getCategoryId(view.getId());
 
             // A la categoria anterior se le devuelve su color de icono normal
             if(preview_Category_View_Selected != 0) {
-                categoryIcon = LL_Categories.findViewById(getCategoryImageViewId(preview_Category_View_Selected));
+                categoryIcon = LL_Categories.findViewById(Utilities.getCategoryImageViewId(preview_Category_View_Selected));
 
                 TypedValue typedValue = new TypedValue();
                 Objects.requireNonNull(getActivity()).getTheme().resolveAttribute(iconNormalColor, typedValue, true);
@@ -207,30 +212,6 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
         userMessage.showSuccessfulOperationMessage(getContext(), UserOperations.CREATE_GUIDE);
     }
 
-    private int getCategoryId(int view_selected_id) {
-        switch (view_selected_id) {
-            case R.id.CL_Exacts:        return 1;
-            case R.id.CL_Socials:       return 2;
-            case R.id.CL_Sports:        return 3;
-            case R.id.CL_Art:           return 4;
-            case R.id.CL_Tech:          return 5;
-            case R.id.CL_Entertainment: return 6;
-            default:                    return 7;
-        }
-    }
-
-    private int getCategoryImageViewId(int view_id) {
-        switch (view_id) {
-            case R.id.CL_Exacts:        return R.id.IV_Exacts;
-            case R.id.CL_Socials:       return R.id.IV_Socials;
-            case R.id.CL_Sports:        return R.id.IV_Sports;
-            case R.id.CL_Art:           return R.id.IV_Art;
-            case R.id.CL_Tech:          return R.id.IV_Tech;
-            case R.id.CL_Entertainment: return R.id.IV_Entertainment;
-            case R.id.CL_Others:        return R.id.IV_Others;
-            default:                    return 0;
-        }
-    }
     private void showDatePickerDialog() {
         DatePickerFragment datePickerFragment = DatePickerFragment.newInstance((view, year, month, dayOfMonth) -> {
             Calendar calendar = Calendar.getInstance();
@@ -258,7 +239,6 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
 
         timePickerFragment.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "timePicker");
     }
-
 
     private void initAnimations(){
         press = AnimationUtils.loadAnimation(context, R.anim.press);

@@ -1,9 +1,23 @@
 package com.nordokod.scio.constants;
 
+import android.annotation.SuppressLint;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.LinearLayout;
+
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+
 import com.nordokod.scio.R;
+import com.nordokod.scio.view.DatePickerFragment;
+import com.nordokod.scio.view.MainActivity;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
+
+import static com.nordokod.scio.R.attr.iconNormalColor;
+import static com.nordokod.scio.R.attr.iconSelectedColor;
 
 public class Utilities {
     public static String USER_REGULAR_EXPRESSION="([A-Za-zÁÉÍÓÚáéíóúÄËÏÖÜäëïöüÑñ]+)([\\s]([A-Za-zÁÉÍÓÚáéíóúÄËÏÖÜäëïöüÑñ])+)*";
@@ -53,16 +67,73 @@ public class Utilities {
      * @param category int
      * @return int de res
      */
-    public static int getStringFromCategory(int category){
+    public static int getCategoryStringResource(int category){
         switch (category) {
-            case 1:return R.string.category_exact_sciences;
-            case 2:return R.string.category_social_sciences;
-            case 3:return R.string.category_sports;
-            case 4:return R.string.category_art;
-            case 5:return R.string.category_tech;
-            case 6:return R.string.category_entertainment;
-            case 7:return R.string.category_others;
+            case 1: return R.string.category_exact_sciences;
+            case 2: return R.string.category_social_sciences;
+            case 3: return R.string.category_sports;
+            case 4: return R.string.category_art;
+            case 5: return R.string.category_tech;
+            case 6: return R.string.category_entertainment;
+            case 7: return R.string.category_others;
             default: return 0;
+        }
+    }
+
+    /**
+     *
+     * @param view_selected_id
+     * @return
+     */
+    public static int getCategoryId(int view_selected_id) {
+        switch (view_selected_id) {
+            case R.id.CL_Exacts:        return 1;
+            case R.id.CL_Socials:       return 2;
+            case R.id.CL_Sports:        return 3;
+            case R.id.CL_Art:           return 4;
+            case R.id.CL_Tech:          return 5;
+            case R.id.CL_Entertainment: return 6;
+            default:                    return 7;
+        }
+    }
+
+    @SuppressLint("ResourceType")
+    public static int onClickCategoryListener(View view, MainActivity mainActivity, int preview_Category_View_Selected, LinearLayout LL_Categories) {
+        if (preview_Category_View_Selected != view.getId()) {
+            AppCompatImageView categoryIcon = view.findViewById(getCategoryImageViewId(view.getId()));
+
+            if(categoryIcon != null) {
+                TypedValue typedValue = new TypedValue();
+                Objects.requireNonNull(mainActivity).getTheme().resolveAttribute(iconSelectedColor, typedValue, true);
+
+                categoryIcon.setColorFilter(typedValue.data);
+            }
+
+            // A la categoria anterior se le devuelve su color de icono normal
+            if(preview_Category_View_Selected != 0) {
+                categoryIcon = LL_Categories.findViewById(getCategoryImageViewId(preview_Category_View_Selected));
+
+                TypedValue typedValue = new TypedValue();
+                Objects.requireNonNull(mainActivity).getTheme().resolveAttribute(iconNormalColor, typedValue, true);
+
+                categoryIcon.setColorFilter(typedValue.data);
+            }
+
+            preview_Category_View_Selected = view.getId();
+        }
+        return preview_Category_View_Selected;
+    }
+
+    public static int getCategoryImageViewId(int view_id) {
+        switch (view_id) {
+            case R.id.CL_Exacts:        return R.id.IV_Exacts;
+            case R.id.CL_Socials:       return R.id.IV_Socials;
+            case R.id.CL_Sports:        return R.id.IV_Sports;
+            case R.id.CL_Art:           return R.id.IV_Art;
+            case R.id.CL_Tech:          return R.id.IV_Tech;
+            case R.id.CL_Entertainment: return R.id.IV_Entertainment;
+            case R.id.CL_Others:        return R.id.IV_Others;
+            default:                    return 0;
         }
     }
 }
