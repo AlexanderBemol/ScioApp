@@ -15,14 +15,12 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.StorageException;
 import com.nordokod.scio.constants.ErrorMessage;
 import com.nordokod.scio.constants.UserOperations;
-import com.nordokod.scio.entity.Error;
 import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.InvalidValueException;
 import com.nordokod.scio.entity.NoGuidesException;
 import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.entity.PermissionException;
 import com.nordokod.scio.entity.PhoneNetworkException;
-
 import es.dmoral.toasty.Toasty;
 
 

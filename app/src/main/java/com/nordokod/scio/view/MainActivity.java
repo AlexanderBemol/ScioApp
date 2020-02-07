@@ -153,6 +153,11 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         }
         try {
             TV_Name.setText(userModel.getBasicUserInfo().getUsername());
+            com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
+            user = userModel.getBasicUserInfo();
+            userModel.getUserInformation(user)
+                    .addOnSuccessListener(documentSnapshot -> TV_Name.setText(userModel.getUserFromDocument(documentSnapshot).getUsername()))
+                    .addOnFailureListener(this::showError);
         } catch (Exception e) {
             showError(e);
         }
