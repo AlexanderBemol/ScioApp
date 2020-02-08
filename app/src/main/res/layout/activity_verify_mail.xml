@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.VerifyMailActivity">
+
+    <TextView
+        android:id="@+id/TV_Verify_Mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Para continuar debes verificar tu cuenta de correo, revisa tu bandeja de entrada"
+        android:textAlignment="center"
+        android:layout_marginTop="30dp"
+
+        app:layout_constraintBottom_toTopOf="@id/BTN_Verify_Mail_Refresh"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BTN_Verify_Mail_Refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Actualizar"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TV_Verify_Mail"
+        app:layout_constraintBottom_toTopOf="@id/BTN_Verify_Mail_Resend"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BTN_Verify_Mail_Resend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reenviar correo"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BTN_Verify_Mail_Refresh"
+        app:layout_constraintBottom_toTopOf="@id/BTN_Verify_Mail_Logout"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BTN_Verify_Mail_Logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar sesión"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BTN_Verify_Mail_Resend"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

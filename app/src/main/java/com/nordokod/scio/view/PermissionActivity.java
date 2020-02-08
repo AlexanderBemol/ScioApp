@@ -13,6 +13,7 @@ import androidx.lifecycle.OnLifecycleEvent;
 import android.view.View;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.model.User;
 import com.nordokod.scio.process.PermissionCheck;
 
 public class PermissionActivity extends AppCompatActivity implements BasicActivity, LifecycleObserver {
@@ -25,6 +26,7 @@ public class PermissionActivity extends AppCompatActivity implements BasicActivi
     private AppCompatButton BTN_Skip;
 
     private PermissionCheck permissionCheck;
+    private User userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,7 @@ public class PermissionActivity extends AppCompatActivity implements BasicActivi
         BTN_Usage = findViewById(R.id.BTN_Usage_access_permission);
         BTN_Autostart = findViewById(R.id.BTN_Autostart_permission);
         BTN_Skip = findViewById(R.id.BTN_Permission_skip);
+        userModel = new User();
 
         permissionCheck = new PermissionCheck();
 
@@ -77,8 +80,14 @@ public class PermissionActivity extends AppCompatActivity implements BasicActivi
     }
 
     private void goToMain(){
-        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-        startActivity(intent);
+        if(!userModel.isEmailVerified()){
+            Intent intent = new Intent(getApplicationContext(),VerifyMailActivity.class);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+            startActivity(intent);
+        }
+        finish();
     }
 
 

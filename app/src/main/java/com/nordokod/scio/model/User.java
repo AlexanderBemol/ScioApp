@@ -31,7 +31,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -182,12 +181,12 @@ public class User {
      * @return entidad usuario
      * @throws InvalidValueException (valores inválidos)
      */
-    public com.nordokod.scio.entity.User getBasicUserInfo() throws InvalidValueException {
+    public com.nordokod.scio.entity.User getBasicUserInfo(){
         com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
-        user.setUsername(Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName()));
-        user.setEmail(mAuth.getCurrentUser().getEmail());
+        if (Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName()!=null) user.setUsername(mAuth.getCurrentUser().getDisplayName());
+        if(mAuth.getCurrentUser().getEmail() != null) user.setEmail(mAuth.getCurrentUser().getEmail());
+        if(mAuth.getCurrentUser().getPhotoUrl()!= null) user.setPhotoPath(mAuth.getCurrentUser().getPhotoUrl().toString());
         user.setUid(mAuth.getCurrentUser().getUid());
-        user.setPhotoPath(Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser().getPhotoUrl()).toString()));
         return user;
     }
 
@@ -307,4 +306,17 @@ public class User {
         );
     }
 
+    /**
+     * Revisar si el email está verificado
+     * @return boolean
+     */
+    public boolean isEmailVerified(){
+        return mAuth.getCurrentUser().isEmailVerified();
+    }
+
+    /**
+     * Obtener el estado mas actual del usuario
+     * @return
+     */
+    public Task<Void> refreshUser(){return mAuth.getCurrentUser().reload();}
 }
