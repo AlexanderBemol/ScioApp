@@ -78,7 +78,11 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         initComponents();
         initAnimations();
         initListeners();
-        if(userModel.isUserLogged())goToMainView();
+        if(userModel.isUserLogged()){
+            if(userModel.isEmailVerified())goToMainView();
+            else goToVerifyMail();
+        }
+
     }
 
     private void showLoginLoadingDialog(){
@@ -187,12 +191,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                             if (!userModel.isEmailVerified()) goToVerifyMail();
                             else goToMainView();
                         }
-                    }).addOnCanceledListener(() -> showError(new OperationCanceledException())).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            showError(e);
-                        }
-                    });
+                    }).addOnCanceledListener(() -> showError(new OperationCanceledException())).addOnFailureListener(e -> showError(e));
                 }
             }catch(Exception e){
                 showError(e);
