@@ -30,6 +30,7 @@ import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.User;
 import com.nordokod.scio.process.DownloadImageProcess;
 import com.nordokod.scio.process.MediaProcess;
+import com.nordokod.scio.process.UpdateCheck;
 import com.nordokod.scio.process.UserMessage;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +94,11 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         } catch (Exception e) {
             showError(e);
         }
+
+        //verificar update
+        
+        UpdateCheck updateCheck = new UpdateCheck();
+        updateCheck.checkUpdateAvailability(this,this);
 
         //link dinámico
         FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent())

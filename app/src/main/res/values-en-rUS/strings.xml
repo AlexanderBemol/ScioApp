@@ -93,4 +93,11 @@
     <string name="txt_edittext_password_hint">Type password</string>
     <string name="txt_edittext_mail_hint">Type e-mail</string>
     <string name="txt_edittext_confirm_password_hint">Retype password</string>
+    <string name="txt_activity_mail_title">Verify your account</string>
+    <string name="txt_activity_mail_verify">We sent you an e-mail to verify you account, check your inbox or spam</string>
+    <string name="txt_activity_mail_resend">Click on resend button to forward the e-mail</string>
+    <string name="txt_activity_mail_swipe">Update swiping up</string>
+    <string name="txt_BTN_Logout">Logout</string>
+    <string name="txt_BTN_Resend">Resend</string>
+
 </resources>

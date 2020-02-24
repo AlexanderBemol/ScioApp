@@ -14,6 +14,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -26,12 +27,14 @@ import com.nordokod.scio.entity.InvalidValueException;
 import com.nordokod.scio.process.DownloadImageProcess;
 import com.nordokod.scio.process.MediaProcess;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -307,11 +310,15 @@ public class User {
     }
 
     /**
-     * Revisar si el email está verificado
+     * Revisar si el email está verificado, si el usuario es de FB o Google, por defecto regresa un TRUE
      * @return boolean
      */
     public boolean isEmailVerified(){
-        return mAuth.getCurrentUser().isEmailVerified();
+        if(mAuth.getCurrentUser().getProviderData().size() > 1){
+            if(mAuth.getCurrentUser().getProviderData().get(1).getProviderId().equals(FacebookAuthProvider.PROVIDER_ID)) return true;
+            else return mAuth.getCurrentUser().isEmailVerified();
+        }
+        else return mAuth.getCurrentUser().isEmailVerified();
     }
 
     /**
