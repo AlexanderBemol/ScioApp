@@ -29,8 +29,6 @@ public class OpenQuestionFragment extends Fragment implements BasicFragment{
     private OpenQuestion openQuestion;
     private StudyGuideActivity studyGuideActivity;
 
-    private int starsEarned = 0;
-
     private Animation starEarnedAnimation;
 
     public OpenQuestionFragment() {}
@@ -89,10 +87,12 @@ public class OpenQuestionFragment extends Fragment implements BasicFragment{
     }
 
     protected void onAnswerQuestion() {
-        starsEarned = QualifyMethod.getStars(openQuestion.getAnswer(), Objects.requireNonNull(ET_Answer.getText()).toString());
+        int starsEarned = QualifyMethod.getStars(openQuestion.getAnswer(), Objects.requireNonNull(ET_Answer.getText()).toString());
 
         if (starsEarned > 0) QuestionUtils.fillStarsEarned(context, starsEarned, IV_Star_1, IV_Star_2, IV_Star_3, starEarnedAnimation);
         showCorrectAnswer();
+
+        if (studyGuideActivity != null) studyGuideActivity.updateStarsEarnedAmount(starsEarned);
     }
 
     ////////////////////////////////////////////////////////////////////////// Objects from the view

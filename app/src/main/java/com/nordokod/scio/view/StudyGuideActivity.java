@@ -20,7 +20,9 @@ import com.nordokod.scio.entity.MultipleChoiceQuestion;
 import com.nordokod.scio.entity.OpenQuestion;
 import com.nordokod.scio.entity.Question;
 import com.nordokod.scio.entity.TrueFalseQuestion;
+import com.nordokod.scio.process.UserMessage;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,6 +40,8 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
     private List<Question> questionList;
 
     private Animation buttonPressedAnimation;
+
+    private UserMessage userMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +72,11 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
     public void initListeners() {
         BTN_Skip.setOnClickListener(v -> {
             BTN_Skip.startAnimation(buttonPressedAnimation);
-            showNextQuestion();
             amountOfQuestionsSkipped++;
+
+            if (currentQuestion < questionList.size() - 1) showNextQuestion();
+            else onAnswerLastQuestionShowAndHideButtonsLogic();
+
         });
 
         BTN_Next.setOnClickListener(v -> {
@@ -88,12 +95,12 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
 
         BTN_Finish.setOnClickListener(v -> {
             BTN_Finish.setAnimation(buttonPressedAnimation);
-            showStats();
+            showStats(amountOfStarsEarned, amountOfQuestionsSkipped);
         });
 
         IV_Close.setOnClickListener(v -> {
             IV_Close.startAnimation(buttonPressedAnimation);
-            showStats();
+            showStats(amountOfStarsEarned, amountOfQuestionsSkipped);
         });
     }
 
@@ -104,24 +111,24 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
     @Override
     protected void onStart() {
         super.onStart();
-
+/*
         Intent intent = getIntent();
         com.nordokod.scio.model.Question questionModel = new com.nordokod.scio.model.Question();
         Guide guide = (Guide) Objects.requireNonNull(intent.getSerializableExtra("GUIDE"));
         questionList = questionModel.getQuestionsFromGuide(guide);
-/*
+*/
         questionList = new ArrayList<>();
+        OpenQuestion openQuestion = new OpenQuestion("3", "Question 3", 3, "Answer");
+        questionList.add(openQuestion);
+        TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion("2", "Question 2", 2, false);
+        questionList.add(trueFalseQuestion);
         MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("1", "Question 1", 1);
         multipleChoiceQuestion.addAnswer("Answer 1", false);
         multipleChoiceQuestion.addAnswer("Answer 2", false);
         multipleChoiceQuestion.addAnswer("Answer 3", true);
         multipleChoiceQuestion.addAnswer("Answer 4", false);
         questionList.add(multipleChoiceQuestion);
-        TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion("2", "Question 2", 2, false);
-        questionList.add(trueFalseQuestion);
-        OpenQuestion openQuestion = new OpenQuestion("3", "Question 3", 3, "Answer");
-        questionList.add(openQuestion);
-*/
+
         totalOfQuestions = questionList.size();
 
         switch (questionList.get(currentQuestion).getKindOfQuestion()) {
@@ -129,6 +136,8 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
             case 2: showTrueFalseQuestion((TrueFalseQuestion) questionList.get(currentQuestion)); break;
             case 3: showOpenAnswerQuestion((OpenQuestion) questionList.get(currentQuestion)); break;
         }
+
+        setQuestionShowAndHideButtonsLogic(kindOfCurrentQuestion);
     }
 
     private void showNextQuestion() {
@@ -142,8 +151,7 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
 
         TV_Question_Number.setText(getResources().getString(R.string.current_question_total_questions, (currentQuestion + 1), totalOfQuestions));
 
-        if (currentQuestion == questionList.size())
-            BTN_Next.setActivated(false);
+        setQuestionShowAndHideButtonsLogic(kindOfCurrentQuestion);
     }
 
     private void showMultipleChoiceQuestion(MultipleChoiceQuestion multipleChoiceQuestion) {
@@ -154,9 +162,6 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
         transaction.addToBackStack(null);
         transaction.commit();
 
-        BTN_Answer.setVisibility(View.VISIBLE);
-        BTN_Next.setVisibility(View.GONE);
-
         kindOfCurrentQuestion = KindOfQuestion.MULTIPLE_CHOICE.getCode();
     }
 
@@ -165,10 +170,6 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
         transaction.replace(R.id.StudyGuide_FL_Question_Container, new TrueFalseQuestionFragment(this, trueFalseQuestion, this));
         transaction.addToBackStack(null);
         transaction.commit();
-
-        BTN_Answer.setVisibility(View.GONE);
-        BTN_Next.setVisibility(View.VISIBLE);
-        BTN_Next.setActivated(false);
 
         kindOfCurrentQuestion = KindOfQuestion.TRUE_FALSE.getCode();
     }
@@ -181,9 +182,6 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
         transaction.addToBackStack(null);
         transaction.commit();
 
-        BTN_Answer.setVisibility(View.VISIBLE);
-        BTN_Next.setVisibility(View.GONE);
-
         kindOfCurrentQuestion = KindOfQuestion.OPEN.getCode();
     }
 
@@ -193,24 +191,81 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
         this.finish();
     }
 
-    protected void updateStarsEarnedAmount(int amountOfStarsEarned) {
-        this.amountOfStarsEarned += amountOfStarsEarned;
-        TV_Stars_Amount.setText(String.valueOf(this.amountOfStarsEarned));
+    /**
+     * Update global stars earned amount.
+     *
+     * @param starsEarned -> (int) Amount of stars earned in a question.
+     */
+    protected void updateStarsEarnedAmount(int starsEarned) {
+        amountOfStarsEarned += starsEarned;
+        TV_Stars_Amount.setText(String.valueOf(amountOfStarsEarned));
 
-        BTN_Answer.setVisibility(View.GONE);
-        BTN_Next.setVisibility(View.VISIBLE);
-        BTN_Next.setActivated(true);
-
-        if (currentQuestion == questionList.size()) showStats();
+        if (currentQuestion == questionList.size() - 1)
+            onAnswerLastQuestionShowAndHideButtonsLogic();
+        else
+            onAnswerQuestionShowAndHideButtonsLogic();
     }
 
-    private void showStats() {
-        dialogFragment = new StudyGuideStatsFragment(this, this, amountOfStarsEarned, amountOfQuestionsSkipped);
+    /**
+     * Open the dialog fragment to show the statistics of this study session.
+     *
+     * @param starsEarned       -> (int) Amount of stars earned in this study session.
+     * @param questionsSkipped  -> (int) Amount of questions skipped in this study session.
+     */
+    private void showStats(int starsEarned, int questionsSkipped) {
+        dialogFragment = new StudyGuideStatsFragment(this, this, starsEarned, questionsSkipped);
         dialogFragment.show(getSupportFragmentManager(), "Study Stats");
     }
 
+    /**
+     * Show an message error if is necessary.
+     */
     private void showError() {
 
+    }
+
+    /**
+     * Logic to show and hide buttons when set a question.
+     *
+     * @param kindOfQuestion
+     */
+    private void  setQuestionShowAndHideButtonsLogic(int kindOfQuestion) {
+        switch (kindOfQuestion) {
+            case 1: case 3:     // Multiple Choice and Open Question
+                BTN_Skip.setVisibility(View.VISIBLE);
+                BTN_Next.setVisibility(View.GONE);
+                BTN_Answer.setVisibility(View.VISIBLE);
+                BTN_Finish.setVisibility(View.GONE);
+                break;
+            case 2:             // True False Question
+                BTN_Skip.setVisibility(View.VISIBLE);
+                BTN_Next.setVisibility(View.GONE);
+                BTN_Answer.setVisibility(View.GONE);
+                BTN_Finish.setVisibility(View.GONE);
+                break;
+        }
+    }
+
+    /**
+     * Logic to show and hide buttons when a questions is answered.
+     * Is the same logic for all kind of questions.
+     */
+    private void onAnswerQuestionShowAndHideButtonsLogic() {
+        BTN_Skip.setVisibility(View.GONE);
+        BTN_Next.setVisibility(View.VISIBLE);
+        BTN_Answer.setVisibility(View.GONE);
+        BTN_Finish.setVisibility(View.GONE);
+    }
+
+    /**
+     * Logic to show and hide buttons when the last question is answered.
+     * Is the same logic for all kind of questions.
+     */
+    private void onAnswerLastQuestionShowAndHideButtonsLogic() {
+        BTN_Skip.setVisibility(View.GONE);
+        BTN_Next.setVisibility(View.GONE);
+        BTN_Answer.setVisibility(View.GONE);
+        BTN_Finish.setVisibility(View.VISIBLE);
     }
 
     ////////////////////////////////////////////////////////////////////////// Objects from the view

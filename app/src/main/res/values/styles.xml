@@ -296,6 +296,12 @@
         <item name="android:background"     >@xml/background_solid_round</item>
     </style>
 
+    <style name="answerButton" parent="button">
+        <item name="android:textColor"      >?secondaryTextColor</item>
+        <item name="android:backgroundTint" >@color/colorYellow</item>
+        <item name="android:background"     >@xml/background_solid_round</item>
+    </style>
+
     <style name="cancelButton" parent="button">
         <item name="android:textColor"      >?cancelColor</item>
         <item name="android:backgroundTint" >?cancelColor</item>
