@@ -107,7 +107,7 @@ public class OpenQuestionDialog implements BasicDialog {
     public void showDialog() {
         if (!dialog.isShowing()) {
             hideStars();
-            TV_Category.setText(Utilities.getStringFromCategory(guide.getCategory()));
+            TV_Category.setText(Utilities.getCategoryStringResource(guide.getCategory()));
             TV_Topic.setText(guide.getTopic());
             TV_Question.setText(question.getQuestion());
             TV_Question.setText(question.getAnswer());

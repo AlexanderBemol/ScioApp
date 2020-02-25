@@ -13,24 +13,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.dynamiclinks.ShortDynamicLink;
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.Guide;
 
 public class MenuGuideFragment extends BottomSheetDialogFragment implements BasicFragment {
-    private MainActivity activity;
+    private MainActivity mainActivity;
     private Context context;
     private Guide guide;
     private com.nordokod.scio.model.Guide mGuide;
-    private AppCompatTextView TV_Study_Guide, TV_Edit_Guide, TV_Delete_Guide, TV_Share_Guide, TV_Add_Question, TV_Edit_Question, TV_Delete_Question, TV_Topic;
-    private AppCompatImageView IV_Icon;
+    private AppCompatTextView TV_Study_Guide;
+    private AppCompatTextView TV_Edit_Guide;
+    private AppCompatTextView TV_Delete_Guide;
+    private AppCompatTextView TV_Share_Guide;
+    private AppCompatTextView TV_Add_Question;
+    private AppCompatTextView TV_Edit_Question;
+    private AppCompatTextView TV_Delete_Question;
 
     public MenuGuideFragment() { }
 
     @SuppressLint("ValidFragment")
-    public MenuGuideFragment(Context context, MainActivity activity, com.nordokod.scio.model.Guide mGuide, Guide guide) {
-        this.activity = activity;
+    public MenuGuideFragment(Context context, MainActivity mainActivity, com.nordokod.scio.model.Guide mGuide, Guide guide) {
+        this.mainActivity = mainActivity;
         this.context = context;
         this.mGuide = mGuide;
         this.guide = guide;
@@ -54,8 +57,8 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
 
     @Override
     public void initComponents(View view) {
-        TV_Topic            = view.findViewById(R.id.FMGuide_TV_Topic);
-        IV_Icon             = view.findViewById(R.id.FMGuide_IV_Icon);
+        AppCompatTextView TV_Topic = view.findViewById(R.id.FMGuide_TV_Topic);
+        AppCompatImageView IV_Icon = view.findViewById(R.id.FMGuide_IV_Icon);
         // Guia
         TV_Study_Guide      = view.findViewById(R.id.FMGuide_TV_StudyGuide);
         TV_Edit_Guide       = view.findViewById(R.id.FMGuide_TV_EditGuide);
@@ -72,66 +75,41 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
 
     @Override
     public void initListeners() {
-        TV_Study_Guide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, StudyGuideActivity.class);
-                intent.putExtra("GUIDE", guide);
-                startActivity(intent);
-            }
+        TV_Study_Guide.setOnClickListener(v -> {
+            Intent intent = new Intent(context, StudyGuideActivity.class);
+            intent.putExtra("GUIDE", guide);
+            startActivity(intent);
         });
 
-        TV_Edit_Guide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: Aqui abrimos el Fragment para editar la guia.
-            }
+        TV_Edit_Guide.setOnClickListener(v -> {
+            mainActivity.onCloseFragment("Menu Guide");
+            mainActivity.showFragmentToEditGuide(guide);
         });
 
-        TV_Delete_Guide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //guideController.deleteGuide(guide.getId());
-            }
+        TV_Delete_Guide.setOnClickListener(v -> {
+            // TODO: Agregar la logica para eliminar la guia.
         });
 
-        TV_Share_Guide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mGuide.generateGuideLink(guide).addOnSuccessListener(new OnSuccessListener<ShortDynamicLink>() {
-                    @Override
-                    public void onSuccess(ShortDynamicLink shortDynamicLink) {
-                        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                        sharingIntent.setType("text/plain");
-                        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "GUIDE");
-                        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shortDynamicLink.getShortLink().toString());
+        TV_Share_Guide.setOnClickListener(v -> mGuide.generateGuideLink(guide).addOnSuccessListener(shortDynamicLink -> {
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "GUIDE");
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, shortDynamicLink.getShortLink().toString());
 
-                        context.startActivity(sharingIntent);
-                    }
-                });
-            }
+            context.startActivity(sharingIntent);
+        }));
+
+        TV_Add_Question.setOnClickListener(v -> {
+            mainActivity.onCloseFragment("Menu Guide");
+            mainActivity.showNewQuestionDialog(guide);
         });
 
-        TV_Add_Question.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.onCloseFragment("Menu Guide");
-                activity.onNewQuestionDialog(guide);
-            }
+        TV_Edit_Question.setOnClickListener(v -> {
+
         });
 
-        TV_Edit_Question.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        TV_Delete_Question.setOnClickListener(v -> {
 
-            }
-        });
-
-        TV_Delete_Question.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
         });
     }
 
@@ -143,7 +121,6 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
             case 4:     return R.drawable.ic_palette;
             case 5:     return R.drawable.ic_code;
             case 6:     return R.drawable.ic_theatre;
-            case 7:     return R.drawable.ic_scio_face;
             default:    return R.drawable.ic_scio_face;
         }
     }

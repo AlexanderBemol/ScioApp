@@ -30,6 +30,7 @@ import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.User;
 import com.nordokod.scio.process.DownloadImageProcess;
 import com.nordokod.scio.process.MediaProcess;
+import com.nordokod.scio.process.UpdateCheck;
 import com.nordokod.scio.process.UserMessage;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,6 +96,11 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
             showError(e);
         }
 
+        //verificar update
+        
+        UpdateCheck updateCheck = new UpdateCheck();
+        updateCheck.checkUpdateAvailability(this,this);
+
         //link dinámico
         FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent())
                 .addOnSuccessListener(
@@ -154,6 +160,11 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         }
         try {
             TV_Name.setText(userModel.getBasicUserInfo().getUsername());
+            com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
+            user = userModel.getBasicUserInfo();
+            userModel.getUserInformation(user)
+                    .addOnSuccessListener(documentSnapshot -> TV_Name.setText(userModel.getUserFromDocument(documentSnapshot).getUsername()))
+                    .addOnFailureListener(this::showError);
         } catch (Exception e) {
             showError(e);
         }
@@ -167,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
             switch (menuItem.getItemId()) {
                 case R.id.Menu_New_Guide:
                     openFragmentOfBottomNavigationBar(new CreateFragment());
-                    openFragmentToCreateNewGuide();
+                    showFragmentToCreateNewGuide();
                     return true;
                 case R.id.Menu_Guides:
                     openFragmentOfBottomNavigationBar(new GuidesFragment(this, this));
@@ -181,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         bottomNavigation.setOnNavigationItemReselectedListener(menuItem -> {
             if (menuItem.getItemId() == R.id.Menu_New_Guide) {
                 openFragmentOfBottomNavigationBar(new CreateFragment());
-                openFragmentToCreateNewGuide();
+                showFragmentToCreateNewGuide();
             }
         });
 
@@ -209,10 +220,12 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         /*MenuItems.findItem(R.id.Menu_About).setOnMenuItemClickListener(item -> {
 
         });*/
-
-
     }
 
+    /**
+     * Método para mostrar el fragment de la opción seleccionada en la barra de navegación principal.
+     * @param fragment
+     */
     private void openFragmentOfBottomNavigationBar(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.VP_Main, fragment);
@@ -220,12 +233,28 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         transaction.commit();
     }
 
-    private void openFragmentToCreateNewGuide() {
+    /**
+     * Método para mostrar el Fragment para crear una nueva guia.
+     */
+    private void showFragmentToCreateNewGuide() {
         dialogFragment = new NewGuideFragment(this, this);
         dialogFragment.show(getSupportFragmentManager(), "New Guide");
     }
 
-    public void onNewQuestionDialog(Guide guide) {
+    /**
+     * Método para mostrar el Fragment para editar una guia.
+     * @param guide entidad de la guia que se quiere editar.
+     */
+    protected void showFragmentToEditGuide(Guide guide) {
+        dialogFragment = new EditGuideFragment(this, this, guide);
+        dialogFragment.show(getSupportFragmentManager(), "Edit Guide");
+    }
+
+    /**
+     * Método para mostrar el Fragment para elegir el tipo de pregunta que se quiere agregar.
+     * @param guide entidad de la guia a la que se quiere agregar la pregunta.
+     */
+    public void showNewQuestionDialog(Guide guide) {
         dialogFragment = new NewQuestionFragment(this, this, guide);
         dialogFragment.show(getSupportFragmentManager(), "New Question");
     }
@@ -234,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
      * Método para inicializar Fragment para la pregunta de tipo Opción muultiple y mostrarlo.
      * @param guide entidad de la guía
      */
-    public void onNewMultipleChoiceQuestionDialog(Guide guide) {
+    public void showNewMultipleChoiceQuestionDialog(Guide guide) {
         dialogFragment = new NewMultipleChoiceQuestionFragment(this, this, guide);
         dialogFragment.show(getSupportFragmentManager(), "New Multiple Choice");
     }
@@ -243,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
      * Método para inicializar Fragment para la pregunta de tipo Respuesta abierta y mostrarlo.
      * @param guide entidad de la guía
      */
-    public void onNewOpenAnswerQuestionDialog(Guide guide) {
+    public void showNewOpenAnswerQuestionDialog(Guide guide) {
         dialogFragment = new NewOpenAnswerQuestionFragment(this, this, guide);
         dialogFragment.show(getSupportFragmentManager(), "New Open Answer");
     }
@@ -252,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
      * Método para inicializar Fragment para la pregunta de tipo Verdadero/Falso y mostrarlo.
      * @param guide entidad de la guía
      */
-    public void onNewTrueFalseQuestionDialog(Guide guide) {
+    public void showNewTrueFalseQuestionDialog(Guide guide) {
         dialogFragment = new NewTrueFalseQuestionFragment(this, this, guide);
         dialogFragment.show(getSupportFragmentManager(), "New TrueFalse");
     }
@@ -268,32 +297,6 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                         .requireNonNull(getSupportFragmentManager()
                                 .findFragmentByTag(tag)))
                 .commit();
-        /*
-        switch (tag) {
-            case "New Guide":
-                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("New Guide"))).commit();
-                break;
-            case "New Question":
-                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("New Question"))).commit();
-                break;
-            case "Menu Guide":
-                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("Menu Guide"))).commit();
-                break;
-            case "New Multiple Choice":
-                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("New Multiple Choice"))).commit();
-                break;
-            case "New TrueFalse":
-                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("New TrueFalse"))).commit();
-                break;
-            case "New Open Answer":
-                getSupportFragmentManager().beginTransaction().remove(Objects.requireNonNull(getSupportFragmentManager().findFragmentByTag("New Open Answer"))).commit();
-                break;
-        }
-        */
-    }
-
-    public void onClickCategoryListener(View view) {
-        //createFragment.onClickCategoryListener(view);
     }
 
     @Override

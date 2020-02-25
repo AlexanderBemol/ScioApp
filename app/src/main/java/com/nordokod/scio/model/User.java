@@ -14,6 +14,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
@@ -26,13 +27,14 @@ import com.nordokod.scio.entity.InvalidValueException;
 import com.nordokod.scio.process.DownloadImageProcess;
 import com.nordokod.scio.process.MediaProcess;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -182,12 +184,12 @@ public class User {
      * @return entidad usuario
      * @throws InvalidValueException (valores inválidos)
      */
-    public com.nordokod.scio.entity.User getBasicUserInfo() throws InvalidValueException {
+    public com.nordokod.scio.entity.User getBasicUserInfo(){
         com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
-        user.setUsername(Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName()));
-        user.setEmail(mAuth.getCurrentUser().getEmail());
+        if (Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName()!=null) user.setUsername(mAuth.getCurrentUser().getDisplayName());
+        if(mAuth.getCurrentUser().getEmail() != null) user.setEmail(mAuth.getCurrentUser().getEmail());
+        if(mAuth.getCurrentUser().getPhotoUrl()!= null) user.setPhotoPath(mAuth.getCurrentUser().getPhotoUrl().toString());
         user.setUid(mAuth.getCurrentUser().getUid());
-        user.setPhotoPath(Objects.requireNonNull(Objects.requireNonNull(mAuth.getCurrentUser().getPhotoUrl()).toString()));
         return user;
     }
 
@@ -307,4 +309,21 @@ public class User {
         );
     }
 
+    /**
+     * Revisar si el email está verificado, si el usuario es de FB o Google, por defecto regresa un TRUE
+     * @return boolean
+     */
+    public boolean isEmailVerified(){
+        if(mAuth.getCurrentUser().getProviderData().size() > 1){
+            if(mAuth.getCurrentUser().getProviderData().get(1).getProviderId().equals(FacebookAuthProvider.PROVIDER_ID)) return true;
+            else return mAuth.getCurrentUser().isEmailVerified();
+        }
+        else return mAuth.getCurrentUser().isEmailVerified();
+    }
+
+    /**
+     * Obtener el estado mas actual del usuario
+     * @return
+     */
+    public Task<Void> refreshUser(){return mAuth.getCurrentUser().reload();}
 }

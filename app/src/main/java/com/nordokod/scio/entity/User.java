@@ -69,11 +69,8 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) throws InvalidValueException {
-        if(!username.matches(Utilities.USER_REGULAR_EXPRESSION))
-            throw new InvalidValueException();
-        else
-            this.username = username;
+    public void setUsername(String username){
+        this.username = username;
     }
 
     public String getEmail() {

@@ -24,6 +24,7 @@
     <!-- Strings relacionados con fragment_new_guide -->
     <!-- ======================================================================================= -->
     <string name="txt_TV_NewGuide">Nueva Guía</string>
+    <string name="txt_TV_EditGuide">Editar Guía</string>
     <string name="hint_ET_Topic">p. ej: </string>
     <string name="txt_TV_Category">Categoría</string>
     <string name="txt_TV_Topic">Tema</string>
@@ -78,6 +79,15 @@
     <string name="title_incomplete_first_configuration">Aún no terminas</string>
     <string name="description_incomplete_first_configuration">Por favor llena tus datos para\npoder usar la aplicación.</string>
 
+    <!-- ======================================================================================= -->
+    <!-- Strings relacionados con verification_mail -->
+    <!-- ======================================================================================= -->
+    <string name="txt_activity_mail_title">Verificar tu cuenta</string>
+    <string name="txt_activity_mail_verify">Te enviamos un correo para que verifiques tu cuenta, revisa tu bandeja de entrada o spam</string>
+    <string name="txt_activity_mail_resend">Si no recibiste el correo da clic en el botón Reenviar</string>
+    <string name="txt_activity_mail_swipe">Actualiza deslizando hacia abajo</string>
+    <string name="txt_BTN_Logout">Cerrar sesión</string>
+    <string name="txt_BTN_Resend">Reenviar</string>
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con las preguntas -->
     <!-- ======================================================================================= -->

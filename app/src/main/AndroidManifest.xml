@@ -22,13 +22,14 @@
         android:supportsRtl="true"
         android:theme="@style/DefaultTheme">
         <activity android:name=".view.StudyGuideActivity" />
+        <activity android:name=".view.VerifyMailActivity"></activity>
 
         <service
             android:name=".process.PushNotifications"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-            <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
@@ -97,9 +98,7 @@
 
         <service
             android:name=".process.LockAppProcess"
-            android:stopWithTask="false" />
-
-        <!-- ============================================================================== Crop Recortes -->
+            android:stopWithTask="false" /> <!-- ============================================================================== Crop Recortes -->
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" /> <!-- ======================================================================================= Permission -->
         <activity
             android:name=".view.PermissionActivity"

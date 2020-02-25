@@ -86,8 +86,6 @@
     <string name="txt_BTN_Import">Import</string>
     <string name="txt_import_guide_dialog_title">Import Guide</string>
     <string name="txt_hint_TV_Options">Write and select the correct answers.</string>
-    <string name="txt_BTN_Logout">Cerrar sesión</string>
-    <string name="txt_BTN_Resend">Reenviar</string>
     <string name="txt_BTN_Finish">Finish</string>
     <string name="txt_activity_signup_title">Create your account</string>
     <string name="hint_ET_Topic">e. g.</string>
@@ -95,4 +93,17 @@
     <string name="txt_TV_FStats_TV_Stars_Hint">Stars earned</string>
     <string name="txt_TV_FStats_TV_Title">Here are your statistics</string>
     <string name="txt_TV_FStats_TV_Hint">See the summary of the statistics of your study session.</string>
+    <string name="txt_TV_EditGuide">Edit Guide</string>
+    <string name="txt_textview_password_title">Password</string>
+    <string name="txt_textview_mail_title">E-mail</string>
+    <string name="txt_textview_confirm_password_title">Retype password</string>
+    <string name="txt_edittext_password_hint">Type password</string>
+    <string name="txt_edittext_mail_hint">Type e-mail</string>
+    <string name="txt_edittext_confirm_password_hint">Retype password</string>
+    <string name="txt_activity_mail_title">Verify your account</string>
+    <string name="txt_activity_mail_verify">We sent you an e-mail to verify you account, check your inbox or spam</string>
+    <string name="txt_activity_mail_resend">Click on resend button to forward the e-mail</string>
+    <string name="txt_activity_mail_swipe">Update swiping up</string>
+    <string name="txt_BTN_Logout">Logout</string>
+    <string name="txt_BTN_Resend">Resend</string>
 </resources>

@@ -73,4 +73,8 @@
     <dimen name="navigation_max_width">300dp</dimen>
     <dimen name="navigation_photo_size">60dp</dimen>
     <dimen name="icon_size_main_star">60dp</dimen>
+    <!-- ======================================================================================= -->
+    <!-- Verify mail -->
+    <!-- ======================================================================================= -->
+    <dimen name="verify_mail_image_size">250dp</dimen>
 </resources>

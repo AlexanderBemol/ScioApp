@@ -78,7 +78,11 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         initComponents();
         initAnimations();
         initListeners();
-        if(userModel.isUserLogged())goToMainView();
+        if(userModel.isUserLogged()){
+            if(userModel.isEmailVerified())goToMainView();
+            else goToVerifyMail();
+        }
+
     }
 
     private void showLoginLoadingDialog(){
@@ -184,14 +188,10 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                             newUser();
                         } else {
                             showSuccessfulMessage(UserOperations.LOGIN_USER);
-                            goToMainView();
+                            if (!userModel.isEmailVerified()) goToVerifyMail();
+                            else goToMainView();
                         }
-                    }).addOnCanceledListener(() -> showError(new OperationCanceledException())).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            showError(e);
-                        }
-                    });
+                    }).addOnCanceledListener(() -> showError(new OperationCanceledException())).addOnFailureListener(e -> showError(e));
                 }
             }catch(Exception e){
                 showError(e);
@@ -258,11 +258,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
     private void newUser(){
         User userModel = new User();
         com.nordokod.scio.entity.User userEntity = new com.nordokod.scio.entity.User();
-        try {
-            userEntity = userModel.getBasicUserInfo();
-        } catch (InvalidValueException e) {
-            showError(e);
-        }
+        userEntity = userModel.getBasicUserInfo();
         userModel.createUserInformation(userEntity).addOnSuccessListener(aVoid -> {
             showSuccessfulMessage(UserOperations.SIGN_UP_USER);
             goToPermissionView();
@@ -284,6 +280,13 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
 
     private void goToPermissionView(){
         Intent intent = new Intent(getApplicationContext(),PermissionActivity.class);
+        dismissProgressDialog();
+        startActivity(intent);
+        finish();
+    }
+
+    private void goToVerifyMail(){
+        Intent intent = new Intent(getApplicationContext(),VerifyMailActivity.class);
         dismissProgressDialog();
         startActivity(intent);
         finish();

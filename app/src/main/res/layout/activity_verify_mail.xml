@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/VMail_Swipe"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_padding"
+        tools:context=".view.VerifyMailActivity"
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/VMail_TV_Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_activity_mail_title"
+            android:textAlignment="center"
+
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/titleTextView"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/VMail_TV_TextVerify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/space_2"
+            android:text="@string/txt_activity_mail_verify"
+
+            app:layout_constraintTop_toBottomOf="@id/VMail_TV_Title"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/VMail_IV_Mailbox"
+            android:layout_width="@dimen/verify_mail_image_size"
+            android:layout_height="@dimen/verify_mail_image_size"
+            android:layout_marginTop="@dimen/space_3"
+
+            app:layout_constraintTop_toBottomOf="@id/VMail_TV_TextVerify"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:srcCompat="@drawable/ic_mailbox"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/VMail_TV_TextResend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/space_4"
+            android:text="@string/txt_activity_mail_resend"
+
+            app:layout_constraintTop_toBottomOf="@id/VMail_IV_Mailbox"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/VMail_TV_TextSwipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/space_2"
+            android:text="@string/txt_activity_mail_swipe"
+
+            app:layout_constraintTop_toBottomOf="@id/VMail_TV_TextResend"
+            />
+
+        <!-- ====================================================================================== Botones -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/VMail_BTN_Logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_BTN_Logout"
+            android:textColor="@color/cancelColor"
+            android:layout_marginEnd="@dimen/space_2"
+
+            app:layout_constraintTop_toTopOf="@id/VMail_BTN_Resend"
+            app:layout_constraintRight_toLeftOf="@id/VMail_BTN_Resend"
+            app:layout_constraintBottom_toBottomOf="@id/VMail_BTN_Resend"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/VMail_BTN_Resend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_BTN_Resend"
+
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            style="@style/normalButton"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
