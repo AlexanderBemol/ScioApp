@@ -89,9 +89,9 @@ public class LockedAppsOptionActivity extends AppCompatActivity implements Basic
 
             UserMessage userMessage = new UserMessage();
             userMessage.showSuccessfulOperationMessage(this, UserOperations.IMPORT_GUIDE);
-            finish();
+            closeAndGoToMainActivity();
         });
-        BTN_Cancel.setOnClickListener(l->finish());
+        BTN_Cancel.setOnClickListener(l->closeAndGoToMainActivity());
     }
 
     private boolean isMyServiceRunning() {
@@ -102,5 +102,11 @@ public class LockedAppsOptionActivity extends AppCompatActivity implements Basic
             }
         }
         return false;
+    }
+
+    private void closeAndGoToMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

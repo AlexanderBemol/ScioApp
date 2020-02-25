@@ -16,4 +16,16 @@ interface BasicFragment {
      * No debe ser llamado por clases externas.
      */
     void initListeners();
+
+    /**
+     * Este método es usado para inicializar las animaciones.
+     *
+     * No debe ser llamado por clases externas.
+     */
+    default void initAnimations() {}
+
+    /**
+     * Método usado para cerrar el Activity desde el que se esté invocando el Fragment.
+     */
+    default void goToFinishActivity() {}
 }

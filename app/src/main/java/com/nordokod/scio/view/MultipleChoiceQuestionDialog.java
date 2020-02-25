@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
@@ -11,7 +12,6 @@ import android.os.Build;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.Utilities;
 import com.nordokod.scio.entity.Guide;
@@ -41,7 +41,7 @@ public class MultipleChoiceQuestionDialog implements BasicDialog {
 
     @Override
     public void initDialog() {
-        dialog = new Dialog(context, R.style.DefaultTheme);
+        dialog = new Dialog(context, R.style.NightTheme);
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(true);
@@ -69,51 +69,6 @@ public class MultipleChoiceQuestionDialog implements BasicDialog {
     @Override
     public void initListeners() {
         IV_Close.setOnClickListener(v -> dialog.dismiss());
-        /*
-        TV_First_Answer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (question.getCorrect_answer_index() == 0 && !wasAnswered) {
-                    onCorrectAnswer(0);
-                    changeStarState(0);
-                } else if (!wasAnswered)
-                    onWrongAnswer(0);
-            }
-        });
-
-        TV_Second_Answer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (question.getCorrect_answer_index() == 1 && !wasAnswered) {
-                    onCorrectAnswer(1);
-                    changeStarState(0);
-                } else if (!wasAnswered)
-                    onWrongAnswer(1);
-            }
-        });
-
-        TV_Third_Answer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (question.getCorrect_answer_index() == 2 && !wasAnswered) {
-                    onCorrectAnswer(2);
-                    changeStarState(0);
-                } else if (!wasAnswered)
-                    onWrongAnswer(2);
-            }
-        });
-
-        TV_Fourth_Answer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (question.getCorrect_answer_index() == 3 && !wasAnswered) {
-                    onCorrectAnswer(3);
-                    changeStarState(0);
-                } else if (!wasAnswered)
-                    onWrongAnswer(3);
-            }
-        });
-        */
     }
 
     @Override
@@ -134,6 +89,7 @@ public class MultipleChoiceQuestionDialog implements BasicDialog {
 
             WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
             Window window = dialog.getWindow();
+
             layoutParams.copyFrom(window.getAttributes());
 
             layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -161,6 +117,7 @@ public class MultipleChoiceQuestionDialog implements BasicDialog {
     public void setQuestion(MultipleChoiceQuestion multipleChoiceQuestion, Guide guide) {
         this.question = multipleChoiceQuestion;
         this.guide = guide;
+
 
 
         showDialog();

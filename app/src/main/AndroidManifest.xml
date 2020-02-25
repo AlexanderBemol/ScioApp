@@ -21,6 +21,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/DefaultTheme">
+        <activity android:name=".view.StudyGuideActivity" />
+
         <service
             android:name=".process.PushNotifications"
             android:enabled="true"

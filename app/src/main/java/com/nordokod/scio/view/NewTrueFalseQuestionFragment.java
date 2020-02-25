@@ -120,7 +120,8 @@ public class NewTrueFalseQuestionFragment extends BottomSheetDialogFragment impl
         activity.onCloseFragment("New TrueFalse");
     }
 
-    private void initAnimations(){
+    @Override
+    public void initAnimations(){
         press = AnimationUtils.loadAnimation(context, R.anim.press);
     }
 

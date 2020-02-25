@@ -135,7 +135,8 @@ public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment
         activity.onCloseFragment("New Multiple Choice");
     }
 
-    private void initAnimations(){
+    @Override
+    public void initAnimations(){
         press = AnimationUtils.loadAnimation(context, R.anim.press);
     }
 }

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.OpenQuestionFragment"
+    android:background="?attr/backgroundColor">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- =========================================================================================== Estrellas -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/OQFragment_IV_Star_1"
+            android:layout_width="@dimen/icon_size_star"
+            android:layout_height="@dimen/icon_size_star"
+            android:layout_marginEnd="@dimen/space_3"
+            android:tint="@color/starEmptyColor"
+
+            app:layout_constraintTop_toTopOf="@id/OQFragment_IV_Star_3"
+            app:layout_constraintRight_toLeftOf="@id/OQFragment_IV_Star_3"
+            app:layout_constraintBottom_toBottomOf="@id/OQFragment_IV_Star_3"
+            app:srcCompat="@drawable/ic_star"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/OQFragment_IV_Star_3"
+            android:layout_width="@dimen/icon_size_main_star"
+            android:layout_height="@dimen/icon_size_main_star"
+            android:tint="@color/starEmptyColor"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:srcCompat="@drawable/ic_star"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/OQFragment_IV_Star_2"
+            android:layout_width="@dimen/icon_size_star"
+            android:layout_height="@dimen/icon_size_star"
+            android:layout_marginStart="@dimen/space_3"
+            android:tint="@color/starEmptyColor"
+
+            app:layout_constraintTop_toTopOf="@id/OQFragment_IV_Star_3"
+            app:layout_constraintLeft_toRightOf="@id/OQFragment_IV_Star_3"
+            app:layout_constraintBottom_toBottomOf="@id/OQFragment_IV_Star_3"
+            app:srcCompat="@drawable/ic_star"
+            />
+
+        <!-- =========================================================================================== Pregunta -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/OQFragment_TV_Question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_3"
+
+            app:layout_constraintTop_toBottomOf="@id/OQFragment_IV_Star_2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/normalTextView"
+            />
+
+        <!-- =========================================================================================== Opciones para responder -->
+        <!-- ====================================================================== Pregunta abierta -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/OQFragment_CL_Open_Answer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/space_3"
+
+            app:layout_constraintTop_toBottomOf="@id/OQFragment_TV_Question"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/OQFragment_ET_Answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/txt_hint_ET_Answer"
+                    android:background="@drawable/background_card_round"
+
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+
+                    style="@style/EditText_AnswerCard"
+                    />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/OQFragment_CL_Correct_Answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_2"
+                    android:visibility="gone"
+
+                    app:layout_constraintTop_toBottomOf="@id/OQFragment_ET_Answer"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/OQFragment_TV_Correct_Answer_Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Respuesta correcta"
+
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        >
+                    </androidx.appcompat.widget.AppCompatTextView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/OQFragment_TV_Correct_Answer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:padding="10dp"
+                        android:layout_marginTop="@dimen/space_1"
+
+                        app:layout_constraintTop_toBottomOf="@id/OQFragment_TV_Correct_Answer_Title"
+                        >
+                    </androidx.appcompat.widget.AppCompatTextView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

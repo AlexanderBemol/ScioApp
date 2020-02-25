@@ -33,11 +33,13 @@
     <!-- ICONOS -->
     <!-- ======================================================================================= -->
     <dimen name="icon_category_size">30dp</dimen>
-    <dimen name="icon_question_size">90dp</dimen>
+    <dimen name="icon_question_size">100dp</dimen>
     <!-- ======================================================================================= -->
     <!-- IMAGE VIEW Question -->
     <!-- ======================================================================================= -->
-    <dimen name="icon_size_star">35dp</dimen>
+    <dimen name="icon_size_star">40dp</dimen>
+
+    <dimen name="icon_size_loading">45dp</dimen>
 
     <dimen name="option_textview_padding">10dp</dimen>
 
@@ -70,4 +72,5 @@
     <dimen name="navigation_bottom_icon_height">30dp</dimen>
     <dimen name="navigation_max_width">300dp</dimen>
     <dimen name="navigation_photo_size">60dp</dimen>
+    <dimen name="icon_size_main_star">60dp</dimen>
 </resources>

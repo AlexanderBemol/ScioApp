@@ -6,6 +6,7 @@
     <string name="txt_BTN_Save">Guardar</string>
     <string name="txt_BTN_Cancel">Cancelar</string>
     <string name="txt_BTN_Create">Crear</string>
+    <string name="txt_BTN_Finish">Finalizar</string>
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_login -->
     <!-- ======================================================================================= -->
@@ -27,6 +28,18 @@
     <string name="txt_TV_Category">Categoría</string>
     <string name="txt_TV_Topic">Tema</string>
     <string name="txt_TV_DateTime">Fecha y Hora</string>
+
+    <!-- ======================================================================================= -->
+    <!-- Strings relacionados con fragment_study_guide_stats -->
+    <!-- ======================================================================================= -->
+    <string name="txt_TV_FStats_TV_Title">Aquí están tus estadísticas</string>
+    <string name="txt_TV_FStats_TV_Hint">Mira el resumen de las estadísticas de tu sesión de estudio.</string>
+    <string name="txt_TV_FStats_TV_Stars_Hint">Estrellas ganadas</string>
+    <string name="txt_TV_FStats_TV_Ommited_Hint">Preguntas omitidas</string>
+    <!-- ======================================================================================= -->
+    <!-- Strings relacionados con fragment_guides -->
+    <!-- ======================================================================================= -->
+    <string name="txt_fragment_guides_title">Tus guías</string>
 
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_permission -->
@@ -74,7 +87,7 @@
     <string name="txt_hint_ET_Answer">Escribe tu respuesta aquí...</string>
     <string name="txt_title_TV_Answer">Respuesta:</string>
     <string name="txt_title_TV_Options">Opciones:</string>
-    <string name="txt_hint_TV_Options">Activa las respuestas que son correctas.</string>
+    <string name="txt_hint_TV_Options">Escribe y activa las respuestas que son correctas.</string>
 
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con las guías -->
@@ -207,6 +220,11 @@
     <string name="txt_textview_notice_terms">Al crear tu cuenta aceptas nuestros terminos y condiciones, y el aviso de privacidad</string>
 
     <!-- ======================================================================================= -->
+    <!-- Titulos para las opciones en los menú -->
+    <!-- ======================================================================================= -->
+    <string name="current_question_total_questions" translatable="false">%1$d/%2$d</string>
+
+    <!-- ======================================================================================= -->
     <!-- Mensajes de error para usuario -->
     <!-- ======================================================================================= -->
 
@@ -308,6 +326,11 @@
     <string name="SIGN_UP_USER">¡Se registró tu usuario correctamente!</string>
     <string name="LOGIN_USER">Inicio de sesión satisfactorio.</string>
     <string name="IMPORT_GUIDE">¡La guía se importó correctamente!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_BTN_Logout">Cerrar sesión</string>
+    <string name="txt_BTN_Resend">Reenviar</string>
 
 
 </resources>

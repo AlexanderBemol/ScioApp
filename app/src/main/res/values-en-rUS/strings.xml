@@ -85,5 +85,14 @@
     <string name="txt_ET_option_hint">Type the option here</string>
     <string name="txt_BTN_Import">Import</string>
     <string name="txt_import_guide_dialog_title">Import Guide</string>
-    <string name="txt_hint_TV_Options">Select the correct answers.</string>
+    <string name="txt_hint_TV_Options">Write and select the correct answers.</string>
+    <string name="txt_BTN_Logout">Cerrar sesión</string>
+    <string name="txt_BTN_Resend">Reenviar</string>
+    <string name="txt_BTN_Finish">Finish</string>
+    <string name="txt_activity_signup_title">Create your account</string>
+    <string name="hint_ET_Topic">e. g.</string>
+    <string name="txt_TV_FStats_TV_Ommited_Hint">Questions omitted</string>
+    <string name="txt_TV_FStats_TV_Stars_Hint">Stars earned</string>
+    <string name="txt_TV_FStats_TV_Title">Here are your statistics</string>
+    <string name="txt_TV_FStats_TV_Hint">See the summary of the statistics of your study session.</string>
 </resources>

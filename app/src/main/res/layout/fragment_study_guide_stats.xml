@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.StudyGuideStatsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/backgroundColor"
+        android:padding="@dimen/activity_padding"
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/FStats_TV_Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_TV_FStats_TV_Title"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/titleTextView"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/FStats_TV_Hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_TV_FStats_TV_Hint"
+
+            app:layout_constraintTop_toBottomOf="@+id/FStats_TV_Title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            style="@style/infoGuideTextView"
+             />
+
+        <!-- ================================================================= Estrellas ganadas -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/FStats_IV_Star"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="@dimen/space_3"
+            android:tint="@color/starFillColor"
+
+            app:layout_constraintTop_toBottomOf="@id/FStats_TV_Hint"
+            app:layout_constraintLeft_toLeftOf="@id/FStats_TV_Stars_Amount"
+            app:layout_constraintRight_toRightOf="@id/FStats_TV_Stars_Amount"
+
+            app:srcCompat="@drawable/ic_star"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/FStats_TV_Stars_Amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:text="0"
+            android:layout_marginTop="@dimen/space_1"
+
+            app:layout_constraintTop_toBottomOf="@id/FStats_IV_Star"
+            app:layout_constraintLeft_toLeftOf="@id/FStats_TV_Stars_Hint"
+            app:layout_constraintRight_toRightOf="@id/FStats_TV_Stars_Hint"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/FStats_TV_Stars_Hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_TV_FStats_TV_Stars_Hint"
+            android:layout_marginTop="@dimen/space_1"
+
+            app:layout_constraintTop_toBottomOf="@id/FStats_TV_Stars_Amount"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/FStats_TV_Skipped_Hint"
+            app:layout_constraintBottom_toBottomOf="@id/FStats_TV_Skipped_Hint"
+            />
+
+        <!-- ================================================================ Preguntas omitidas -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/FStats_IV_Skipped"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:tint="@color/colorOrange"
+
+            app:layout_constraintTop_toTopOf="@id/FStats_IV_Star"
+            app:layout_constraintLeft_toLeftOf="@id/FStats_TV_Skipped_Amount"
+            app:layout_constraintRight_toRightOf="@id/FStats_TV_Skipped_Amount"
+            app:layout_constraintBottom_toBottomOf="@id/FStats_IV_Star"
+
+            app:srcCompat="@drawable/ic_broken_heart"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/FStats_TV_Skipped_Amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:text="0"
+            android:layout_marginTop="@dimen/space_1"
+
+            app:layout_constraintTop_toBottomOf="@id/FStats_IV_Skipped"
+            app:layout_constraintLeft_toLeftOf="@id/FStats_TV_Skipped_Hint"
+            app:layout_constraintRight_toRightOf="@id/FStats_TV_Skipped_Hint"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/FStats_TV_Skipped_Hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_TV_FStats_TV_Ommited_Hint"
+            android:layout_marginTop="@dimen/space_1"
+
+            app:layout_constraintTop_toBottomOf="@id/FStats_TV_Skipped_Amount"
+            app:layout_constraintLeft_toRightOf="@id/FStats_TV_Stars_Hint"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <!-- ============================================================================= Boton -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/FStats_BTN_Finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_BTN_Finish"
+            android:layout_marginTop="@dimen/space_3"
+
+            app:layout_constraintTop_toBottomOf="@id/FStats_TV_Stars_Hint"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            style="@style/normalButton"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
