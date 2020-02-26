@@ -24,6 +24,11 @@ interface BasicActivity {
      */
     void initListeners();
 
+    /**
+     * Este método es usado para inicializar las variables o logica necesaria.
+     */
+    default void initVariables() {}
+
     default void showLoadingDialog(AppCompatDialog dialog) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);

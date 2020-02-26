@@ -395,8 +395,8 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         }
     }
 
-    /**
-     * ViewPager personalizado para desactivar el swipe.
-     */
-
+    @Override
+    public void onBackPressed() {
+        // Empty
+    }
 }

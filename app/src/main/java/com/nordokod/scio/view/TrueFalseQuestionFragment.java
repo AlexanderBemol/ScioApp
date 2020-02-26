@@ -18,6 +18,8 @@ import com.nordokod.scio.R;
 import com.nordokod.scio.constants.QuestionUtils;
 import com.nordokod.scio.entity.TrueFalseQuestion;
 
+import java.util.Objects;
+
 public class TrueFalseQuestionFragment extends Fragment implements BasicFragment{
 
     private Context context;
@@ -25,6 +27,7 @@ public class TrueFalseQuestionFragment extends Fragment implements BasicFragment
     private StudyGuideActivity studyGuideActivity;
 
     private int starsEarned = 0;
+    private boolean isAnswered = false;
 
     private Animation pressCard;
     private Animation starEarnedAnimation;
@@ -65,31 +68,45 @@ public class TrueFalseQuestionFragment extends Fragment implements BasicFragment
         TV_True_Answer.setOnClickListener(v -> {
             TV_True_Answer.startAnimation(pressCard);
 
-            if (trueFalseQuestion.isAnswer()) {
-                QuestionUtils.showCorrectAnswerCard(context, TV_True_Answer);
-                starsEarned = 3;
-            } else {
-                QuestionUtils.showCorrectAnswerCard(context, TV_True_Answer);
-                QuestionUtils.showIncorrectAnswerCard(context, TV_False_Answer);
-            }
+            if (!isAnswered) {
+                if (trueFalseQuestion.isAnswer()) {
+                    QuestionUtils.showCorrectAnswerCard(context, TV_True_Answer);
+                    starsEarned = 3;
+                } else {
+                    QuestionUtils.showCorrectAnswerCard(context, TV_True_Answer);
+                    QuestionUtils.showIncorrectAnswerCard(context, TV_False_Answer);
+                }
 
-            if (starsEarned > 0) QuestionUtils.fillStarsEarned(context, starsEarned, IV_Star_1, IV_Star_2, IV_Star_3, starEarnedAnimation);
-            if (studyGuideActivity != null) studyGuideActivity.updateStarsEarnedAmount(starsEarned);
+                if (starsEarned > 0)
+                    QuestionUtils.fillStarsEarned(context, starsEarned, IV_Star_1, IV_Star_2, IV_Star_3, starEarnedAnimation);
+
+                if (studyGuideActivity != null)
+                    studyGuideActivity.updateStarsEarnedAmount(starsEarned);
+
+                isAnswered = true;
+            }
         });
 
         TV_False_Answer.setOnClickListener(v -> {
             TV_False_Answer.startAnimation(pressCard);
 
-            if (!trueFalseQuestion.isAnswer()) {
-                QuestionUtils.showCorrectAnswerCard(context, TV_False_Answer);
-                starsEarned = 3;
-            } else {
-                QuestionUtils.showCorrectAnswerCard(context, TV_False_Answer);
-                QuestionUtils.showIncorrectAnswerCard(context, TV_True_Answer);
-            }
+            if (!isAnswered) {
+                if (!trueFalseQuestion.isAnswer()) {
+                    QuestionUtils.showCorrectAnswerCard(context, TV_False_Answer);
+                    starsEarned = 3;
+                } else {
+                    QuestionUtils.showCorrectAnswerCard(context, TV_False_Answer);
+                    QuestionUtils.showIncorrectAnswerCard(context, TV_True_Answer);
+                }
 
-            if (starsEarned > 0) QuestionUtils.fillStarsEarned(context, starsEarned, IV_Star_1, IV_Star_2, IV_Star_3, starEarnedAnimation);
-            if (studyGuideActivity != null) studyGuideActivity.updateStarsEarnedAmount(starsEarned);
+                if (starsEarned > 0)
+                    QuestionUtils.fillStarsEarned(context, starsEarned, IV_Star_1, IV_Star_2, IV_Star_3, starEarnedAnimation);
+
+                if (studyGuideActivity != null)
+                    studyGuideActivity.updateStarsEarnedAmount(starsEarned);
+
+                isAnswered = true;
+            }
         });
     }
 

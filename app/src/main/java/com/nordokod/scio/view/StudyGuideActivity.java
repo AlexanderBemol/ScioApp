@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -111,23 +112,11 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
     @Override
     protected void onStart() {
         super.onStart();
-/*
+
         Intent intent = getIntent();
         com.nordokod.scio.model.Question questionModel = new com.nordokod.scio.model.Question();
         Guide guide = (Guide) Objects.requireNonNull(intent.getSerializableExtra("GUIDE"));
         questionList = questionModel.getQuestionsFromGuide(guide);
-*/
-        questionList = new ArrayList<>();
-        OpenQuestion openQuestion = new OpenQuestion("3", "Question 3", 3, "Answer");
-        questionList.add(openQuestion);
-        TrueFalseQuestion trueFalseQuestion = new TrueFalseQuestion("2", "Question 2", 2, false);
-        questionList.add(trueFalseQuestion);
-        MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("1", "Question 1", 1);
-        multipleChoiceQuestion.addAnswer("Answer 1", false);
-        multipleChoiceQuestion.addAnswer("Answer 2", false);
-        multipleChoiceQuestion.addAnswer("Answer 3", true);
-        multipleChoiceQuestion.addAnswer("Answer 4", false);
-        questionList.add(multipleChoiceQuestion);
 
         totalOfQuestions = questionList.size();
 
@@ -266,6 +255,11 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
         BTN_Next.setVisibility(View.GONE);
         BTN_Answer.setVisibility(View.GONE);
         BTN_Finish.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Empty
     }
 
     ////////////////////////////////////////////////////////////////////////// Objects from the view

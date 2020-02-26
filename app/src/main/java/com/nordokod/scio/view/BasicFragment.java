@@ -18,6 +18,11 @@ interface BasicFragment {
     void initListeners();
 
     /**
+     * Este método es usado para inicializar las variables o logica necesaria.
+     */
+    default void initVariables() {}
+
+    /**
      * Este método es usado para inicializar las animaciones.
      *
      * No debe ser llamado por clases externas.

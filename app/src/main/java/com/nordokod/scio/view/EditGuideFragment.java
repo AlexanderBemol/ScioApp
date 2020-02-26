@@ -161,7 +161,8 @@ public class EditGuideFragment extends BottomSheetDialogFragment implements Basi
         FEditGuide_CL_Others.setOnClickListener(v -> preview_Category_View_Selected = Utilities.onClickCategoryListener(v, mainActivity, preview_Category_View_Selected, FEditGuide_LL_Categories));
     }
 
-    private void initAnimations(){
+    @Override
+    public void initAnimations(){
         press_button = AnimationUtils.loadAnimation(context, R.anim.press);
     }
 

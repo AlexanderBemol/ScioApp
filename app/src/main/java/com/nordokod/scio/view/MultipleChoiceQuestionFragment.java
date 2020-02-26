@@ -29,10 +29,13 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
     private boolean isSecondAnswerSelected  = false;
     private boolean isThirdAnswerSelected   = false;
     private boolean isFourthAnswerSelected  = false;
+    private boolean isAnswered = false;
 
     private int correctAnswersByUser = 0;
     private int totalCorrectAnswers = 0;
     private int incorrectAnswersByUser = 0;
+
+    private AppCompatTextView[] answerCardsArray;
 
     public MultipleChoiceQuestionFragment() {}
 
@@ -48,6 +51,7 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
 
         initComponents(view);
         initListeners();
+        initVariables();
         initAnimations();
 
         return view;
@@ -70,24 +74,41 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
     @Override
     public void initListeners() {
         TV_First_Answer.setOnClickListener(v -> {
-            onAnswerSelectedOrUnselected(!isFirstAnswerSelected, TV_First_Answer);
-            isFirstAnswerSelected = !isFirstAnswerSelected;
+            if (!isAnswered) {
+                onAnswerSelectedOrUnselected(!isFirstAnswerSelected, TV_First_Answer);
+                isFirstAnswerSelected = !isFirstAnswerSelected;
+                isAnswered = true;
+            }
         });
 
         TV_Second_Answer.setOnClickListener(v -> {
-            onAnswerSelectedOrUnselected(!isSecondAnswerSelected, TV_Second_Answer);
-            isSecondAnswerSelected = !isSecondAnswerSelected;
+            if (!isAnswered) {
+                onAnswerSelectedOrUnselected(!isSecondAnswerSelected, TV_Second_Answer);
+                isSecondAnswerSelected = !isSecondAnswerSelected;
+                isAnswered = true;
+            }
         });
 
         TV_Third_Answer.setOnClickListener(v -> {
-            onAnswerSelectedOrUnselected(!isThirdAnswerSelected, TV_Third_Answer);
-            isThirdAnswerSelected = !isThirdAnswerSelected;
+            if (!isAnswered) {
+                onAnswerSelectedOrUnselected(!isThirdAnswerSelected, TV_Third_Answer);
+                isThirdAnswerSelected = !isThirdAnswerSelected;
+                isAnswered = true;
+            }
         });
 
         TV_Fourth_Answer.setOnClickListener(v -> {
-            onAnswerSelectedOrUnselected(!isFourthAnswerSelected, TV_Fourth_Answer);
-            isFourthAnswerSelected = !isFourthAnswerSelected;
+            if (!isAnswered) {
+                onAnswerSelectedOrUnselected(!isFourthAnswerSelected, TV_Fourth_Answer);
+                isFourthAnswerSelected = !isFourthAnswerSelected;
+                isAnswered = true;
+            }
         });
+    }
+
+    @Override
+    public void initVariables() {
+        answerCardsArray = new AppCompatTextView[]{TV_First_Answer, TV_Second_Answer, TV_Third_Answer, TV_Fourth_Answer};
     }
 
     @Override
@@ -98,24 +119,20 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
     @Override
     public void onStart() {
         super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
 
         TV_Question.setText(multipleChoiceQuestion.getQuestion());
 
-        String s = multipleChoiceQuestion.getAnswers().get(0).getAnswer();
+        setCardsWhitItsAnswers();
+    }
 
-        TV_First_Answer.setText(multipleChoiceQuestion.getAnswers().get(0).getAnswer());
-        if (multipleChoiceQuestion.getAnswers().get(0).isCorrect()) totalCorrectAnswers++;
-        TV_Second_Answer.setText(multipleChoiceQuestion.getAnswers().get(1).getAnswer());
-        if (multipleChoiceQuestion.getAnswers().get(1).isCorrect()) totalCorrectAnswers++;
-        TV_Third_Answer.setText(multipleChoiceQuestion.getAnswers().get(2).getAnswer());
-        if (multipleChoiceQuestion.getAnswers().get(2).isCorrect()) totalCorrectAnswers++;
-        TV_Fourth_Answer.setText(multipleChoiceQuestion.getAnswers().get(3).getAnswer());
-        if (multipleChoiceQuestion.getAnswers().get(3).isCorrect()) totalCorrectAnswers++;
+    private void setCardsWhitItsAnswers() {
+        for (int i = 0; i < 4; i++) {
+            if (i < multipleChoiceQuestion.getAnswers().size()) {
+                answerCardsArray[i].setText(multipleChoiceQuestion.getAnswers().get(i).getAnswer());
+                if (multipleChoiceQuestion.getAnswers().get(i).isCorrect()) totalCorrectAnswers++;
+            } else
+                answerCardsArray[i].setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -158,18 +175,20 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
      * @param isAnswerSelected      -> {boolean} indica si la card fue seleccionada por el usuario.
      */
     private void verifyAnswer(AppCompatTextView TV_Answer_Selected, int indexAnswerSelected, boolean isAnswerSelected) {
-        if (multipleChoiceQuestion.getAnswers().get(indexAnswerSelected).isCorrect()) {
-            if (isAnswerSelected) {
-                QuestionUtils.showCorrectAnswerCard(context, TV_Answer_Selected);
-                correctAnswersByUser++;
+        if (indexAnswerSelected < multipleChoiceQuestion.getAnswers().size()) {
+            if (multipleChoiceQuestion.getAnswers().get(indexAnswerSelected).isCorrect()) {
+                if (isAnswerSelected) {
+                    QuestionUtils.showCorrectAnswerCard(context, TV_Answer_Selected);
+                    correctAnswersByUser++;
+                } else {
+                    QuestionUtils.showCorrectAnswerCard(context, TV_Answer_Selected);
+                    incorrectAnswersByUser++;
+                }
             } else {
-                QuestionUtils.showCorrectAnswerCard(context, TV_Answer_Selected);
-                incorrectAnswersByUser++;
-            }
-        } else {
-            if (isAnswerSelected) {
-                QuestionUtils.showIncorrectAnswerCard(context, TV_Answer_Selected);
-                incorrectAnswersByUser++;
+                if (isAnswerSelected) {
+                    QuestionUtils.showIncorrectAnswerCard(context, TV_Answer_Selected);
+                    incorrectAnswersByUser++;
+                }
             }
         }
     }
@@ -184,7 +203,9 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
      * @return -> Cantidad de estrellas ganadas.
      */
     private int getAmountOfStarsEarned() {
-        return Math.round(((float) correctAnswersByUser * (float) 3) / (float) totalCorrectAnswers) - incorrectAnswersByUser;
+        return (correctAnswersByUser == 0)
+                ? 0
+                : Math.round(((float) correctAnswersByUser * (float) 3) / (float) totalCorrectAnswers) - incorrectAnswersByUser;
     }
 
     ////////////////////////////////////////////////////////////////////////// Objects from the view

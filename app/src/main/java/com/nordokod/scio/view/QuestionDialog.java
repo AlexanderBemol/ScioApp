@@ -64,7 +64,7 @@ public class QuestionDialog implements BasicDialog {
     @Override
     public void showDialog() {
         if (!dialog.isShowing()) {
-            TV_Category.setText(Utilities.getStringFromCategory(guide.getCategory()));
+            TV_Category.setText(Utilities.getCategoryStringResource(guide.getCategory()));
             TV_Topic.setText(guide.getTopic());
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <Build.VERSION_CODES.O)
