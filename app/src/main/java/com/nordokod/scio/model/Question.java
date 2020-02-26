@@ -1,21 +1,17 @@
 package com.nordokod.scio.model;
 
-import android.content.Intent;
+import android.util.Log;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.WriteBatch;
 import com.nordokod.scio.constants.KindOfQuestion;
 import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.entity.MultipleChoiceQuestion;
 import com.nordokod.scio.entity.OpenQuestion;
 import com.nordokod.scio.entity.TrueFalseQuestion;
+import com.nordokod.scio.entity.Answer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +49,7 @@ public class Question {
                 int index=0;
                 MultipleChoiceQuestion multipleChoiceQuestion =(MultipleChoiceQuestion)question;
                 Map<String,Object> map = new HashMap<>();
-                for (MultipleChoiceQuestion.Answer answer : multipleChoiceQuestion.getAnswers()){
+                for (Answer answer : multipleChoiceQuestion.getAnswers()){
                     map.put(String.valueOf(index),answer);
                     index++;
                 }
@@ -94,11 +90,16 @@ public class Question {
                 boolean trueFalseAnswer = (boolean) ((HashMap<String,Object>)aux).get(TrueFalseQuestion.KEY_ANSWER);
                 question = new TrueFalseQuestion(id, stringQuestion, kindOfQuestion, trueFalseAnswer);
             } else {
-                HashMap<String,MultipleChoiceQuestion.Answer> answers = (HashMap<String, MultipleChoiceQuestion.Answer>) ((HashMap<String,Object>)aux).get(MultipleChoiceQuestion.KEY_ANSWERS);
                 question = new MultipleChoiceQuestion(id,stringQuestion,kindOfQuestion);
-                ArrayList<MultipleChoiceQuestion.Answer> answerArrayList = new ArrayList<>();
-                for(int i = 0; i< Objects.requireNonNull(answers).size(); i++){
-                    answerArrayList.add(answers.get(String.valueOf(i)));
+                ArrayList<Answer> answerArrayList = new ArrayList<>();
+                HashMap<String,Object> map = (HashMap<String, Object>) ((HashMap<String,Object>)aux).get(MultipleChoiceQuestion.KEY_ANSWERS);
+                for(int i = 0; i < map.size(); i++){
+                    HashMap<String,Object> item = (HashMap<String, Object>) map.get(String.valueOf(i));
+                    Answer answer = new Answer(
+                            item.get("answer").toString(),
+                            (boolean)item.get("correct")
+                    );
+                    answerArrayList.add(answer);
                 }
                 ((MultipleChoiceQuestion)question).setAnswers(answerArrayList);
             }
