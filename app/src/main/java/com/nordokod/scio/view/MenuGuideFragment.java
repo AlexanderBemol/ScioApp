@@ -8,6 +8,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,7 +76,9 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
     @Override
     public void initListeners() {
         TV_Study_Guide.setOnClickListener(v -> {
-            // TODO: Aqui abrimos el Activity para estudiar la guia.
+            Intent intent = new Intent(context, StudyGuideActivity.class);
+            intent.putExtra("GUIDE", guide);
+            startActivity(intent);
         });
 
         TV_Edit_Guide.setOnClickListener(v -> {

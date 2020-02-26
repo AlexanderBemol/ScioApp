@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private com.nordokod.scio.entity.User actualUserEntity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //setTheme(R.style.NightTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initComponents();
@@ -394,8 +395,8 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         }
     }
 
-    /**
-     * ViewPager personalizado para desactivar el swipe.
-     */
-
+    @Override
+    public void onBackPressed() {
+        // Empty
+    }
 }

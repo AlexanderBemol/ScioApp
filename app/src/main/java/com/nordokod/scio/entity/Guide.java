@@ -1,9 +1,10 @@
 package com.nordokod.scio.entity;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 
-public class Guide {
+public class Guide implements Serializable {
     public static String KEY_GUIDES="GUIDES";
     public static String KEY_PERSONAL_GUIDES="PERSONAL_GUIDES";
     public static String KEY_ONLINE="ONLINE";

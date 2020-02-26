@@ -240,7 +240,8 @@ public class NewGuideFragment extends BottomSheetDialogFragment implements Basic
         timePickerFragment.show(Objects.requireNonNull(getActivity()).getFragmentManager(), "timePicker");
     }
 
-    private void initAnimations(){
+    @Override
+    public void initAnimations(){
         press = AnimationUtils.loadAnimation(context, R.anim.press);
     }
 }

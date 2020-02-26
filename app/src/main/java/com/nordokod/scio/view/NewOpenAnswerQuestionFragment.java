@@ -104,7 +104,9 @@ public class NewOpenAnswerQuestionFragment extends BottomSheetDialogFragment imp
         userMessage.showSuccessfulOperationMessage(context,userOperations);
         activity.onCloseFragment("New Open Answer");
     }
-    private void initAnimations(){
+
+    @Override
+    public void initAnimations(){
         press = AnimationUtils.loadAnimation(context, R.anim.press);
     }
 }

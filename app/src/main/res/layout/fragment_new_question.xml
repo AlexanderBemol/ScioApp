@@ -43,9 +43,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/txt_title_question_type_multiple_choice"
-            android:layout_marginTop="@dimen/space_2"
+            android:layout_marginTop="@dimen/space_1"
 
-            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_Hint"
+            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_IV_Multiple"
             app:layout_constraintLeft_toLeftOf="@id/FNewQuestion_IV_Multiple"
             app:layout_constraintRight_toRightOf="@id/FNewQuestion_IV_Multiple"
             />
@@ -55,9 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/txt_title_question_type_true_false"
-            android:layout_marginTop="@dimen/space_2"
+            android:layout_marginTop="@dimen/space_1"
 
-            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_Hint"
+            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_IV_TrueFalse"
             app:layout_constraintLeft_toLeftOf="@id/FNewQuestion_IV_TrueFalse"
             app:layout_constraintRight_toRightOf="@id/FNewQuestion_IV_TrueFalse"
             />
@@ -67,9 +67,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/txt_title_question_type_open_answer"
-            android:layout_marginTop="@dimen/space_2"
+            android:layout_marginTop="@dimen/space_1"
 
-            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_Hint"
+            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_IV_Open"
             app:layout_constraintLeft_toLeftOf="@id/FNewQuestion_IV_Open"
             app:layout_constraintRight_toRightOf="@id/FNewQuestion_IV_Open"
             />
@@ -78,39 +78,39 @@
             android:id="@+id/FNewQuestion_IV_Multiple"
             android:layout_width="@dimen/icon_question_size"
             android:layout_height="@dimen/icon_question_size"
-            android:tint="?attr/onBackgroundColor"
+            android:layout_marginTop="@dimen/space_2"
 
-            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_Multiple"
+            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_Hint"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/FNewQuestion_IV_TrueFalse"
 
-            app:srcCompat="@drawable/ic_multiple_option"
+            app:srcCompat="@drawable/ic_multiple_question_art"
             />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/FNewQuestion_IV_TrueFalse"
             android:layout_width="@dimen/icon_question_size"
             android:layout_height="@dimen/icon_question_size"
-            android:tint="?attr/onBackgroundColor"
 
-            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_TrueFalse"
+            app:layout_constraintTop_toTopOf="@id/FNewQuestion_IV_Multiple"
             app:layout_constraintRight_toLeftOf="@id/FNewQuestion_IV_Open"
             app:layout_constraintLeft_toRightOf="@id/FNewQuestion_IV_Multiple"
+            app:layout_constraintBottom_toBottomOf="@id/FNewQuestion_IV_Multiple"
 
-            app:srcCompat="@drawable/ic_true_false"
+            app:srcCompat="@drawable/ic_t_f_question_art"
             />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/FNewQuestion_IV_Open"
             android:layout_width="@dimen/icon_question_size"
             android:layout_height="@dimen/icon_question_size"
-            android:tint="?attr/onBackgroundColor"
 
-            app:layout_constraintTop_toBottomOf="@id/FNewQuestion_TV_Open"
+            app:layout_constraintTop_toTopOf="@id/FNewQuestion_IV_Multiple"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@id/FNewQuestion_IV_TrueFalse"
+            app:layout_constraintBottom_toBottomOf="@id/FNewQuestion_IV_Multiple"
 
-            app:srcCompat="@drawable/ic_open"
+            app:srcCompat="@drawable/ic_open_question_art"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

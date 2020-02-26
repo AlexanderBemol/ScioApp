@@ -8,6 +8,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.app.DialogCompat;
 
 import android.os.Build;
 import android.view.View;
@@ -110,7 +111,7 @@ public class OpenQuestionDialog implements BasicDialog {
             TV_Topic.setText(guide.getTopic());
             TV_Question.setText(question.getQuestion());
             TV_Question.setText(question.getAnswer());
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT <Build.VERSION_CODES.O){
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Build.VERSION.SDK_INT < Build.VERSION_CODES.O){
                 Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_TOAST);
             }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);

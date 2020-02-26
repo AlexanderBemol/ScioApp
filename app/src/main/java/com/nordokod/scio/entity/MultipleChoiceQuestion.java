@@ -3,6 +3,7 @@ package com.nordokod.scio.entity;
 import com.google.firebase.firestore.CollectionReference;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MultipleChoiceQuestion extends Question {
     public static String KEY_ANSWERS="ANSWERS";
@@ -25,25 +26,5 @@ public class MultipleChoiceQuestion extends Question {
     }
     public void setAnswers(ArrayList<Answer> answersCollection) {
         this.answers = answersCollection;
-    }
-
-    public class Answer {
-        private String answer;
-        private boolean correct;
-
-        Answer(String answer, boolean correct) {
-            this.answer = answer;
-            this.correct = correct;
-        }
-
-        public String getAnswer() {
-            return answer;
-        }
-
-        public boolean isCorrect() {
-            return correct;
-        }
-
-
     }
 }
