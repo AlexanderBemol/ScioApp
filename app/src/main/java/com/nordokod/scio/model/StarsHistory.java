@@ -10,7 +10,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
+import com.nordokod.scio.constants.ErrorMessage;
+import com.nordokod.scio.constants.UserOperations;
 import com.nordokod.scio.entity.User;
+import com.nordokod.scio.process.UserMessage;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,8 +36,10 @@ public class StarsHistory {
     private SQLiteDatabase sqLiteDatabase;
     private SimpleDateFormat dateFormat;
     private FirebaseAuth mAuth;
+    private Context context;
 
     public StarsHistory(Context context){
+        this.context = context;
         dbAux = new DBAux(context);
         sqLiteDatabase = dbAux.getWritableDatabase();
         dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -88,10 +93,16 @@ public class StarsHistory {
                 }
             }
             //operation
+            UserMessage userMessage = new UserMessage();
             writeBatch.commit()
-                    .addOnSuccessListener((aVoid)-> Log.d("testlogs","success"))
-                    .addOnFailureListener(ex->Log.d("testlogs", Objects.requireNonNull(ex.getMessage())));
-
+                    .addOnSuccessListener((aVoid)-> {
+                        Log.d("testlogs","success");
+                        userMessage.showSuccessfulOperationMessage(context,UserOperations.DATA_EXPORTED);
+                    })
+                    .addOnFailureListener(ex->{
+                        Log.d("testlogs", Objects.requireNonNull(ex.getMessage()));
+                        userMessage.showErrorMessage(context, ErrorMessage.UNKNOWN_EXCEPTION);
+                    });
         }
     }
 
