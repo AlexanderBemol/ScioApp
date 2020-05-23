@@ -16,6 +16,7 @@ import android.view.animation.AnimationUtils;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.QuestionUtils;
 import com.nordokod.scio.entity.MultipleChoiceQuestion;
+import com.nordokod.scio.model.StarsHistory;
 
 import javax.annotation.Nullable;
 
@@ -164,6 +165,10 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
 
         // En caso de estar en Modo Estudio
         if (studyGuideActivity != null) studyGuideActivity.updateStarsEarnedAmount(getAmountOfStarsEarned());
+
+        //insertar en log
+        StarsHistory starsHistory = new StarsHistory(context);
+        starsHistory.createStarHistory(multipleChoiceQuestion.getGuide(),multipleChoiceQuestion.getId(),getAmountOfStarsEarned(),1);
     }
 
     /**

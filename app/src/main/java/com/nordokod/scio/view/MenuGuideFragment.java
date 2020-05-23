@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.Guide;
+import com.nordokod.scio.entity.NoQuestionsInGuide;
 
 public class MenuGuideFragment extends BottomSheetDialogFragment implements BasicFragment {
     private MainActivity mainActivity;
@@ -76,9 +77,13 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
     @Override
     public void initListeners() {
         TV_Study_Guide.setOnClickListener(v -> {
-            Intent intent = new Intent(context, StudyGuideActivity.class);
-            intent.putExtra("GUIDE", guide);
-            startActivity(intent);
+            if(guide.getAuxQuestions().size()>0){
+                Intent intent = new Intent(context, StudyGuideActivity.class);
+                intent.putExtra("GUIDE", guide);
+                startActivity(intent);
+            }else
+                mainActivity.showError(new NoQuestionsInGuide());
+
         });
 
         TV_Edit_Guide.setOnClickListener(v -> {

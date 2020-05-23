@@ -12,8 +12,8 @@ public class MultipleChoiceQuestion extends Question {
 
     private ArrayList<Answer> answers;
 
-    public MultipleChoiceQuestion(String id, String question, int kindOfQuestions) {
-        super(id, question,kindOfQuestions);
+    public MultipleChoiceQuestion(String guide, int id, String question, int kindOfQuestions) {
+        super(guide,id,question,kindOfQuestions);
         answers=new ArrayList<>();
     }
 

@@ -22,6 +22,7 @@ import com.nordokod.scio.constants.Utilities;
 import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.OpenQuestion;
+import com.nordokod.scio.model.StarsHistory;
 import com.nordokod.scio.process.QualifyMethod;
 import com.nordokod.scio.process.UserMessage;
 
@@ -90,8 +91,13 @@ public class OpenQuestionDialog implements BasicDialog {
             if (!wasAnswered) {
                 if(Objects.requireNonNull(ET_Answer.getText()).length()==0)showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
                 else{
-                    changeStarState(QualifyMethod.getStars(question.getAnswer(),ET_Answer.getText().toString()));
+                    int amountOfStars = QualifyMethod.getStars(question.getAnswer(),ET_Answer.getText().toString());
+                    changeStarState(amountOfStars);
                     showCorrectAnswer();
+
+                    //insert log
+                    StarsHistory starsHistory = new StarsHistory(context);
+                    starsHistory.createStarHistory(question.getGuide(),question.getId(),amountOfStars,2);
                 }
 
             }

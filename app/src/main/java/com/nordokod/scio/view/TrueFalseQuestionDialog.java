@@ -16,6 +16,7 @@ import com.nordokod.scio.R;
 import com.nordokod.scio.constants.Utilities;
 import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.entity.TrueFalseQuestion;
+import com.nordokod.scio.model.StarsHistory;
 
 import java.util.Objects;
 
@@ -82,12 +83,14 @@ public class TrueFalseQuestionDialog implements BasicDialog {
         IV_Close.setOnClickListener(v -> dialog.dismiss());
 
         TV_True.setOnClickListener(v -> {
+            int amountOfStars = 0;
             if (question.isAnswer() && !wasAnswered) {
                 // Mostramos que eligió la respuesta correcta.
                 TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
                 TV_True.setTextAppearance(context, R.style.correctAnswer);
 
-                changeStarState(0);
+                changeStarState(3);
+                amountOfStars = 3;
                 wasAnswered = true;
             } else if (!wasAnswered) {
                 // Mostramos que eligió la respuesta incorrecta.
@@ -96,7 +99,12 @@ public class TrueFalseQuestionDialog implements BasicDialog {
                 // Mostramos que Falso es la respuesta correcta.
                 TV_False.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
                 TV_False.setTextAppearance(context, R.style.correctAnswer);
+                changeStarState(0);
             }
+
+            //insert log
+            StarsHistory starsHistory = new StarsHistory(context);
+            starsHistory.createStarHistory(question.getGuide(),question.getId(),amountOfStars,2);
         });
 
         TV_False.setOnClickListener(v -> {

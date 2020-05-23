@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.QuestionUtils;
 import com.nordokod.scio.entity.TrueFalseQuestion;
+import com.nordokod.scio.model.StarsHistory;
 
 import java.util.Objects;
 
@@ -84,6 +85,10 @@ public class TrueFalseQuestionFragment extends Fragment implements BasicFragment
                     studyGuideActivity.updateStarsEarnedAmount(starsEarned);
 
                 isAnswered = true;
+
+                //insert in Log
+                StarsHistory starsHistory = new StarsHistory(context);
+                starsHistory.createStarHistory(trueFalseQuestion.getGuide(),trueFalseQuestion.getId(),starsEarned,1);
             }
         });
 
