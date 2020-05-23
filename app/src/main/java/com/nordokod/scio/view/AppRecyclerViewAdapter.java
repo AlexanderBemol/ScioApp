@@ -24,7 +24,7 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.app_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.app_card, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -76,7 +76,7 @@ public class AppRecyclerViewAdapter extends RecyclerView.Adapter<AppRecyclerView
         ViewHolder(View view) {
             super(view);
 
-            IV_Icon = view.findViewById(R.id.IV_Icon);
+            IV_Icon = view.findViewById(R.id.QCard_IV_Icon);
             TV_Name = view.findViewById(R.id.TV_Name);
             Switch_State = view.findViewById(R.id.Switch_State);
         }

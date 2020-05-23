@@ -5,10 +5,12 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import android.os.Build;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -28,6 +30,7 @@ public class TrueFalseQuestionDialog implements BasicDialog {
 
     private AppCompatImageView IV_Star_1, IV_Star_2, IV_Star_3, IV_Close;
     private AppCompatTextView TV_Question, TV_Category, TV_Topic, TV_True, TV_False;
+    private AppCompatButton BTN_Close;
 
     private boolean wasAnswered = false;
 
@@ -69,14 +72,10 @@ public class TrueFalseQuestionDialog implements BasicDialog {
         TV_True         = dialog.findViewById(R.id.TFQuestion_Answer_True);
         TV_False        = dialog.findViewById(R.id.TFQuestion_Answer_False);
 
-
+        BTN_Close       = dialog.findViewById(R.id.TFQuestion_BTN_Close);
     }
 
-    /*
-    * Posiblemente haya errores en el cambio de color de las respuestas.
-    * En caso de que sí, las corrigo cuando ya esté el backend terminado para
-    * poder hacer pruebas.
-    */
+
     @Override
     public void initListeners() {
         IV_Close.setOnClickListener(v -> dialog.dismiss());
@@ -97,6 +96,8 @@ public class TrueFalseQuestionDialog implements BasicDialog {
                 TV_False.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
                 TV_False.setTextAppearance(context, R.style.correctAnswer);
             }
+
+            BTN_Close.setVisibility(View.VISIBLE);
         });
 
         TV_False.setOnClickListener(v -> {
@@ -115,6 +116,12 @@ public class TrueFalseQuestionDialog implements BasicDialog {
                 TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
                 TV_True.setTextAppearance(context, R.style.correctAnswer);
             }
+
+            BTN_Close.setVisibility(View.VISIBLE);
+        });
+
+        BTN_Close.setOnClickListener(v -> {
+            dialog.dismiss();
         });
     }
 

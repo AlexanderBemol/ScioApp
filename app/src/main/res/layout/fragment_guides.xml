@@ -17,7 +17,7 @@
             android:id="@+id/FGuides_TV_Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tus guías"
+            android:text="@string/txt_fragment_guides_title"
             android:gravity="center"
             android:layout_marginLeft="@dimen/activity_padding"
             android:layout_marginRight="@dimen/activity_padding"

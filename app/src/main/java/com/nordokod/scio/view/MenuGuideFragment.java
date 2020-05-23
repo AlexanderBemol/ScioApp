@@ -12,6 +12,8 @@ import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.Guide;
@@ -21,13 +23,7 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
     private Context context;
     private Guide guide;
     private com.nordokod.scio.model.Guide mGuide;
-    private AppCompatTextView TV_Study_Guide;
-    private AppCompatTextView TV_Edit_Guide;
-    private AppCompatTextView TV_Delete_Guide;
-    private AppCompatTextView TV_Share_Guide;
-    private AppCompatTextView TV_Add_Question;
-    private AppCompatTextView TV_Edit_Question;
-    private AppCompatTextView TV_Delete_Question;
+    private Animation button_pressed_animation;
 
     public MenuGuideFragment() { }
 
@@ -51,6 +47,7 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
 
         initComponents(view);
         initListeners();
+        initAnimations();
 
         return view;
     }
@@ -76,21 +73,25 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
     @Override
     public void initListeners() {
         TV_Study_Guide.setOnClickListener(v -> {
+            TV_Study_Guide.startAnimation(button_pressed_animation);
             Intent intent = new Intent(context, StudyGuideActivity.class);
             intent.putExtra("GUIDE", guide);
             startActivity(intent);
         });
 
         TV_Edit_Guide.setOnClickListener(v -> {
+            TV_Edit_Guide.startAnimation(button_pressed_animation);
             mainActivity.onCloseFragment("Menu Guide");
             mainActivity.showFragmentToEditGuide(guide);
         });
 
         TV_Delete_Guide.setOnClickListener(v -> {
+            TV_Delete_Guide.startAnimation(button_pressed_animation);
             // TODO: Agregar la logica para eliminar la guia.
         });
 
         TV_Share_Guide.setOnClickListener(v -> mGuide.generateGuideLink(guide).addOnSuccessListener(shortDynamicLink -> {
+            TV_Share_Guide.startAnimation(button_pressed_animation);
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
             sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "GUIDE");
@@ -100,17 +101,27 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
         }));
 
         TV_Add_Question.setOnClickListener(v -> {
+            TV_Add_Question.startAnimation(button_pressed_animation);
             mainActivity.onCloseFragment("Menu Guide");
             mainActivity.showNewQuestionDialog(guide);
         });
 
         TV_Edit_Question.setOnClickListener(v -> {
+            TV_Edit_Question.startAnimation(button_pressed_animation);
 
         });
 
         TV_Delete_Question.setOnClickListener(v -> {
-
+            TV_Delete_Question.startAnimation(button_pressed_animation);
+            //Intent intent = new Intent(context, DeleteQuestionsActivity.class);
+            //intent.putExtra("GUIDE", guide);
+            //startActivity(intent);
         });
+    }
+
+    @Override
+    public void initAnimations() {
+        button_pressed_animation = AnimationUtils.loadAnimation(context, R.anim.press);
     }
 
     private int getCategoryIcon(int category) {
@@ -124,4 +135,13 @@ public class MenuGuideFragment extends BottomSheetDialogFragment implements Basi
             default:    return R.drawable.ic_scio_face;
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////// Objects from the view
+    private AppCompatTextView TV_Study_Guide;
+    private AppCompatTextView TV_Edit_Guide;
+    private AppCompatTextView TV_Delete_Guide;
+    private AppCompatTextView TV_Share_Guide;
+    private AppCompatTextView TV_Add_Question;
+    private AppCompatTextView TV_Edit_Question;
+    private AppCompatTextView TV_Delete_Question;
 }

@@ -12,7 +12,7 @@
     >
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/IV_Icon"
+        android:id="@+id/QCard_IV_Icon"
         android:layout_width="@dimen/icon_category_size"
         android:layout_height="@dimen/icon_category_size"
         android:layout_margin="@dimen/activity_padding"
@@ -32,7 +32,7 @@
         android:layout_marginStart="@dimen/space_3"
 
         android:text="Ecuaciones diferenciales"
-        app:layout_constraintLeft_toRightOf="@id/IV_Icon"
+        app:layout_constraintLeft_toRightOf="@id/QCard_IV_Icon"
         app:layout_constraintRight_toRightOf="parent"
 
         app:layout_constraintTop_toTopOf="parent" />

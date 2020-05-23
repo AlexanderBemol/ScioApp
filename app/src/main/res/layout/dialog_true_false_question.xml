@@ -107,27 +107,40 @@
         android:id="@+id/TFQuestion_Answer_True"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:padding="10dp"
         android:text="@string/txt_Answer_True"
-        android:background="@xml/background_card_round"
         android:layout_marginTop="@dimen/space_3"
 
         app:layout_constraintTop_toBottomOf="@id/TFQuestion_TV_Question"
+
+        style="@style/answerCard"
         />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/TFQuestion_Answer_False"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:padding="10dp"
         android:text="@string/txt_Answer_False"
         android:layout_marginTop="@dimen/space_2"
         android:layout_marginBottom="@dimen/space_2"
-        android:background="@xml/background_card_round"
 
         app:layout_constraintTop_toBottomOf="@id/TFQuestion_Answer_True"
+
+        style="@style/answerCard"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/TFQuestion_BTN_Close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_BTN_Close"
+        android:layout_marginTop="@dimen/space_2"
+        android:layout_marginBottom="@dimen/space_1"
+        android:visibility="gone"
+
+        app:layout_constraintTop_toBottomOf="@id/TFQuestion_Answer_False"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+
+        style="@style/finishButton"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

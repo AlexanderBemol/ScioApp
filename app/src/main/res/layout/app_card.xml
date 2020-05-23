@@ -7,7 +7,7 @@
     >
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/IV_Icon"
+        android:id="@+id/QCard_IV_Icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
 
@@ -24,7 +24,7 @@
         android:textSize="@dimen/text_size_normal"
 
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/IV_Icon"
+        app:layout_constraintLeft_toRightOf="@+id/QCard_IV_Icon"
         app:layout_constraintRight_toLeftOf="@+id/Switch_State"
         app:layout_constraintTop_toTopOf="parent" />
 

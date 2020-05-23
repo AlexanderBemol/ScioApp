@@ -109,7 +109,8 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
         progressDialog.show();
     }
 
-    private void initAnimations(){
+    @Override
+    public void initAnimations(){
         press = AnimationUtils.loadAnimation(this, R.anim.press);
     }
 

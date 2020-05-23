@@ -59,16 +59,16 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
 
     @Override
     public void initComponents(View view) {
-        TV_Question                     = view.findViewById(R.id.MCFragment_TV_Question);
+        TV_Question         = view.findViewById(R.id.MCFragment_TV_Question);
 
-        IV_Star_1                       = view.findViewById(R.id.MCFragment_IV_Star_1);
-        IV_Star_2                       = view.findViewById(R.id.MCFragment_IV_Star_2);
-        IV_Star_3                       = view.findViewById(R.id.MCFragment_IV_Star_3);
+        IV_Star_1           = view.findViewById(R.id.MCFragment_IV_Star_1);
+        IV_Star_2           = view.findViewById(R.id.MCFragment_IV_Star_2);
+        IV_Star_3           = view.findViewById(R.id.MCFragment_IV_Star_3);
 
-        TV_First_Answer                 = view.findViewById(R.id.MCFragment_TV_First_Answer);
-        TV_Second_Answer                = view.findViewById(R.id.MCFragment_TV_Second_Answer);
-        TV_Third_Answer                 = view.findViewById(R.id.MCFragment_TV_Third_Answer);
-        TV_Fourth_Answer                = view.findViewById(R.id.MCFragment_TV_Fourth_Answer);
+        TV_First_Answer     = view.findViewById(R.id.MCFragment_TV_First_Answer);
+        TV_Second_Answer    = view.findViewById(R.id.MCFragment_TV_Second_Answer);
+        TV_Third_Answer     = view.findViewById(R.id.MCFragment_TV_Third_Answer);
+        TV_Fourth_Answer    = view.findViewById(R.id.MCFragment_TV_Fourth_Answer);
     }
 
     @Override
@@ -77,7 +77,6 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
             if (!isAnswered) {
                 onAnswerSelectedOrUnselected(!isFirstAnswerSelected, TV_First_Answer);
                 isFirstAnswerSelected = !isFirstAnswerSelected;
-                isAnswered = true;
             }
         });
 
@@ -85,7 +84,6 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
             if (!isAnswered) {
                 onAnswerSelectedOrUnselected(!isSecondAnswerSelected, TV_Second_Answer);
                 isSecondAnswerSelected = !isSecondAnswerSelected;
-                isAnswered = true;
             }
         });
 
@@ -93,7 +91,6 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
             if (!isAnswered) {
                 onAnswerSelectedOrUnselected(!isThirdAnswerSelected, TV_Third_Answer);
                 isThirdAnswerSelected = !isThirdAnswerSelected;
-                isAnswered = true;
             }
         });
 
@@ -101,7 +98,6 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
             if (!isAnswered) {
                 onAnswerSelectedOrUnselected(!isFourthAnswerSelected, TV_Fourth_Answer);
                 isFourthAnswerSelected = !isFourthAnswerSelected;
-                isAnswered = true;
             }
         });
     }
@@ -122,10 +118,10 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
 
         TV_Question.setText(multipleChoiceQuestion.getQuestion());
 
-        setCardsWhitItsAnswers();
+        setCardsWhitItsAnswer();
     }
 
-    private void setCardsWhitItsAnswers() {
+    private void setCardsWhitItsAnswer() {
         for (int i = 0; i < 4; i++) {
             if (i < multipleChoiceQuestion.getAnswers().size()) {
                 answerCardsArray[i].setText(multipleChoiceQuestion.getAnswers().get(i).getAnswer());
@@ -164,6 +160,8 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
 
         // En caso de estar en Modo Estudio
         if (studyGuideActivity != null) studyGuideActivity.updateStarsEarnedAmount(getAmountOfStarsEarned());
+
+        isAnswered = true;
     }
 
     /**
@@ -182,7 +180,6 @@ public class MultipleChoiceQuestionFragment extends Fragment implements BasicFra
                     correctAnswersByUser++;
                 } else {
                     QuestionUtils.showCorrectAnswerCard(context, TV_Answer_Selected);
-                    incorrectAnswersByUser++;
                 }
             } else {
                 if (isAnswerSelected) {

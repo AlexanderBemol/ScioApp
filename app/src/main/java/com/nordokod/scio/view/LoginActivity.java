@@ -251,7 +251,8 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         });
     }
 
-    private void initAnimations(){
+    @Override
+    public void initAnimations(){
         press = AnimationUtils.loadAnimation(this, R.anim.press);
     }
 

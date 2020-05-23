@@ -136,38 +136,6 @@
     </style>
 
     <!-- ======================================================================================= -->
-    <!-- ESTILOS PARA LOS COMPONENTES REFERENTES A FirstConfigurationActivity -->
-    <!-- ======================================================================================= -->
-    <style name="FirstConfiguration_Title">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textColor">@color/colorTextFirstConfiguration</item>
-        <item name="android:textSize">@dimen/first_configuration_text_size_title</item>
-        <item name="android:textAlignment">center</item>
-    </style>
-
-    <style name="FirstConfiguration_Description">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:fontFamily">sans-serif-light</item>
-        <item name="android:textColor">@color/colorTextFirstConfiguration</item>
-        <item name="android:textSize">@dimen/first_configuration_text_size_description</item>
-        <item name="android:textAlignment">center</item>
-    </style>
-    
-    <style name="FirstConfiguration_EditText">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textAlignment">center</item>
-        <item name="android:textSize">@dimen/text_size_normal</item>
-        <item name="android:singleLine">true</item>
-        <item name="android:background">@xml/background_solid_round</item>
-        <item name="android:padding">12dp</item>
-        <item name="android:layout_marginBottom">@dimen/first_configuration_max_space</item>
-    </style>
-
-    <!-- ======================================================================================= -->
     <!-- ESTILOS PARA LOS PICKERDIALOG DE FECHA Y HORA -->
     <!-- ======================================================================================= -->
     <style name="PickerDialog" parent="Theme.AppCompat.Light.Dialog">
@@ -254,6 +222,7 @@
         <item name="android:backgroundTint">@color/secondaryColor</item>
         <item name="android:textColor">?attr/onBackgroundColor</item>
         <item name="android:textColorHint">?attr/onBackgroundColor</item>
+        <item name="android:inputType">textCapSentences</item>
     </style>
 
     <style name="EditText_Option">
@@ -263,6 +232,7 @@
         <item name="android:textColor">?attr/onBackgroundColor</item>
         <item name="android:textColorHint">?attr/onBackgroundColor</item>
         <item name="android:textAlignment">center</item>
+        <item name="android:inputType">textCapSentences</item>
     </style>
 
     <style name="EditText_Login" parent="EditText_Normal">
@@ -285,9 +255,9 @@
                                                                                                     <!-- ESTILOS PARA LOS BOTONES -->
     <!-- ======================================================================================= -->
     <style name="button" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:textSize">@dimen/text_size_button</item>
-        <item name="android:paddingLeft">@dimen/button_padding_size</item>
-        <item name="android:paddingRight">@dimen/button_padding_size</item>
+        <item name="android:textSize"       >@dimen/text_size_button</item>
+        <item name="android:paddingLeft"    >@dimen/button_padding_size</item>
+        <item name="android:paddingRight"   >@dimen/button_padding_size</item>
     </style>
 
     <style name="normalButton" parent="button">
@@ -299,6 +269,12 @@
     <style name="answerButton" parent="button">
         <item name="android:textColor"      >?secondaryTextColor</item>
         <item name="android:backgroundTint" >@color/colorYellow</item>
+        <item name="android:background"     >@xml/background_solid_round</item>
+    </style>
+
+    <style name="deleteButton" parent="button">
+        <item name="android:textColor"      >?secondaryTextColor</item>
+        <item name="android:backgroundTint" >@color/errorColor</item>
         <item name="android:background"     >@xml/background_solid_round</item>
     </style>
 
@@ -351,10 +327,11 @@
     </style>
 
     <style name="answerCard">
+        <item name="android:textColor">@color/primaryTextColor</item>
         <item name="android:padding">10dp</item>
         <item name="android:textSize">@dimen/text_size_normal</item>
         <item name="android:textAlignment">center</item>
-        <item name="android:background">@xml/background_card_round</item>
+        <item name="android:background">@drawable/background_card_round</item>
     </style>
 
     <!-- ======================================================================================= -->

@@ -34,7 +34,7 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
 
     @Override
     public GuidesRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.guide_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.guide_card, parent, false);
 
         GuidesRecyclerViewAdapter.ViewHolder viewHolder = new GuidesRecyclerViewAdapter.ViewHolder(view);
         return viewHolder;
@@ -115,7 +115,7 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
             super(view);
 
             CL_Guide = view.findViewById(R.id.CL_Guide);
-            IV_Icon = view.findViewById(R.id.IV_Icon);
+            IV_Icon = view.findViewById(R.id.QCard_IV_Icon);
             TV_Topic = view.findViewById(R.id.TV_Topic);
             TV_Days = view.findViewById(R.id.TV_Days);
             TV_Category = view.findViewById(R.id.TV_Category);
