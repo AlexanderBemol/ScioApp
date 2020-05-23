@@ -82,15 +82,15 @@ public class Question {
             com.nordokod.scio.entity.Question question;
             int kindOfQuestion = ((Long)((HashMap<String,Object>)aux).get(com.nordokod.scio.entity.Question.KEY_KIND_OF_QUESTION)).intValue();
             String stringQuestion = Objects.requireNonNull(((HashMap<String, Object>) aux).get(com.nordokod.scio.entity.Question.KEY_QUESTION)).toString();
-            String id = String.valueOf(index1);
+            int id = index1;
             if (KindOfQuestion.OPEN.getCode() == kindOfQuestion) {
                 String openAnswer = Objects.requireNonNull(((HashMap<String, Object>) aux).get(OpenQuestion.KEY_ANSWER)).toString();
-                question = new OpenQuestion(id, stringQuestion, kindOfQuestion, openAnswer);
+                question = new OpenQuestion(guide.getId(), id, stringQuestion, kindOfQuestion, openAnswer);
             } else if (KindOfQuestion.TRUE_FALSE.getCode() == kindOfQuestion) {
                 boolean trueFalseAnswer = (boolean) ((HashMap<String,Object>)aux).get(TrueFalseQuestion.KEY_ANSWER);
-                question = new TrueFalseQuestion(id, stringQuestion, kindOfQuestion, trueFalseAnswer);
+                question = new TrueFalseQuestion(guide.getId(), id, stringQuestion, kindOfQuestion, trueFalseAnswer);
             } else {
-                question = new MultipleChoiceQuestion(id,stringQuestion,kindOfQuestion);
+                question = new MultipleChoiceQuestion(guide.getId(),id,stringQuestion,kindOfQuestion);
                 ArrayList<Answer> answerArrayList = new ArrayList<>();
                 HashMap<String,Object> map = (HashMap<String, Object>) ((HashMap<String,Object>)aux).get(MultipleChoiceQuestion.KEY_ANSWERS);
                 for(int i = 0; i < map.size(); i++){

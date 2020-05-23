@@ -48,7 +48,7 @@ public class VerifyMailActivity extends AppCompatActivity implements BasicActivi
         });
 
         BTN_Resend.setOnClickListener(v -> userModel.sendVerificationMail()
-                .addOnSuccessListener(a -> showMessage())
+                .addOnSuccessListener(a -> showMessage(UserOperations.RESEND_VERIFICATION_MAIL))
                 .addOnFailureListener(this::showError));
 
         Swipe.setOnRefreshListener(this::updateState);
@@ -63,6 +63,7 @@ public class VerifyMailActivity extends AppCompatActivity implements BasicActivi
         userModel.refreshUser()
                 .addOnSuccessListener(aVoid ->{
                     if(userModel.isEmailVerified()){
+                        showMessage(UserOperations.MAIL_VERIFICATED);
                         goToMainActivity();
                     }
                     if(Swipe!=null)Swipe.setRefreshing(false);
@@ -100,9 +101,9 @@ public class VerifyMailActivity extends AppCompatActivity implements BasicActivi
         userMessage.showErrorMessage(getApplicationContext(), userMessage.categorizeException(e));
     }
 
-    private void showMessage() {
+    private void showMessage(UserOperations userOperation) {
         UserMessage userMessage = new UserMessage();
-        userMessage.showSuccessfulOperationMessage(getApplicationContext(), UserOperations.CREATE_USER);
+        userMessage.showSuccessfulOperationMessage(getApplicationContext(), userOperation);
     }
 
     ////////////////////////////////////////////////////////////////////////// Objects from the view

@@ -105,7 +105,7 @@ public class NewMultipleChoiceQuestionFragment extends BottomSheetDialogFragment
                     if(optionCounter<2)showError(new InputDataException(InputDataException.Code.NOT_ENOUGH_OPTIONS));
                     else if(!correctOptionSelected)showError(new InputDataException(InputDataException.Code.NOT_CORRECT_OPTION_SELECTED));
                     else{
-                        MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion("", Objects.requireNonNull(ET_Question.getText()).toString(), KindOfQuestion.MULTIPLE_CHOICE.getCode());
+                        MultipleChoiceQuestion multipleChoiceQuestion = new MultipleChoiceQuestion(guide.getId(),0, Objects.requireNonNull(ET_Question.getText()).toString(), KindOfQuestion.MULTIPLE_CHOICE.getCode());
                         for(int i = 0;i<editTextArray.length;i++){
                             if(Objects.requireNonNull(editTextArray[i].getText()).length()!=0){
                                 multipleChoiceQuestion.addAnswer(Objects.requireNonNull(editTextArray[i].getText()).toString(),switchCompatArray[i].isChecked());

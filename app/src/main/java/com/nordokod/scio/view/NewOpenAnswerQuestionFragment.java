@@ -81,7 +81,7 @@ public class NewOpenAnswerQuestionFragment extends BottomSheetDialogFragment imp
                 BTN_Create.startAnimation(press);
 
                 if(Objects.requireNonNull(ET_Question.getText()).length()!=0&& Objects.requireNonNull(ET_Answer.getText()).length()!=0){
-                    OpenQuestion openQuestion = new OpenQuestion("", ET_Question.getText().toString(), KindOfQuestion.OPEN.getCode(), ET_Answer.getText().toString());
+                    OpenQuestion openQuestion = new OpenQuestion(guide.getId(),0, ET_Question.getText().toString(), KindOfQuestion.OPEN.getCode(), ET_Answer.getText().toString());
 
                     Question question = new Question();
                     question.addQuestion(KindOfQuestion.OPEN, guide, openQuestion)

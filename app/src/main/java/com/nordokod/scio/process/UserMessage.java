@@ -18,6 +18,7 @@ import com.nordokod.scio.constants.UserOperations;
 import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.InvalidValueException;
 import com.nordokod.scio.entity.NoGuidesException;
+import com.nordokod.scio.entity.NoQuestionsInGuide;
 import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.entity.PermissionException;
 import com.nordokod.scio.entity.PhoneNetworkException;
@@ -138,6 +139,8 @@ public class UserMessage {
         else if(exception instanceof NoGuidesException){
             //el usuario no tiene guias para estudiar
             return  ErrorMessage.NO_GUIDES_EXCEPTION;
+        }else if(exception instanceof NoQuestionsInGuide){
+            return ErrorMessage.NO_QUESTIONS_IN_GUIDE;
         }
         else{
             //cualquier otro error
@@ -153,7 +156,11 @@ public class UserMessage {
      */
     public void showErrorMessage(Context context, ErrorMessage errorMessage){
         if(errorMessage!=ErrorMessage.CANCELED_OPERATION){//MOSTRAR SÓLO SI NO ES OPERACIÓN CANCELADA POR USUARIO
-           Toasty.error(context,context.getString(errorMessage.getMessageCode())).show();
+           if(errorMessage.getKindOfToast()==2)
+               Toasty.error(context,context.getString(errorMessage.getMessageCode())).show();
+           else
+               Toasty.warning(context,context.getString(errorMessage.getMessageCode())).show();
+
         }
     }
 

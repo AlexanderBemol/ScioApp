@@ -19,6 +19,7 @@ import android.view.animation.AnimationUtils;
 import com.nordokod.scio.R;
 import com.nordokod.scio.constants.QuestionUtils;
 import com.nordokod.scio.entity.OpenQuestion;
+import com.nordokod.scio.model.StarsHistory;
 import com.nordokod.scio.process.QualifyMethod;
 
 import java.util.Objects;
@@ -93,6 +94,10 @@ public class OpenQuestionFragment extends Fragment implements BasicFragment{
         showCorrectAnswer();
 
         if (studyGuideActivity != null) studyGuideActivity.updateStarsEarnedAmount(starsEarned);
+
+        //insert log
+        StarsHistory starsHistory = new StarsHistory(context);
+        starsHistory.createStarHistory(openQuestion.getGuide(),openQuestion.getId(),starsEarned,1);
     }
 
     ////////////////////////////////////////////////////////////////////////// Objects from the view

@@ -16,6 +16,7 @@ public class User {
     public static String KEY_PROFILE_PHOTO="PROFILE_PHOTOS";
     public static String KEY_PROFILE_PROVIDER="PROVIDER";
     public static String KEY_CREATION_DATE="CREATION_DATE";
+    public static String KEY_USERS_LOGS="LOGS";
 
     private static String DEFAULT_USERNAME="USUARIO DE SENDO SG";
     private static String DEFAULT_EMAIL="SIN INFORMACIÓN";

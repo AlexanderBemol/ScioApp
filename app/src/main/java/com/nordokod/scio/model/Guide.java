@@ -12,6 +12,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firestore.v1.DocumentTransform;
@@ -84,6 +85,19 @@ public class Guide {
     public Task<QuerySnapshot> getAllGuides(){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         return db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES).get();
+    }
+
+    /**
+     * Obtener todas las guías activas
+     * @return Task con resultado
+     */
+    public Task<QuerySnapshot> getAllActivatedGuides(){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Query query = db.collection(com.nordokod.scio.entity.Guide.KEY_GUIDES)
+                .document(Objects.requireNonNull(mAuth.getCurrentUser())
+                .getUid()).collection(com.nordokod.scio.entity.Guide.KEY_PERSONAL_GUIDES)
+                .whereEqualTo(com.nordokod.scio.entity.Guide.KEY_ACTIVATED,true);
+        return query.get();
     }
 
     /**

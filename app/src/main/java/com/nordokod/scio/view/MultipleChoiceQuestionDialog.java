@@ -69,6 +69,7 @@ public class MultipleChoiceQuestionDialog implements BasicDialog {
     @Override
     public void initListeners() {
         IV_Close.setOnClickListener(v -> dialog.dismiss());
+
     }
 
     @Override
@@ -117,8 +118,6 @@ public class MultipleChoiceQuestionDialog implements BasicDialog {
     public void setQuestion(MultipleChoiceQuestion multipleChoiceQuestion, Guide guide) {
         this.question = multipleChoiceQuestion;
         this.guide = guide;
-
-
 
         showDialog();
     }
