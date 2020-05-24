@@ -92,7 +92,7 @@
                     android:background="@drawable/background_card_round"
 
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/OQFragment_CL_Correct_Answer"
 
                     style="@style/EditText_AnswerCard"
                     />
@@ -102,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_2"
-                    android:visibility="gone"
+
 
                     app:layout_constraintTop_toBottomOf="@id/OQFragment_ET_Answer"
                     >
@@ -111,7 +111,7 @@
                         android:id="@+id/OQFragment_TV_Correct_Answer_Title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Respuesta correcta"
+                        android:text="@string/txt_title_correct_answer"
 
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
@@ -123,9 +123,11 @@
                         android:id="@+id/OQFragment_TV_Correct_Answer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:maxHeight="310px"
                         android:textAlignment="center"
                         android:padding="10dp"
                         android:layout_marginTop="@dimen/space_1"
+                        android:scrollbars="vertical"
 
                         app:layout_constraintTop_toBottomOf="@id/OQFragment_TV_Correct_Answer_Title"
                         >
