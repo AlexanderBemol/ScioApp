@@ -21,6 +21,7 @@ import com.nordokod.scio.constants.QuestionUtils;
 import com.nordokod.scio.constants.Utilities;
 import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.entity.MultipleChoiceQuestion;
+import com.nordokod.scio.model.StarsHistory;
 
 import java.util.Objects;
 
@@ -199,9 +200,14 @@ public class MultipleChoiceQuestionDialog implements BasicDialog {
         verifyAnswer(TV_Third_Answer, 2, isThirdAnswerSelected);
         verifyAnswer(TV_Fourth_Answer, 3, isFourthAnswerSelected);
 
-        QuestionUtils.fillStarsEarned(context, getAmountOfStarsEarned(), IV_Star_1, IV_Star_2, IV_Star_3, starEarnedAnimation);
+        int amountOfStars = getAmountOfStarsEarned();
+        QuestionUtils.fillStarsEarned(context, amountOfStars , IV_Star_1, IV_Star_2, IV_Star_3, starEarnedAnimation);
+
 
         isAnswered = true;
+
+        StarsHistory starsHistory = new StarsHistory(context);
+        starsHistory.createStarHistory(multipleChoiceQuestion.getGuide(),multipleChoiceQuestion.getId(),amountOfStars,2);
     }
 
     /**

@@ -88,7 +88,7 @@ public class TrueFalseQuestionDialog implements BasicDialog {
                 TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
                 TV_True.setTextAppearance(context, R.style.correctAnswer);
 
-                changeStarState(3);
+                changeStarState();
                 amountOfStars = 3;
                 wasAnswered = true;
             } else if (!wasAnswered) {
@@ -98,13 +98,10 @@ public class TrueFalseQuestionDialog implements BasicDialog {
                 // Mostramos que Falso es la respuesta correcta.
                 TV_False.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
                 TV_False.setTextAppearance(context, R.style.correctAnswer);
-                changeStarState(0);
             }
-
+            logInsert(amountOfStars);
             BTN_Close.setVisibility(View.VISIBLE);
-            //insert log
-            StarsHistory starsHistory = new StarsHistory(context);
-            starsHistory.createStarHistory(question.getGuide(),question.getId(),amountOfStars,2);
+
         });
 
         TV_False.setOnClickListener(v -> {
@@ -113,7 +110,8 @@ public class TrueFalseQuestionDialog implements BasicDialog {
                 TV_False.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
                 TV_False.setTextAppearance(context, R.style.correctAnswer);
 
-                changeStarState(0);
+                changeStarState();
+                logInsert(3);
                 wasAnswered = true;
             } else if (!wasAnswered) {
                 // Mostramos que eligió la respuesta incorrecta.
@@ -122,6 +120,7 @@ public class TrueFalseQuestionDialog implements BasicDialog {
                 // Mostramos que True es la respuesta correcta.
                 TV_True.setBackgroundDrawable(context.getDrawable(R.drawable.background_correct_answer));
                 TV_True.setTextAppearance(context, R.style.correctAnswer);
+                logInsert(0);
             }
 
             BTN_Close.setVisibility(View.VISIBLE);
@@ -165,10 +164,14 @@ public class TrueFalseQuestionDialog implements BasicDialog {
 
 
 
-    private void changeStarState(int number_of_stars) {
+    private void changeStarState() {
         IV_Star_1.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
         IV_Star_2.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
         IV_Star_3.setColorFilter(new PorterDuffColorFilter(context.getResources().getColor(R.color.starFillColor), PorterDuff.Mode.SRC_IN));
     }
 
+    private void logInsert(int stars){
+        StarsHistory starsHistory = new StarsHistory(context);
+        starsHistory.createStarHistory(question.getGuide(),question.getId(),stars,2);
+    }
 }

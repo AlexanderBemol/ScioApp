@@ -93,7 +93,8 @@ public class OpenQuestionDialog implements BasicDialog {
                 if (Objects.requireNonNull(ET_Answer.getText()).length() == 0)
                     showError(new InputDataException(InputDataException.Code.EMPTY_FIELD));
                 else {
-                    changeStarState(QualifyMethod.getStars(question.getAnswer(), ET_Answer.getText().toString()));
+                    int amountOfStars = QualifyMethod.getStars(question.getAnswer(), ET_Answer.getText().toString());
+                    changeStarState(amountOfStars);
                     showCorrectAnswer();
 
                     //insert log
