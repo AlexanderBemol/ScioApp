@@ -1,6 +1,8 @@
 package com.nordokod.scio.process;
 
 import android.content.Context;
+import android.os.Build;
+import android.widget.Toast;
 
 import com.facebook.FacebookException;
 import com.google.android.gms.auth.GoogleAuthException;
@@ -156,11 +158,10 @@ public class UserMessage {
      */
     public void showErrorMessage(Context context, ErrorMessage errorMessage){
         if(errorMessage!=ErrorMessage.CANCELED_OPERATION){//MOSTRAR SÓLO SI NO ES OPERACIÓN CANCELADA POR USUARIO
-           if(errorMessage.getKindOfToast()==2)
-               Toasty.error(context,context.getString(errorMessage.getMessageCode())).show();
-           else
-               Toasty.warning(context,context.getString(errorMessage.getMessageCode())).show();
-
+            if(errorMessage.getKindOfToast()==2)
+                Toasty.error(context,context.getString(errorMessage.getMessageCode())).show();
+            else
+                Toasty.warning(context,context.getString(errorMessage.getMessageCode())).show();
         }
     }
 
