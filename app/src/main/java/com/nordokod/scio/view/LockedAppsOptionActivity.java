@@ -88,7 +88,7 @@ public class LockedAppsOptionActivity extends AppCompatActivity implements Basic
                 stopService(service);
 
             UserMessage userMessage = new UserMessage();
-            userMessage.showSuccessfulOperationMessage(this, UserOperations.IMPORT_GUIDE);
+            userMessage.showSuccessfulOperationMessage(this, UserOperations.SAVE_CONFIGURATION);
             closeAndGoToMainActivity();
         });
         BTN_Cancel.setOnClickListener(l->closeAndGoToMainActivity());

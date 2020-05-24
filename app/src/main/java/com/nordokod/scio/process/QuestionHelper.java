@@ -22,7 +22,7 @@ public class QuestionHelper {
 
     public void showRandomQuestion(Context context){
         com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
-        guideModel.getAllGuides().addOnSuccessListener(queryDocumentSnapshots -> {
+        guideModel.getAllActivatedGuides().addOnSuccessListener(queryDocumentSnapshots -> {
             if(!queryDocumentSnapshots.getDocuments().isEmpty()){
                 int n = queryDocumentSnapshots.getDocuments().size();
                 Random random = new Random();

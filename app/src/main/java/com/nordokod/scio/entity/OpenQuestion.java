@@ -5,8 +5,8 @@ public class OpenQuestion extends Question {
 
     private String answer;
 
-    public OpenQuestion(String id, String question, int kindOfQuestion, String answer) {
-        super(id, question, kindOfQuestion);
+    public OpenQuestion(String guide,int id, String question, int kindOfQuestion, String answer) {
+        super(guide, id, question, kindOfQuestion);
         this.answer = answer;
     }
 

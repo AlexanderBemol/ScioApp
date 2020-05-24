@@ -351,7 +351,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         finish();
     }
 
-    private void showError(Exception e) {
+    public void showError(Exception e) {
         UserMessage userMessage = new UserMessage();
         userMessage.showErrorMessage(this, userMessage.categorizeException(e));
     }

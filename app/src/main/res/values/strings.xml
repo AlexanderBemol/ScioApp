@@ -304,6 +304,8 @@
     <string name="AUTH_USER_NOT_FOUND_TITLE">Error de Autenticación</string>
     <string name="AUTH_USER_NOT_FOUND_MESSAGE">El usuario ingresado no está registrado</string>
 
+    <string name="NO_QUESTIONS_IN_GUIDE_TITLE">Ups!</string>
+    <string name="NO_QUESTIONS_IN_GUIDE_MESSAGE">No tienes preguntas en esta guía</string>
 
     <!-- ======================================================================================= -->
     <!-- Mensajes de operaciones para usuario -->
@@ -321,6 +323,11 @@
     <string name="SIGN_UP_USER">¡Se registró tu usuario correctamente!</string>
     <string name="LOGIN_USER">Inicio de sesión satisfactorio.</string>
     <string name="IMPORT_GUIDE">¡La guía se importó correctamente!</string>
+    <string name="SAVE_CONFIGURATION">¡Tu configuración se guardo de forma exitosa!</string>
+    <string name="RESEND_VERIFICATION_MAIL">¡Se reenvío el correo de verificación de forma correcta!</string>
+    <string name="MAIL_VERIFICATED">¡Tu correo ha sido verificado!</string>
+    <string name="DATA_EXPORTED">¡Los datos se exportaron de forma correcta!</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

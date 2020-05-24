@@ -24,12 +24,14 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
     private ArrayList<Guide> guideArrayList;
     private DialogFragment dialogFragment;
     private int category;
+    private com.nordokod.scio.model.Guide guideModel;
 
     public GuidesRecyclerViewAdapter(ArrayList<Guide> guideArrayList, int category, Context context, MainActivity activity) {
         this.guideArrayList = guideArrayList;
         this.category = category;
         this.context = context;
         this.activity = activity;
+        this.guideModel = new com.nordokod.scio.model.Guide();
     }
 
     @Override
@@ -61,7 +63,14 @@ public class GuidesRecyclerViewAdapter extends RecyclerView.Adapter<GuidesRecycl
             // TODO Crear un método par que cuando el usaurio active o desactive la guía mande a
             //  llamar un método al backend que haga el cambio en la base de datos o donde sea que se almacene esa guía.
             //  Debe mandar por parametro el ID y el estado.
-            // buttonView.setChecked(firstConfigurationController.onStateChanged(appArrayList.get(position).getPackagePath(), isChecked));
+            Guide guide = guideArrayList.get(position);
+            guide.setActivated(isChecked);
+            guideModel.updateGuide(guide)
+                    .addOnSuccessListener(aVoid -> buttonView.setChecked(isChecked))
+                    .addOnFailureListener(e -> {
+                        buttonView.setChecked(!isChecked);
+                        guide.setActivated(!isChecked);
+                    });
         });
     }
 
