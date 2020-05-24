@@ -39,20 +39,15 @@
     <!-- ======================================================================================= -->
     <dimen name="icon_size_star">40dp</dimen>
 
-    <dimen name="icon_size_loading">45dp</dimen>
+    <!-- ======================================================================================= -->
+    <!-- Loading Dialog -->
+    <!-- ======================================================================================= -->
+    <dimen name="icon_size_loading">60dp</dimen>
+    <dimen name="padding_top_bottom_dialog_loading">40dp</dimen>
+    <dimen name="padding_start_end_dialog_loading">80dp</dimen>
 
     <dimen name="option_textview_padding">10dp</dimen>
 
-    <!-- ======================================================================================= -->
-    <!-- First Configuration -->
-    <!-- ======================================================================================= -->
-    <dimen name="first_configuration_img_size">240dp</dimen>
-    <dimen name="first_configuration_ic_size">50dp</dimen>
-    <dimen name="first_configuration_photo_size">200dp</dimen>
-    <dimen name="first_configuration_text_size_title">24dp</dimen>
-    <dimen name="first_configuration_text_size_description">17dp</dimen>
-    <dimen  name="first_configuration_space_between_buttons">15dp</dimen>
-    <dimen name="first_configuration_max_space">150dp</dimen>
     <!-- ======================================================================================= -->
     <!-- Permissions -->
     <!-- ======================================================================================= -->

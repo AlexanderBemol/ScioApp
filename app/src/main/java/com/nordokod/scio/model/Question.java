@@ -1,7 +1,5 @@
 package com.nordokod.scio.model;
 
-import android.util.Log;
-
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
@@ -62,12 +60,12 @@ public class Question {
     /**
      * eliminar pregunta de la guía
      * @param guide entidad guide con id de guia
-     * @param question entidad question con id de pregunta
+     * @param questions entidad question con id de pregunta
      * @return task con el resultado
      */
-    public Task<Void> deleteQuestion(Guide guide, Map<String, Object> question) {
+    public Task<Void> deleteQuestions(Guide guide, Map<String, Object> questions) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        return db.collection(Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(Guide.KEY_PERSONAL_GUIDES).document(guide.getId()).update(com.nordokod.scio.entity.Question.KEY_QUESTIONS,FieldValue.arrayRemove(question));
+        return db.collection(Guide.KEY_GUIDES).document(Objects.requireNonNull(mAuth.getCurrentUser()).getUid()).collection(Guide.KEY_PERSONAL_GUIDES).document(guide.getId()).update(com.nordokod.scio.entity.Question.KEY_QUESTIONS,FieldValue.arrayRemove(questions));
     }
 
     /**

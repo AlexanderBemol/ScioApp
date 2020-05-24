@@ -1,13 +1,17 @@
 package com.nordokod.scio.view;
 
+import android.content.Context;
 import android.view.Window;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.appcompat.widget.AppCompatImageView;
 
 import com.nordokod.scio.R;
+
+import java.time.Duration;
 
 interface BasicActivity {
     /**
@@ -25,18 +29,26 @@ interface BasicActivity {
     void initListeners();
 
     /**
+     * Este método es usado para inicializar las animaciones necesarias de los componentes.
+     *
+     * No es obligatorio usarlo.
+     */
+    default void initAnimations() {}
+
+    /**
      * Este método es usado para inicializar las variables o logica necesaria.
+     *
+     * No es obligatorio usarlo.
      */
     default void initVariables() {}
 
-    default void showLoadingDialog(AppCompatDialog dialog) {
+    default void showLoadingDialog(AppCompatDialog dialog, Context context) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setCancelable(false);
         dialog.setContentView(R.layout.dialog_loading);
 
         AppCompatImageView IV_Icon = dialog.findViewById(R.id.DLoading_Icon);
-        RotateAnimation rotateAnimation = new RotateAnimation(0.0f, (-10.0f * 360.0f), Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        rotateAnimation.setDuration(Animation.INFINITE);
+        Animation rotateAnimation = AnimationUtils.loadAnimation(context, R.anim.rotate);
 
         assert IV_Icon != null;
         IV_Icon.startAnimation(rotateAnimation);

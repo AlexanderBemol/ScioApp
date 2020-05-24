@@ -7,6 +7,7 @@
     <string name="txt_BTN_Cancel">Cancelar</string>
     <string name="txt_BTN_Create">Crear</string>
     <string name="txt_BTN_Finish">Finalizar</string>
+    <string name="txt_BTN_Delete">Eliminar</string>
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_login -->
     <!-- ======================================================================================= -->
@@ -48,6 +49,12 @@
     <string name="description_permission">Necesitamos de algunos permisos para que puedas acceder a todas las caracteristícas</string>
 
     <!-- ======================================================================================= -->
+    <!-- Strings relacionados con activity_delete_questions -->
+    <!-- ======================================================================================= -->
+    <string name="txt_activity_delete_questions_title">Elimina preguntas</string>
+    <string name="txt_activity_delete_questions_action_hint">Selecciona las preguntas que quieres eliminar.</string>
+
+    <!-- ======================================================================================= -->
     <!-- Strings relacionados con activity_first_configuration -->
     <!-- ======================================================================================= -->
     <string name="txt_BTN_Skip">Omitir</string>
@@ -56,28 +63,6 @@
     <string name="txt_BTN_Start">Comenzar</string>
     <string name="txt_BTN_Done">Listo</string>
     <string name="txt_BTN_Import">Importar</string>
-    <!-- Foto -->
-    <string name="title_photo_first_configuration">Los reflectores son tuyos</string>
-    <string name="description_photo_first_configuration">Puedes elegir una foto o cambiarla en el\nmomento que quieras.</string>
-    <!-- Nombre -->
-    <string name="hint_name_edittext">Alejandra Montes…</string>
-    <string name="title_name_first_configuration">Elige un nombre para que\nlas personas te vean</string>
-    <string name="description_name_first_configuration">Puedes dejar el nombre de tus redes\no cambiarlo.</string>
-    <!-- Cumpleaños -->
-    <string name="hint_birthday_edittext">Sí naciste, ¿verdad?…</string>
-    <string name="title_birthday_first_configuration">¿Cuándo naciste?</string>
-    <string name="description_birthday_first_configuration">Los cumpleaños son muy especiales para nosotros.</string>
-    <!-- Escuela -->
-    <string name="hint_school_edittext">Elige un nivel</string>
-    <string name="title_school_first_configuration">¿En qué nivel de estudios\nte encuentras?</string>
-    <!-- Apps Bloqueadas -->
-    <string name="title_appblock_first_configuration">Elige las apps que más usas\ny te distraen cuando estudias</string>
-    <string name="description_appblock_first_configuration">Puedes elegirlas o cambiarlas cuando\nquieras.</string>
-    <!-- Finalizar -->
-    <string name="title_done_first_configuration">¡Perfecto!</string>
-    <string name="description_done_first_configuration">Ahora estás listo para utilizar la app,\ny no olvides que:\n¡Esto es Sciooooo!</string>
-    <string name="title_incomplete_first_configuration">Aún no terminas</string>
-    <string name="description_incomplete_first_configuration">Por favor llena tus datos para\npoder usar la aplicación.</string>
 
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con verification_mail -->
@@ -346,4 +331,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_loading">Cargando</string>
+    <string name="txt_BTN_Close">Cerrar</string>
 </resources>

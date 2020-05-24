@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_padding"
+    android:background="?attr/backgroundColor"
+    tools:context=".view.DeleteQuestionsActivity"
+    >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ADeleteQ_IV_Close"
+        android:layout_width="@dimen/icon_size_star"
+        android:layout_height="@dimen/icon_size_star"
+        android:tint="@color/cancelColor"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        app:srcCompat="@drawable/crop__ic_cancel"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ADeleteQ_TV_Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_activity_delete_questions_title"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        style="@style/titleTextView"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/ADeleteQ_TV_Action_Hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_activity_delete_questions_action_hint"
+        android:layout_marginTop="@dimen/space_1"
+
+        app:layout_constraintTop_toBottomOf="@id/ADeleteQ_TV_Title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+
+        style="@style/hintTextview"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ADeleteQ_RV_Questions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        android:layout_marginTop="@dimen/space_2"
+        android:layout_marginBottom="@dimen/space_2"
+
+        app:layout_constraintTop_toBottomOf="@id/ADeleteQ_TV_Action_Hint"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ADeleteQ_BTN_Delete"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ADeleteQ_BTN_Cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_BTN_Cancel"
+        android:layout_marginEnd="@dimen/space_2"
+
+        app:layout_constraintTop_toTopOf="@id/ADeleteQ_BTN_Delete"
+        app:layout_constraintRight_toLeftOf="@id/ADeleteQ_BTN_Delete"
+        app:layout_constraintBottom_toBottomOf="@id/ADeleteQ_BTN_Delete"
+
+        style="@style/cancelButton"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/ADeleteQ_BTN_Delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        style="@style/deleteButton"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

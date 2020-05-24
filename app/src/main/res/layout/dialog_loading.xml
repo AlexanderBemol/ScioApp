@@ -5,10 +5,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="?attr/backgroundColor"
-    android:paddingTop="50dp"
-    android:paddingStart="80dp"
-    android:paddingEnd="80dp"
-    android:paddingBottom="50dp"
+    android:paddingTop="@dimen/padding_top_bottom_dialog_loading"
+    android:paddingStart="@dimen/padding_start_end_dialog_loading"
+    android:paddingEnd="@dimen/padding_start_end_dialog_loading"
+    android:paddingBottom="@dimen/padding_top_bottom_dialog_loading"
     >
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -16,6 +16,7 @@
         android:layout_width="@dimen/icon_size_loading"
         android:layout_height="@dimen/icon_size_loading"
         android:tint="?attr/onBackgroundColor"
+        android:padding="@dimen/space_1"
 
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -28,7 +29,7 @@
         android:id="@+id/DLoading_Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Loading"
+        android:text="@string/txt_loading"
         android:layout_marginTop="@dimen/space_2"
 
         app:layout_constraintTop_toBottomOf="@id/DLoading_Icon"

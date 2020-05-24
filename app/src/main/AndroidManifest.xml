@@ -21,8 +21,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/DefaultTheme">
+        <activity android:name=".view.DeleteQuestionsActivity"></activity>
         <activity android:name=".view.StudyGuideActivity" />
-        <activity android:name=".view.VerifyMailActivity"></activity>
+        <activity android:name=".view.VerifyMailActivity" />
 
         <service
             android:name=".process.PushNotifications"

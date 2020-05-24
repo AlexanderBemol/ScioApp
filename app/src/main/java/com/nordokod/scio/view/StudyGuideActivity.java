@@ -46,7 +46,6 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.NightTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study_guide);
 
@@ -105,7 +104,8 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
         });
     }
 
-    private void initAnimations() {
+    @Override
+    public void initAnimations() {
         buttonPressedAnimation = AnimationUtils.loadAnimation(this, R.anim.press);
     }
 
@@ -119,6 +119,8 @@ public class StudyGuideActivity extends AppCompatActivity implements BasicActivi
         questionList = questionModel.getQuestionsFromGuide(guide);
 
         totalOfQuestions = questionList.size();
+
+        TV_Question_Number.setText(getResources().getString(R.string.current_question_total_questions, (currentQuestion + 1), totalOfQuestions));
 
         switch (questionList.get(currentQuestion).getKindOfQuestion()) {
             case 1: showMultipleChoiceQuestion((MultipleChoiceQuestion) questionList.get(currentQuestion)); break;

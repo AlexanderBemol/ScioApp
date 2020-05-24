@@ -68,7 +68,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FMGuide_TV_StudyGuide"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_study_guide_option_menu_guide"
 
@@ -81,7 +81,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FMGuide_TV_ShareGuide"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_share_guide_option_menu_guide"
 
@@ -94,7 +94,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FMGuide_TV_EditGuide"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_edit_guide_option_menu_guide"
 
@@ -107,7 +107,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FMGuide_TV_DeleteGuide"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_delete_guide_option_menu_guide"
 
@@ -148,7 +148,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FMGuide_TV_AddQuestion"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_add_question_option_menu_guide"
 
@@ -161,7 +161,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FMGuide_TV_EditQuestion"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_edit_question_option_menu_guide"
 
@@ -174,7 +174,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/FMGuide_TV_DeleteQuestion"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_delete_question_option_menu_guide"
             android:layout_marginBottom="@dimen/activity_padding"

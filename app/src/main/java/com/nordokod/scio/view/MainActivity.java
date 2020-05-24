@@ -9,12 +9,15 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.Guide;
@@ -32,9 +36,11 @@ import com.nordokod.scio.process.DownloadImageProcess;
 import com.nordokod.scio.process.MediaProcess;
 import com.nordokod.scio.process.UpdateCheck;
 import com.nordokod.scio.process.UserMessage;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 
@@ -57,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private Fragment selectedFragment = null;
     private User userModel;
     private com.nordokod.scio.entity.User actualUserEntity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //setTheme(R.style.NightTheme);
@@ -69,22 +76,22 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     @SuppressLint("ResourceAsColor")
     @Override
     public void initComponents() {
-        drawerLayout        = findViewById(R.id.DrawerLayout);
-        navigationMenu      = findViewById(R.id.NAV_Menu);
-        MenuItems           = navigationMenu.getMenu();
+        drawerLayout = findViewById(R.id.DrawerLayout);
+        navigationMenu = findViewById(R.id.NAV_Menu);
+        MenuItems = navigationMenu.getMenu();
 
-        bottomNavigation    = findViewById(R.id.NAV_Bar);
+        bottomNavigation = findViewById(R.id.NAV_Bar);
 
-        BTN_Logout      = navigationMenu.findViewById(R.id.BTN_Logout);
+        BTN_Logout = navigationMenu.findViewById(R.id.BTN_Logout);
 
-        View header     = navigationMenu.getHeaderView(0);
+        View header = navigationMenu.getHeaderView(0);
 
-        CIV_Photo       = header.findViewById(R.id.CIV_Photo);
-        TV_Name         = header.findViewById(R.id.TV_Name);
+        CIV_Photo = header.findViewById(R.id.CIV_Photo);
+        TV_Name = header.findViewById(R.id.TV_Name);
 
 
         userModel = new User();
-        if(!userModel.isUserLogged())goToLoginActivity();
+        if (!userModel.isUserLogged()) goToLoginActivity();
 
         actualUserEntity = new com.nordokod.scio.entity.User();
         try {
@@ -97,28 +104,28 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         }
 
         //verificar update
-        
+
         UpdateCheck updateCheck = new UpdateCheck();
-        updateCheck.checkUpdateAvailability(this,this);
+        updateCheck.checkUpdateAvailability(this, this);
 
         //link dinámico
         FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent())
                 .addOnSuccessListener(
-                    pendingDynamicLinkData -> {
-                        if(pendingDynamicLinkData!=null){
-                            com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
-                            guideModel.getPublicGuide(pendingDynamicLinkData).addOnSuccessListener(documentSnapshot -> {
-                                Guide guide = guideModel.getGuideFromDocument(documentSnapshot);
-                                ImportGuideDialog importGuideDialog = new ImportGuideDialog(getApplicationContext());
-                                importGuideDialog.showDialog(guide,documentSnapshot);
-                            });
+                        pendingDynamicLinkData -> {
+                            if (pendingDynamicLinkData != null) {
+                                com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
+                                guideModel.getPublicGuide(pendingDynamicLinkData).addOnSuccessListener(documentSnapshot -> {
+                                    Guide guide = guideModel.getGuideFromDocument(documentSnapshot);
+                                    ImportGuideDialog importGuideDialog = new ImportGuideDialog(getApplicationContext());
+                                    importGuideDialog.showDialog(guide, documentSnapshot);
+                                });
+                            }
                         }
-                    }
                 );
 
         //obtener foto de usuario
         Bitmap localPhoto = userModel.getLocalProfilePhoto(getApplicationContext(), actualUserEntity);
-        if(localPhoto==null) {
+        if (localPhoto == null) {
             switch (userModel.getProfilePhotoHost(actualUserEntity)) {
                 case GOOGLE_OR_FACEBOOK_STORAGE:
                     userModel.getExternalProfilePhoto(new DownloadImageProcess.CustomListener() {
@@ -141,11 +148,11 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                 case FIREBASE_STORAGE:
                     try {
                         userModel.getFirebaseProfilePhoto(actualUserEntity).addOnSuccessListener(bytes -> {
-                            try{
+                            try {
                                 Bitmap userPhoto = new MediaProcess().createBitmapWithBytes(bytes);
-                                userModel.saveProfilePhotoInLocal(MainActivity.this, userPhoto,actualUserEntity);
+                                userModel.saveProfilePhotoInLocal(MainActivity.this, userPhoto, actualUserEntity);
                                 setUserPhoto(userPhoto);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 setDefaultUserPhoto();
                             }
                         }).addOnCanceledListener(this::setDefaultUserPhoto).addOnFailureListener(ex -> setDefaultUserPhoto());
@@ -154,8 +161,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                         //showError(e);
                     }
             }
-        }
-        else{
+        } else {
             setUserPhoto(localPhoto);
         }
         try {
@@ -183,7 +189,8 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                 case R.id.Menu_Guides:
                     openFragmentOfBottomNavigationBar(new GuidesFragment(this, this));
                     return true;
-                case R.id.Menu_Home: default:
+                case R.id.Menu_Home:
+                default:
                     openFragmentOfBottomNavigationBar(new HomeFragment(this, this));
                     return true;
             }
@@ -204,18 +211,21 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         //listener de items de menú
         /*MenuItems.findItem(R.id.Menu_Acount).setOnMenuItemClickListener(item -> {
 
-        });
+        });*/
         MenuItems.findItem(R.id.Menu_Settings).setOnMenuItemClickListener(item -> {
-
+            Intent intent = new Intent(MainActivity.this, PermissionActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
         });
-        MenuItems.findItem(R.id.Menu_Security).setOnMenuItemClickListener(item -> {
+        /*MenuItems.findItem(R.id.Menu_Security).setOnMenuItemClickListener(item -> {
 
         });*/
         MenuItems.findItem(R.id.Menu_Apps).setOnMenuItemClickListener(item -> {
-                Intent intent = new Intent(MainActivity.this, LockedAppsOptionActivity.class);
-                startActivity(intent);
-                finish();
-                return true;
+            Intent intent = new Intent(MainActivity.this, LockedAppsOptionActivity.class);
+            startActivity(intent);
+            finish();
+            return true;
         });
         /*MenuItems.findItem(R.id.Menu_About).setOnMenuItemClickListener(item -> {
 
@@ -224,6 +234,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     /**
      * Método para mostrar el fragment de la opción seleccionada en la barra de navegación principal.
+     *
      * @param fragment
      */
     private void openFragmentOfBottomNavigationBar(Fragment fragment) {
@@ -243,6 +254,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     /**
      * Método para mostrar el Fragment para editar una guia.
+     *
      * @param guide entidad de la guia que se quiere editar.
      */
     protected void showFragmentToEditGuide(Guide guide) {
@@ -252,6 +264,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     /**
      * Método para mostrar el Fragment para elegir el tipo de pregunta que se quiere agregar.
+     *
      * @param guide entidad de la guia a la que se quiere agregar la pregunta.
      */
     public void showNewQuestionDialog(Guide guide) {
@@ -261,6 +274,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     /**
      * Método para inicializar Fragment para la pregunta de tipo Opción muultiple y mostrarlo.
+     *
      * @param guide entidad de la guía
      */
     public void showNewMultipleChoiceQuestionDialog(Guide guide) {
@@ -270,6 +284,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     /**
      * Método para inicializar Fragment para la pregunta de tipo Respuesta abierta y mostrarlo.
+     *
      * @param guide entidad de la guía
      */
     public void showNewOpenAnswerQuestionDialog(Guide guide) {
@@ -279,6 +294,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     /**
      * Método para inicializar Fragment para la pregunta de tipo Verdadero/Falso y mostrarlo.
+     *
      * @param guide entidad de la guía
      */
     public void showNewTrueFalseQuestionDialog(Guide guide) {
@@ -288,6 +304,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     /**
      * Método para cerrar Fragments según su tag.
+     *
      * @param tag tag
      */
     public void onCloseFragment(String tag) {
@@ -313,30 +330,30 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         Toasty.warning(this, R.string.message_unselected_answer_warning).show();
     }
 
-    public void setUserPhoto(Bitmap photo){
+    public void setUserPhoto(Bitmap photo) {
         CIV_Photo.setImageBitmap(photo);
     }
 
-    public void setDefaultUserPhoto(){
+    public void setDefaultUserPhoto() {
         CIV_Photo.setImageResource(R.drawable.default_photo);
     }
 
-    public void refreshGuides(){
-        if(guidesFragment!=null&&selectedFragment==guidesFragment){
+    public void refreshGuides() {
+        if (guidesFragment != null && selectedFragment == guidesFragment) {
             //guidesFragment.onBackFragment();
             guidesFragment.getAllGuides();
         }
     }
 
-    private void goToLoginActivity(){
-        Intent loginIntent = new Intent(this,LoginActivity.class);
+    private void goToLoginActivity() {
+        Intent loginIntent = new Intent(this, LoginActivity.class);
         startActivity(loginIntent);
         finish();
     }
 
     public void showError(Exception e) {
         UserMessage userMessage = new UserMessage();
-        userMessage.showErrorMessage(this,userMessage.categorizeException(e));
+        userMessage.showErrorMessage(this, userMessage.categorizeException(e));
     }
 
     /**
