@@ -1,114 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".view.TrueFalseQuestionFragment"
     android:background="?attr/backgroundColor"
-    >
+    tools:context=".view.TrueFalseQuestionFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <!-- =========================================================================================== Estrellas -->
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/TFFragment_IV_Star_1"
-        android:layout_width="@dimen/icon_size_star"
-        android:layout_height="@dimen/icon_size_star"
-        android:layout_marginEnd="@dimen/space_3"
-        android:tint="@color/starEmptyColor"
-
-        app:layout_constraintTop_toTopOf="@id/TFFragment_IV_Star_3"
-        app:layout_constraintRight_toLeftOf="@id/TFFragment_IV_Star_3"
-        app:layout_constraintBottom_toBottomOf="@id/TFFragment_IV_Star_3"
-        app:srcCompat="@drawable/ic_star"
-        />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/TFFragment_IV_Star_3"
-        android:layout_width="@dimen/icon_size_main_star"
-        android:layout_height="@dimen/icon_size_main_star"
-        android:tint="@color/starEmptyColor"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/ic_star"
-        />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/TFFragment_IV_Star_2"
-        android:layout_width="@dimen/icon_size_star"
-        android:layout_height="@dimen/icon_size_star"
-        android:layout_marginStart="@dimen/space_3"
-        android:tint="@color/starEmptyColor"
-
-        app:layout_constraintTop_toTopOf="@id/TFFragment_IV_Star_3"
-        app:layout_constraintLeft_toRightOf="@id/TFFragment_IV_Star_3"
-        app:layout_constraintBottom_toBottomOf="@id/TFFragment_IV_Star_3"
-        app:srcCompat="@drawable/ic_star"
-        />
-
-    <!-- =========================================================================================== Pregunta -->
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/TFFragment_TV_Question"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_3"
-
-        app:layout_constraintTop_toBottomOf="@id/TFFragment_IV_Star_2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-
-        style="@style/normalTextView"
-        />
-
-        <!-- =========================================================================================== Opciones para responder -->
-        <!-- ===================================================================== Verdadero y Falso -->
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/TFFragment_CL_True_False_Answer"
-            android:layout_width="match_parent"
+        <ScrollView
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/space_3"
 
-            app:layout_constraintTop_toBottomOf="@id/TFFragment_TV_Question"
             app:layout_constraintBottom_toBottomOf="parent"
-            >
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content">
+                <!-- =========================================================================================== Estrellas -->
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/TFFragment_IV_Star_1"
+                    android:layout_width="@dimen/icon_size_star"
+                    android:layout_height="@dimen/icon_size_star"
+                    android:layout_marginEnd="@dimen/space_3"
+                    android:tint="@color/starEmptyColor"
 
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                >
+                    app:layout_constraintBottom_toBottomOf="@id/TFFragment_IV_Star_3"
+                    app:layout_constraintRight_toLeftOf="@id/TFFragment_IV_Star_3"
+                    app:layout_constraintTop_toTopOf="@id/TFFragment_IV_Star_3"
+                    app:srcCompat="@drawable/ic_star" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/TFFragment_True_Answer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/txt_Answer_True"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/TFFragment_IV_Star_3"
+                    android:layout_width="@dimen/icon_size_main_star"
+                    android:layout_height="@dimen/icon_size_main_star"
+                    android:tint="@color/starEmptyColor"
 
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_star" />
 
-                    style="@style/answerCard"
-                    />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/TFFragment_IV_Star_2"
+                    android:layout_width="@dimen/icon_size_star"
+                    android:layout_height="@dimen/icon_size_star"
+                    android:layout_marginStart="@dimen/space_3"
+                    android:tint="@color/starEmptyColor"
 
+                    app:layout_constraintBottom_toBottomOf="@id/TFFragment_IV_Star_3"
+                    app:layout_constraintLeft_toRightOf="@id/TFFragment_IV_Star_3"
+                    app:layout_constraintTop_toTopOf="@id/TFFragment_IV_Star_3"
+                    app:srcCompat="@drawable/ic_star" />
+
+                <!-- =========================================================================================== Pregunta -->
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/TFFragment_False_Answer"
-                    android:layout_width="match_parent"
+                    android:id="@+id/TFFragment_TV_Question"
+                    style="@style/normalTextView"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/txt_Answer_False"
-                    android:layout_marginTop="@dimen/space_2"
+                    android:textAlignment="center"
 
-                    app:layout_constraintTop_toBottomOf="@id/TFFragment_True_Answer"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="@dimen/space_3"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
 
-                    style="@style/answerCard"
-                    />
+                    app:layout_constraintTop_toBottomOf="@id/TFFragment_IV_Star_2" />
+
+                <!-- =========================================================================================== Opciones para responder -->
+                <!-- ===================================================================== Verdadero y Falso -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/TFFragment_CL_True_False_Answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/space_3"
+
+                    app:layout_constraintTop_toBottomOf="@id/TFFragment_TV_Question">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/TFFragment_True_Answer"
+                            style="@style/answerCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:text="@string/txt_Answer_True"
+
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/TFFragment_False_Answer"
+                            style="@style/answerCard"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/space_2"
+
+                            android:text="@string/txt_Answer_False"
+                            app:layout_constraintBottom_toBottomOf="parent"
+
+                            app:layout_constraintTop_toBottomOf="@id/TFFragment_True_Answer" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
