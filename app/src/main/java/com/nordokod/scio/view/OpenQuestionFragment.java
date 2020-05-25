@@ -64,6 +64,8 @@ public class OpenQuestionFragment extends Fragment implements BasicFragment{
 
         CL_Correct_Answer               = view.findViewById(R.id.OQFragment_CL_Correct_Answer);
         TV_Correct_Answer               = view.findViewById(R.id.OQFragment_TV_Correct_Answer);
+
+        CL_Open_Answer                  = view.findViewById(R.id.OQFragment_CL_Open_Answer);
     }
 
     @Override
@@ -110,4 +112,5 @@ public class OpenQuestionFragment extends Fragment implements BasicFragment{
     private AppCompatEditText ET_Answer;
     private ConstraintLayout CL_Correct_Answer;
     private AppCompatTextView TV_Correct_Answer;
+    private ConstraintLayout CL_Open_Answer;
 }
