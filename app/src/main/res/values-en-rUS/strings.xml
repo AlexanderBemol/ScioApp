@@ -112,4 +112,6 @@
     <string name="txt_activity_delete_questions_title">Delete questions</string>
     <string name="txt_activity_delete_questions_action_hint">Select the questions you want to delete.</string>
     <string name="txt_BTN_Close">Close</string>
+    <string name="txt_loading">Loading</string>
+    <string name="txt_title_correct_answer">Correct answer</string>
 </resources>

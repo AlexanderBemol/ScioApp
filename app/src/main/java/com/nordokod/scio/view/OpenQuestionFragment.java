@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +84,7 @@ public class OpenQuestionFragment extends Fragment implements BasicFragment{
 
         TV_Question.setText(openQuestion.getQuestion());
         TV_Correct_Answer.setText(openQuestion.getAnswer());
+        TV_Correct_Answer.setMovementMethod(new ScrollingMovementMethod());
     }
 
     private void showCorrectAnswer() {
