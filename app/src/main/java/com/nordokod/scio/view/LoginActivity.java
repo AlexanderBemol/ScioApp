@@ -3,9 +3,6 @@ package com.nordokod.scio.view;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import androidx.annotation.NonNull;
@@ -16,8 +13,6 @@ import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -28,6 +23,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -37,18 +33,17 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.nordokod.scio.R;
 import com.nordokod.scio.entity.InputDataException;
-import com.nordokod.scio.entity.InvalidValueException;
 import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.User;
 import com.nordokod.scio.process.UpdateCheck;
 import com.nordokod.scio.process.UserMessage;
 import com.victor.loading.newton.NewtonCradleLoading;
 
-import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Objects;
 
 import com.nordokod.scio.constants.*;
+
 
 public class LoginActivity extends AppCompatActivity implements BasicActivity {
     // Botones de Inicio de Sesion y Registrarse
@@ -70,6 +65,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
     private Dialog  noticeDialog;
     //Mensajes de usuario
     private UserMessage userMessage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +110,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                 assert account != null;
                 userModel.signInWithGoogle(account).addOnSuccessListener(authResult -> {
                     if(authResult.getAdditionalUserInfo().isNewUser()){
-                        newUser();
+                        newUser(Provider.GOOGLE);
                     }
                     else{
                         showSuccessfulMessage(UserOperations.LOGIN_USER);
@@ -166,8 +162,13 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         userModel = new User();
         userMessage = new UserMessage();
 
+        //Revisar actualizaciones
         UpdateCheck updateCheck = new UpdateCheck();
         updateCheck.checkUpdateAvailability(this,this);
+
+        //Inicializar Admob
+        MobileAds.initialize(this);
+
     }
 
     @Override
@@ -185,7 +186,7 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                     user.setPassword(ET_Password.getText().toString());
                     userModel.signInWithMail(user).addOnSuccessListener(authResult -> {
                         if (authResult.getAdditionalUserInfo().isNewUser()) {
-                            newUser();
+                            newUser(Provider.MAIL);
                         } else {
                             showSuccessfulMessage(UserOperations.LOGIN_USER);
                             if (!userModel.isEmailVerified()) goToVerifyMail();
@@ -216,17 +217,12 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
                 public void onSuccess(LoginResult loginResult) {
                     userModel.signInWithFacebook(loginResult.getAccessToken()).addOnSuccessListener(authResult -> {
                         if(authResult.getAdditionalUserInfo().isNewUser()){
-                            newUser();
+                            newUser(Provider.FACEBOOK);
                         }else{
                             showSuccessfulMessage(UserOperations.LOGIN_USER);
                             goToMainView();
                         }
-                    }).addOnCanceledListener(() -> showError(new OperationCanceledException())).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            showError(e);
-                        }
-                    });
+                    }).addOnCanceledListener(() -> showError(new OperationCanceledException())).addOnFailureListener(e -> showError(e));
                 }
                 @Override
                 public void onCancel() {
@@ -256,10 +252,12 @@ public class LoginActivity extends AppCompatActivity implements BasicActivity {
         press = AnimationUtils.loadAnimation(this, R.anim.press);
     }
 
-    private void newUser(){
+    private void newUser(Provider provider){
         User userModel = new User();
         com.nordokod.scio.entity.User userEntity = new com.nordokod.scio.entity.User();
         userEntity = userModel.getBasicUserInfo();
+        userEntity.setState(UserState.FREE.getCode());
+        userEntity.setProvider(provider.getCode());
         userModel.createUserInformation(userEntity).addOnSuccessListener(aVoid -> {
             showSuccessfulMessage(UserOperations.SIGN_UP_USER);
             goToPermissionView();

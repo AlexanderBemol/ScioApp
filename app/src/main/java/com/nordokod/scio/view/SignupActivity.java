@@ -11,7 +11,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.nordokod.scio.R;
+import com.nordokod.scio.constants.Provider;
 import com.nordokod.scio.constants.UserOperations;
+import com.nordokod.scio.constants.UserState;
 import com.nordokod.scio.entity.InputDataException;
 import com.nordokod.scio.entity.OperationCanceledException;
 import com.nordokod.scio.model.User;
@@ -62,6 +64,8 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
                         com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
                         user.setEmail(Objects.requireNonNull(ET_Mail.getText()).toString());
                         user.setPassword(ET_Password.getText().toString());
+                        user.setState(UserState.FREE.getCode());
+                        user.setProvider(Provider.MAIL.getCode());
                         userModel.signUpWithMail(user)
                                 .addOnSuccessListener(authResult -> onSuccessSignUp())
                                 .addOnCanceledListener(() -> showError(new OperationCanceledException()))
@@ -89,6 +93,8 @@ public class SignupActivity extends AppCompatActivity implements BasicActivity{
         user.setEmail(Objects.requireNonNull(ET_Mail.getText()).toString());
         user.setPassword(Objects.requireNonNull(ET_Password.getText()).toString());
         user.setUsername(user.getEmail());
+        user.setState(UserState.FREE.getCode());
+        user.setProvider(Provider.MAIL.getCode());
         userModel.sendVerificationMail()
                 .addOnSuccessListener(aVoid ->
                     userModel.createUserInformation(user)

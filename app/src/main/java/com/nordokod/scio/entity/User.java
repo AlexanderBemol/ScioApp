@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import com.nordokod.scio.constants.Provider;
 import com.nordokod.scio.constants.Utilities;
 
 public class User {
@@ -29,7 +30,7 @@ public class User {
     private String password2;
     private String photoPath;
     private Date birthdayDate;
-    private String provider;
+    private int provider;
     private int studyLevel;
     private int state;
     private Date creationDate;
@@ -41,11 +42,11 @@ public class User {
         this.password2="";
         this.photoPath="";
         this.birthdayDate = DEFAULT_BIRTHDAY;
-        this.provider="";
+        this.provider= Provider.MAIL.getCode();
         this.creationDate =DEFAULT_BIRTHDAY;
     }
 
-    public User (String uid,String username,String email,String photoPath, Date birthdayDate, int studyLevel, int state, String provider, Date creationDate){
+    public User (String uid,String username,String email,String photoPath, Date birthdayDate, int studyLevel, int state, int provider, Date creationDate){
         this.uid=uid;
         this.username=username;
         this.email=email;
@@ -130,11 +131,11 @@ public class User {
             this.state = state;
     }
 
-    public String getProvider() {
+    public int getProvider() {
         return provider;
     }
 
-    public void setProvider(String provider) {
+    public void setProvider(int provider) {
         this.provider = provider;
     }
 

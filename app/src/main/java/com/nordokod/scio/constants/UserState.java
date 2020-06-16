@@ -10,4 +10,6 @@ public enum UserState {
         this.userStateCode=userStateCode;
         this.userStateDescription=userStateDescription;
     }
+    public int getCode(){return userStateCode;}
+    public String getDescription(){return userStateDescription;}
 }

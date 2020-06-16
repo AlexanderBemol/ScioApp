@@ -10,6 +10,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import android.view.Window;
+import android.view.WindowAnimationFrameStats;
 import android.view.WindowManager;
 
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -137,7 +138,7 @@ public class ImportGuideDialog implements BasicDialog {
             }else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
             }else{
-                Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_PHONE);
+                Objects.requireNonNull(dialog.getWindow()).setType(WindowManager.LayoutParams.TYPE_APPLICATION_PANEL);
             }
 
             WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
@@ -148,7 +149,6 @@ public class ImportGuideDialog implements BasicDialog {
             layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
             window.setAttributes(layoutParams);
-
 
             dialog.show();
         } else {

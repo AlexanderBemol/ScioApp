@@ -1,12 +1,32 @@
 package com.nordokod.scio.view;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import androidx.appcompat.app.AppCompatDialog;
+
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingFlowParams;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.PurchasesUpdatedListener;
+import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.SkuDetailsParams;
+import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.reward.RewardItem;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
@@ -21,16 +41,20 @@ import android.os.Bundle;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.nordokod.scio.R;
+import com.nordokod.scio.constants.UserState;
 import com.nordokod.scio.entity.Guide;
 import com.nordokod.scio.entity.OperationCanceledException;
+import com.nordokod.scio.model.BillingAux;
 import com.nordokod.scio.model.User;
 import com.nordokod.scio.process.DownloadImageProcess;
 import com.nordokod.scio.process.MediaProcess;
@@ -40,6 +64,7 @@ import com.nordokod.scio.process.UserMessage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
@@ -63,6 +88,14 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
     private Fragment selectedFragment = null;
     private User userModel;
     private com.nordokod.scio.entity.User actualUserEntity;
+    private AppCompatDialog  loadingDialog;
+
+
+    private BillingAux billingAux;
+    //ad mob
+    //private InterstitialAd interstitialAd;
+    private RewardedVideoAd rvAd;
+    private AdView adViewBanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,24 +122,59 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         CIV_Photo = header.findViewById(R.id.CIV_Photo);
         TV_Name = header.findViewById(R.id.TV_Name);
 
+        loadingDialog = new AppCompatDialog(this);
 
         userModel = new User();
         if (!userModel.isUserLogged()) goToLoginActivity();
 
+        //billing testing
+        billingAux = new BillingAux(this,this);
+        /*billingAux.startConnection(new BillingClientStateListener() {
+            @Override
+            public void onBillingSetupFinished(BillingResult billingResult) {
+                if(billingResult.getResponseCode()== BillingClient.BillingResponseCode.OK){
+                    billingAux.prepareFlowSub1((billingResult1, list) -> {
+                        if(billingResult1.getResponseCode()== BillingClient.BillingResponseCode.OK){
+                            if(list!=null){
+                                if(list.size()>0){
+                                    billingAux.startBuyFlow(list.get(0));
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onBillingServiceDisconnected() {
+
+            }
+        });
+        */
         actualUserEntity = new com.nordokod.scio.entity.User();
         try {
             actualUserEntity = userModel.getBasicUserInfo();
-            userModel.getUserInformation(actualUserEntity).addOnSuccessListener(documentSnapshot -> actualUserEntity = userModel.getUserFromDocument(documentSnapshot))
+            userModel.getUserInformation(actualUserEntity)
+                    .addOnSuccessListener(documentSnapshot -> {
+                        actualUserEntity = userModel.getUserFromDocument(documentSnapshot);
+                        setUserMode(actualUserEntity);
+                    })
                     .addOnCanceledListener(() -> showError(new OperationCanceledException()))
                     .addOnFailureListener(this::showError);
         } catch (Exception e) {
             showError(e);
         }
 
-        //verificar update
+        //Initalize ads
+        rvAd =  MobileAds.getRewardedVideoAdInstance(this);
+        adViewBanner = findViewById(R.id.adNavigationMenu);
 
+
+
+        //verificar update
         UpdateCheck updateCheck = new UpdateCheck();
         updateCheck.checkUpdateAvailability(this, this);
+
+
 
         //link dinámico
         FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent())
@@ -114,10 +182,58 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
                         pendingDynamicLinkData -> {
                             if (pendingDynamicLinkData != null) {
                                 com.nordokod.scio.model.Guide guideModel = new com.nordokod.scio.model.Guide();
+                                showLoadingDialog(loadingDialog,this);
                                 guideModel.getPublicGuide(pendingDynamicLinkData).addOnSuccessListener(documentSnapshot -> {
                                     Guide guide = guideModel.getGuideFromDocument(documentSnapshot);
                                     ImportGuideDialog importGuideDialog = new ImportGuideDialog(getApplicationContext());
-                                    importGuideDialog.showDialog(guide, documentSnapshot);
+                                    if(actualUserEntity.getState()==UserState.FREE.getCode()){
+                                        rvAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+                                            @Override
+                                            public void onRewardedVideoAdLoaded() {
+
+                                            }
+
+                                            @Override
+                                            public void onRewardedVideoAdOpened() {
+
+                                            }
+
+                                            @Override
+                                            public void onRewardedVideoStarted() {
+
+                                            }
+
+                                            @Override
+                                            public void onRewardedVideoAdClosed() {
+
+                                            }
+
+                                            @Override
+                                            public void onRewarded(RewardItem rewardItem) {
+
+                                            }
+
+                                            @Override
+                                            public void onRewardedVideoAdLeftApplication() {
+
+                                            }
+
+                                            @Override
+                                            public void onRewardedVideoAdFailedToLoad(int i) {
+
+                                            }
+
+                                            @Override
+                                            public void onRewardedVideoCompleted() {
+                                                importGuideDialog.showDialog(guide,documentSnapshot);
+                                            }
+                                        });
+                                        showAd();
+                                    }else{
+                                        if(loadingDialog.isShowing())closeLoadingDialog(loadingDialog);
+                                        importGuideDialog.showDialog(guide,documentSnapshot);
+                                    }
+
                                 });
                             }
                         }
@@ -166,7 +282,7 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         }
         try {
             TV_Name.setText(userModel.getBasicUserInfo().getUsername());
-            com.nordokod.scio.entity.User user = new com.nordokod.scio.entity.User();
+            com.nordokod.scio.entity.User user;
             user = userModel.getBasicUserInfo();
             userModel.getUserInformation(user)
                     .addOnSuccessListener(documentSnapshot -> TV_Name.setText(userModel.getUserFromDocument(documentSnapshot).getUsername()))
@@ -342,6 +458,71 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
         if (guidesFragment != null && selectedFragment == guidesFragment) {
             //guidesFragment.onBackFragment();
             guidesFragment.getAllGuides();
+        }
+    }
+
+    private void setUserMode(com.nordokod.scio.entity.User user){
+        if(user.getState()==UserState.FREE.getCode()){
+            rvAd.loadAd("ca-app-pub-3940256099942544/5224354917", new AdRequest.Builder().build());
+            adViewBanner.loadAd(new AdRequest.Builder().build());
+        }else{
+            adViewBanner.setVisibility(View.INVISIBLE);
+        }
+    }
+
+
+    private void showAd(){
+        if(actualUserEntity.getState()== UserState.FREE.getCode()){
+            if (rvAd.isLoaded()) {
+                rvAd.show();
+            }else{
+                RewardedVideoAdListener adListener = rvAd.getRewardedVideoAdListener();
+                rvAd.setRewardedVideoAdListener(new RewardedVideoAdListener() {
+                    @Override
+                    public void onRewardedVideoAdLoaded() {
+                        closeLoadingDialog(loadingDialog);
+                        rvAd.show();
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdOpened() {
+
+                    }
+
+                    @Override
+                    public void onRewardedVideoStarted() {
+
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdClosed() {
+                        //rvAd.loadAd("ca-app-pub-3940256099942544/5224354917", new AdRequest.Builder().build());
+                    }
+
+                    @Override
+                    public void onRewarded(RewardItem rewardItem) {
+                        rvAd.destroy(getApplicationContext());
+                        adListener.onRewardedVideoCompleted();
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdLeftApplication() {
+
+                    }
+
+                    @Override
+                    public void onRewardedVideoAdFailedToLoad(int i) {
+
+                    }
+
+                    @Override
+                    public void onRewardedVideoCompleted() {
+
+                    }
+                });
+            }
+        }else{
+            Log.d("testeo","Not free");
         }
     }
 

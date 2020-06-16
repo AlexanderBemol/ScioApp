@@ -304,7 +304,7 @@ public class User {
                         documentSnapshot.getDate(com.nordokod.scio.entity.User.KEY_BIRTHDAY),
                         Integer.parseInt(String.valueOf(documentSnapshot.get(com.nordokod.scio.entity.User.KEY_STUDY_LEVEL))),
                         Integer.parseInt(String.valueOf(documentSnapshot.get(com.nordokod.scio.entity.User.KEY_STATE))),
-                (String)documentSnapshot.get(com.nordokod.scio.entity.User.KEY_PROFILE_PROVIDER),
+                        Integer.parseInt(String.valueOf(documentSnapshot.get(com.nordokod.scio.entity.User.KEY_PROFILE_PROVIDER))),
                         documentSnapshot.getDate(com.nordokod.scio.entity.User.KEY_CREATION_DATE)
         );
     }
