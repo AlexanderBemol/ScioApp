@@ -6,11 +6,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.nordokod.scio.kt.constants.FirebaseTags
-import com.nordokod.scio.kt.constants.exceptions.UnknownException
+import com.nordokod.scio.kt.constants.UnknownException
 import com.nordokod.scio.kt.model.entity.User
 import com.nordokod.scio.kt.utils.TaskResult
 import kotlinx.coroutines.tasks.await
 import java.io.File
+import com.nordokod.scio.kt.utils.getEnumErrorMessage;
 import java.util.*
 
 class FirebaseUser(
@@ -47,6 +48,7 @@ class FirebaseUser(
     /**
      * Get an user document from firestore database
      * @param uid: uid from the user to retrieve
+     * @param source: Source Firebase source
      * @return TaskResult<User>
      */
     suspend fun getUserDocument(uid: String): TaskResult<User> {
@@ -66,6 +68,7 @@ class FirebaseUser(
                     )
             )
         } catch (e: Exception) {
+            e.getEnumErrorMessage()
             TaskResult.Error(e)
         }
     }

@@ -5,7 +5,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import org.koin.dsl.module
 
-val firebaseAuthModule = module {
+val firebaseModule = module {
     fun provideFirebaseAuth() : FirebaseAuth{
         return FirebaseAuth.getInstance()
     }

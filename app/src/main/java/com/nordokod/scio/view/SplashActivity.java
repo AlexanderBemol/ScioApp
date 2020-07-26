@@ -7,6 +7,7 @@ import android.os.Handler;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import com.nordokod.scio.R;
+import com.nordokod.scio.kt.ui.login.LoginView;
 import com.nordokod.scio.process.LockAppProcess;
 
 public class SplashActivity extends AppCompatActivity {
@@ -21,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+            Intent intent = new Intent(SplashActivity.this, LoginView.class);
             startActivity(intent);
             finish();
         }, 1500);

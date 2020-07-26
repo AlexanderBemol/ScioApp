@@ -16,6 +16,7 @@
 
     <application
         android:allowBackup="true"
+        android:name=".kt.SendoApplication"
         android:appCategory="productivity"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -36,6 +37,7 @@
 
         <activity android:name=".view.LockedAppsOptionActivity" />
         <activity android:name=".view.SignupActivity" />
+        <activity android:name=".kt.ui.login.LoginView"/>
 
         <receiver
             android:name=".process.SystemsEventsProcess"

@@ -9,5 +9,10 @@ class FirebaseTags {
         //storage tags
         const val USERS_FOLDER = "USERS"
         const val USERS_PROFILE_PHOTO = "PROFILE_PHOTOS"
+
+        //Dynamic links
+        const val USER_QUERY = "user"
+        const val GUIDE_QUERY = "guide"
+
     }
 }
