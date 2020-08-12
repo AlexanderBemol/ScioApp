@@ -3,15 +3,13 @@ package com.nordokod.scio.source
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Source
 import com.google.firebase.storage.FirebaseStorage
 import com.nordokod.scio.kt.constants.Testing
 import com.nordokod.scio.kt.model.entity.User
-import com.nordokod.scio.kt.model.source.FirebaseUser
+import com.nordokod.scio.kt.model.source.RemoteUser
 import com.nordokod.scio.kt.utils.TaskResult
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withTimeout
 import org.junit.Test
 import java.util.*
 
@@ -19,7 +17,7 @@ class UserFirebaseTest {
     private val firebaseDatabase = FirebaseFirestore.getInstance()
     private val firebaseAuth = FirebaseAuth.getInstance()
     private val firebaseStorage = FirebaseStorage.getInstance()
-    private val firebaseUser = FirebaseUser(firebaseAuth, firebaseDatabase, firebaseStorage)
+    private val firebaseUser = RemoteUser(firebaseAuth, firebaseDatabase, firebaseStorage)
 
     @Test
     fun createUserDocument() {

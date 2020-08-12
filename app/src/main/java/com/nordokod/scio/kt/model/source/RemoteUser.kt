@@ -1,20 +1,25 @@
 package com.nordokod.scio.kt.model.source
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
-import com.nordokod.scio.kt.constants.FirebaseTags
+import com.nordokod.scio.kt.constants.DataTags
 import com.nordokod.scio.kt.constants.UnknownException
 import com.nordokod.scio.kt.model.entity.User
 import com.nordokod.scio.kt.utils.TaskResult
 import kotlinx.coroutines.tasks.await
 import java.io.File
 import com.nordokod.scio.kt.utils.getEnumErrorMessage;
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 
-class FirebaseUser(
+class RemoteUser(
         private val firebaseAuth: FirebaseAuth,
         private val firebaseDB: FirebaseFirestore,
         private val firebaseStorage: FirebaseStorage
@@ -37,7 +42,7 @@ class FirebaseUser(
                 User::creationDate.name to FieldValue.serverTimestamp()
         )
         return try {
-            firebaseDB.collection(FirebaseTags.USERS_COLLECTION).document(user.uid).set(data).await()
+            firebaseDB.collection(DataTags.USERS_COLLECTION).document(user.uid).set(data).await()
             TaskResult.Success(Unit)
         } catch (e: Exception) {
             print(e.message)
@@ -53,7 +58,7 @@ class FirebaseUser(
      */
     suspend fun getUserDocument(uid: String): TaskResult<User> {
         return try {
-            val result = firebaseDB.collection(FirebaseTags.USERS_COLLECTION).document(uid).get().await()
+            val result = firebaseDB.collection(DataTags.USERS_COLLECTION).document(uid).get().await()
             TaskResult.Success(
                     User(
                             uid = result.id,
@@ -64,7 +69,8 @@ class FirebaseUser(
                             photoURL = result[User::photoURL.name] as String,
                             provider = (result[User::provider.name] as Long).toInt(),
                             userState = (result[User::userState.name] as Long).toInt(),
-                            creationDate = result.getDate(User::creationDate.name) ?: Date()
+                            creationDate = result.getDate(User::creationDate.name) ?: Date(),
+                            synchronized = true
                     )
             )
         } catch (e: Exception) {
@@ -82,8 +88,8 @@ class FirebaseUser(
         return try {
             if (firebaseAuth.currentUser != null) {
                 val filename = firebaseAuth.currentUser!!.uid
-                val result = firebaseStorage.reference.child(FirebaseTags.USERS_FOLDER)
-                        .child(FirebaseTags.USERS_PROFILE_PHOTO)
+                val result = firebaseStorage.reference.child(DataTags.USERS_FOLDER)
+                        .child(DataTags.USERS_PROFILE_PHOTO)
                         .child(filename)
                         .putFile(Uri.fromFile(photo))
                         .await()
@@ -99,16 +105,37 @@ class FirebaseUser(
     /**
      * get the user profile photo from firebase
      * @param uid
+     * @return TaskResult<Bitmap>
      */
-    suspend fun getUserFirebasePhoto(uid: String): TaskResult<ByteArray> {
+    suspend fun getUserFirebasePhoto(uid: String): TaskResult<Bitmap> {
         return try {
             val result = firebaseStorage.reference
-                    .child(FirebaseTags.USERS_FOLDER)
-                    .child(FirebaseTags.USERS_PROFILE_PHOTO)
+                    .child(DataTags.USERS_FOLDER)
+                    .child(DataTags.USERS_PROFILE_PHOTO)
                     .getBytes(1024)
                     .await()
-            TaskResult.Success(result)
+            TaskResult.Success(BitmapFactory.decodeByteArray(result,0,result.size))
         } catch (e: Exception) {
+            TaskResult.Error(e)
+        }
+    }
+
+    /**
+     * get the user profile photo from facebook or google
+     * @param user
+     * @return TaskResult<Bitmap>
+     */
+    fun getUserExternalPhoto(user: User): TaskResult<Bitmap>{
+        var photoPath = user.photoURL
+        if(photoPath.contains(FacebookAuthProvider.PROVIDER_ID)) photoPath += "?type=large"
+        return try{
+            val url = URL(photoPath)
+            val connection =  url.openConnection() as HttpURLConnection
+            connection.doInput = true
+            connection.connect()
+            val bitmap = BitmapFactory.decodeStream(connection.inputStream)
+            TaskResult.Success(bitmap)
+        }catch (e: Exception){
             TaskResult.Error(e)
         }
     }

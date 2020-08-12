@@ -8,7 +8,7 @@ import com.google.firebase.dynamiclinks.PendingDynamicLinkData
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.nordokod.scio.BuildConfig
-import com.nordokod.scio.kt.constants.FirebaseTags
+import com.nordokod.scio.kt.constants.DataTags
 import com.nordokod.scio.kt.constants.GuideException
 import com.nordokod.scio.kt.constants.UnknownException
 import com.nordokod.scio.kt.model.entity.Guide
@@ -17,7 +17,7 @@ import kotlinx.coroutines.tasks.await
 import java.util.*
 import kotlin.collections.ArrayList
 
-class FirebaseGuide(
+class RemoteGuide(
         private val firebaseFirestore: FirebaseFirestore,
         private val firebaseAuth: FirebaseAuth,
         private val firebaseDynamicLinks: FirebaseDynamicLinks
@@ -41,9 +41,9 @@ class FirebaseGuide(
             )
             try {
                 val result = firebaseFirestore
-                        .collection(FirebaseTags.GUIDES_COLLECTION)
+                        .collection(DataTags.GUIDES_COLLECTION)
                         .document(uid)
-                        .collection(FirebaseTags.GUIDES_COLLECTION)
+                        .collection(DataTags.GUIDES_COLLECTION)
                         .add(data)
                         .await()
                 TaskResult.Success(
@@ -83,9 +83,9 @@ class FirebaseGuide(
             )
             try {
                 val result = firebaseFirestore
-                        .collection(FirebaseTags.GUIDES_COLLECTION)
+                        .collection(DataTags.GUIDES_COLLECTION)
                         .document(uid)
-                        .collection(FirebaseTags.GUIDES_COLLECTION)
+                        .collection(DataTags.GUIDES_COLLECTION)
                         .document(guide.id)
                         .update(data)
                         .await()
@@ -105,9 +105,9 @@ class FirebaseGuide(
         val uid = firebaseAuth.uid
         return if (uid != null) {
             try {
-                firebaseFirestore.collection(FirebaseTags.GUIDES_COLLECTION)
+                firebaseFirestore.collection(DataTags.GUIDES_COLLECTION)
                         .document(uid)
-                        .collection(FirebaseTags.GUIDES_COLLECTION)
+                        .collection(DataTags.GUIDES_COLLECTION)
                         .document(id)
                         .delete()
                         .await()
@@ -127,9 +127,9 @@ class FirebaseGuide(
         return if (uid != null) {
             try {
                 val result = firebaseFirestore
-                        .collection(FirebaseTags.GUIDES_COLLECTION)
+                        .collection(DataTags.GUIDES_COLLECTION)
                         .document(uid)
-                        .collection(FirebaseTags.GUIDES_COLLECTION)
+                        .collection(DataTags.GUIDES_COLLECTION)
                         .get()
                         .await()
                 val guides = ArrayList<Guide>()
@@ -190,12 +190,12 @@ class FirebaseGuide(
      */
     suspend fun getPublicGuide(pendingDynamicLinkData: PendingDynamicLinkData): TaskResult<Guide> {
         return if (pendingDynamicLinkData.link != null) {
-            val uid = pendingDynamicLinkData.link.getQueryParameter(FirebaseTags.USER_QUERY)
-            val guideId = pendingDynamicLinkData.link.getQueryParameter(FirebaseTags.GUIDE_QUERY)
+            val uid = pendingDynamicLinkData.link.getQueryParameter(DataTags.USER_QUERY)
+            val guideId = pendingDynamicLinkData.link.getQueryParameter(DataTags.GUIDE_QUERY)
             if (uid != null && guideId != null) {
-                val result = firebaseFirestore.collection(FirebaseTags.GUIDES_COLLECTION)
+                val result = firebaseFirestore.collection(DataTags.GUIDES_COLLECTION)
                         .document(uid)
-                        .collection(FirebaseTags.GUIDES_COLLECTION)
+                        .collection(DataTags.GUIDES_COLLECTION)
                         .document(guideId)
                         .get()
                         .await()
@@ -225,9 +225,9 @@ class FirebaseGuide(
         return if (uid != null) {
             try {
                 val guideDocument = firebaseFirestore
-                        .collection(FirebaseTags.GUIDES_COLLECTION)
+                        .collection(DataTags.GUIDES_COLLECTION)
                         .document(guide.creationUser)
-                        .collection(FirebaseTags.GUIDES_COLLECTION)
+                        .collection(DataTags.GUIDES_COLLECTION)
                         .document(guide.id)
                         .get()
                         .await()
@@ -237,9 +237,9 @@ class FirebaseGuide(
                     data[Guide::updateUser.name] = uid
                     data[Guide::updateDate.name] = FieldValue.serverTimestamp()
                     val result = firebaseFirestore
-                            .collection(FirebaseTags.GUIDES_COLLECTION)
+                            .collection(DataTags.GUIDES_COLLECTION)
                             .document(uid)
-                            .collection(FirebaseTags.GUIDES_COLLECTION)
+                            .collection(DataTags.GUIDES_COLLECTION)
                             .add(data)
                             .await()
                     TaskResult.Success(Unit)

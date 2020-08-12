@@ -10,7 +10,7 @@ import com.nordokod.scio.kt.constants.enums.UserState
 import kotlinx.coroutines.tasks.await
 import java.util.*
 
-class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
+class RemoteAuth(private val firebaseAuth: FirebaseAuth) {
 
     /**
      * Sign in with mail
@@ -31,7 +31,8 @@ class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
                             photoURL = "",
                             provider = Provider.MAIL.code,
                             userState = UserState.FREE.code,
-                            creationDate = Date()
+                            creationDate = Date(),
+                            synchronized = true
                     )
             )
         } catch (e: Exception) {
@@ -58,7 +59,8 @@ class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
                             photoURL = "",
                             provider = Provider.MAIL.code,
                             userState = UserState.FREE.code,
-                            creationDate = Date()
+                            creationDate = Date(),
+                            synchronized = true
                     )
             )
         } catch (e: Exception) {
@@ -84,7 +86,8 @@ class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
                             photoURL = result.user?.photoUrl.toString(),
                             provider = Provider.GOOGLE.code,
                             userState = UserState.FREE.code,
-                            creationDate = Date()
+                            creationDate = Date(),
+                            synchronized = true
                     )
             )
         } catch (e: Exception) {
@@ -110,7 +113,8 @@ class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
                             photoURL = result.user?.photoUrl.toString(),
                             provider = Provider.FACEBOOK.code,
                             userState = UserState.FREE.code,
-                            creationDate = Date()
+                            creationDate = Date(),
+                            synchronized = true
                     )
             )
         } catch (e: Exception) {
@@ -137,7 +141,8 @@ class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
                             else -> Provider.MAIL.code
                         },
                         userState = UserState.FREE.code,
-                        creationDate = Date()
+                        creationDate = Date(),
+                        synchronized = true
                 )
             } ?: User(
                     uid = "",
@@ -148,7 +153,8 @@ class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
                     photoURL = "",
                     provider = 0,
                     userState = 0,
-                    creationDate = Date()
+                    creationDate = Date(),
+                    synchronized = true
             )
     )
 
