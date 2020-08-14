@@ -32,7 +32,7 @@ class RemoteGuide(
         return if (uid != null) {
             val data = hashMapOf(
                     Guide::topic.name to guide.topic,
-                    Guide::category.name to guide.topic,
+                    Guide::category.name to guide.category,
                     Guide::testDate.name to guide.testDate,
                     Guide::creationDate.name to FieldValue.serverTimestamp(),
                     Guide::updateDate.name to FieldValue.serverTimestamp(),

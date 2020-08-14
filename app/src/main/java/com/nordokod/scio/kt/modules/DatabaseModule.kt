@@ -7,11 +7,9 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 val databaseModule = module {
-    fun provideDatabase(application: Application): AppDatabase{
-        return Room.databaseBuilder(application,AppDatabase::class.java,"sendo")
-                .fallbackToDestructiveMigration()
-                .build()
-    }
+    fun provideDatabase(application: Application) = Room.databaseBuilder(application, AppDatabase::class.java, "sendo")
+            .fallbackToDestructiveMigration()
+            .build()
 
     single { provideDatabase(androidApplication()) }
 }

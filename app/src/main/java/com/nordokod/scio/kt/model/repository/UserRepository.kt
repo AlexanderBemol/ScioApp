@@ -19,6 +19,7 @@ import kotlinx.coroutines.withTimeout
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
+import java.util.*
 
 class UserRepository(private val remoteUser: RemoteUser,
                      private val userDAO: UserDAO,
@@ -32,6 +33,7 @@ class UserRepository(private val remoteUser: RemoteUser,
                     val result = remoteUser.setUserDocument(user)
                     if (result is TaskResult.Success) {
                         user.synchronized = true
+                        user.lastSync = Date()
                         saveUserOffline(user)
                     } else {
                         user.synchronized = false
