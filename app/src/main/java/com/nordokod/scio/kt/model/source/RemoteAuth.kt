@@ -10,7 +10,7 @@ import com.nordokod.scio.kt.constants.enums.UserState
 import kotlinx.coroutines.tasks.await
 import java.util.*
 
-class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
+class RemoteAuth(private val firebaseAuth: FirebaseAuth) {
 
     /**
      * Sign in with mail
@@ -28,10 +28,8 @@ class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
                             newUser = result.user?.isEmailVerified ?: false,
                             displayName = result.user?.displayName ?: "",
                             email = result.user?.email ?: "",
-                            photoURL = "",
                             provider = Provider.MAIL.code,
-                            userState = UserState.FREE.code,
-                            creationDate = Date()
+                            synchronized = true
                     )
             )
         } catch (e: Exception) {
@@ -51,14 +49,9 @@ class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
             TaskResult.Success(
                     User(
                             uid = result.user?.uid ?: "",
-                            emailVerified = false,
                             newUser = true,
-                            displayName = "",
                             email = result.user?.email ?: "",
-                            photoURL = "",
-                            provider = Provider.MAIL.code,
-                            userState = UserState.FREE.code,
-                            creationDate = Date()
+                            synchronized = true
                     )
             )
         } catch (e: Exception) {
@@ -83,8 +76,7 @@ class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
                             email = result.user?.email ?: "",
                             photoURL = result.user?.photoUrl.toString(),
                             provider = Provider.GOOGLE.code,
-                            userState = UserState.FREE.code,
-                            creationDate = Date()
+                            synchronized = true
                     )
             )
         } catch (e: Exception) {
@@ -110,7 +102,8 @@ class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
                             photoURL = result.user?.photoUrl.toString(),
                             provider = Provider.FACEBOOK.code,
                             userState = UserState.FREE.code,
-                            creationDate = Date()
+                            creationDate = Date(),
+                            synchronized = true
                     )
             )
         } catch (e: Exception) {
@@ -127,7 +120,6 @@ class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
                 User(
                         uid = it.uid,
                         emailVerified = it.isEmailVerified,
-                        newUser = false,
                         displayName = it.displayName.toString(),
                         email = it.email.toString(),
                         photoURL = it.photoUrl.toString(),
@@ -136,20 +128,9 @@ class FirebaseAuth(private val firebaseAuth: FirebaseAuth) {
                             FacebookAuthProvider.PROVIDER_ID -> Provider.FACEBOOK.code
                             else -> Provider.MAIL.code
                         },
-                        userState = UserState.FREE.code,
-                        creationDate = Date()
+                        synchronized = true
                 )
-            } ?: User(
-                    uid = "",
-                    emailVerified = false,
-                    newUser = false,
-                    displayName = "",
-                    email = "",
-                    photoURL = "",
-                    provider = 0,
-                    userState = 0,
-                    creationDate = Date()
-            )
+            } ?: User()
     )
 
     /**

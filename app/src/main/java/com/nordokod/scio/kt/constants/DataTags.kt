@@ -1,6 +1,6 @@
 package com.nordokod.scio.kt.constants
 
-class FirebaseTags {
+class DataTags {
     companion object {
         //firestore tags
         const val USERS_COLLECTION = "USERS"
@@ -14,5 +14,7 @@ class FirebaseTags {
         const val USER_QUERY = "user"
         const val GUIDE_QUERY = "guide"
 
+        //Others
+        const val USER_LOCAL_PHOTO = "profile_photo.JPEG"
     }
 }

@@ -1,34 +1,56 @@
 package com.nordokod.scio.source
 
 import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Source
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.nordokod.scio.kt.constants.Testing
 import com.nordokod.scio.kt.constants.enums.GuideCategory
 import com.nordokod.scio.kt.model.entity.Guide
-import com.nordokod.scio.kt.model.source.FirebaseGuide
+import com.nordokod.scio.kt.model.source.RemoteGuide
+import com.nordokod.scio.kt.modules.*
 import com.nordokod.scio.kt.utils.TaskResult
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.runBlocking
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.inject
 import java.util.*
 
-class GuidesFirebaseTest {
-    private val firebaseDatabase = FirebaseFirestore.getInstance()
-    private val firebaseAuth = FirebaseAuth.getInstance()
-    private val firebaseGuides = FirebaseGuide(firebaseDatabase,firebaseAuth)
+@RunWith(AndroidJUnit4::class)
+class GuidesFirebaseTest : KoinTest {
+    private val modules = listOf(firebaseModule, sourceModule)
+    private val remoteGuide by inject<RemoteGuide>()
+
+    @Before
+    fun before(){
+        stopKoin()
+        startKoin {
+            androidLogger()
+            androidContext(InstrumentationRegistry.getInstrumentation().context)
+            modules(modules)
+        }
+    }
+
+    @After
+    fun after(){
+        stopKoin()
+    }
 
     @Test
     fun createGuide(){
         runBlocking {
-            val result = firebaseGuides.createGuide(
+            val result = remoteGuide.createGuide(
                     Guide(
                             id = "",
                             topic = "TEST",
                             category = GuideCategory.OTHERS.code,
-                            online = true,
-                            activated = true,
                             testDate = Date(),
                             creationDate = Date(),
                             updateDate =  Date(),
@@ -44,7 +66,7 @@ class GuidesFirebaseTest {
     @Test
     fun getUserGuidesOnline(){
         runBlocking {
-            val result = firebaseGuides.getUserGuides()
+            val result = remoteGuide.getUserGuides()
             assertTrue(result is TaskResult.Success)
             Log.d(Testing.TESTING_TAG,result.toString())
         }

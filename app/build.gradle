@@ -1,8 +1,8 @@
 //noinspection GradleDynamicVersion
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -41,10 +41,10 @@ configurations.all {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleCompatible
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
@@ -54,9 +54,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.google.firebase:firebase-firestore:21.5.0'
-    implementation 'com.google.android.gms:play-services-auth:18.0.0'
-    implementation 'com.google.firebase:firebase-messaging:20.2.3'
-    implementation 'com.google.android.play:core:1.7.3'
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+    implementation 'com.google.firebase:firebase-messaging:20.2.4'
+    implementation 'com.google.android.play:core:1.8.0'
 
     implementation 'com.victor:lib:1.0.4'
     implementation 'me.relex:circleindicator:1.2.2'
@@ -76,6 +76,7 @@ dependencies {
     androidTestImplementation 'org.mockito:mockito-android:2.27.0'
     implementation 'com.google.firebase:firebase-invites:17.0.0'
 
+    //androidx jetpack, kotlinx
     implementation "androidx.core:core-ktx:1.3.1"
     implementation "androidx.work:work-runtime-ktx:2.4.0"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -83,11 +84,20 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2"
     //koin
-    implementation 'org.koin:koin-android:2.1.5'
-    implementation 'org.koin:koin-android-viewmodel:2.1.5'
+    def koin_version = "2.1.5"
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
     implementation 'org.koin:koin-androidx-scope:2.0.0-rc-2'
+    androidTestImplementation "org.koin:koin-test:$koin_version"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //room
+    def room_version = "2.2.5"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
 
 
 }
