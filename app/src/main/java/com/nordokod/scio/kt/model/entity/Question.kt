@@ -1,8 +1,13 @@
 package com.nordokod.scio.kt.model.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity
 data class Question (
-        val id: String,
-        val question: String,
-        val idGuide: String,
-        val kindOfQuestion: Int
+        @PrimaryKey(autoGenerate = true) var id: Int,
+        var remoteId: String,
+        var question: String,
+        var idGuide: Int,
+        var kindOfQuestion: Int
 )

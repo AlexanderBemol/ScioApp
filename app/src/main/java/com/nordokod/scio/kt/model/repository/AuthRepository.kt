@@ -1,7 +1,7 @@
 package com.nordokod.scio.kt.model.repository
 
 import com.nordokod.scio.kt.model.entity.User
-import com.nordokod.scio.kt.model.source.RemoteAuth
+import com.nordokod.scio.kt.model.source.remote.RemoteAuth
 import com.nordokod.scio.kt.utils.TaskResult
 
 class AuthRepository(private val remoteAuth: RemoteAuth) : IAuthRepository {

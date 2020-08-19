@@ -5,10 +5,10 @@ import android.util.Log
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
-import com.nordokod.scio.kt.constants.Testing
+import com.nordokod.scio.TestingValues
 import com.nordokod.scio.kt.model.entity.User
-import com.nordokod.scio.kt.model.source.AppDatabase
-import com.nordokod.scio.kt.model.source.UserDAO
+import com.nordokod.scio.kt.model.source.local.AppDatabase
+import com.nordokod.scio.kt.model.source.local.UserDAO
 import com.nordokod.scio.kt.modules.sourceModule
 import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking
@@ -62,7 +62,7 @@ class UserLocalTest : KoinTest {
                 localUser.insertUser(user)
                 TestCase.assertTrue(true)
             } catch (e: Exception){
-                Log.d(Testing.TESTING_TAG,e.toString())
+                Log.d(TestingValues.TESTING_TAG,e.toString())
                 TestCase.assertTrue(false)
             }
         }
@@ -73,10 +73,10 @@ class UserLocalTest : KoinTest {
         runBlocking {
             try{
                 val user = localUser.getUser("testing-001")
-                Log.d(Testing.TESTING_TAG,user.toString())
+                Log.d(TestingValues.TESTING_TAG,user.toString())
                 TestCase.assertTrue(true)
             } catch (e: Exception){
-                Log.d(Testing.TESTING_TAG,e.toString())
+                Log.d(TestingValues.TESTING_TAG,e.toString())
                 TestCase.assertTrue(false)
             }
         }

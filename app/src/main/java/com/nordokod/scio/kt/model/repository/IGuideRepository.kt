@@ -7,9 +7,11 @@ interface IGuideRepository {
     suspend fun createGuide(guide: Guide): TaskResult<Guide>
     suspend fun updateGuide(guide: Guide): TaskResult<Unit>
     suspend fun deleteGuide(guide: Guide): TaskResult<Unit>
-    suspend fun getUserGuides(): TaskResult<ArrayList<Guide>>
+    suspend fun getUserGuides(uid: String): TaskResult<ArrayList<Guide>>
     suspend fun generateGuideLink(): TaskResult<String>
     suspend fun getPublicGuide(): TaskResult<Guide>
     suspend fun importGuide(): TaskResult<Unit>
+    suspend fun syncInRemote(uid: String): TaskResult<Unit>
+    suspend fun syncInLocal(): TaskResult<Unit>
 
 }

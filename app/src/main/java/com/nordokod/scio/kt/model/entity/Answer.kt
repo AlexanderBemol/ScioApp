@@ -1,20 +1,26 @@
 package com.nordokod.scio.kt.model.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
 sealed class Answer {
+    @Entity
     data class OpenAnswer(
-            var idOpenAnswer: Int,
+            @PrimaryKey(autoGenerate = true) var idOpenAnswer: Int,
             var idQuestion: Int,
-            var anser: String
+            var answer: String
     ) : Answer()
+    @Entity
     data class TrueFalseAnswer(
-            var idOpenAnswer: Int,
+            @PrimaryKey(autoGenerate = true) var idOpenAnswer: Int,
             var idQuestion: Int,
-            var anser: Boolean
+            var answer: Boolean
     ) : Answer()
+    @Entity
     data class MultipleChoiceAnswer(
-            var idOpenAnswer: Int,
+            @PrimaryKey(autoGenerate = true) var idOpenAnswer: Int,
             var idQuestion: Int,
-            var anser: String,
+            var answer: String,
             var isCorrect: String
-    )
+    ) : Answer()
 }
