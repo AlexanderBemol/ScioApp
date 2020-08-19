@@ -1,4 +1,4 @@
-package com.nordokod.scio.kt.model.source
+package com.nordokod.scio.kt.model.source.local
 
 import androidx.room.Dao
 import androidx.room.Insert

@@ -3,14 +3,12 @@ package com.nordokod.scio.kt.model.repository
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import com.nordokod.scio.kt.constants.DataTags
 import com.nordokod.scio.kt.constants.Generic
 import com.nordokod.scio.kt.constants.UnknownException
-import com.nordokod.scio.kt.constants.enums.Provider
 import com.nordokod.scio.kt.model.entity.User
-import com.nordokod.scio.kt.model.source.RemoteUser
-import com.nordokod.scio.kt.model.source.UserDAO
+import com.nordokod.scio.kt.model.source.remote.RemoteUser
+import com.nordokod.scio.kt.model.source.local.UserDAO
 import com.nordokod.scio.kt.utils.NetworkManager
 import com.nordokod.scio.kt.utils.TaskResult
 import kotlinx.coroutines.Dispatchers

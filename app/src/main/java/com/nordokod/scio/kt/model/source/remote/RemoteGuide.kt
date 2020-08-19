@@ -1,4 +1,4 @@
-package com.nordokod.scio.kt.model.source
+package com.nordokod.scio.kt.model.source.remote
 
 import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
@@ -11,6 +11,7 @@ import com.nordokod.scio.BuildConfig
 import com.nordokod.scio.kt.constants.DataTags
 import com.nordokod.scio.kt.constants.GuideException
 import com.nordokod.scio.kt.constants.UnknownException
+import com.nordokod.scio.kt.constants.enums.SyncState
 import com.nordokod.scio.kt.model.entity.Guide
 import com.nordokod.scio.kt.utils.TaskResult
 import kotlinx.coroutines.tasks.await
@@ -46,18 +47,8 @@ class RemoteGuide(
                         .collection(DataTags.GUIDES_COLLECTION)
                         .add(data)
                         .await()
-                TaskResult.Success(
-                        Guide(
-                                id = result.id,
-                                topic = guide.topic,
-                                category = guide.category,
-                                testDate = guide.testDate,
-                                creationDate = guide.creationDate,
-                                updateDate = guide.updateDate,
-                                creationUser = guide.creationUser,
-                                updateUser = guide.updateUser
-                        )
-                )
+                guide.remoteId = result.id
+                TaskResult.Success(guide)
             } catch (e: Exception) {
                 TaskResult.Error(e)
             }
@@ -82,11 +73,10 @@ class RemoteGuide(
                     Guide::updateDate.name to FieldValue.serverTimestamp()
             )
             try {
-                val result = firebaseFirestore
-                        .collection(DataTags.GUIDES_COLLECTION)
+                firebaseFirestore.collection(DataTags.GUIDES_COLLECTION)
                         .document(uid)
                         .collection(DataTags.GUIDES_COLLECTION)
-                        .document(guide.id)
+                        .document(guide.remoteId)
                         .update(data)
                         .await()
                 TaskResult.Success(Unit)
@@ -136,7 +126,7 @@ class RemoteGuide(
                 result.forEach {
                     guides.add(
                             Guide(
-                                    id = it[Guide::id.name].toString(),
+                                    remoteId = it[Guide::id.name].toString(),
                                     topic = it[Guide::topic.name].toString(),
                                     category = (it[Guide::category.name] as Long).toInt(),
                                     testDate = it.getDate(Guide::testDate.name) ?: Date(),
@@ -201,7 +191,7 @@ class RemoteGuide(
                         .await()
                 TaskResult.Success(
                         Guide(
-                                id = result[Guide::id.name].toString(),
+                                remoteId = result[Guide::id.name].toString(),
                                 topic = result[Guide::topic.name].toString(),
                                 category = (result[Guide::category.name] as Long).toInt(),
                                 testDate = result.getDate(Guide::testDate.name) ?: Date(),
@@ -228,7 +218,7 @@ class RemoteGuide(
                         .collection(DataTags.GUIDES_COLLECTION)
                         .document(guide.creationUser)
                         .collection(DataTags.GUIDES_COLLECTION)
-                        .document(guide.id)
+                        .document(guide.remoteId)
                         .get()
                         .await()
 

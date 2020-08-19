@@ -1,4 +1,4 @@
-package com.nordokod.scio.kt.model.source
+package com.nordokod.scio.kt.model.source.remote
 
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth

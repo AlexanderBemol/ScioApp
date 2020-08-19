@@ -1,4 +1,4 @@
-package com.nordokod.scio.kt.model.source
+package com.nordokod.scio.kt.model.source.remote
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
