@@ -226,7 +226,7 @@ class RemoteGuide(
                 if (data != null) {
                     data[Guide::updateUser.name] = uid
                     data[Guide::updateDate.name] = FieldValue.serverTimestamp()
-                    val result = firebaseFirestore
+                    firebaseFirestore
                             .collection(DataTags.GUIDES_COLLECTION)
                             .document(uid)
                             .collection(DataTags.GUIDES_COLLECTION)

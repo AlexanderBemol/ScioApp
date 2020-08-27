@@ -9,5 +9,5 @@ data class GuideWithQuestions(
                 parentColumn = "id",
                 entityColumn = "idGuide"
         )
-        val questions: List<Question>
+        val questions: ArrayList<QuestionWithAnswers>
 )
