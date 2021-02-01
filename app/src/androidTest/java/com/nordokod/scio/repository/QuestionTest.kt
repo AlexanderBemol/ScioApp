@@ -6,8 +6,13 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import com.nordokod.scio.TestingValues
+import com.nordokod.scio.kt.constants.enums.KindOfQuestion
+import com.nordokod.scio.kt.model.entity.Answer
 import com.nordokod.scio.kt.model.entity.Guide
+import com.nordokod.scio.kt.model.entity.Question
+import com.nordokod.scio.kt.model.entity.QuestionWithAnswers
 import com.nordokod.scio.kt.model.repository.IGuideRepository
+import com.nordokod.scio.kt.model.repository.IQuestionRepository
 import com.nordokod.scio.kt.model.source.local.AppDatabase
 import com.nordokod.scio.kt.modules.firebaseModule
 import com.nordokod.scio.kt.modules.repositoryModule
@@ -23,11 +28,12 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.core.logger.Level
+import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class GuideTest : KoinTest {
+class QuestionTest : KoinTest{
     private val databaseModuleTest = module {
         fun provideDatabase(application: Context) = Room.databaseBuilder(application, AppDatabase::class.java,"sendo")
                 .fallbackToDestructiveMigration()
@@ -35,7 +41,9 @@ class GuideTest : KoinTest {
         single { provideDatabase(ApplicationProvider.getApplicationContext()) }
     }
     private val modules = listOf(databaseModuleTest, sourceModule, firebaseModule, repositoryModule)
-    private val guideRepository : IGuideRepository by inject()
+    private val questionRepository : IQuestionRepository by inject {
+                parametersOf(Guide(id = 1,remoteId = "IG3WgtndbheOxolXIBLu"))
+            }
 
     @Before
     fun before() {
@@ -53,15 +61,18 @@ class GuideTest : KoinTest {
     }
 
     @Test
-    fun createGuide() {
-        val guide = Guide(
-                topic = "TESTING",
-                creationUser = TestingValues.TEST_USER_UID,
-                updateUser = TestingValues.TEST_USER_UID
+    fun addOpenQuestionToGuide(){
+        val questionWithAnswers = QuestionWithAnswers(
+                question = Question(
+                        question = "Testing Question",
+                        kindOfQuestion = KindOfQuestion.OPEN.code,
+                        idGuide = 1
+                ),
+                openAnswer = Answer.OpenAnswer(answer = "Open Answer Test")
         )
         try {
             runBlocking {
-                when(val result = guideRepository.createGuide(guide)){
+                when(val result = questionRepository.addQuestion(questionWithAnswers)){
                     is TaskResult.Success -> {
                         Log.d(TestingValues.TESTING_TAG,result.data.toString())
                         TestCase.assertTrue(true)
@@ -71,25 +82,29 @@ class GuideTest : KoinTest {
                         TestCase.assertTrue(true)
                     }
                 }
+
             }
-        } catch (e: Exception) {
+        }catch (e: Exception){
             Log.d(TestingValues.TESTING_TAG, e.toString())
             TestCase.assertTrue(false)
         }
     }
 
     @Test
-    fun updateGuide() {
-        val guide = Guide(
-                id = 7,
-                topic = "NEW TESTING",
-                creationUser = TestingValues.TEST_USER_UID,
-                updateUser = TestingValues.TEST_USER_UID
+    fun addTrueFalseQuestionToGuide(){
+        val questionWithAnswers = QuestionWithAnswers(
+                question = Question(
+                        question = "Testing Question True False",
+                        kindOfQuestion = KindOfQuestion.TRUE_FALSE.code,
+                        idGuide = 1
+                ),
+                trueFalseAnswer = Answer.TrueFalseAnswer(answer = true)
         )
         try {
             runBlocking {
-                when(val result = guideRepository.updateGuide(guide)){
+                when(val result = questionRepository.addQuestion(questionWithAnswers)){
                     is TaskResult.Success -> {
+                        Log.d(TestingValues.TESTING_TAG,result.data.toString())
                         TestCase.assertTrue(true)
                     }
                     is TaskResult.Error -> {
@@ -97,30 +112,66 @@ class GuideTest : KoinTest {
                         TestCase.assertTrue(true)
                     }
                 }
+
             }
-        } catch (e: Exception) {
+        }catch (e: Exception){
             Log.d(TestingValues.TESTING_TAG, e.toString())
             TestCase.assertTrue(false)
         }
     }
 
     @Test
-    fun readGuides(){
-        try{
-            Log.d(TestingValues.TESTING_TAG,"--------------------READ GUIDES------------------")
+    fun addMultipleChoiceQuestion(){
+        val questionWithAnswers = QuestionWithAnswers(
+                question = Question(
+                        question = "Testing Question MCQ",
+                        kindOfQuestion = KindOfQuestion.MULTIPLE_CHOICE.code,
+                        idGuide = 1
+                ),
+                multipleChoiceAnswers = listOf(
+                        Answer.MultipleChoiceAnswer(answer = "respuesta 1",isCorrect = false),
+                        Answer.MultipleChoiceAnswer(answer = "respuesta 2",isCorrect = true),
+                        Answer.MultipleChoiceAnswer(answer = "respuesta 3",isCorrect = false),
+                )
+        )
+        try {
             runBlocking {
-                when(val result = guideRepository.getUserGuides(TestingValues.TEST_USER_UID)){
+                when(val result = questionRepository.addQuestion(questionWithAnswers)){
+                    is TaskResult.Success -> {
+                        Log.d(TestingValues.TESTING_TAG,result.data.toString())
+                        TestCase.assertTrue(true)
+                    }
+                    is TaskResult.Error -> {
+                        Log.d(TestingValues.TESTING_TAG,result.e.toString())
+                        TestCase.assertTrue(true)
+                    }
+                }
+
+            }
+        }catch (e: Exception){
+            Log.d(TestingValues.TESTING_TAG, e.toString())
+            TestCase.assertTrue(false)
+        }
+    }
+
+    @Test
+    fun readQuestionsFromGuide(){
+        Log.d(TestingValues.TESTING_TAG,"---------------------------------------------------------")
+        try {
+            runBlocking {
+                when(val result = questionRepository.getGuideQuestions()){
                     is TaskResult.Success ->{
                         result.data.forEach{
                             Log.d(TestingValues.TESTING_TAG,it.toString())
                         }
                         TestCase.assertTrue(true)
                     }
-                    is TaskResult.Error->{
+                    is TaskResult.Error ->{
                         Log.d(TestingValues.TESTING_TAG,result.e.toString())
-                        TestCase.assertTrue(false)
+                        TestCase.assertTrue(true)
                     }
                 }
+
             }
         }catch (e : Exception){
             Log.d(TestingValues.TESTING_TAG,e.toString())
@@ -130,16 +181,16 @@ class GuideTest : KoinTest {
     }
 
     @Test
-    fun deleteGuide(){
-        try{
+    fun syncQuestionsInRemote(){
+        try {
             runBlocking {
-                when (val result = guideRepository.deleteGuide(Guide(id = 14))) {
-                    is TaskResult.Success -> {
+                when(val result = questionRepository.syncInRemote()){
+                    is TaskResult.Success ->{
                         TestCase.assertTrue(true)
                     }
-                    is TaskResult.Error -> {
-                        Log.d(TestingValues.TESTING_TAG, result.e.toString())
-                        TestCase.assertTrue(false)
+                    is TaskResult.Error ->{
+                        Log.d(TestingValues.TESTING_TAG,result.e.toString())
+                        TestCase.assertTrue(true)
                     }
                 }
             }
@@ -150,16 +201,16 @@ class GuideTest : KoinTest {
     }
 
     @Test
-    fun syncInRemote(){
-        try{
+    fun syncQuestionsInLocal(){
+        try {
             runBlocking {
-                when (val result = guideRepository.syncInRemote(TestingValues.TEST_USER_UID)) {
-                    is TaskResult.Success -> {
+                when(val result = questionRepository.syncInLocal()){
+                    is TaskResult.Success ->{
                         TestCase.assertTrue(true)
                     }
-                    is TaskResult.Error -> {
-                        Log.d(TestingValues.TESTING_TAG, result.e.toString())
-                        TestCase.assertTrue(false)
+                    is TaskResult.Error ->{
+                        Log.d(TestingValues.TESTING_TAG,result.e.toString())
+                        TestCase.assertTrue(true)
                     }
                 }
             }
@@ -168,5 +219,4 @@ class GuideTest : KoinTest {
             TestCase.assertTrue(false)
         }
     }
-
 }

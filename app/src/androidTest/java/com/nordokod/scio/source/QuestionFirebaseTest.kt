@@ -71,14 +71,12 @@ class QuestionFirebaseTest : KoinTest {
                     }
                     is TaskResult.Error -> {
                         Log.d(TestingValues.TESTING_TAG, result.e.toString())
-                        FirebaseCrashlytics.getInstance().recordException(result.e)
                         TestCase.assertTrue(false)
                     }
                 }
             }
         } catch (e: Exception) {
             Log.d(TestingValues.TESTING_TAG, e.toString())
-            FirebaseCrashlytics.getInstance().recordException(e)
             TestCase.assertTrue(false)
         }
 
@@ -89,7 +87,7 @@ class QuestionFirebaseTest : KoinTest {
         try {
             runBlocking {
                 val result = remoteQuestion.getGuideQuestions(
-                        guide = Guide(remoteId = "0RxKmLPY0ovu1WzzQi0J")
+                        guide = Guide(remoteId = "IG3WgtndbheOxolXIBLu")
                 )
                 when (result) {
                     is TaskResult.Success -> {
@@ -98,14 +96,12 @@ class QuestionFirebaseTest : KoinTest {
                     }
                     is TaskResult.Error -> {
                         Log.d(TestingValues.TESTING_TAG, result.e.toString())
-                        FirebaseCrashlytics.getInstance().recordException(result.e)
                         TestCase.assertTrue(false)
                     }
                 }
             }
         } catch (e: Exception) {
             Log.d(TestingValues.TESTING_TAG, e.toString())
-            FirebaseCrashlytics.getInstance().recordException(e)
             TestCase.assertTrue(false)
         }
     }

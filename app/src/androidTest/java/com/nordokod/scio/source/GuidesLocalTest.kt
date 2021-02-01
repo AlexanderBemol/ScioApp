@@ -19,16 +19,17 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.core.logger.Level
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
 class GuidesLocalTest : KoinTest {
     private val databaseModuleTest = module {
-        fun provideDatabase(application: Context) = Room.databaseBuilder(application, AppDatabase::class.java, "sendo")
+        fun provideDatabase(application: Context) = Room.databaseBuilder(application, AppDatabase::class.java,"sendo")
                 .fallbackToDestructiveMigration()
                 .build()
-        single { provideDatabase(ApplicationProvider.getApplicationContext<Context>()) }
+        single { provideDatabase(ApplicationProvider.getApplicationContext()) }
     }
     private val modules = listOf(databaseModuleTest, sourceModule)
     private val localGuide: GuideDAO by inject()
@@ -37,7 +38,7 @@ class GuidesLocalTest : KoinTest {
     fun before() {
         stopKoin()
         startKoin {
-            androidLogger()
+            androidLogger(Level.ERROR)
             androidContext(InstrumentationRegistry.getInstrumentation().context)
             modules(modules)
         }
@@ -50,18 +51,16 @@ class GuidesLocalTest : KoinTest {
 
     @Test
     fun saveLocalGuide() {
-        runBlocking {
-            try {
-                localGuide.insertGuide(Guide(
-                        creationUser = "testing-001",
-                        updateUser = "testing-001",
-                        topic = "TEST"
-                ))
-                TestCase.assertTrue(true)
-            } catch (e: Exception) {
-                Log.d(TestingValues.TESTING_TAG, e.toString())
-                TestCase.assertTrue(false)
-            }
+        try {
+            localGuide.insertGuide(Guide(
+                    creationUser = TestingValues.TEST_USER_UID,
+                    updateUser = TestingValues.TEST_USER_UID,
+                    topic = "TEST"
+            ))
+            TestCase.assertTrue(true)
+        } catch (e: Exception) {
+            Log.d(TestingValues.TESTING_TAG, e.toString())
+            TestCase.assertTrue(false)
         }
     }
 
