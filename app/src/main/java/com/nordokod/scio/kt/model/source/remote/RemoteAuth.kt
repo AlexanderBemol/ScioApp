@@ -10,7 +10,7 @@ import com.nordokod.scio.kt.constants.enums.UserState
 import kotlinx.coroutines.tasks.await
 import java.util.*
 
-class RemoteAuth(private val firebaseAuth: FirebaseAuth) {
+class RemoteAuth(private val firebaseAuth: FirebaseAuth) : IRemoteAuth {
 
     /**
      * Sign in with mail
@@ -18,7 +18,7 @@ class RemoteAuth(private val firebaseAuth: FirebaseAuth) {
      * @param password: String with user password
      * @return FBResult<User> Object with the task result
      */
-    suspend fun signInWithMail(email: String, password: String): TaskResult<User> {
+    override suspend fun signInWithMail(email: String, password: String): TaskResult<User> {
         return try {
             val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             TaskResult.Success(
@@ -43,7 +43,7 @@ class RemoteAuth(private val firebaseAuth: FirebaseAuth) {
      * @param password: String with user password
      * @return FBResult<User> Object with the task result
      */
-    suspend fun signUpWithMail(email: String, password: String): TaskResult<User> {
+    override suspend fun signUpWithMail(email: String, password: String): TaskResult<User> {
         return try {
             val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
             TaskResult.Success(
@@ -64,7 +64,7 @@ class RemoteAuth(private val firebaseAuth: FirebaseAuth) {
      * @param token: String with the auth token
      * @return FBResult<User> Object with the task result
      */
-    suspend fun signInWithGoogle(token: String): TaskResult<User> {
+    override suspend fun signInWithGoogle(token: String): TaskResult<User> {
         return try {
             val result = firebaseAuth.signInWithCredential(GoogleAuthProvider.getCredential(token, null)).await()
             TaskResult.Success(
@@ -89,7 +89,7 @@ class RemoteAuth(private val firebaseAuth: FirebaseAuth) {
      * @param token: String with the auth token
      * @return FBResult<User> Object with the task result
      */
-    suspend fun signInWithFacebook(token: String): TaskResult<User> {
+    override suspend fun signInWithFacebook(token: String): TaskResult<User> {
         return try {
             val result = firebaseAuth.signInWithCredential(GoogleAuthProvider.getCredential(token, null)).await()
             TaskResult.Success(
@@ -115,7 +115,7 @@ class RemoteAuth(private val firebaseAuth: FirebaseAuth) {
      * get all the basic data of a user
      * @return FBResult<User> Object with the result
      */
-    fun getBasicUserInfo(): TaskResult<User> = TaskResult.Success(
+    override fun getBasicUserInfo(): TaskResult<User> = TaskResult.Success(
             firebaseAuth.currentUser?.let {
                 User(
                         uid = it.uid,
@@ -137,19 +137,19 @@ class RemoteAuth(private val firebaseAuth: FirebaseAuth) {
      * Is the user logged?
      * @return FBResult<Boolean> with task result
      */
-    fun isUserLogged(): TaskResult<Boolean> = TaskResult.Success(firebaseAuth.currentUser != null)
+    override fun isUserLogged(): TaskResult<Boolean> = TaskResult.Success(firebaseAuth.currentUser != null)
 
     /**
      * Log out
      * @return FBResult<Unit> with the task result
      */
-    fun logOut(): TaskResult<Unit> = TaskResult.Success(firebaseAuth.signOut())
+    override fun logOut(): TaskResult<Unit> = TaskResult.Success(firebaseAuth.signOut())
 
     /**
      * Send verification mail
      * @return TaskResult<Unit> with the result
      */
-    suspend fun sendVerificationMail(): TaskResult<Unit> {
+    override suspend fun sendVerificationMail(): TaskResult<Unit> {
         return try {
             firebaseAuth.currentUser?.sendEmailVerification()?.await()
             TaskResult.Success(Unit)
@@ -162,7 +162,7 @@ class RemoteAuth(private val firebaseAuth: FirebaseAuth) {
      * Refresh the user data
      * @return TaskResult<Unit> with the result
      */
-    suspend fun refreshUser(): TaskResult<Unit> {
+    override suspend fun refreshUser(): TaskResult<Unit> {
         return try {
             firebaseAuth.currentUser?.reload()?.await()
             TaskResult.Success(Unit)

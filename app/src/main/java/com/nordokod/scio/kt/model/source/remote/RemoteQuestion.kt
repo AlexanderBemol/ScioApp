@@ -16,7 +16,7 @@ import kotlin.collections.ArrayList
 class RemoteQuestion(
         private val firebaseFirestore: FirebaseFirestore,
         private val firebaseAuth: FirebaseAuth
-) {
+) : IRemoteQuestion {
 
     /**
      * Add question to the guide
@@ -24,7 +24,7 @@ class RemoteQuestion(
      * @param guide : Guide with remoteID
      * @return TaskResult<Question> with the result
      */
-    suspend fun addQuestion(question: QuestionWithAnswers, guide: Guide) : TaskResult<Question> {
+    override suspend fun addQuestion(question: QuestionWithAnswers, guide: Guide) : TaskResult<Question> {
         val uid = firebaseAuth.uid
         val q = question.question
         return if (uid != null && guide.remoteId.isNotEmpty()) {
@@ -74,7 +74,7 @@ class RemoteQuestion(
      * @param guide : Guide with remoteId
      * @return TaskResult<Unit> with the result
      */
-    suspend fun updateQuestion(question: QuestionWithAnswers, guide: Guide) : TaskResult<Unit>{
+    override suspend fun updateQuestion(question: QuestionWithAnswers, guide: Guide) : TaskResult<Unit>{
         val uid = firebaseAuth.uid
         val q = question.question
         return if (uid != null && guide.remoteId.isNotEmpty()) {
@@ -124,7 +124,7 @@ class RemoteQuestion(
      * @param guide : Guide with remoteId
      * @return TaskResult<Unit> with the result
      */
-    suspend fun deleteQuestion(question: Question, guide: Guide) : TaskResult<Unit>{
+    override suspend fun deleteQuestion(question: Question, guide: Guide) : TaskResult<Unit>{
         val uid = firebaseAuth.uid
         return if (uid != null && guide.remoteId.isNotEmpty()) {
             try {
@@ -151,7 +151,7 @@ class RemoteQuestion(
      * @param guide : Guide with remoteId
      * @return TaskResult<ArrayList<QuestionsWithAnswers>> with the result
      */
-    suspend fun getGuideQuestions(guide: Guide) : TaskResult<ArrayList<QuestionWithAnswers>>{
+    override suspend fun getGuideQuestions(guide: Guide) : TaskResult<List<QuestionWithAnswers>>{
         val uid = firebaseAuth.uid
         return if (uid != null && guide.remoteId.isNotEmpty()) {
             try {
@@ -163,7 +163,7 @@ class RemoteQuestion(
                         .collection(DataTags.QUESTIONS_COLLECTION)
                         .get()
                         .await()
-                val list = ArrayList<QuestionWithAnswers>()
+                val list = mutableListOf<QuestionWithAnswers>()
                 result.documents.forEach{
                     val question = Question(
                             remoteId = it.id,
