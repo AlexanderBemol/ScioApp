@@ -9,6 +9,7 @@ import com.nordokod.scio.kt.constants.UnknownException
 import com.nordokod.scio.kt.model.entity.User
 import com.nordokod.scio.kt.model.source.remote.RemoteUser
 import com.nordokod.scio.kt.model.source.local.UserDAO
+import com.nordokod.scio.kt.model.source.remote.IRemoteUser
 import com.nordokod.scio.kt.utils.NetworkManager
 import com.nordokod.scio.kt.utils.TaskResult
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +20,7 @@ import java.io.FileOutputStream
 import java.io.OutputStream
 import java.util.*
 
-class UserRepository(private val remoteUser: RemoteUser,
+class UserRepository(private val remoteUser: IRemoteUser,
                      private val userDAO: UserDAO,
                      private val context: Context
 ) : IUserRepository {

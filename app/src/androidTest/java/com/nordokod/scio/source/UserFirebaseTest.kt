@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import com.nordokod.scio.TestingValues
 import com.nordokod.scio.kt.model.entity.User
+import com.nordokod.scio.kt.model.source.remote.IRemoteUser
 import com.nordokod.scio.kt.model.source.remote.RemoteUser
 import com.nordokod.scio.kt.modules.firebaseModule
 import com.nordokod.scio.kt.modules.sourceModule
@@ -21,7 +22,7 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 
 class UserFirebaseTest : KoinTest {
-    private val remoteUser: RemoteUser by inject()
+    private val remoteUser: IRemoteUser by inject()
     private val modules = listOf(firebaseModule, sourceModule)
 
     @Before

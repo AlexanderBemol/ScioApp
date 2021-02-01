@@ -8,6 +8,7 @@ import com.nordokod.scio.kt.constants.enums.SyncState
 import com.nordokod.scio.kt.model.entity.Guide
 import com.nordokod.scio.kt.model.entity.QuestionWithAnswers
 import com.nordokod.scio.kt.model.source.local.QuestionDAO
+import com.nordokod.scio.kt.model.source.remote.IRemoteQuestion
 import com.nordokod.scio.kt.model.source.remote.RemoteQuestion
 import com.nordokod.scio.kt.utils.NetworkManager
 import com.nordokod.scio.kt.utils.TaskResult
@@ -15,7 +16,7 @@ import kotlinx.coroutines.withTimeout
 
 class QuestionRepository(
         private val guide: Guide,
-        private val remoteQuestion: RemoteQuestion,
+        private val remoteQuestion: IRemoteQuestion,
         private val localQuestion: QuestionDAO
 ) : IQuestionRepository {
 

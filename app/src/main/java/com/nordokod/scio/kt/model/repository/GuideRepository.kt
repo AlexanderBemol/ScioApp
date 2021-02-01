@@ -6,13 +6,14 @@ import com.nordokod.scio.kt.constants.PhoneNetworkException
 import com.nordokod.scio.kt.constants.enums.SyncState
 import com.nordokod.scio.kt.model.entity.Guide
 import com.nordokod.scio.kt.model.source.local.GuideDAO
+import com.nordokod.scio.kt.model.source.remote.IRemoteGuide
 import com.nordokod.scio.kt.model.source.remote.RemoteGuide
 import com.nordokod.scio.kt.utils.NetworkManager
 import com.nordokod.scio.kt.utils.TaskResult
 import kotlinx.coroutines.withTimeout
 
 class GuideRepository(
-        private val remoteGuide: RemoteGuide,
+        private val remoteGuide: IRemoteGuide,
         private val localGuide: GuideDAO
 ) : IGuideRepository {
 

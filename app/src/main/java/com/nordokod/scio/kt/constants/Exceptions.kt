@@ -2,6 +2,8 @@ package com.nordokod.scio.kt.constants
 
 class UnknownException: Exception()
 
+class IrrelevantException: Exception()
+
 class PhoneNetworkException: Exception()
 
 class OnlyPremiumException: Exception()

@@ -5,13 +5,11 @@ import com.google.android.gms.auth.GoogleAuthException
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.*
+import com.google.firebase.crashlytics.*
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.storage.StorageException
-import com.nordokod.scio.kt.constants.GuideException
+import com.nordokod.scio.kt.constants.*
 import com.nordokod.scio.kt.constants.GuideException.Code
-import com.nordokod.scio.kt.constants.InputDataException
-import com.nordokod.scio.kt.constants.OnlyPremiumException
-import com.nordokod.scio.kt.constants.PhoneNetworkException
 import com.nordokod.scio.kt.constants.enums.ErrorMessage
 import java.lang.Exception
 
@@ -55,6 +53,12 @@ fun Exception.getEnumErrorMessage(): ErrorMessage {
                 InputDataException.Code.NOT_CORRECT_OPTION_SELECTED -> ErrorMessage.NOT_CORRECT_OPTION_SELECTED
             }
         }
+        is IrrelevantException -> ErrorMessage.IRRELEVANT_EXCEPTION
         else -> ErrorMessage.UNKNOWN_EXCEPTION
     }
+}
+
+fun Exception.recordException(){
+    if(this.getEnumErrorMessage().getRecordException())
+        FirebaseCrashlytics.getInstance().recordException(this)
 }

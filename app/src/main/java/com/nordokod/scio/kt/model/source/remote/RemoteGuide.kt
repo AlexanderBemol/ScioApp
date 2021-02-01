@@ -16,19 +16,18 @@ import com.nordokod.scio.kt.model.entity.Guide
 import com.nordokod.scio.kt.utils.TaskResult
 import kotlinx.coroutines.tasks.await
 import java.util.*
-import kotlin.collections.ArrayList
 
 class RemoteGuide(
         private val firebaseFirestore: FirebaseFirestore,
         private val firebaseAuth: FirebaseAuth,
         private val firebaseDynamicLinks: FirebaseDynamicLinks
-) {
+) : IRemoteGuide {
     /**
      * create a guide in the user collection
      * @param guide: Guide object with the guide
      * @return TaskResult<Guide>
      */
-    suspend fun createGuide(guide: Guide): TaskResult<Guide> {
+    override suspend fun createGuide(guide: Guide): TaskResult<Guide> {
         val uid = firebaseAuth.uid
         return if (uid != null) {
             val data = hashMapOf(
@@ -62,7 +61,7 @@ class RemoteGuide(
      * @param guide: Guide
      * @return TaskResult<Unit> with the result
      */
-    suspend fun updateGuide(guide: Guide): TaskResult<Unit> {
+    override suspend fun updateGuide(guide: Guide): TaskResult<Unit> {
         val uid = firebaseAuth.uid
         return if (uid != null && guide.remoteId != "") {
             val data = hashMapOf(
@@ -91,7 +90,7 @@ class RemoteGuide(
      * @param id: String id of the guide
      * @return TaskResult<Unit>
      */
-    suspend fun deleteGuide(id: String): TaskResult<Unit> {
+    override suspend fun deleteGuide(id: String): TaskResult<Unit> {
         val uid = firebaseAuth.uid
         return if (uid != null && id != "") {
             try {
@@ -112,7 +111,7 @@ class RemoteGuide(
      * get all the guides of the user
      * @return TaskResult<ArrayList<Guide>>
      */
-    suspend fun getUserGuides(): TaskResult<ArrayList<Guide>> {
+    override suspend fun getUserGuides(): TaskResult<List<Guide>> {
         val uid = firebaseAuth.uid
         return if (uid != null) {
             try {
@@ -122,11 +121,11 @@ class RemoteGuide(
                         .collection(DataTags.GUIDES_COLLECTION)
                         .get()
                         .await()
-                val guides = ArrayList<Guide>()
+                val guides = mutableListOf<Guide>()
                 result.forEach {
                     guides.add(
                             Guide(
-                                    remoteId = it[Guide::id.name].toString(),
+                                    remoteId = it.id,
                                     topic = it[Guide::topic.name].toString(),
                                     category = (it[Guide::category.name] as Long).toInt(),
                                     testDate = it.getDate(Guide::testDate.name) ?: Date(),
@@ -149,7 +148,7 @@ class RemoteGuide(
      * @param guide: Guide to share
      * @return TaskResult<String>
      */
-    suspend fun generateGuideLink(guide: Guide): TaskResult<String> {
+    override suspend fun generateGuideLink(guide: Guide): TaskResult<String> {
         val uid = firebaseAuth.uid
         return if (uid != null) {
             val link = "https://sendosg.com/?user=" + uid + "&guide=" + guide.id
@@ -178,7 +177,7 @@ class RemoteGuide(
      * @param pendingDynamicLinkData: PendingDynamicLinkData dynamicLink of the guide
      * @return TaskResult<Guide>
      */
-    suspend fun getPublicGuide(pendingDynamicLinkData: PendingDynamicLinkData): TaskResult<Guide> {
+    override suspend fun getPublicGuide(pendingDynamicLinkData: PendingDynamicLinkData): TaskResult<Guide> {
         return if (pendingDynamicLinkData.link != null) {
             val uid = pendingDynamicLinkData.link.getQueryParameter(DataTags.USER_QUERY)
             val guideId = pendingDynamicLinkData.link.getQueryParameter(DataTags.GUIDE_QUERY)
@@ -210,7 +209,7 @@ class RemoteGuide(
      * @param guide: Guide
      * @return TaskResult<Guide>
      */
-    suspend fun importGuide(guide: Guide): TaskResult<Unit> {
+    override suspend fun importGuide(guide: Guide): TaskResult<Unit> {
         val uid = firebaseAuth.uid
         return if (uid != null) {
             try {

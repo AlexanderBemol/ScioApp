@@ -23,14 +23,14 @@ class RemoteUser(
         private val firebaseAuth: FirebaseAuth,
         private val firebaseDB: FirebaseFirestore,
         private val firebaseStorage: FirebaseStorage
-) {
+) : IRemoteUser {
 
     /**
      * Set an user document in the firestore database
      * @param user User entity with the data
      *@return TaskResult<Unit> with the result
      */
-    suspend fun setUserDocument(user: User): TaskResult<Unit> {
+    override suspend fun setUserDocument(user: User): TaskResult<Unit> {
         val data = hashMapOf(
                 User::displayName.name to user.displayName,
                 User::email.name to user.email,
@@ -56,7 +56,7 @@ class RemoteUser(
      * @param source: Source Firebase source
      * @return TaskResult<User>
      */
-    suspend fun getUserDocument(uid: String): TaskResult<User> {
+    override suspend fun getUserDocument(uid: String): TaskResult<User> {
         return try {
             val result = firebaseDB.collection(DataTags.USERS_COLLECTION).document(uid).get().await()
             TaskResult.Success(
@@ -84,7 +84,7 @@ class RemoteUser(
      * @param photo: File file of photo
      *@return TaskResult<Unit>
      */
-    suspend fun saveUserPhoto(photo: File): TaskResult<Unit> {
+    override suspend fun saveUserPhoto(photo: File): TaskResult<Unit> {
         return try {
             if (firebaseAuth.currentUser != null) {
                 val filename = firebaseAuth.currentUser!!.uid
@@ -108,7 +108,7 @@ class RemoteUser(
      * @param uid
      * @return TaskResult<Bitmap>
      */
-    suspend fun getUserFirebasePhoto(uid: String): TaskResult<Bitmap> {
+    override suspend fun getUserFirebasePhoto(uid: String): TaskResult<Bitmap> {
         return try {
             val result = firebaseStorage.reference
                     .child(DataTags.USERS_FOLDER)
@@ -127,7 +127,7 @@ class RemoteUser(
      * @param user
      * @return TaskResult<Bitmap>
      */
-    fun getUserExternalPhoto(user: User): TaskResult<Bitmap> {
+    override fun getUserExternalPhoto(user: User): TaskResult<Bitmap> {
         var photoPath = user.photoURL
         if (photoPath.contains(FacebookAuthProvider.PROVIDER_ID)) photoPath += "?type=large"
         return try {

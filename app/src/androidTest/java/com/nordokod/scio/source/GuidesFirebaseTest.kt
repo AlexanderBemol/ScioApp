@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.nordokod.scio.TestingValues
 import com.nordokod.scio.kt.model.entity.Guide
+import com.nordokod.scio.kt.model.source.remote.IRemoteGuide
 import com.nordokod.scio.kt.model.source.remote.RemoteGuide
 import com.nordokod.scio.kt.modules.*
 import com.nordokod.scio.kt.utils.TaskResult
@@ -25,7 +26,7 @@ import org.koin.test.inject
 @RunWith(AndroidJUnit4::class)
 class GuidesFirebaseTest : KoinTest {
     private val modules = listOf(firebaseModule, sourceModule)
-    private val remoteGuide by inject<RemoteGuide>()
+    private val remoteGuide by inject<IRemoteGuide>()
 
     @Before
     fun before(){
