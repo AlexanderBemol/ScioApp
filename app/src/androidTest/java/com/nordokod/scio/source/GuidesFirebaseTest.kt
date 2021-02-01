@@ -18,6 +18,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.core.logger.Level
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
@@ -30,7 +31,7 @@ class GuidesFirebaseTest : KoinTest {
     fun before(){
         stopKoin()
         startKoin {
-            androidLogger()
+            androidLogger(Level.ERROR)
             androidContext(InstrumentationRegistry.getInstrumentation().context)
             modules(modules)
         }

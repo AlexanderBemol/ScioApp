@@ -9,5 +9,5 @@ data class UserWithGuides(
                 parentColumn = "uid",
                 entityColumn = "updateUser"
         )
-        val guides: List<Guide>
+        val guides: List<Guide> = listOf()
 )

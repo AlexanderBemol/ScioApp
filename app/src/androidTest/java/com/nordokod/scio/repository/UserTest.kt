@@ -7,6 +7,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
 import com.nordokod.scio.TestingValues
 import com.nordokod.scio.kt.model.entity.User
+import com.nordokod.scio.kt.model.repository.IUserRepository
 import com.nordokod.scio.kt.model.repository.UserRepository
 import com.nordokod.scio.kt.model.source.local.AppDatabase
 import com.nordokod.scio.kt.modules.firebaseModule
@@ -22,6 +23,8 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.core.logger.Level
+import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
@@ -34,13 +37,15 @@ class UserTest : KoinTest {
         single { provideDatabase(ApplicationProvider.getApplicationContext<Context>()) }
     }
     private val modules = listOf(databaseModuleTest, sourceModule, firebaseModule, repositoryModule)
-    private val userRepository: UserRepository by inject()
+    private val userRepository: IUserRepository by inject{
+        parametersOf(ApplicationProvider.getApplicationContext())
+    }
 
     @Before
     fun before() {
         stopKoin()
         startKoin {
-            androidLogger()
+            androidLogger(Level.ERROR)
             androidContext(InstrumentationRegistry.getInstrumentation().context)
             modules(modules)
         }

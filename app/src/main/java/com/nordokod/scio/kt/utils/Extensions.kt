@@ -15,7 +15,7 @@ import com.nordokod.scio.kt.constants.PhoneNetworkException
 import com.nordokod.scio.kt.constants.enums.ErrorMessage
 import java.lang.Exception
 
-fun Exception.getEnumErrorMessage(): ErrorMessage{
+fun Exception.getEnumErrorMessage(): ErrorMessage {
     return when (this) {
         is PhoneNetworkException -> ErrorMessage.NETWORK_PHONE
         is FirebaseNetworkException -> ErrorMessage.NETWORK_FIREBASE
@@ -23,7 +23,7 @@ fun Exception.getEnumErrorMessage(): ErrorMessage{
         is FirebaseAuthEmailException -> ErrorMessage.AUTH_SEND_EMAIL
         is FirebaseAuthInvalidUserException -> {
             when (this.errorCode) {
-                "ERROR_USER_NOT_FOUND"-> ErrorMessage.AUTH_USER_NOT_FOUND
+                "ERROR_USER_NOT_FOUND" -> ErrorMessage.AUTH_USER_NOT_FOUND
                 else -> ErrorMessage.AUTH_INVALID_USER
             }
         }
@@ -43,7 +43,7 @@ fun Exception.getEnumErrorMessage(): ErrorMessage{
             }
         }
         is InputDataException -> {
-            when(this.code) {
+            when (this.code) {
                 InputDataException.Code.DATETIME_AFTER -> ErrorMessage.DATETIME_AFTER
                 InputDataException.Code.DATETIME_BEFORE -> ErrorMessage.DATETIME_BEFORE
                 InputDataException.Code.INVALID_MAIL -> ErrorMessage.INVALID_MAIL
