@@ -18,11 +18,15 @@ val sourceModule = module {
     fun provideRemoteQuestion(firebaseAuth: FirebaseAuth,firebaseFirestore: FirebaseFirestore) = RemoteQuestion(firebaseFirestore,firebaseAuth)
     fun provideUserDAO(database: AppDatabase) = database.userDAO
     fun provideGuideDAO(database: AppDatabase) = database.guideDAO
+    fun provideQuestionDao(database: AppDatabase) = database.questionDAO
 
-    single { provideRemoteAuth(get()) }
-    single { provideRemoteUser(get(),get(),get()) }
-    single { provideRemoteGuide(get(),get(),get()) }
-    single { provideRemoteQuestion(get(),get()) }
-    single { provideUserDAO(get()) }
-    single { provideGuideDAO(get()) }
+    factory { provideRemoteAuth(get()) }
+    factory { provideRemoteUser(get(),get(),get()) }
+    factory { provideRemoteGuide(get(),get(),get()) }
+    factory { provideRemoteQuestion(get(),get()) }
+
+    factory { provideUserDAO(get()) }
+    factory { provideGuideDAO(get()) }
+    factory { provideQuestionDao(get()) }
+
 }

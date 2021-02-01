@@ -37,7 +37,7 @@ interface QuestionDAO {
     @Delete
     fun deleteAnswer(answer: Answer.TrueFalseAnswer)
 
-    @Query("DELETE FROM MultipleChoiceAnswer WHERE idQuestion = idQuestion")
+    @Query("DELETE FROM MultipleChoiceAnswer WHERE idQuestion = :idQuestion")
     fun deleteMultipleChoiceAnswers(idQuestion: Long)
 
     @Update

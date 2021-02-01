@@ -7,5 +7,7 @@ interface IQuestionRepository {
     suspend fun addQuestion(questionWithAnswers: QuestionWithAnswers) : TaskResult<QuestionWithAnswers>
     suspend fun updateQuestion(questionWithAnswers: QuestionWithAnswers) : TaskResult<Unit>
     suspend fun deleteQuestion(questionWithAnswers: QuestionWithAnswers) : TaskResult<Unit>
-    suspend fun getGuideQuestions() : TaskResult<ArrayList<QuestionWithAnswers>>
+    suspend fun getGuideQuestions() : TaskResult<List<QuestionWithAnswers>>
+    suspend fun syncInRemote() : TaskResult<Unit>
+    suspend fun syncInLocal() : TaskResult<Unit>
 }

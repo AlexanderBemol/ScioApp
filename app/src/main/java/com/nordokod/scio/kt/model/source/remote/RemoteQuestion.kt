@@ -35,15 +35,15 @@ class RemoteQuestion(
                 )
                 when (q.kindOfQuestion) {
                     KindOfQuestion.OPEN.code -> {
-                        data[Answer.OpenAnswer::answer.name] = question.openAnswer.answer
+                        data[Answer.OpenAnswer::answer.name] = question.openAnswer!!.answer
                     }
                     KindOfQuestion.TRUE_FALSE.code -> {
-                        data[Answer.TrueFalseAnswer::answer.name] = question.trueFalseAnswer.answer
+                        data[Answer.TrueFalseAnswer::answer.name] = question.trueFalseAnswer!!.answer
                     }
                     KindOfQuestion.MULTIPLE_CHOICE.code -> {
                         val answers = mutableMapOf<String,Any>()
                         var i = 0
-                        question.multipleChoiceAnswers.forEach {
+                        question.multipleChoiceAnswers?.forEach {
                             answers[i.toString()] = it
                             i++
                         }
@@ -85,15 +85,15 @@ class RemoteQuestion(
                 )
                 when (question.question.kindOfQuestion) {
                     KindOfQuestion.OPEN.code -> {
-                        data[Answer.OpenAnswer::answer.name] = question.openAnswer.answer
+                        data[Answer.OpenAnswer::answer.name] = question.openAnswer!!.answer
                     }
                     KindOfQuestion.TRUE_FALSE.code -> {
-                        data[Answer.TrueFalseAnswer::answer.name] = question.trueFalseAnswer.answer
+                        data[Answer.TrueFalseAnswer::answer.name] = question.trueFalseAnswer!!.answer
                     }
                     KindOfQuestion.MULTIPLE_CHOICE.code -> {
                         val answers = mutableMapOf<String,Any>()
                         var i = 0
-                        question.multipleChoiceAnswers.forEach {
+                        question.multipleChoiceAnswers?.forEach {
                             answers[i.toString()] = it
                             i++
                         }
@@ -188,11 +188,17 @@ class RemoteQuestion(
                             )
                         }
                         KindOfQuestion.MULTIPLE_CHOICE.code -> {
-                            val answersMap  = it[Answer.MultipleChoiceAnswer::answer.name] as Map<String, Any>
-                            val answers = ArrayList<Answer.MultipleChoiceAnswer>()
+                            val answersMap  = it[Answer.MultipleChoiceAnswer::answer.name] as Map<String,Any>
+                            val answers = mutableListOf<Answer.MultipleChoiceAnswer>()
                             for (i in 0 until answersMap.size){
+                                val auxMap = answersMap[i.toString()] as Map<String, Any>
                                 answers.add(
-                                        answersMap[i.toString()] as Answer.MultipleChoiceAnswer
+                                        Answer.MultipleChoiceAnswer(
+                                                id = auxMap[Answer.MultipleChoiceAnswer::id.name] as Long,
+                                                isCorrect = auxMap["correct"] as Boolean,
+                                                answer = auxMap[Answer.MultipleChoiceAnswer::answer.name] as String,
+                                                idQuestion = auxMap[Answer.MultipleChoiceAnswer::idQuestion.name] as Long
+                                        )
                                 )
                             }
                             list.add(

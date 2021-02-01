@@ -11,7 +11,7 @@ class SendoApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         startKoin {
-            androidLogger(Level.NONE) //temporal by bug in kt1.4
+            androidLogger(Level.ERROR) //temporal by bug in kt1.4
             androidContext(this@SendoApplication)
             modules(
                     firebaseModule,
