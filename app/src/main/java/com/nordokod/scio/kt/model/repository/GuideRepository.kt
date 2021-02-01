@@ -1,6 +1,7 @@
 package com.nordokod.scio.kt.model.repository
 
 import com.nordokod.scio.kt.constants.Generic
+import com.nordokod.scio.kt.constants.GuideException
 import com.nordokod.scio.kt.constants.PhoneNetworkException
 import com.nordokod.scio.kt.constants.enums.SyncState
 import com.nordokod.scio.kt.model.entity.Guide
@@ -51,7 +52,8 @@ class GuideRepository(
                             updateGuideOffline(guide)
                         }
                         is TaskResult.Error -> {
-                            guide.syncState = SyncState.UPDATED_IN_LOCAL.code
+                            if(guide.syncState != SyncState.ONLY_IN_LOCAL.code)
+                                guide.syncState = SyncState.UPDATED_IN_LOCAL.code
                             updateGuideOffline(guide)
                         }
                     }
@@ -76,7 +78,10 @@ class GuideRepository(
                         }
                         is TaskResult.Error -> {
                             guide.syncState = SyncState.DELETED_IN_LOCAL.code
-                            updateSyncState(guide)
+                            if(guide.remoteId == "")
+                                deleteGuideOffline(guide)
+                            else
+                                updateSyncState(guide)
                         }
                     }
                 }
@@ -90,10 +95,14 @@ class GuideRepository(
         }
     }
 
-    override suspend fun getUserGuides(uid: String): TaskResult<ArrayList<Guide>> {
+    override suspend fun getUserGuides(uid: String): TaskResult<List<Guide>> {
         return try {
             val userWithGuides = localGuide.getGuidesFromUser(uid)
-            TaskResult.Success(ArrayList(userWithGuides.guides))
+            val guidesList = userWithGuides.guides.filter { guide -> guide.syncState != SyncState.DELETED_IN_LOCAL.code }
+            if(guidesList.isNotEmpty())
+                TaskResult.Success(guidesList)
+            else
+                TaskResult.Error(GuideException(GuideException.Code.NO_GUIDES))
         } catch (e: Exception) {
             TaskResult.Error(e)
         }
@@ -121,7 +130,7 @@ class GuideRepository(
                             withTimeout(Generic.TIMEOUT_VALUE) {
                                 val result = remoteGuide.createGuide(it)
                                 if (result is TaskResult.Success) {
-                                    updateSyncState(result.data.apply { syncState = SyncState.SYNCHRONIZED.code })
+                                    updateGuideOffline(result.data.apply { syncState = SyncState.SYNCHRONIZED.code })
                                 }
                             }
                         }

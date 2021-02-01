@@ -88,7 +88,8 @@ class RemoteUser(
         return try {
             if (firebaseAuth.currentUser != null) {
                 val filename = firebaseAuth.currentUser!!.uid
-                val result = firebaseStorage.reference.child(DataTags.USERS_FOLDER)
+                firebaseStorage.reference
+                        .child(DataTags.USERS_FOLDER)
                         .child(DataTags.USERS_PROFILE_PHOTO)
                         .child(filename)
                         .putFile(Uri.fromFile(photo))
@@ -112,9 +113,10 @@ class RemoteUser(
             val result = firebaseStorage.reference
                     .child(DataTags.USERS_FOLDER)
                     .child(DataTags.USERS_PROFILE_PHOTO)
+                    .child(uid)
                     .getBytes(1024)
                     .await()
-            TaskResult.Success(BitmapFactory.decodeByteArray(result,0,result.size))
+            TaskResult.Success(BitmapFactory.decodeByteArray(result, 0, result.size))
         } catch (e: Exception) {
             TaskResult.Error(e)
         }
@@ -125,17 +127,17 @@ class RemoteUser(
      * @param user
      * @return TaskResult<Bitmap>
      */
-    fun getUserExternalPhoto(user: User): TaskResult<Bitmap>{
+    fun getUserExternalPhoto(user: User): TaskResult<Bitmap> {
         var photoPath = user.photoURL
-        if(photoPath.contains(FacebookAuthProvider.PROVIDER_ID)) photoPath += "?type=large"
-        return try{
+        if (photoPath.contains(FacebookAuthProvider.PROVIDER_ID)) photoPath += "?type=large"
+        return try {
             val url = URL(photoPath)
-            val connection =  url.openConnection() as HttpURLConnection
+            val connection = url.openConnection() as HttpURLConnection
             connection.doInput = true
             connection.connect()
             val bitmap = BitmapFactory.decodeStream(connection.inputStream)
             TaskResult.Success(bitmap)
-        }catch (e: Exception){
+        } catch (e: Exception) {
             TaskResult.Error(e)
         }
     }

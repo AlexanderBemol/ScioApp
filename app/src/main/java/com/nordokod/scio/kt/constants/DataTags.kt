@@ -5,6 +5,7 @@ class DataTags {
         //firestore tags
         const val USERS_COLLECTION = "USERS"
         const val GUIDES_COLLECTION = "GUIDES"
+        const val QUESTIONS_COLLECTION = "QUESTIONS"
 
         //storage tags
         const val USERS_FOLDER = "USERS"

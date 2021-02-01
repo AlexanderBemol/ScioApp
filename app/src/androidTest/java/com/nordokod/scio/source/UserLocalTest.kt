@@ -19,6 +19,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
+import org.koin.core.logger.Level
 import org.koin.dsl.module
 import org.koin.test.KoinTest
 import org.koin.test.inject
@@ -28,7 +29,7 @@ class UserLocalTest : KoinTest {
         fun provideDatabase(application: Context) = Room.databaseBuilder(application, AppDatabase::class.java, "sendo")
                 .fallbackToDestructiveMigration()
                 .build()
-        single { provideDatabase(ApplicationProvider.getApplicationContext<Context>()) }
+        single { provideDatabase(ApplicationProvider.getApplicationContext()) }
     }
     private val modules = listOf(databaseModuleTest, sourceModule)
     private val localUser: UserDAO by inject()
@@ -37,7 +38,7 @@ class UserLocalTest : KoinTest {
     fun before() {
         stopKoin()
         startKoin {
-            androidLogger()
+            androidLogger(Level.NONE)
             androidContext(InstrumentationRegistry.getInstrumentation().context)
             modules(modules)
         }
@@ -51,9 +52,9 @@ class UserLocalTest : KoinTest {
     @Test
     fun saveUser(){
         val user = User(
-                uid = "testing-001",
-                displayName = "testing user",
-                email = "test@mail.com",
+                uid = TestingValues.TEST_USER_UID,
+                displayName = TestingValues.TEST_USERNAME,
+                email = TestingValues.TEST_MAIL,
                 photoURL = "photo.com",
                 synchronized = true
         )
@@ -72,7 +73,8 @@ class UserLocalTest : KoinTest {
     fun getUser(){
         runBlocking {
             try{
-                val user = localUser.getUser("testing-001")
+                saveUser()
+                val user = localUser.getUser(TestingValues.TEST_USER_UID)
                 Log.d(TestingValues.TESTING_TAG,user.toString())
                 TestCase.assertTrue(true)
             } catch (e: Exception){

@@ -7,7 +7,8 @@ data class GuideWithQuestions(
         @Embedded val guide: Guide,
         @Relation(
                 parentColumn = "id",
-                entityColumn = "idGuide"
+                entityColumn = "idGuide",
+                entity = Question::class
         )
-        val questions: List<Question>
+        val questions: List<QuestionWithAnswers> = listOf()
 )

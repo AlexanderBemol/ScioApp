@@ -64,7 +64,7 @@ class RemoteGuide(
      */
     suspend fun updateGuide(guide: Guide): TaskResult<Unit> {
         val uid = firebaseAuth.uid
-        return if (uid != null) {
+        return if (uid != null && guide.remoteId != "") {
             val data = hashMapOf(
                     Guide::topic.name to guide.topic,
                     Guide::category.name to guide.category,
@@ -93,7 +93,7 @@ class RemoteGuide(
      */
     suspend fun deleteGuide(id: String): TaskResult<Unit> {
         val uid = firebaseAuth.uid
-        return if (uid != null) {
+        return if (uid != null && id != "") {
             try {
                 firebaseFirestore.collection(DataTags.GUIDES_COLLECTION)
                         .document(uid)
@@ -226,7 +226,7 @@ class RemoteGuide(
                 if (data != null) {
                     data[Guide::updateUser.name] = uid
                     data[Guide::updateDate.name] = FieldValue.serverTimestamp()
-                    val result = firebaseFirestore
+                    firebaseFirestore
                             .collection(DataTags.GUIDES_COLLECTION)
                             .document(uid)
                             .collection(DataTags.GUIDES_COLLECTION)
