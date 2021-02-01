@@ -9,6 +9,7 @@ import com.nordokod.scio.kt.model.entity.Answer
 import com.nordokod.scio.kt.model.entity.Guide
 import com.nordokod.scio.kt.model.entity.Question
 import com.nordokod.scio.kt.model.entity.QuestionWithAnswers
+import com.nordokod.scio.kt.model.source.remote.IRemoteQuestion
 import com.nordokod.scio.kt.model.source.remote.RemoteQuestion
 import com.nordokod.scio.kt.modules.firebaseModule
 import com.nordokod.scio.kt.modules.sourceModule
@@ -28,7 +29,7 @@ import org.koin.test.inject
 
 class QuestionFirebaseTest : KoinTest {
     private val modules = listOf(firebaseModule, sourceModule)
-    private val remoteQuestion by inject<RemoteQuestion>()
+    private val remoteQuestion by inject<IRemoteQuestion>()
 
     @Before
     fun before() {
