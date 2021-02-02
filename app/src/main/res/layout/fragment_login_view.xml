@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/activity_padding"
+    android:background="@color/secondaryColor"
+    tools:context=".kt.ui.login.LoginView"
+    >
+
+
+    <!-- IMAGEN -->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/IV_Logo"
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_sendo_imagotipo_vertical"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ET_Mail"
+        />
+
+    <!-- EDIT TEXT USUARIO -->
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/ET_Mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_ET_Mail"
+        android:layout_marginBottom="@dimen/space_2"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ET_Password"
+
+        style="@style/EditText_Login"
+        />
+
+    <!-- EDIT TEXT CONTRASEÑA -->
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/ET_Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_ET_Password"
+        android:inputType="textPassword"
+        android:pointerIcon="arrow"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/TV_Forgot_Password"
+
+        style="@style/EditText_Login"
+        />
+
+    <!-- TEXTO RECUPERAR CONTRASEÑA -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/TV_Forgot_Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_TV_recover_password"
+        android:textColor="?attr/secondaryTextColor"
+        android:layout_marginBottom="@dimen/space_3"
+        android:textSize="@dimen/text_size_small"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/BTN_Login"
+        />
+
+    <!-- BOTÓN INICIAR SESIÓN -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BTN_Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_BTN_Login"
+        android:layout_marginBottom="@dimen/space_1"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/BTN_Signup"
+
+        style="@style/loginButton"
+        />
+
+    <!-- BOTÓN REGISTRARSE -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BTN_Signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_BTN_Signup"
+        android:layout_marginBottom="@dimen/space_3"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/txtConectar"
+
+        style="@style/signupButton"
+        />
+
+    <!-- TEXTO OPCIONES -->
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtConectar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_TV_options"
+        android:textColor="?attr/secondaryTextColor"
+        android:layout_marginBottom="@dimen/space_1"
+        android:textSize="@dimen/text_size_small"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/cajaRedesSociales"
+        />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/cajaRedesSociales"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <!-- OPCIÓN FACEBOOK -->
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/BTN_Facebook"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@xml/background_solid_round"
+            android:src="@drawable/facebook_icon"
+            android:scaleType="fitCenter"
+            android:padding="6dp"
+            android:gravity="center"
+            android:layout_marginRight="10dp"
+            />
+
+        <!-- OPCIÓN GOOGLE -->
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/BTN_Google"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@xml/background_solid_round"
+            android:src="@drawable/google_icon"
+            android:scaleType="fitCenter"
+            android:padding="6dp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

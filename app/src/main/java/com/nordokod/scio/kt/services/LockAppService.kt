@@ -8,6 +8,7 @@ import android.content.Intent
 import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
+import android.util.Log
 import com.nordokod.scio.kt.constants.Generic
 import java.util.*
 
@@ -36,7 +37,8 @@ class LockAppService : Service() {
     }
 
     private fun checkApps() {
-        TODO()
+        //TODO()
+        Log.d("SENDO_TESTING","CHECKING........")
     }
 
     private fun getForegroundApp() : String{
