@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashView">
+
+    <fragment
+        android:id="@+id/loginView"
+        android:name="com.nordokod.scio.kt.ui.login.LoginView"
+        android:label="fragment_login_view"
+        tools:layout="@layout/fragment_login_view" />
+    <fragment
+        android:id="@+id/splashView"
+        android:name="com.nordokod.scio.kt.ui.splash.SplashView"
+        android:label="fragment_splash_view"
+        tools:layout="@layout/fragment_splash_view" >
+        <action
+            android:id="@+id/action_splashView_to_loginView"
+            app:destination="@id/loginView" />
+    </fragment>
+</navigation>
