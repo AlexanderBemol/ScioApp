@@ -9,7 +9,14 @@
         android:id="@+id/loginView"
         android:name="com.nordokod.scio.kt.ui.login.LoginView"
         android:label="fragment_login_view"
-        tools:layout="@layout/fragment_login_view" />
+        tools:layout="@layout/fragment_login_view" >
+        <action
+            android:id="@+id/action_loginView_to_signupView"
+            app:destination="@id/signupView" />
+        <action
+            android:id="@+id/action_loginView_to_verifyMailView"
+            app:destination="@id/verifyMailView" />
+    </fragment>
     <fragment
         android:id="@+id/splashView"
         android:name="com.nordokod.scio.kt.ui.splash.SplashView"
@@ -17,6 +24,30 @@
         tools:layout="@layout/fragment_splash_view" >
         <action
             android:id="@+id/action_splashView_to_loginView"
-            app:destination="@id/loginView" />
+            app:destination="@id/loginView"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popUpTo="@id/loginView"
+            app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/signupView"
+        android:name="com.nordokod.scio.kt.ui.signup.SignUpView"
+        android:label="fragment_signup_view"
+        tools:layout="@layout/fragment_signup_view" >
+        <action
+            android:id="@+id/action_signupView_to_verifyMailView"
+            app:destination="@id/verifyMailView" />
+    </fragment>
+    <fragment
+        android:id="@+id/verifyMailView"
+        android:name="com.nordokod.scio.kt.ui.verifymail.VerifyMailView"
+        android:label="fragment_verify_mail_view"
+        tools:layout="@layout/fragment_verify_mail_view" />
+    <dialog
+        android:id="@+id/loadingView"
+        android:name="com.nordokod.scio.kt.ui.loading.LoadingView"
+        android:label="dialog_loading"
+        tools:layout="@layout/dialog_loading" />
+    <action android:id="@+id/action_global_loadingView" app:destination="@id/loadingView" />
 </navigation>
