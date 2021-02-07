@@ -7,6 +7,7 @@ import com.nordokod.scio.kt.constants.InputDataException
 import com.nordokod.scio.kt.constants.UnknownException
 import com.nordokod.scio.kt.constants.enums.SuccessMessage
 import com.nordokod.scio.kt.model.repository.IAuthRepository
+import com.nordokod.scio.kt.utils.Event
 import com.nordokod.scio.kt.utils.TaskResult
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
@@ -14,29 +15,29 @@ import kotlinx.coroutines.withTimeout
 import java.lang.Exception
 
 class LoginViewModel(private val authRepository: IAuthRepository): ViewModel() {
-    val error = MutableLiveData<Exception>()
-    val successMessage = MutableLiveData<SuccessMessage>()
-    val loginAction = MutableLiveData<LoginActions>()
+    val error = MutableLiveData<Event<Exception>>()
+    val successMessage = MutableLiveData<Event<SuccessMessage>>()
+    val loginAction = MutableLiveData<Event<LoginActions>>()
 
     fun signInWithMail(email: String, password: String){
         if(email.isBlank()||password.isBlank()){
-            error.value = InputDataException(InputDataException.Code.EMPTY_FIELD)
+            error.value = Event(InputDataException(InputDataException.Code.EMPTY_FIELD))
         }else{
             viewModelScope.launch {
                 try{
                     withTimeout(Generic.TIMEOUT_VALUE){
                         when(val result = authRepository.signInWithMail(email, password)){
-                            is TaskResult.Error -> error.value = result.e
+                            is TaskResult.Error -> error.value = Event(result.e)
                             is TaskResult.Success -> {
                                 val user = result.data
-                                successMessage.value = SuccessMessage.LOGIN_USER
-                                if(!user.emailVerified) loginAction.value = LoginActions.GO_TO_VERIFY_MAIL
-                                else loginAction.value = LoginActions.GO_TO_MAIN
+                                successMessage.value = Event(SuccessMessage.LOGIN_USER)
+                                if(!user.emailVerified) loginAction.value = Event(LoginActions.GO_TO_VERIFY_MAIL)
+                                else loginAction.value = Event(LoginActions.GO_TO_MAIN)
                             }
                         }
                     }
                 }catch (e: TimeoutCancellationException){
-                    error.value = UnknownException()
+                    error.value = Event(UnknownException())
                 }
             }
         }
