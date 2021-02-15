@@ -179,8 +179,8 @@ class RemoteGuide(
      */
     override suspend fun getPublicGuide(pendingDynamicLinkData: PendingDynamicLinkData): TaskResult<Guide> {
         return if (pendingDynamicLinkData.link != null) {
-            val uid = pendingDynamicLinkData.link.getQueryParameter(DataTags.USER_QUERY)
-            val guideId = pendingDynamicLinkData.link.getQueryParameter(DataTags.GUIDE_QUERY)
+            val uid = pendingDynamicLinkData.link?.getQueryParameter(DataTags.USER_QUERY)
+            val guideId = pendingDynamicLinkData.link?.getQueryParameter(DataTags.GUIDE_QUERY)
             if (uid != null && guideId != null) {
                 val result = firebaseFirestore.collection(DataTags.GUIDES_COLLECTION)
                         .document(uid)
