@@ -180,29 +180,6 @@ public class MainActivity extends AppCompatActivity implements BasicActivity {
 
     @Override
     public void initListeners() {
-        bottomNavigation.setOnNavigationItemSelectedListener(menuItem -> {
-            switch (menuItem.getItemId()) {
-                case R.id.Menu_New_Guide:
-                    openFragmentOfBottomNavigationBar(new CreateFragment());
-                    showFragmentToCreateNewGuide();
-                    return true;
-                case R.id.Menu_Guides:
-                    openFragmentOfBottomNavigationBar(new GuidesFragment(this, this));
-                    return true;
-                case R.id.Menu_Home:
-                default:
-                    openFragmentOfBottomNavigationBar(new HomeFragment(this, this));
-                    return true;
-            }
-        });
-
-        bottomNavigation.setOnNavigationItemReselectedListener(menuItem -> {
-            if (menuItem.getItemId() == R.id.Menu_New_Guide) {
-                openFragmentOfBottomNavigationBar(new CreateFragment());
-                showFragmentToCreateNewGuide();
-            }
-        });
-
         BTN_Logout.setOnClickListener(v -> {
             userModel.logOut();
             goToLoginActivity();

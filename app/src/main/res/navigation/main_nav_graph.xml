@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/homeView">
+
+    <fragment
+        android:id="@+id/homeView"
+        android:name="com.nordokod.scio.kt.ui.home.HomeView"
+        android:label="fragment_home_view"
+        tools:layout="@layout/fragment_home_view" />
+    <fragment
+        android:id="@+id/guidesView"
+        android:name="com.nordokod.scio.kt.ui.guides.GuidesView"
+        android:label="fragment_guides_view"
+        tools:layout="@layout/fragment_guides_view" />
+    <fragment
+        android:id="@+id/createView"
+        android:name="com.nordokod.scio.kt.ui.create.CreateView"
+        android:label="fragment_create_view"
+        tools:layout="@layout/fragment_create_view" />
+    <dialog
+        android:id="@+id/newGuideView"
+        android:name="com.nordokod.scio.kt.ui.newguide.NewGuideView"
+        android:label="fragment_new_guide_view"
+        tools:layout="@layout/fragment_new_guide_view" />
+        <action
+            android:id="@+id/action_global_newGuideView"
+            app:destination="@id/newGuideView" />
+    <fragment
+        android:id="@+id/lockedAppsView"
+        android:name="com.nordokod.scio.kt.ui.lockedapps.LockedAppsView"
+        android:label="fragment_locked_apps_view"
+        tools:layout="@layout/fragment_locked_apps_view" />
+
+</navigation>
