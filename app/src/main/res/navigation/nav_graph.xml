@@ -16,6 +16,10 @@
         <action
             android:id="@+id/action_loginView_to_verifyMailView"
             app:destination="@id/verifyMailView" />
+        <action
+            android:id="@+id/action_loginView_to_mainView"
+            app:launchSingleTop="true"
+            app:destination="@id/mainView" />
     </fragment>
     <fragment
         android:id="@+id/splashView"
@@ -27,7 +31,12 @@
             app:destination="@id/loginView"
             app:enterAnim="@anim/fragment_fade_enter"
             app:exitAnim="@anim/fragment_fade_exit"
-            app:popUpTo="@id/loginView"
+            app:popUpTo="@id/splashView"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashView_to_mainView"
+            app:destination="@id/mainView"
+            app:popUpTo="@id/splashView"
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
@@ -49,5 +58,17 @@
         android:name="com.nordokod.scio.kt.ui.loading.LoadingView"
         android:label="dialog_loading"
         tools:layout="@layout/dialog_loading" />
-    <action android:id="@+id/action_global_loadingView" app:destination="@id/loadingView" />
+        <action
+            android:id="@+id/action_global_loadingView"
+            app:destination="@id/loadingView" />
+    <fragment
+        android:id="@+id/mainView"
+        android:name="com.nordokod.scio.kt.ui.main.MainView"
+        android:label="fragment_main_view"
+        tools:layout="@layout/fragment_main_view" />
+    <action android:id="@+id/action_global_loginView"
+        app:destination="@id/loginView"
+        app:popUpToInclusive="true"
+        app:popUpTo="@id/mainView"
+        />
 </navigation>

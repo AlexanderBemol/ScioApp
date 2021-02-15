@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".kt.ui.newguide.NewGuideView"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/backgroundColor"
+        >
+        <!-- TITULO -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/FNewGuide_TV_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_TV_NewGuide"
+            android:layout_marginTop="@dimen/activity_padding"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginBottom="@dimen/space_2"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/FNewGuide_TV_Category"
+
+            style="@style/titleTextView"
+            />
+
+        <!-- CATEGORIA -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/FNewGuide_TV_Category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_TV_Category"
+            android:layout_marginStart="@dimen/activity_padding"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/FNewGuide_RV_Categories"
+
+            style="@style/normalTextView"
+            />
+
+        <include
+            android:id="@+id/FNewGuide_RV_Categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintBottom_toTopOf="@id/FNewGuide_TV_Topic"
+
+            layout="@layout/list_categories"
+            />
+
+        <!-- TEMA -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/FNewGuide_TV_Topic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_TV_Topic"
+            android:layout_marginStart="@dimen/activity_padding"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/FNewGuide_ET_Topic"
+
+            style="@style/normalTextView"
+            />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/FNewGuide_ET_Topic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginEnd="@dimen/space_2"
+            android:layout_marginBottom="@dimen/space_2"
+
+
+            app:layout_constraintBottom_toTopOf="@id/FNewGuide_TV_DateTime"
+
+            style="@style/EditText_Normal"
+            />
+
+        <!-- FECHA Y HORA -->
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/FNewGuide_TV_DateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_TV_DateTime"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginBottom="@dimen/space_2"
+
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/FNewGuide_LL_Date"
+
+            style="@style/normalTextView"
+            />
+
+        <LinearLayout
+            android:id="@+id/FNewGuide_LL_Date"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_marginBottom="@dimen/space_3"
+            android:orientation="vertical"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginEnd="@dimen/activity_padding"
+
+            app:layout_constraintBottom_toTopOf="@id/FNewGuide_BTN_Create"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/FNewGuide_LL_Time">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/FNewGuide_TV_Month"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/background_top_normal_round"
+                android:backgroundTint="@color/cancelColor"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@color/onSecondaryColor" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/FNewGuide_TV_Day"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@xml/background_bottom_normal_round"
+                android:text="-"
+
+                style="@style/datetimeTextView"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/FNewGuide_LL_Time"
+            android:layout_width="0dp"
+            android:layout_height="130dp"
+            android:layout_marginBottom="@dimen/space_3"
+            android:layout_marginStart="@dimen/activity_padding"
+            android:layout_marginEnd="@dimen/activity_padding"
+            android:orientation="vertical"
+
+            app:layout_constraintBottom_toTopOf="@id/FNewGuide_BTN_Create"
+            app:layout_constraintLeft_toRightOf="@id/FNewGuide_LL_Date"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/FNewGuide_TV_Time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@xml/background_top_normal_round"
+                android:backgroundTint="@color/secondaryColor"
+                android:text="-"
+                android:textAlignment="center"
+                android:textColor="@color/onSecondaryColor" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/FNewGuide_TV_Hour"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@xml/background_bottom_normal_round"
+                android:text="-"
+
+                style="@style/datetimeTextView"
+                />
+
+        </LinearLayout>
+
+        <!-- BOTONES -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/FNewGuide_BTN_Cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_BTN_Cancel"
+            android:layout_marginEnd="@dimen/activity_padding"
+
+            app:layout_constraintTop_toTopOf="@id/FNewGuide_BTN_Create"
+            app:layout_constraintRight_toLeftOf="@id/FNewGuide_BTN_Create"
+            app:layout_constraintBottom_toBottomOf="@id/FNewGuide_BTN_Create"
+
+            style="@style/cancelButton"
+            />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/FNewGuide_BTN_Create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_BTN_Create"
+            android:layout_marginEnd="@dimen/activity_padding"
+            android:layout_marginBottom="@dimen/space_2"
+
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            style="@style/normalButton"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

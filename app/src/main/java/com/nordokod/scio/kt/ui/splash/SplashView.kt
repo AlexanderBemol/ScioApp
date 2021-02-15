@@ -38,10 +38,15 @@ class SplashView : Fragment() {
         if(context != null){
             viewModel.splashAction.observe(
                     viewLifecycleOwner,
-                    Observer { action ->
+                    Observer {
                         GlobalScope.launch {
                             delay(Generic.SPLASH_SCREEN_TIME)
-                            navController.navigate(R.id.action_splashView_to_loginView)
+                            when(it.getContentIfNotHandled()){
+                                SplashActions.GO_TO_MAIN -> {
+                                    navController.navigate(R.id.action_splashView_to_mainView)
+                                }
+                                else -> navController.navigate(R.id.action_splashView_to_loginView)
+                            }
                         }
                     }
             )
