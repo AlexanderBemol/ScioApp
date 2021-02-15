@@ -91,7 +91,7 @@ class RemoteAuth(private val firebaseAuth: FirebaseAuth) : IRemoteAuth {
      */
     override suspend fun signInWithFacebook(token: String): TaskResult<User> {
         return try {
-            val result = firebaseAuth.signInWithCredential(GoogleAuthProvider.getCredential(token, null)).await()
+            val result = firebaseAuth.signInWithCredential(FacebookAuthProvider.getCredential(token)).await()
             TaskResult.Success(
                     User(
                             uid = result.user?.uid ?: "",

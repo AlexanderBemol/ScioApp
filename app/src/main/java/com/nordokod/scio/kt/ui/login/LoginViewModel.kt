@@ -12,7 +12,7 @@ import com.nordokod.scio.kt.utils.TaskResult
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
-import java.lang.Exception
+import kotlin.Exception
 
 class LoginViewModel(private val authRepository: IAuthRepository): ViewModel() {
     val error = MutableLiveData<Event<Exception>>()
@@ -43,5 +43,66 @@ class LoginViewModel(private val authRepository: IAuthRepository): ViewModel() {
         }
     }
 
+    fun loginWithFacebook(token: String){
+        if(token=="") error.value = Event(UnknownException())
+        else{
+            viewModelScope.launch {
+                try {
+                    withTimeout(Generic.TIMEOUT_VALUE){
+                        when(val result = authRepository.signInWithFacebook(token)){
+                            is TaskResult.Success -> {
+                                val user = result.data
+                                if(user.newUser) {
+                                    successMessage.value = Event(SuccessMessage.SIGN_UP_USER)
+                                    loginAction.value = Event(LoginActions.GO_TO_MAIN)
+                                } else {
+                                    successMessage.value = Event(SuccessMessage.LOGIN_USER)
+                                    loginAction.value = Event(LoginActions.GO_TO_MAIN)
+                                }
+
+                            }
+                            is TaskResult.Error -> {
+                                error.value = Event(result.e)
+                            }
+                        }
+                    }
+                } catch (e: Exception){
+                    error.value = Event(e)
+                }
+            }
+
+        }
+    }
+
+    fun loginWithGoogle(token: String){
+        if(token=="") error.value = Event(UnknownException())
+        else{
+            viewModelScope.launch {
+                try {
+                    withTimeout(Generic.TIMEOUT_VALUE){
+                        when(val result = authRepository.signInWithGoogle(token)){
+                            is TaskResult.Success -> {
+                                val user = result.data
+                                if(user.newUser) {
+                                    successMessage.value = Event(SuccessMessage.SIGN_UP_USER)
+                                    loginAction.value = Event(LoginActions.GO_TO_MAIN)
+                                } else {
+                                    successMessage.value = Event(SuccessMessage.LOGIN_USER)
+                                    loginAction.value = Event(LoginActions.GO_TO_MAIN)
+                                }
+
+                            }
+                            is TaskResult.Error -> {
+                                error.value = Event(result.e)
+                            }
+                        }
+                    }
+                } catch (e: Exception){
+                    error.value = Event(e)
+                }
+            }
+
+        }
+    }
 
 }
