@@ -45,6 +45,9 @@ class SplashView : Fragment() {
                                 SplashActions.GO_TO_MAIN -> {
                                     navController.navigate(R.id.action_splashView_to_mainView)
                                 }
+                                SplashActions.GO_TO_VERIFY_MAIL ->{
+                                    navController.navigate(R.id.action_splashView_to_verifyMailView)
+                                }
                                 else -> navController.navigate(R.id.action_splashView_to_loginView)
                             }
                         }

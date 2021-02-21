@@ -12,5 +12,5 @@ interface IRemoteAuth {
     fun isUserLogged(): TaskResult<Boolean>
     fun logOut(): TaskResult<Unit>
     suspend fun sendVerificationMail(): TaskResult<Unit>
-    suspend fun refreshUser(): TaskResult<Unit>
+    suspend fun refreshUser(): TaskResult<User>
 }

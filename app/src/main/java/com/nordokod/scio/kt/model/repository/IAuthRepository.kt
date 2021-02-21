@@ -11,6 +11,6 @@ interface IAuthRepository {
     suspend fun getBasicUserInfo(): TaskResult<User>
     suspend fun isUserLogged(): TaskResult<Boolean>
     suspend fun sendVerificationMail(): TaskResult<Unit>
-    suspend fun refreshUser(): TaskResult<Unit>
+    suspend fun refreshUser(): TaskResult<User>
     suspend fun logOut(): TaskResult<Unit>
 }

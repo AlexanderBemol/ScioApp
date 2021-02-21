@@ -15,11 +15,15 @@
             app:destination="@id/signupView" />
         <action
             android:id="@+id/action_loginView_to_verifyMailView"
-            app:destination="@id/verifyMailView" />
+            app:destination="@id/verifyMailView"
+            app:popUpTo="@id/loginView"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginView_to_mainView"
+            app:destination="@id/mainView"
             app:launchSingleTop="true"
-            app:destination="@id/mainView" />
+            app:popUpTo="@id/loginView"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/splashView"
@@ -38,6 +42,11 @@
             app:destination="@id/mainView"
             app:popUpTo="@id/splashView"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashView_to_verifyMailView"
+            app:destination="@id/verifyMailView"
+            app:popUpTo="@id/splashView"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signupView"
@@ -46,13 +55,26 @@
         tools:layout="@layout/fragment_signup_view" >
         <action
             android:id="@+id/action_signupView_to_verifyMailView"
-            app:destination="@id/verifyMailView" />
+            app:destination="@id/verifyMailView"
+            app:popUpTo="@id/signupView"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/verifyMailView"
         android:name="com.nordokod.scio.kt.ui.verifymail.VerifyMailView"
         android:label="fragment_verify_mail_view"
-        tools:layout="@layout/fragment_verify_mail_view" />
+        tools:layout="@layout/fragment_verify_mail_view" >
+        <action
+            android:id="@+id/action_verifyMailView_to_mainView"
+            app:destination="@id/mainView"
+            app:popUpTo="@id/verifyMailView"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_verifyMailView_to_loginView"
+            app:destination="@id/loginView"
+            app:popUpTo="@id/verifyMailView"
+            app:popUpToInclusive="true" />
+    </fragment>
     <dialog
         android:id="@+id/loadingView"
         android:name="com.nordokod.scio.kt.ui.loading.LoadingView"

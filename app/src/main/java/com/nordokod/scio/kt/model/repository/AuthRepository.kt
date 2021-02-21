@@ -34,7 +34,7 @@ class AuthRepository(private val remoteAuth: IRemoteAuth) : IAuthRepository {
         return remoteAuth.sendVerificationMail()
     }
 
-    override suspend fun refreshUser(): TaskResult<Unit> {
+    override suspend fun refreshUser(): TaskResult<User> {
         return remoteAuth.refreshUser()
     }
 
