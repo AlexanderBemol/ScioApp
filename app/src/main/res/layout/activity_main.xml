@@ -26,23 +26,6 @@
             >
 
         </FrameLayout>
-        <!--
-        <FrameLayout
-            android:id="@+id/FL_Main"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/NAV_Bar"
-            >
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/Toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/backgroundColor"
-                />
-        </FrameLayout>
-        -->
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/NAV_Bar"
             android:layout_width="match_parent"
@@ -57,32 +40,6 @@
             >
 
         </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-        <!--
-                <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
-                    android:id="@+id/NAV_Bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:backgroundTint="?backgroundColor"
-
-                    app:itemIconTint="@color/navigation_bar_colors"
-                    />
-
-                <android.support.design.widget.BottomNavigationView
-                    android:id="@+id/NAV_Bar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_alignParentBottom="true"
-
-                    app:itemBackground="@color/surfaceColor"
-                    app:itemIconTint="@color/navigation_bar_colors"
-                    app:itemTextColor="@color/navigation_bar_colors"
-                    app:menu="@menu/navigation_bar_items"
-                    >
-                </android.support.design.widget.BottomNavigationView>
-                -->
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView

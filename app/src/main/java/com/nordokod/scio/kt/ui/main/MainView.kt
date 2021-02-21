@@ -6,13 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.nordokod.scio.R
-import com.nordokod.scio.kt.ui.login.LoginActions
 import com.nordokod.scio.kt.utils.getEnumErrorMessage
 import kotlinx.android.synthetic.main.fragment_main_view.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -72,8 +70,10 @@ class MainView : Fragment() {
     }
 
     private fun setUpNavigation() {
+        bottom_navigation_view.visibility = View.VISIBLE
         mainNavController?.let {
             NavigationUI.setupWithNavController(bottom_navigation_view, mainNavController!!)
+            NavigationUI.setupWithNavController(NAV_Menu,appNavController)
         }
     }
 

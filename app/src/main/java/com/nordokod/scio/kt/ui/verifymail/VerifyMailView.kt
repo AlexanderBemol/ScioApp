@@ -69,7 +69,7 @@ class VerifyMailView : Fragment() {
                     this,
                     Observer {
                         when(it.getContentIfNotHandled()){
-                            VerifyMailActions.GO_TO_MAIN -> navController.navigate(R.id.action_verifyMailView_to_mainView)
+                            VerifyMailActions.GO_TO_PERMISSIONS -> navController.navigate(R.id.action_verifyMailView_to_permissionsView)
                             VerifyMailActions.GO_TO_LOGIN -> navController.navigate(R.id.action_verifyMailView_to_loginView)
                             VerifyMailActions.STOP_REFRESH_ANIMATION -> VMail_Swipe.isRefreshing = false
                         }
