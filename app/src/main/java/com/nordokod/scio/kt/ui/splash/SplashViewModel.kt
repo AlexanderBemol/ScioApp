@@ -22,8 +22,15 @@ class SplashViewModel(private val authRepository: IAuthRepository) : ViewModel()
                     when(val result = authRepository.isUserLogged()){
                         is TaskResult.Success -> {
                             splashAction.value =
-                                    if(result.data) Event(SplashActions.GO_TO_MAIN)
-                                    else Event(SplashActions.GO_TO_LOGIN)
+                            if(result.data){
+                                val userResult = authRepository.getBasicUserInfo()
+                                if(userResult is TaskResult.Success){
+                                    if(userResult.data.emailVerified)
+                                        Event(SplashActions.GO_TO_MAIN)
+                                    else
+                                        Event(SplashActions.GO_TO_VERIFY_MAIL)
+                                } else Event(SplashActions.GO_TO_LOGIN)
+                            } else Event(SplashActions.GO_TO_LOGIN)
                         }
                         is TaskResult.Error -> {
                             splashAction.value = Event(SplashActions.GO_TO_LOGIN)

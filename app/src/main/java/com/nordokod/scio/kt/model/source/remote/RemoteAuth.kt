@@ -46,6 +46,7 @@ class RemoteAuth(private val firebaseAuth: FirebaseAuth) : IRemoteAuth {
     override suspend fun signUpWithMail(email: String, password: String): TaskResult<User> {
         return try {
             val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            result.user?.sendEmailVerification()
             TaskResult.Success(
                     User(
                             uid = result.user?.uid ?: "",
@@ -162,10 +163,24 @@ class RemoteAuth(private val firebaseAuth: FirebaseAuth) : IRemoteAuth {
      * Refresh the user data
      * @return TaskResult<Unit> with the result
      */
-    override suspend fun refreshUser(): TaskResult<Unit> {
+    override suspend fun refreshUser(): TaskResult<User> {
         return try {
             firebaseAuth.currentUser?.reload()?.await()
-            TaskResult.Success(Unit)
+            TaskResult.Success( firebaseAuth.currentUser?.let {
+                User(
+                        uid = it.uid,
+                        emailVerified = it.isEmailVerified,
+                        displayName = it.displayName.toString(),
+                        email = it.email.toString(),
+                        photoURL = it.photoUrl.toString(),
+                        provider = when (it.providerData[0].providerId) {
+                            GoogleAuthProvider.PROVIDER_ID -> Provider.GOOGLE.code
+                            FacebookAuthProvider.PROVIDER_ID -> Provider.FACEBOOK.code
+                            else -> Provider.MAIL.code
+                        },
+                        synchronized = true
+                )
+            } ?: User())
         } catch (e: Exception) {
             TaskResult.Error(e)
         }

@@ -121,8 +121,11 @@ class LoginView: Fragment() {
             viewModel.loginAction.observe(
                     this,
                     Observer {
-                        if(it.getContentIfNotHandled() == LoginActions.GO_TO_MAIN){
+                        val action = it.getContentIfNotHandled()
+                        if(action == LoginActions.GO_TO_MAIN){
                             navController.navigate(R.id.action_loginView_to_mainView)
+                        } else if (action == LoginActions.GO_TO_VERIFY_MAIL){
+                            navController.navigate(R.id.action_loginView_to_verifyMailView)
                         }
                     }
             )
