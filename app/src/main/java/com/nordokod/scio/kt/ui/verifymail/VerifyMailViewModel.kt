@@ -60,14 +60,12 @@ class VerifyMailViewModel(private val auth: IAuthRepository) : ViewModel() {
                         is TaskResult.Success -> {
                             if(result.data.emailVerified) {
                                 successMessage.value = Event(SuccessMessage.MAIL_VERIFIED)
-                                verifyMailAction.value = Event(VerifyMailActions.GO_TO_MAIN)
+                                verifyMailAction.value = Event(VerifyMailActions.GO_TO_PERMISSIONS)
                             } else {
                                 verifyMailAction.value = Event(VerifyMailActions.STOP_REFRESH_ANIMATION)
                             }
                         }
-                        is TaskResult.Error -> {
-                            error.value = Event(result.e)
-                        }
+                        is TaskResult.Error -> error.value = Event(result.e)
                     }
                 }
             }

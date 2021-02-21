@@ -13,7 +13,7 @@
         />
 
     <item
-        android:id="@+id/Menu_Security"
+        android:id="@+id/permissionsView"
         android:title="@string/navmenu_title_security"
         android:icon="@drawable/lock_icon"
         />

@@ -65,15 +65,19 @@
         android:label="fragment_verify_mail_view"
         tools:layout="@layout/fragment_verify_mail_view" >
         <action
-            android:id="@+id/action_verifyMailView_to_mainView"
-            app:destination="@id/mainView"
-            app:popUpTo="@id/verifyMailView"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_verifyMailView_to_loginView"
             app:destination="@id/loginView"
             app:popUpTo="@id/verifyMailView"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_verifyMailView_to_permissionsView"
+            app:destination="@id/permissionsView"
+            app:popUpTo="@id/verifyMailView"
+            app:popUpToInclusive="true" >
+            <argument
+                android:name="firstConfiguration"
+                android:defaultValue="true" />
+        </action>
     </fragment>
     <dialog
         android:id="@+id/loadingView"
@@ -93,4 +97,19 @@
         app:popUpToInclusive="true"
         app:popUpTo="@id/mainView"
         />
+    <fragment
+        android:id="@+id/permissionsView"
+        android:name="com.nordokod.scio.kt.ui.permissions.PermissionsView"
+        android:label="fragment_permissions_view"
+        tools:layout="@layout/fragment_permissions_view" >
+        <action
+            android:id="@+id/action_permissionsView_to_mainView"
+            app:destination="@id/mainView"
+            app:popUpTo="@id/permissionsView"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="firstConfiguration"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
 </navigation>
