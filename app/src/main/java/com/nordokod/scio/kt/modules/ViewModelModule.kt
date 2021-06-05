@@ -1,7 +1,9 @@
 package com.nordokod.scio.kt.modules
 
+import com.nordokod.scio.kt.ui.guides.GuidesViewModel
 import com.nordokod.scio.kt.ui.login.LoginViewModel
 import com.nordokod.scio.kt.ui.main.MainViewModel
+import com.nordokod.scio.kt.ui.newguide.NewGuideViewModel
 import com.nordokod.scio.kt.ui.permissions.PermissionsViewModel
 import com.nordokod.scio.kt.ui.signup.SignUpViewModel
 import com.nordokod.scio.kt.ui.splash.SplashViewModel
@@ -17,4 +19,6 @@ val viewModelModule = module{
     viewModel { VerifyMailViewModel(get()) }
     viewModel { MainViewModel(get()) }
     viewModel { PermissionsViewModel(PermissionsCheck(),get()) }
+    viewModel { NewGuideViewModel(get(),get()) }
+    viewModel { GuidesViewModel(get(),get()) }
 }

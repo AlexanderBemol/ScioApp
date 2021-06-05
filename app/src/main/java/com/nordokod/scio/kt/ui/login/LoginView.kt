@@ -2,6 +2,7 @@ package com.nordokod.scio.kt.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.nordokod.scio.R
+import com.nordokod.scio.kt.constants.Generic
 import com.nordokod.scio.kt.constants.enums.ErrorMessage
 import com.nordokod.scio.kt.utils.getEnumErrorMessage
 import kotlinx.android.synthetic.main.activity_login.*
@@ -36,18 +38,25 @@ class LoginView: Fragment() {
                     .build() )
         }
     }
+    private var isDisplaying = false
+    private val countDownTimer = object : CountDownTimer(Generic.BEFORE_LOADING_TIME, Generic.BEFORE_LOADING_TIME) {
+        override fun onTick(millisUntilFinished: Long) {}
+        override fun onFinish() {
+            isDisplaying = true
+            navController.navigate(R.id.action_global_loadingView)
+        }
+    }
 
     override fun onStart() {
         super.onStart()
-        initComponents()
         initListeners()
-        observeLiveData()
     }
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        observeLiveData()
         return inflater.inflate(R.layout.fragment_login_view, container, false)
     }
 
@@ -58,6 +67,7 @@ class LoginView: Fragment() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
+                countDownTimer.start()
                 viewModel.loginWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 context?.let { ErrorMessage.GOOGLE_EXCEPTION.showMessage(it) }
@@ -66,18 +76,16 @@ class LoginView: Fragment() {
 
     }
 
-    private fun initComponents() {
-
-    }
-
     fun initListeners(){
         BTN_Login.setOnClickListener {
+            countDownTimer.start()
             viewModel.signInWithMail(ET_Mail.text.toString(),ET_Password.text.toString())
         }
         BTN_Signup.setOnClickListener{
             navController.navigate(R.id.action_loginView_to_signupView)
         }
         BTN_Facebook.setOnClickListener {
+            countDownTimer.start()
             LoginManager.getInstance().logInWithReadPermissions(this, listOf("email", "public_profile"))
             LoginManager.getInstance().registerCallback(callbackManager, object : FacebookCallback<LoginResult>{
                 override fun onSuccess(loginResult: LoginResult) {
@@ -106,29 +114,33 @@ class LoginView: Fragment() {
             viewModel.error.observe(
                     viewLifecycleOwner,
                     Observer {
-                        it.getContentIfNotHandled()
-                                ?.getEnumErrorMessage()
-                                ?.showMessage(context)
+                        dismissDialog()
+                        it.getEnumErrorMessage().showMessage(context)
                     }
             )
             viewModel.successMessage.observe(
                     viewLifecycleOwner,
                     Observer {
-                            it.getContentIfNotHandled()
-                                    ?.showMessage(context)
+                            dismissDialog()
+                            it.showMessage(context)
                     }
             )
             viewModel.loginAction.observe(
-                    this,
+                    viewLifecycleOwner,
                     Observer {
-                        val action = it.getContentIfNotHandled()
-                        if(action == LoginActions.GO_TO_MAIN){
+                        if(it == LoginActions.GO_TO_MAIN){
                             navController.navigate(R.id.action_loginView_to_mainView)
-                        } else if (action == LoginActions.GO_TO_VERIFY_MAIL){
+                        } else if (it == LoginActions.GO_TO_VERIFY_MAIL){
                             navController.navigate(R.id.action_loginView_to_verifyMailView)
                         }
                     }
             )
         }
+    }
+    private fun dismissDialog(){
+        if(isDisplaying){
+            navController.popBackStack()
+            countDownTimer.cancel()
+        } else countDownTimer.cancel()
     }
 }

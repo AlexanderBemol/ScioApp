@@ -1,5 +1,6 @@
 package com.nordokod.scio.kt.ui.main
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,9 @@ class MainView : Fragment() {
             run {
                 mainViewModel.logOut()
             }
+        }
+        BTN_Dark.setOnClickListener {
+            activity?.setTheme(R.style.DefaultTheme)
         }
     }
     private fun observeLiveData() {
