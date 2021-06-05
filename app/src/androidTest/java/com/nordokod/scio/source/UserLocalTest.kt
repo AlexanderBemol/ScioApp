@@ -52,7 +52,7 @@ class UserLocalTest : KoinTest {
     @Test
     fun saveUser(){
         val user = User(
-                uid = TestingValues.TEST_USER_UID,
+                uid = "LorvB36nIoOGi759igKXH0q2xIl2",
                 displayName = TestingValues.TEST_USERNAME,
                 email = TestingValues.TEST_MAIL,
                 photoURL = "photo.com",

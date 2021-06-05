@@ -9,14 +9,14 @@ import com.nordokod.scio.kt.constants.enums.SuccessMessage
 import com.nordokod.scio.kt.model.repository.IAuthRepository
 import com.nordokod.scio.kt.utils.Event
 import com.nordokod.scio.kt.utils.TaskResult
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.*
 import java.lang.Exception
+import kotlin.coroutines.suspendCoroutine
 
 class SignUpViewModel(private val authRepository: IAuthRepository) : ViewModel() {
-    val error = MutableLiveData<Event<Exception>>()
-    val successMessage = MutableLiveData<Event<SuccessMessage>>()
-    val signUpAction = MutableLiveData<Event<SignUpActions>>()
+    val error = MutableLiveData<Exception>()
+    val successMessage = MutableLiveData<SuccessMessage>()
+    val signUpAction = MutableLiveData<SignUpActions>()
 
     fun signUp(mail: String, password1: String, password2: String){
         if (mail != "" && password1 != "" && password2 != ""){
@@ -27,19 +27,20 @@ class SignUpViewModel(private val authRepository: IAuthRepository) : ViewModel()
                             withTimeout(Generic.TIMEOUT_VALUE){
                                 when(val result = authRepository.signUpWithMail(mail,password1)){
                                     is TaskResult.Success -> {
-                                        successMessage.value = Event(SuccessMessage.SIGN_UP_USER)
-                                        signUpAction.value = Event(SignUpActions.GO_TO_VERIFY_MAIL)
+                                        successMessage.value = SuccessMessage.SIGN_UP_USER
+                                        signUpAction.value = SignUpActions.GO_TO_VERIFY_MAIL
                                     }
-                                    is TaskResult.Error -> error.value = Event(result.e)
+                                    is TaskResult.Error -> error.value = result.e
                                 }
                             }
                         } catch (e: Exception){
-                            error.value = Event(e)
+                            error.value = e
                         }
                     }
-                } else error.value = Event(InputDataException(InputDataException.Code.INVALID_PASSWORD))
-            } else error.value = Event(InputDataException(InputDataException.Code.PASSWORDS_NOT_MATCH))
-        } else error.value = Event(InputDataException(InputDataException.Code.EMPTY_FIELD))
+                } else error.value = InputDataException(InputDataException.Code.INVALID_PASSWORD)
+            } else error.value = InputDataException(InputDataException.Code.PASSWORDS_NOT_MATCH)
+        } else error.value = InputDataException(InputDataException.Code.EMPTY_FIELD)
     }
+
 
 }
