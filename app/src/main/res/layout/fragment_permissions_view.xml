@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_padding"
-    android:background="?attr/backgroundColor"
     tools:context=".kt.ui.permissions.PermissionsView">
 
     <androidx.appcompat.widget.AppCompatTextView

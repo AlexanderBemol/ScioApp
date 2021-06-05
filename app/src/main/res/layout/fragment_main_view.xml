@@ -32,7 +32,13 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_alignParentBottom="true"
+
+            app:itemTextAppearanceInactive="@style/BottomNavigationView_Inactive"
+            app:itemTextAppearanceActive="@style/BottomNavigationView_Active"
+            app:itemIconTint="@color/navigation_bar_colors"
+            app:itemTextColor="@color/navigation_bar_colors"
             app:menu="@menu/bottom_navigation_menu_items"
+            android:background="@color/backgroundColor"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
     <!-- android:layout_gravity="start" -->
@@ -61,7 +67,6 @@
             >
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/BTN_Dark"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:tint="?iconNormalColor"

@@ -1,6 +1,5 @@
 package com.nordokod.scio.kt.utils
 
-import android.view.View
 import com.facebook.FacebookException
 import com.google.android.gms.auth.GoogleAuthException
 import com.google.firebase.FirebaseException
@@ -9,15 +8,10 @@ import com.google.firebase.auth.*
 import com.google.firebase.crashlytics.*
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.storage.StorageException
-import com.nordokod.scio.R
 import com.nordokod.scio.kt.constants.*
 import com.nordokod.scio.kt.constants.GuideException.Code
 import com.nordokod.scio.kt.constants.enums.ErrorMessage
-import com.nordokod.scio.kt.constants.enums.GuideCategory
-import kotlinx.android.synthetic.main.list_categories.*
 import java.lang.Exception
-import java.util.*
-import java.util.concurrent.TimeUnit
 
 fun Exception.getEnumErrorMessage(): ErrorMessage {
     return when (this) {
@@ -67,42 +61,4 @@ fun Exception.getEnumErrorMessage(): ErrorMessage {
 fun Exception.recordException(){
     if(this.getEnumErrorMessage().getRecordException())
         FirebaseCrashlytics.getInstance().recordException(this)
-}
-
-fun Int.formatToNDigits(n : Int) = this.toString().padStart(n , '0')
-
-fun Int.getMonthName() : Int {
-    return when(this){
-        0 -> R.string.month_january
-        1 -> R.string.month_february
-        2 -> R.string.month_march
-        3 -> R.string.month_april
-        4 -> R.string.month_may
-        5 -> R.string.month_june
-        6 -> R.string.month_july
-        7 -> R.string.month_august
-        8 -> R.string.month_september
-        9 -> R.string.month_october
-        10 -> R.string.month_november
-        else -> R.string.month_december
-    }
-}
-
-fun View.toGuideCategory() : GuideCategory {
-    return when(this.id){
-        R.id.CL_Art -> GuideCategory.ART
-        R.id.CL_Entertainment -> GuideCategory.ENTERTAINMENT
-        R.id.CL_Exacts -> GuideCategory.EXACT_SCIENCES
-        R.id.CL_Socials -> GuideCategory.SOCIAL_SCIENCES
-        R.id.CL_Sports -> GuideCategory.SPORTS
-        R.id.CL_Tech -> GuideCategory.TECH
-        else -> GuideCategory.OTHERS
-    }
-}
-
-fun Date.daysLeft() : Int {
-    return if(this.after(Date())){
-        val leftTime = this.time - Calendar.getInstance().timeInMillis
-        TimeUnit.MILLISECONDS.toDays(leftTime).toInt()
-    } else 0
 }
