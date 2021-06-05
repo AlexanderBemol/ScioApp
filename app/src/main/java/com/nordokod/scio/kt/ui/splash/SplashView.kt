@@ -14,7 +14,6 @@ import com.nordokod.scio.kt.constants.Generic
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.nordokod.scio.kt.ui.splash.SplashActions
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -38,9 +37,9 @@ class SplashView : Fragment() {
         val context = this.context
         if(context != null){
             viewModel.splashAction.observe(
-                    this,
+                    viewLifecycleOwner,
                     Observer {
-                        MainScope().launch {
+                        GlobalScope.launch {
                             delay(Generic.SPLASH_SCREEN_TIME)
                             when(it.getContentIfNotHandled()){
                                 SplashActions.GO_TO_MAIN -> {

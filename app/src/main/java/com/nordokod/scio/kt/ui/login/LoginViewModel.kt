@@ -15,36 +15,36 @@ import kotlinx.coroutines.withTimeout
 import kotlin.Exception
 
 class LoginViewModel(private val authRepository: IAuthRepository): ViewModel() {
-    val error = MutableLiveData<Exception>()
-    val successMessage = MutableLiveData<SuccessMessage>()
-    val loginAction = MutableLiveData<LoginActions>()
+    val error = MutableLiveData<Event<Exception>>()
+    val successMessage = MutableLiveData<Event<SuccessMessage>>()
+    val loginAction = MutableLiveData<Event<LoginActions>>()
 
     fun signInWithMail(email: String, password: String){
         if(email.isBlank()||password.isBlank()){
-            error.value = InputDataException(InputDataException.Code.EMPTY_FIELD)
+            error.value = Event(InputDataException(InputDataException.Code.EMPTY_FIELD))
         }else{
             viewModelScope.launch {
                 try{
                     withTimeout(Generic.TIMEOUT_VALUE){
                         when(val result = authRepository.signInWithMail(email, password)){
-                            is TaskResult.Error -> error.value = result.e
+                            is TaskResult.Error -> error.value = Event(result.e)
                             is TaskResult.Success -> {
                                 val user = result.data
-                                successMessage.value = SuccessMessage.LOGIN_USER
-                                if(!user.emailVerified) loginAction.value = LoginActions.GO_TO_VERIFY_MAIL
-                                else loginAction.value = LoginActions.GO_TO_MAIN
+                                successMessage.value = Event(SuccessMessage.LOGIN_USER)
+                                if(!user.emailVerified) loginAction.value = Event(LoginActions.GO_TO_VERIFY_MAIL)
+                                else loginAction.value = Event(LoginActions.GO_TO_MAIN)
                             }
                         }
                     }
                 }catch (e: TimeoutCancellationException){
-                    error.value = UnknownException()
+                    error.value = Event(UnknownException())
                 }
             }
         }
     }
 
     fun loginWithFacebook(token: String){
-        if(token=="") error.value = UnknownException()
+        if(token=="") error.value = Event(UnknownException())
         else{
             viewModelScope.launch {
                 try {
@@ -53,21 +53,21 @@ class LoginViewModel(private val authRepository: IAuthRepository): ViewModel() {
                             is TaskResult.Success -> {
                                 val user = result.data
                                 if(user.newUser) {
-                                    successMessage.value = SuccessMessage.SIGN_UP_USER
-                                    loginAction.value = LoginActions.GO_TO_MAIN
+                                    successMessage.value = Event(SuccessMessage.SIGN_UP_USER)
+                                    loginAction.value = Event(LoginActions.GO_TO_MAIN)
                                 } else {
-                                    successMessage.value = SuccessMessage.LOGIN_USER
-                                    loginAction.value = LoginActions.GO_TO_MAIN
+                                    successMessage.value = Event(SuccessMessage.LOGIN_USER)
+                                    loginAction.value = Event(LoginActions.GO_TO_MAIN)
                                 }
 
                             }
                             is TaskResult.Error -> {
-                                error.value = result.e
+                                error.value = Event(result.e)
                             }
                         }
                     }
                 } catch (e: Exception){
-                    error.value = e
+                    error.value = Event(e)
                 }
             }
 
@@ -75,7 +75,7 @@ class LoginViewModel(private val authRepository: IAuthRepository): ViewModel() {
     }
 
     fun loginWithGoogle(token: String){
-        if(token=="") error.value = UnknownException()
+        if(token=="") error.value = Event(UnknownException())
         else{
             viewModelScope.launch {
                 try {
@@ -84,21 +84,21 @@ class LoginViewModel(private val authRepository: IAuthRepository): ViewModel() {
                             is TaskResult.Success -> {
                                 val user = result.data
                                 if(user.newUser) {
-                                    successMessage.value = SuccessMessage.SIGN_UP_USER
-                                    loginAction.value = LoginActions.GO_TO_MAIN
+                                    successMessage.value = Event(SuccessMessage.SIGN_UP_USER)
+                                    loginAction.value = Event(LoginActions.GO_TO_MAIN)
                                 } else {
-                                    successMessage.value = SuccessMessage.LOGIN_USER
-                                    loginAction.value = LoginActions.GO_TO_MAIN
+                                    successMessage.value = Event(SuccessMessage.LOGIN_USER)
+                                    loginAction.value = Event(LoginActions.GO_TO_MAIN)
                                 }
 
                             }
                             is TaskResult.Error -> {
-                                error.value = result.e
+                                error.value = Event(result.e)
                             }
                         }
                     }
                 } catch (e: Exception){
-                    error.value = e
+                    error.value = Event(e)
                 }
             }
 

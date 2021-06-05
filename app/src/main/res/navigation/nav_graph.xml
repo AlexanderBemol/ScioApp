@@ -33,8 +33,8 @@
         <action
             android:id="@+id/action_splashView_to_loginView"
             app:destination="@id/loginView"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
             app:popUpTo="@id/splashView"
             app:popUpToInclusive="true" />
         <action
@@ -56,11 +56,6 @@
         <action
             android:id="@+id/action_signupView_to_verifyMailView"
             app:destination="@id/verifyMailView"
-            app:popUpTo="@id/signupView"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_signupView_to_loginView"
-            app:destination="@id/loginView"
             app:popUpTo="@id/signupView"
             app:popUpToInclusive="true" />
     </fragment>
@@ -88,8 +83,7 @@
         android:id="@+id/loadingView"
         android:name="com.nordokod.scio.kt.ui.loading.LoadingView"
         android:label="dialog_loading"
-        tools:layout="@layout/dialog_loading" >
-    </dialog>
+        tools:layout="@layout/dialog_loading" />
         <action
             android:id="@+id/action_global_loadingView"
             app:destination="@id/loadingView" />

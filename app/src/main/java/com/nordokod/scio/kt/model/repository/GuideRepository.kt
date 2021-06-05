@@ -5,15 +5,11 @@ import com.nordokod.scio.kt.constants.GuideException
 import com.nordokod.scio.kt.constants.PhoneNetworkException
 import com.nordokod.scio.kt.constants.enums.SyncState
 import com.nordokod.scio.kt.model.entity.Guide
-import com.nordokod.scio.kt.model.entity.User
 import com.nordokod.scio.kt.model.source.local.GuideDAO
 import com.nordokod.scio.kt.model.source.remote.IRemoteGuide
-import com.nordokod.scio.kt.model.source.remote.RemoteAuth
 import com.nordokod.scio.kt.model.source.remote.RemoteGuide
 import com.nordokod.scio.kt.utils.NetworkManager
 import com.nordokod.scio.kt.utils.TaskResult
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 
 class GuideRepository(
@@ -24,18 +20,16 @@ class GuideRepository(
     override suspend fun createGuide(guide: Guide): TaskResult<Guide> {
         return if (NetworkManager.isOnline()) {
             try {
-                withContext(Dispatchers.IO){
-                    withTimeout(Generic.TIMEOUT_VALUE) {
-                        when (val result = remoteGuide.createGuide(guide)) {
-                            is TaskResult.Success -> {
-                                val cloudGuide = result.data
-                                cloudGuide.syncState = SyncState.SYNCHRONIZED.code
-                                saveGuideOffline(cloudGuide)
-                            }
-                            is TaskResult.Error -> {
-                                guide.syncState = SyncState.ONLY_IN_LOCAL.code
-                                saveGuideOffline(guide)
-                            }
+                withTimeout(Generic.TIMEOUT_VALUE) {
+                    when (val result = remoteGuide.createGuide(guide)) {
+                        is TaskResult.Success -> {
+                            val cloudGuide = result.data
+                            cloudGuide.syncState = SyncState.SYNCHRONIZED.code
+                            saveGuideOffline(cloudGuide)
+                        }
+                        is TaskResult.Error -> {
+                            guide.syncState = SyncState.ONLY_IN_LOCAL.code
+                            saveGuideOffline(guide)
                         }
                     }
                 }
@@ -104,14 +98,12 @@ class GuideRepository(
 
     override suspend fun getUserGuides(uid: String): TaskResult<List<Guide>> {
         return try {
-            withContext(Dispatchers.IO){
-                val userWithGuides = localGuide.getGuidesFromUser(uid)
-                val guidesList = userWithGuides.guides.filter { guide -> guide.syncState != SyncState.DELETED_IN_LOCAL.code }
-                if(guidesList.isNotEmpty())
-                    TaskResult.Success(guidesList)
-                else
-                    TaskResult.Error(GuideException(GuideException.Code.NO_GUIDES))
-            }
+            val userWithGuides = localGuide.getGuidesFromUser(uid)
+            val guidesList = userWithGuides.guides.filter { guide -> guide.syncState != SyncState.DELETED_IN_LOCAL.code }
+            if(guidesList.isNotEmpty())
+                TaskResult.Success(guidesList)
+            else
+                TaskResult.Error(GuideException(GuideException.Code.NO_GUIDES))
         } catch (e: Exception) {
             TaskResult.Error(e)
         }
@@ -197,45 +189,37 @@ class GuideRepository(
         }
     }
 
-    private suspend fun saveGuideOffline(guide: Guide): TaskResult<Guide> {
+    private fun saveGuideOffline(guide: Guide): TaskResult<Guide> {
         return try {
-            withContext(Dispatchers.IO){
-                localGuide.insertGuide(guide)
-                TaskResult.Success(guide)
-            }
+            localGuide.insertGuide(guide)
+            TaskResult.Success(guide)
         } catch (e: Exception) {
             TaskResult.Error(e)
         }
     }
 
-    private suspend fun updateGuideOffline(guide: Guide): TaskResult<Unit> {
+    private fun updateGuideOffline(guide: Guide): TaskResult<Unit> {
         return try {
-            withContext(Dispatchers.IO){
-                localGuide.updateGuide(guide)
-                TaskResult.Success(Unit)
-            }
+            localGuide.updateGuide(guide)
+            TaskResult.Success(Unit)
         } catch (e: Exception) {
             TaskResult.Error(e)
         }
     }
 
-    private suspend fun updateSyncState(guide: Guide): TaskResult<Unit>{
+    private fun updateSyncState(guide: Guide): TaskResult<Unit>{
         return try {
-            withContext(Dispatchers.IO){
-                localGuide.updateSyncState(guide.id,guide.syncState)
-                TaskResult.Success(Unit)
-            }
+            localGuide.updateSyncState(guide.id,guide.syncState)
+            TaskResult.Success(Unit)
         } catch (e: Exception) {
             TaskResult.Error(e)
         }
     }
 
-    private suspend fun deleteGuideOffline(guide: Guide): TaskResult<Unit> {
+    private fun deleteGuideOffline(guide: Guide): TaskResult<Unit> {
         return try {
-            withContext(Dispatchers.IO){
-                localGuide.deleteGuide(guide)
-                TaskResult.Success(Unit)
-            }
+            localGuide.deleteGuide(guide)
+            TaskResult.Success(Unit)
         } catch (e: Exception) {
             TaskResult.Error(e)
         }

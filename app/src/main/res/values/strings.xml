@@ -328,7 +328,6 @@
     <string name="RESEND_VERIFICATION_MAIL">¡Se reenvío el correo de verificación de forma correcta!</string>
     <string name="MAIL_VERIFICATED">¡Tu correo ha sido verificado!</string>
     <string name="DATA_EXPORTED">¡Los datos se exportaron de forma correcta!</string>
-    <string name="LOG_OUT_USER">¡Se cerró la sesión correctamente!</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -336,6 +335,4 @@
     <string name="txt_loading">Cargando</string>
     <string name="txt_BTN_Close">Cerrar</string>
     <string name="txt_title_correct_answer">Respuesta correcta</string>
-    <string name="hour_display">%s:%s</string>
-
 </resources>
