@@ -23,6 +23,7 @@ class MainViewModel(private  val authRepository: IAuthRepository) : ViewModel() 
                     when(val result = authRepository.logOut()){
                         is TaskResult.Success -> {
                             mainAction.value = Event(MainActions.GO_TO_LOGIN)
+                            successMessage.value = Event(SuccessMessage.LOG_OUT_USER)
                         }
                         is TaskResult.Error -> {
                             error.value = Event(result.e)

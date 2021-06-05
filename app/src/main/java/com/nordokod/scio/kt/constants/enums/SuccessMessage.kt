@@ -20,7 +20,8 @@ enum class SuccessMessage(private val messageCode: Int) {
     SAVE_CONFIGURATION(R.string.SAVE_CONFIGURATION),
     RESEND_VERIFICATION_MAIL(R.string.RESEND_VERIFICATION_MAIL),
     MAIL_VERIFIED(R.string.MAIL_VERIFICATED),
-    DATA_EXPORTED(R.string.DATA_EXPORTED);
+    DATA_EXPORTED(R.string.DATA_EXPORTED),
+    LOG_OUT_USER(R.string.LOG_OUT_USER);
 
     fun showMessage(context: Context){
         Toasty.success(context,context.getString(this.messageCode)).show()

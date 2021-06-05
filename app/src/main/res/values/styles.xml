@@ -8,7 +8,7 @@
     <!-- #    ## #     # #    #  #     # #     # #          #     # #     # #     # #           -->
     <!-- #     # ####### #     # #     # #     # #######    #     # ####### ######  #######     -->
     <!-- ====================================================================================== -->
-    <style name="DefaultTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="DefaultTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary"               >@color/primaryColor</item>
         <item name="colorPrimaryDark"           >@color/primaryDarkColor</item>
         <item name="colorAccent"                >@color/secondaryColor</item>
@@ -42,6 +42,10 @@
         <item name="android:textSize"           >@dimen/text_size_normal</item>
         <item name="android:fontFamily"         >@string/default_font</item>
         <item name="android:textColor"          >?attr/primaryTextColor</item>
+
+        <item name="materialTimePickerTheme">@style/CustomTimePicker</item>
+        <item name="materialCalendarTheme">@style/CustomDatePicker</item>
+        <item name="bottomNavigationStyle">@style/CustomBottomNavigationView</item>
     </style>
 
     <!-- ====================================================================================== -->
@@ -53,7 +57,7 @@
     <!-- #    ##  #  #     # #     #    #       #     # #     # #     # #                       -->
     <!-- #     # ###  #####  #     #    #       #     # ####### ######  #######                 -->
     <!-- ====================================================================================== -->
-    <style name="NightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="NightTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary"               >#02283A</item>
         <item name="colorPrimaryDark"           >#000000</item>
         <item name="colorAccent"                >@color/secondaryColor</item>
@@ -88,6 +92,9 @@
         <item name="android:textSize"           >@dimen/text_size_normal</item>
         <item name="android:fontFamily"         >@string/default_font</item>
         <item name="android:textColor"          >?attr/primaryTextColor</item>
+        <item name="materialCalendarTheme">@style/CustomDarkDatePicker</item>
+        <item name="materialTimePickerTheme">@style/CustomDarkTimePicker</item>
+        <item name="bottomNavigationStyle">@style/DarkBottomNavigationView</item>
     </style>
 
     <!-- ======================================================================================= -->
@@ -364,6 +371,50 @@
         <item name="android:windowBackground">@color/transparent</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
+    </style>
+
+
+    <style name="CustomBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.CustomNavigationView</item>
+    </style>
+    <style name="ThemeOverlay.App.CustomNavigationView" parent="">
+        <item name="colorPrimary">@color/secondaryColor</item>
+        <item name="colorSurface">@color/secondaryTextColor</item>
+        <item name="colorOnSurface">@color/primaryTextColor</item>
+    </style>
+    <style name="DarkBottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.DarkNavigationView</item>
+    </style>
+    <style name="ThemeOverlay.App.DarkNavigationView" parent="">
+        <item name="colorPrimary">@color/secondaryLightColor</item>
+        <item name="colorSurface">#02283A</item>
+        <item name="colorOnSurface">@color/secondaryDarkColor</item>
+    </style>
+
+    <!-- ======================================================================================= -->
+    <!-- ESTILOS PARA LOS PICKERS -->
+    <!-- ======================================================================================= -->
+    <style name="CustomTimePicker" parent="ThemeOverlay.MaterialComponents.TimePicker">
+        <item name="colorPrimary">@color/secondaryColor</item>
+        <item name="colorOnPrimary">@color/secondaryDarkColor</item>
+        <item name="colorOnSurface">@color/primaryTextColor</item>
+    </style>
+    <style name="CustomDarkTimePicker" parent="ThemeOverlay.MaterialComponents.TimePicker">
+        <item name="colorPrimary">@color/onSecondaryTextColor</item>
+        <item name="colorOnPrimary">@color/onSecondaryColor</item>
+        <item name="colorOnSurface">@color/onSecondaryColor</item>
+        <item name="colorSurface">#02283A</item>
+    </style>
+    <style name="CustomDatePicker" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/secondaryColor</item>
+        <item name="colorOnPrimary">@color/onSecondaryColor</item>
+        <item name="colorOnSurface">@color/primaryTextColor</item>
+    </style>
+    <style name="CustomDarkDatePicker" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/onSecondaryTextColor</item>
+        <item name="colorOnPrimary">@color/onSecondaryColor</item>
+        <item name="colorOnSurface">@color/onSecondaryColor</item>
+        <item name="colorSurface">#02283A</item>
     </style>
 
 </resources>
