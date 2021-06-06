@@ -5,6 +5,7 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -16,10 +17,12 @@ import com.nordokod.scio.kt.model.entity.AppPackage
 import com.nordokod.scio.kt.utils.getEnumErrorMessage
 import kotlinx.android.synthetic.main.fragment_locked_apps_view.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.util.*
 
 class LockedAppsView : Fragment(){
     private val navController : NavController by lazy { findNavController()}
     private val viewModel by viewModel<LockedAppsViewModel>()
+    private var appsList = listOf<AppPackage>()
     private var isDisplaying = false
     private val countDownTimer = object : CountDownTimer(Generic.BEFORE_LOADING_TIME, Generic.BEFORE_LOADING_TIME) {
         override fun onTick(millisUntilFinished: Long) {}
@@ -50,9 +53,23 @@ class LockedAppsView : Fragment(){
             navController.navigateUp()
         }
         AppBlocked_BTN_Save.setOnClickListener {
-            val lockedApps = (AppBlocked_RV_listApps.adapter as AppsRVAdapter).apps.filter { app -> app.locked }
+            val adapterApps = (AppBlocked_RV_listApps.adapter as AppsRVAdapter).apps
+            appsList.map { app ->
+                app.locked = adapterApps.find { app2 -> app2.packagePath == app.packagePath }?.locked ?: app.locked
+            }
             countDownTimer.start()
-            viewModel.saveLockedApps(lockedApps)
+            viewModel.saveLockedApps(
+                    appsList.filter { app -> app.locked }
+            )
+        }
+        Apps_ET_Search.doAfterTextChanged {
+            val adapterApps = (AppBlocked_RV_listApps.adapter as AppsRVAdapter).apps
+            appsList.map { app ->
+                app.locked = adapterApps.find { app2 -> app2.packagePath == app.packagePath }?.locked ?: app.locked
+            }
+
+            val filteredList = appsList.filter { app -> app.name.toUpperCase(Locale.ROOT).contains(it.toString().toUpperCase(Locale.ROOT)) }
+            refreshApps(filteredList)
         }
     }
 
@@ -63,7 +80,8 @@ class LockedAppsView : Fragment(){
                     viewLifecycleOwner,
                     Observer {
                         dismissLoading()
-                        refreshApps(it)
+                        appsList = it
+                        refreshApps(appsList)
                     }
             )
             viewModel.successMessage.observe(
