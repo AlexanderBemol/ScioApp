@@ -101,14 +101,14 @@ class NewGuideView : BottomSheetDialogFragment() {
             newGuideViewModel.error.observe(
                     viewLifecycleOwner,
                     androidx.lifecycle.Observer {
-                        dismissDialog()
+                        dismissLoading()
                         it.getEnumErrorMessage().showMessage(context)
                     }
             )
             newGuideViewModel.successMessage.observe(
                     viewLifecycleOwner,
                     androidx.lifecycle.Observer {
-                        dismissDialog()
+                        dismissLoading()
                         it.showMessage(context)
                         this.dismiss()
                     }
@@ -170,10 +170,11 @@ class NewGuideView : BottomSheetDialogFragment() {
 
     }
 
-    private fun dismissDialog(){
+    private fun dismissLoading(){
         if(isDisplaying){
             navController.popBackStack()
             countDownTimer.cancel()
+            isDisplaying = false
         } else countDownTimer.cancel()
     }
 
