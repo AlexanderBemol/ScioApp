@@ -1,6 +1,7 @@
 package com.nordokod.scio.kt.modules
 
 import com.nordokod.scio.kt.ui.guides.GuidesViewModel
+import com.nordokod.scio.kt.ui.lockedapps.LockedAppsViewModel
 import com.nordokod.scio.kt.ui.login.LoginViewModel
 import com.nordokod.scio.kt.ui.main.MainViewModel
 import com.nordokod.scio.kt.ui.newguide.NewGuideViewModel
@@ -21,4 +22,5 @@ val viewModelModule = module{
     viewModel { PermissionsViewModel(PermissionsCheck(),get()) }
     viewModel { NewGuideViewModel(get(),get()) }
     viewModel { GuidesViewModel(get(),get()) }
+    viewModel { LockedAppsViewModel(get()) }
 }

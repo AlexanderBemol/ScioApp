@@ -3,10 +3,7 @@ package com.nordokod.scio.kt.model.source.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.nordokod.scio.kt.model.entity.Answer
-import com.nordokod.scio.kt.model.entity.Guide
-import com.nordokod.scio.kt.model.entity.Question
-import com.nordokod.scio.kt.model.entity.User
+import com.nordokod.scio.kt.model.entity.*
 import com.nordokod.scio.kt.utils.Converters
 
 @Database(
@@ -16,7 +13,8 @@ import com.nordokod.scio.kt.utils.Converters
             Question::class,
             Answer.MultipleChoiceAnswer::class,
             Answer.TrueFalseAnswer::class,
-            Answer.OpenAnswer::class
+            Answer.OpenAnswer::class,
+            AppPackage::class
         ],
         version = 2,
         exportSchema = false

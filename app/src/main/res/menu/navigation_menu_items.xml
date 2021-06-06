@@ -19,7 +19,7 @@
         />
 
     <item
-        android:id="@+id/Menu_Apps"
+        android:id="@+id/lockedAppsView"
         android:title="@string/navmenu_title_apps"
         android:icon="@drawable/ic_apps"
         />
