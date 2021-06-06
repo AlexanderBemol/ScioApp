@@ -50,7 +50,9 @@ class LockedAppsView : Fragment(){
             navController.navigateUp()
         }
         AppBlocked_BTN_Save.setOnClickListener {
-            val algo = (AppBlocked_RV_listApps.adapter as AppsRVAdapter).apps.filter { app -> app.locked }.size
+            val lockedApps = (AppBlocked_RV_listApps.adapter as AppsRVAdapter).apps.filter { app -> app.locked }
+            countDownTimer.start()
+            viewModel.saveLockedApps(lockedApps)
         }
     }
 

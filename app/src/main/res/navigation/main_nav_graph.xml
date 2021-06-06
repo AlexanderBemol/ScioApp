@@ -29,4 +29,14 @@
             android:id="@+id/action_global_newGuideView"
             app:destination="@id/newGuideView" />
 
+    <dialog
+        android:id="@+id/loadingView"
+        android:name="com.nordokod.scio.kt.ui.loading.LoadingView"
+        android:label="dialog_loading"
+        tools:layout="@layout/dialog_loading" >
+    </dialog>
+    <action
+        android:id="@+id/action_global_loadingView"
+        app:destination="@id/loadingView" />
+
 </navigation>

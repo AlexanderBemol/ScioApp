@@ -22,5 +22,5 @@ val viewModelModule = module{
     viewModel { PermissionsViewModel(PermissionsCheck(),get()) }
     viewModel { NewGuideViewModel(get(),get()) }
     viewModel { GuidesViewModel(get(),get()) }
-    viewModel { LockedAppsViewModel(get()) }
+    viewModel { LockedAppsViewModel(get(),get()) }
 }

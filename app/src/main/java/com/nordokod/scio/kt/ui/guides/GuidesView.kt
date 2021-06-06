@@ -115,9 +115,10 @@ class GuidesView : Fragment() {
     }
 
     private fun dismissDialog(){
+        FGuides_Swipe.isRefreshing = false
         if(isDisplaying){
-            FGuides_Swipe.isRefreshing = false
             countDownTimer.cancel()
+            isDisplaying = false
         } else countDownTimer.cancel()
     }
 

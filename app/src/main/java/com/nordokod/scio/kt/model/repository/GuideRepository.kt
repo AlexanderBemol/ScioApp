@@ -198,13 +198,13 @@ class GuideRepository(
     }
 
     private suspend fun saveGuideOffline(guide: Guide): TaskResult<Guide> {
-        return try {
-            withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO){
+            try {
                 localGuide.insertGuide(guide)
                 TaskResult.Success(guide)
+            } catch (e: Exception) {
+                TaskResult.Error(e)
             }
-        } catch (e: Exception) {
-            TaskResult.Error(e)
         }
     }
 

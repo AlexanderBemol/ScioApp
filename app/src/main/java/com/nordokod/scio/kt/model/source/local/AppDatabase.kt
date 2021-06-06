@@ -24,4 +24,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val userDAO: UserDAO
     abstract val guideDAO: GuideDAO
     abstract val questionDAO: QuestionDAO
+    abstract val appDAO: AppDAO
 }
