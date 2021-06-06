@@ -9,6 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.nordokod.scio.R
+import com.nordokod.scio.kt.constants.enums.SendoScreen
+import com.nordokod.scio.kt.utils.AnalyticsHelper
 import com.nordokod.scio.kt.utils.getEnumErrorMessage
 import kotlinx.android.synthetic.main.fragment_verify_mail_view.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -18,6 +20,7 @@ class VerifyMailView : Fragment() {
     private val navController : NavController by lazy { findNavController()}
     override fun onStart() {
         super.onStart()
+        AnalyticsHelper.recordScreenView(SendoScreen.VERIFY_MAIL_SCREEN,this::class.simpleName.toString())
         initListeners()
         observeLiveData()
     }

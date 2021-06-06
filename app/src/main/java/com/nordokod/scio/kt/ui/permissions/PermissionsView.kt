@@ -18,6 +18,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.nordokod.scio.R
+import com.nordokod.scio.kt.constants.enums.SendoScreen
+import com.nordokod.scio.kt.utils.AnalyticsHelper
 import kotlinx.android.synthetic.main.fragment_permissions_view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -28,6 +30,7 @@ class PermissionsView : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        AnalyticsHelper.recordScreenView(SendoScreen.PERMISSIONS_SCREEN,this::class.simpleName.toString())
         initComponents()
         initListeners()
         observeLiveData()

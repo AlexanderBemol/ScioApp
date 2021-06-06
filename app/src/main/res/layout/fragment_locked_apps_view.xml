@@ -30,6 +30,17 @@
         app:layout_constraintTop_toBottomOf="@id/AppBlocked_TV_Title"
         />
 
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/Apps_ET_Search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Buscar.."
+
+        android:layout_marginTop="@dimen/space_1"
+        app:layout_constraintTop_toBottomOf="@id/Apps_TV_Description"
+        style="@style/EditText_Normal"
+    />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/AppBlocked_RV_listApps"
         android:layout_width="match_parent"
@@ -39,7 +50,7 @@
         android:scrollbars="vertical"
 
         app:layout_constraintBottom_toTopOf="@id/AppBlocked_BTN_Save"
-        app:layout_constraintTop_toBottomOf="@id/Apps_TV_Description"
+        app:layout_constraintTop_toBottomOf="@id/Apps_ET_Search"
         />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -49,7 +60,7 @@
         android:layout_height="wrap_content"
         android:text="@string/txt_BTN_Cancel"
         android:layout_marginTop="@dimen/space_3"
-        android:layout_marginRight="@dimen/space_2"
+        android:layout_marginEnd="@dimen/space_2"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/AppBlocked_BTN_Save"

@@ -13,7 +13,9 @@ import com.google.android.material.color.MaterialColors
 import com.nordokod.scio.R
 import com.nordokod.scio.kt.constants.Generic
 import com.nordokod.scio.kt.constants.enums.GuideCategory
+import com.nordokod.scio.kt.constants.enums.SendoScreen
 import com.nordokod.scio.kt.model.entity.Guide
+import com.nordokod.scio.kt.utils.AnalyticsHelper
 import com.nordokod.scio.kt.utils.getEnumErrorMessage
 import com.nordokod.scio.kt.utils.toGuideCategory
 import kotlinx.android.synthetic.main.fragment_guides_view.*
@@ -43,6 +45,7 @@ class GuidesView : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        AnalyticsHelper.recordScreenView(SendoScreen.GUIDES_VIEW,this::class.simpleName.toString())
         initListeners()
         FGuides_RV_Guides.layoutManager = LinearLayoutManager(context)
 

@@ -1,0 +1,16 @@
+package com.nordokod.scio.kt.constants.enums
+
+enum class SendoScreen {
+    SPLASH_SCREEN,
+    LOGIN_SCREEN,
+    FORGOT_PASSWORD_SCREEN,
+    SIGN_UP_SCREEN,
+    VERIFY_MAIL_SCREEN,
+    PERMISSIONS_SCREEN,
+    HOME_VIEW,
+    CREATE_GUIDE_VIEW,
+    GUIDES_VIEW,
+    LOCK_APPS_SCREEN,
+    USER_PROFILE_SCREEN,
+    QUESTIONS_SCREEN
+}
