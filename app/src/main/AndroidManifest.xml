@@ -8,44 +8,40 @@
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
     <application
         android:name=".kt.SendoApplication"
-        android:allowBackup="true"
         android:appCategory="productivity"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/DefaultTheme">
+        android:theme="@style/DefaultTheme"
+        tools:targetApi="o">
         <activity android:name=".kt.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.DeleteQuestionsActivity" />
-        <activity android:name=".view.StudyGuideActivity" />
-        <activity android:name=".view.VerifyMailActivity" />
 
         <service
-            android:name=".process.PushNotifications"
+            android:name=".old.process.PushNotifications"
             android:enabled="true"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".view.LockedAppsOptionActivity" />
-        <activity android:name=".view.SignupActivity" />
-
         <receiver
-            android:name=".process.SystemsEventsProcess"
+            android:name=".old.process.SystemsEventsProcess"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -66,20 +62,7 @@
             <intent-filter>
                 <action android:name="com.nordokod.kill" />
             </intent-filter>
-        </receiver> <!-- ======================================================================================= Splash -->
-        <activity
-            android:name=".view.SplashActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
-        </activity> <!-- ======================================================================================= Login -->
-        <activity
-            android:name=".view.LoginActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme" />
+        </receiver>
 
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <activity android:name="com.facebook.FacebookActivity"
@@ -96,14 +79,12 @@
         </activity>
 
         <service
-            android:name=".process.LockAppProcess"
+            android:name=".old.process.LockAppProcess"
             android:stopWithTask="false" /> <!-- ============================================================================== Crop Recortes -->
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" /> <!-- ======================================================================================= Permission -->
+
         <activity
-            android:name=".view.PermissionActivity"
-            android:screenOrientation="portrait" /> <!-- ======================================================================================= Main -->
-        <activity
-            android:name=".view.MainActivity"
+            android:name=".old.view.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/DefaultTheme">
             <intent-filter>
