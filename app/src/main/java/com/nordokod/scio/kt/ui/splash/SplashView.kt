@@ -11,8 +11,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.nordokod.scio.R
 import com.nordokod.scio.kt.constants.Generic
+import com.nordokod.scio.kt.constants.enums.SendoScreen
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.nordokod.scio.kt.ui.splash.SplashActions
+import com.nordokod.scio.kt.utils.AnalyticsHelper
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -23,6 +25,7 @@ class SplashView : Fragment() {
     private val navController : NavController by lazy { findNavController()}
     override fun onStart() {
         super.onStart()
+        AnalyticsHelper.recordScreenView(SendoScreen.SPLASH_SCREEN,this::class.simpleName.toString())
         observeLiveData()
         viewModel.loadInitialConfiguration()
     }

@@ -21,6 +21,8 @@ import com.google.android.gms.common.api.ApiException
 import com.nordokod.scio.R
 import com.nordokod.scio.kt.constants.Generic
 import com.nordokod.scio.kt.constants.enums.ErrorMessage
+import com.nordokod.scio.kt.constants.enums.SendoScreen
+import com.nordokod.scio.kt.utils.AnalyticsHelper
 import com.nordokod.scio.kt.utils.getEnumErrorMessage
 import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -49,6 +51,7 @@ class LoginView: Fragment() {
 
     override fun onStart() {
         super.onStart()
+        AnalyticsHelper.recordScreenView(SendoScreen.LOGIN_SCREEN,this::class.simpleName.toString())
         initListeners()
     }
 

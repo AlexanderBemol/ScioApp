@@ -13,7 +13,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nordokod.scio.R
 import com.nordokod.scio.kt.constants.Generic
+import com.nordokod.scio.kt.constants.enums.SendoScreen
 import com.nordokod.scio.kt.model.entity.AppPackage
+import com.nordokod.scio.kt.utils.AnalyticsHelper
 import com.nordokod.scio.kt.utils.getEnumErrorMessage
 import kotlinx.android.synthetic.main.fragment_locked_apps_view.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -42,6 +44,7 @@ class LockedAppsView : Fragment(){
 
     override fun onStart() {
         super.onStart()
+        AnalyticsHelper.recordScreenView(SendoScreen.LOCK_APPS_SCREEN,this::class.simpleName.toString())
         AppBlocked_RV_listApps.layoutManager = LinearLayoutManager(context)
         initListeners()
         countDownTimer.start()

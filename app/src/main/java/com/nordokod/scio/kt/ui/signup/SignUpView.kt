@@ -5,7 +5,6 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -14,9 +13,9 @@ import kotlinx.android.synthetic.main.fragment_signup_view.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import androidx.lifecycle.Observer
 import com.nordokod.scio.kt.constants.Generic
+import com.nordokod.scio.kt.constants.enums.SendoScreen
+import com.nordokod.scio.kt.utils.AnalyticsHelper
 import com.nordokod.scio.kt.utils.getEnumErrorMessage
-import kotlinx.coroutines.*
-import org.koin.ext.getOrCreateScope
 
 class SignUpView: Fragment() {
     private val viewModel by this.viewModel<SignUpViewModel>()
@@ -32,6 +31,7 @@ class SignUpView: Fragment() {
 
     override fun onStart() {
         super.onStart()
+        AnalyticsHelper.recordScreenView(SendoScreen.SIGN_UP_SCREEN,this::class.simpleName.toString())
         initListeners()
     }
 
