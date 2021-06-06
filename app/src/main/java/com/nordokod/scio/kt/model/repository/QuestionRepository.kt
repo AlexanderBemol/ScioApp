@@ -1,7 +1,7 @@
 package com.nordokod.scio.kt.model.repository
 
-import com.nordokod.scio.entity.NoQuestionsInGuide
 import com.nordokod.scio.kt.constants.Generic
+import com.nordokod.scio.kt.constants.GuideException
 import com.nordokod.scio.kt.constants.PhoneNetworkException
 import com.nordokod.scio.kt.constants.enums.KindOfQuestion
 import com.nordokod.scio.kt.constants.enums.SyncState
@@ -9,7 +9,6 @@ import com.nordokod.scio.kt.model.entity.Guide
 import com.nordokod.scio.kt.model.entity.QuestionWithAnswers
 import com.nordokod.scio.kt.model.source.local.QuestionDAO
 import com.nordokod.scio.kt.model.source.remote.IRemoteQuestion
-import com.nordokod.scio.kt.model.source.remote.RemoteQuestion
 import com.nordokod.scio.kt.utils.NetworkManager
 import com.nordokod.scio.kt.utils.TaskResult
 import kotlinx.coroutines.withTimeout
@@ -105,7 +104,7 @@ class QuestionRepository(
                     q -> q.question.syncState != SyncState.DELETED_IN_LOCAL.code
                 })
             else
-                TaskResult.Error(NoQuestionsInGuide())
+                TaskResult.Error(GuideException(GuideException.Code.NO_QUESTIONS_IN_GUIDE))
         } catch (e: Exception) {
             TaskResult.Error(e)
         }
