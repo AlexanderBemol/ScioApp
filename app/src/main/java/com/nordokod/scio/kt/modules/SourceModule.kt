@@ -16,6 +16,7 @@ val sourceModule = module {
     fun provideUserDAO(database: AppDatabase) = database.userDAO
     fun provideGuideDAO(database: AppDatabase) = database.guideDAO
     fun provideQuestionDao(database: AppDatabase) = database.questionDAO
+    fun provideAppDAO(database: AppDatabase) = database.appDAO
 
     factory { provideRemoteAuth(get()) }
     factory { provideRemoteUser(get(),get(),get()) }
@@ -25,5 +26,6 @@ val sourceModule = module {
     factory { provideUserDAO(get()) }
     factory { provideGuideDAO(get()) }
     factory { provideQuestionDao(get()) }
+    factory { provideAppDAO(get()) }
 
 }

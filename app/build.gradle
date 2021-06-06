@@ -19,6 +19,13 @@ android {
         vectorDrawables.useSupportLibrary = true
 
     }
+    sourceSets {
+        main {
+            java {
+                exclude 'com/nordokod/scio/old/**'
+            }
+        }
+    }
     buildTypes {
         debug {
             ext.enableCrashlytics = false
@@ -50,16 +57,15 @@ configurations.all {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     //noinspection GradleCompatible
-    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'com.google.android.material:material:1.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+    implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'com.facebook.android:facebook-login:[8,9)'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
     implementation 'com.google.firebase:firebase-core'
     implementation 'com.google.firebase:firebase-auth-ktx'
@@ -72,15 +78,16 @@ dependencies {
     implementation 'com.google.firebase:firebase-dynamic-links-ktx'
 
 
-    implementation 'com.google.android.gms:play-services-auth:18.1.0'
-    implementation 'com.google.android.play:core:1.8.0'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+    implementation 'com.google.android.play:core:1.10.0'
 
 
-
+    //deprecated?
     implementation 'com.victor:lib:1.0.4'
     implementation 'me.relex:circleindicator:1.2.2'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.roughike:swipe-selector:1.0.6'
+
     implementation 'com.github.GrenderG:Toasty:1.4.2'
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
@@ -95,12 +102,12 @@ dependencies {
     androidTestImplementation 'org.mockito:mockito-android:2.27.0'
 
     //androidx jetpack, kotlinx
-    implementation "androidx.core:core-ktx:1.3.1"
-    implementation "androidx.work:work-runtime-ktx:2.4.0"
+    implementation "androidx.core:core-ktx:1.5.0"
+    implementation "androidx.work:work-runtime-ktx:2.5.0"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.2"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.1"
     //koin
     def koin_version = "2.1.5"
     implementation "org.koin:koin-android:$koin_version"
@@ -117,7 +124,7 @@ dependencies {
     implementation "androidx.room:room-ktx:$room_version"
 
     //navigation
-    def nav_version = "2.3.3"
+    def nav_version = "2.3.5"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     // Feature module Support

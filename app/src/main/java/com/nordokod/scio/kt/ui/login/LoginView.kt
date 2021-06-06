@@ -141,6 +141,7 @@ class LoginView: Fragment() {
         if(isDisplaying){
             navController.popBackStack()
             countDownTimer.cancel()
+            isDisplaying = false
         } else countDownTimer.cancel()
     }
 }

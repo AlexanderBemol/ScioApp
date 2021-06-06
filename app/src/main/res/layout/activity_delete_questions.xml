@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/activity_padding"
     android:background="?attr/backgroundColor"
-    tools:context=".view.DeleteQuestionsActivity"
+    tools:context=".old.view.DeleteQuestionsActivity"
     >
 
     <androidx.appcompat.widget.AppCompatImageView

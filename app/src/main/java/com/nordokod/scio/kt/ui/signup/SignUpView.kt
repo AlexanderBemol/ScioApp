@@ -83,6 +83,7 @@ class SignUpView: Fragment() {
         if(isDisplaying){
             navController.popBackStack()
             countDownTimer.cancel()
+            isDisplaying = false
         } else countDownTimer.cancel()
     }
 

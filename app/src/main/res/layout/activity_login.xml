@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/activity_padding"
     android:background="@color/secondaryColor"
-    tools:context=".view.LoginActivity">
+    tools:context=".old.view.LoginActivity">
 
     <!-- IMAGEN -->
     <androidx.appcompat.widget.AppCompatImageView

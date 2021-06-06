@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_padding"
-    tools:context=".view.PermissionActivity">
+    tools:context=".old.view.PermissionActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"

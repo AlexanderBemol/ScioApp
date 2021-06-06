@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/activity_padding"
-        tools:context=".view.VerifyMailActivity"
+        tools:context=".old.view.VerifyMailActivity"
         >
 
         <androidx.appcompat.widget.AppCompatTextView

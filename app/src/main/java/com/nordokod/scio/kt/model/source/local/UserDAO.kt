@@ -9,7 +9,9 @@ import com.nordokod.scio.kt.model.entity.User
 @Dao
 interface UserDAO {
     @Query("SELECT * FROM User where uid = :uid")
-    fun getUser(uid: String): User
+    suspend fun getUser(uid: String): User
+     @Query("SELECT EXISTS(SELECT * FROM User WHERE uid = :uid)")
+     suspend fun existUser(uid: String) : Boolean
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user: User)
+    suspend fun insertUser(user: User)
 }

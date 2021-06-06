@@ -118,4 +118,9 @@
             app:argType="boolean"
             android:defaultValue="false" />
     </fragment>
+    <fragment
+        android:id="@+id/lockedAppsView"
+        android:name="com.nordokod.scio.kt.ui.lockedapps.LockedAppsView"
+        android:label="fragment_locked_apps_view"
+        tools:layout="@layout/fragment_locked_apps_view" />
 </navigation>
