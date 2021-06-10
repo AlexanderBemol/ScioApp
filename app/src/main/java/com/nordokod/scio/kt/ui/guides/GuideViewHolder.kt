@@ -6,10 +6,13 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.SwitchCompat
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.nordokod.scio.R
 import com.nordokod.scio.kt.constants.enums.GuideCategory
 import com.nordokod.scio.kt.model.entity.Guide
+import com.nordokod.scio.kt.ui.guidemenu.GuideMenuViewDirections
 import com.nordokod.scio.kt.utils.daysLeft
 
 class GuideViewHolder(
@@ -22,6 +25,7 @@ class GuideViewHolder(
     var category : AppCompatTextView? = null
     var days : AppCompatTextView?= null
     var isActive : SwitchCompat?= null
+    var guideCard : ConstraintLayout?= null
 
     init {
         categoryIcon = itemView.findViewById(R.id.QCard_IV_Icon)
@@ -29,18 +33,21 @@ class GuideViewHolder(
         category = itemView.findViewById(R.id.TV_Category)
         days = itemView.findViewById(R.id.TV_Days)
         isActive = itemView.findViewById(R.id.Switch_ActivateGuide)
+        guideCard = itemView.findViewById(R.id.CL_Guide)
     }
-    fun bind(guide : Guide){
-        val guideCategory =
-                if(GuideCategory.fromInt(guide.category) != null) GuideCategory.fromInt(guide.category)
-                else GuideCategory.OTHERS
+    fun bind(guide : Guide, nav : NavController){
+        val guideCategory = GuideCategory.fromInt(guide.category)
 
-        if(guideCategory !=null){
-            categoryIcon?.setImageResource(guideCategory.toIconID())
-            topic?.text  = guide.topic
-            category?.setText(guideCategory.toStringResource())
-            context.resources.getString(R.string.txt_days_left,guide.testDate.daysLeft())
-            isActive?.isChecked = false
+        categoryIcon?.setImageResource(guideCategory.toIconID())
+        topic?.text  = guide.topic
+        category?.setText(guideCategory.toStringResource())
+        context.resources.getString(R.string.txt_days_left,guide.testDate.daysLeft())
+        isActive?.isChecked = false
+
+        guideCard?.isClickable = true
+        guideCard?.setOnClickListener {
+            val action = GuideMenuViewDirections.actionGlobalGuideMenuView(guide.id,guide.topic,guideCategory.toIconID())
+            nav.navigate(action)
         }
 
     }

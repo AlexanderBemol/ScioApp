@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/backgroundColor"
+    tools:context="kt.ui.guidemenu.GuideMenuView">
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/GM_IV_Icon"
+        android:layout_width="@dimen/icon_category_size"
+        android:layout_height="@dimen/icon_category_size"
+        android:tint="?attr/colorAccent"
+        android:src="@drawable/ic_globe"
+
+        android:layout_marginStart="@dimen/activity_padding"
+        android:layout_marginTop="@dimen/activity_padding"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/GM_TV_Topic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="300dp"
+
+        android:text=""
+
+        android:textSize="@dimen/text_size_subtitle"
+        app:layout_constraintEnd_toStartOf="@id/GM_IV_Share"
+        app:layout_constraintStart_toEndOf="@id/GM_IV_Icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/GM_dividerTitle"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/GM_IV_Share"
+        android:layout_width="@dimen/icon_category_size"
+        android:layout_height="@dimen/icon_category_size"
+        android:tint="?attr/colorAccent"
+        android:src="@drawable/ic_share"
+
+        android:layout_marginEnd="@dimen/activity_padding"
+        android:layout_marginTop="@dimen/activity_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <View
+        android:id="@+id/GM_dividerTitle"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/space_2"
+        android:background="?attr/primaryLightColor"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/GM_IV_Icon" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/GM_TV_EditGuide"
+        style="@style/menuGuideTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="@string/txt_edit_guide_option_menu_guide"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/GM_dividerTitle"
+         />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/GM_TV_DeleteGuide"
+        style="@style/menuGuideTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="@string/txt_delete_guide_option_menu_guide"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/GM_TV_EditGuide"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/GM_TV_Questions"
+        style="@style/menuGuideTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="@string/txt_questions_guide_option_menu_guide"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/GM_TV_DeleteGuide"/>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/GM_TV_Study"
+        style="@style/menuGuideTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="@string/txt_study_guide_option_menu_guide"
+
+        android:layout_marginBottom="@dimen/activity_padding"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/GM_TV_Questions"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

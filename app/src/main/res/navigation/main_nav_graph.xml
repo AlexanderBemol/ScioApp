@@ -38,5 +38,24 @@
     <action
         android:id="@+id/action_global_loadingView"
         app:destination="@id/loadingView" />
+    <dialog
+        android:id="@+id/guideMenuView"
+        android:name="com.nordokod.scio.kt.ui.guidemenu.GuideMenuView"
+        android:label="GuideMenuView">
+        <argument
+            android:name="guideId"
+            android:defaultValue="1"
+            app:argType="integer" />
+        <argument
+            android:name="guideTopic"
+            app:argType="string" />
+        <argument
+            android:name="guideIcon"
+            app:argType="integer" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_guideMenuView"
+        app:destination="@id/guideMenuView"
+        app:enterAnim="@anim/nav_default_enter_anim" />
 
 </navigation>

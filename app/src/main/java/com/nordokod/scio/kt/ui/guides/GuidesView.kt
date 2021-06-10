@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.color.MaterialColors
 import com.nordokod.scio.R
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.list_categories.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class GuidesView : Fragment() {
+    private val mainNavController by lazy { this.activity?.let { Navigation.findNavController(it,R.id.mainNav) } }
     private var selectedCategory = GuideCategory.EXACT_SCIENCES
     private val guidesViewModel by viewModel<GuidesViewModel>()
     private var guidesList = listOf<Guide>()
@@ -45,12 +47,12 @@ class GuidesView : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        AnalyticsHelper.recordScreenView(SendoScreen.GUIDES_VIEW,this::class.simpleName.toString())
+        AnalyticsHelper.recordScreenView(SendoScreen.GUIDES_VIEW, this::class.simpleName.toString())
         initListeners()
         FGuides_RV_Guides.layoutManager = LinearLayoutManager(context)
 
         requireView().findViewById<AppCompatImageView>(selectedCategory.toListItemID())
-                .setColorFilter(MaterialColors.getColor(this.requireView(),R.attr.iconSelectedColor))
+                .setColorFilter(MaterialColors.getColor(this.requireView(), R.attr.iconSelectedColor))
         countDownTimer.start()
         guidesViewModel.getGuides()
     }
@@ -69,10 +71,10 @@ class GuidesView : Fragment() {
         }
     }
 
-    private fun onClickCategoryListener(l : View?){
+    private fun onClickCategoryListener(l: View?) {
         selectedCategory = l!!.toGuideCategory()
-        val selectedColor = MaterialColors.getColor(this.requireView(),R.attr.iconSelectedColor)
-        val defaultColor = MaterialColors.getColor(this.requireView(),R.attr.iconNormalColor)
+        val selectedColor = MaterialColors.getColor(this.requireView(), R.attr.iconSelectedColor)
+        val defaultColor = MaterialColors.getColor(this.requireView(), R.attr.iconNormalColor)
 
         requireView().findViewById<AppCompatImageView>(GuideCategory.ART.toListItemID()).setColorFilter(defaultColor)
         requireView().findViewById<AppCompatImageView>(GuideCategory.ENTERTAINMENT.toListItemID()).setColorFilter(defaultColor)
@@ -87,9 +89,9 @@ class GuidesView : Fragment() {
         refreshGuides()
     }
 
-    private fun observeLiveData(){
+    private fun observeLiveData() {
         val context = this.context
-        if (context != null){
+        if (context != null) {
             guidesViewModel.error.observe(
                     viewLifecycleOwner,
                     Observer {
@@ -109,11 +111,11 @@ class GuidesView : Fragment() {
 
     }
 
-    private fun refreshGuides(){
+    private fun refreshGuides() {
         val myGuides = guidesList.filter { it.category == selectedCategory.code }
         val context = this.context
         if (context != null)
-            FGuides_RV_Guides.adapter = GuidesRVAdapter(myGuides, context)
+            FGuides_RV_Guides.adapter = mainNavController?.let { GuidesRVAdapter(myGuides, context, it) }
 
     }
 
