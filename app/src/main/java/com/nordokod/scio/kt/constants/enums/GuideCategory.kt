@@ -14,9 +14,9 @@ enum class GuideCategory(val code:Int) {
 
     companion object {
         private val enumValues = values()
-        fun fromInt(code: Int) : GuideCategory? {
+        fun fromInt(code: Int) : GuideCategory {
             return if(code in 1..7)
-                enumValues.firstOrNull {it.code == code}
+                enumValues.firstOrNull {it.code == code}!!
             else OTHERS
         }
     }
