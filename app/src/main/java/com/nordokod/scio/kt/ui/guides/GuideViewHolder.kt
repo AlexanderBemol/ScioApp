@@ -3,6 +3,7 @@ package com.nordokod.scio.kt.ui.guides
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.SwitchCompat
@@ -44,7 +45,6 @@ class GuideViewHolder(
         context.resources.getString(R.string.txt_days_left,guide.testDate.daysLeft())
         isActive?.isChecked = false
 
-        guideCard?.isClickable = true
         guideCard?.setOnClickListener {
             val action = GuideMenuViewDirections.actionGlobalGuideMenuView(guide.id,guide.topic,guideCategory.toIconID())
             nav.navigate(action)

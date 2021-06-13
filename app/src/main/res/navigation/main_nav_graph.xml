@@ -24,7 +24,12 @@
         android:id="@+id/newGuideView"
         android:name="com.nordokod.scio.kt.ui.newguide.NewGuideView"
         android:label="fragment_new_guide_view"
-        tools:layout="@layout/fragment_new_guide_view" />
+        tools:layout="@layout/fragment_new_guide_view" >
+        <argument
+            android:name="guideId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </dialog>
         <action
             android:id="@+id/action_global_newGuideView"
             app:destination="@id/newGuideView" />

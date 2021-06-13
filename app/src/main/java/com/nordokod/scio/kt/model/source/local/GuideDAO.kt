@@ -21,6 +21,9 @@ interface GuideDAO {
     @Query("SELECT * FROM User where uid = :uid")
     suspend fun getGuidesFromUser(uid: String) : UserWithGuides
 
+     @Query("SELECT * FROM Guide where id = :id")
+     suspend fun getGuide(id: Int) : Guide
+
     @Query("DELETE FROM Guide")
     suspend fun deleteAllGuides()
 

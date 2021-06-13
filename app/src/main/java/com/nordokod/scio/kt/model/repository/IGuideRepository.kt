@@ -8,6 +8,7 @@ interface IGuideRepository {
     suspend fun updateGuide(guide: Guide): TaskResult<Unit>
     suspend fun deleteGuide(guide: Guide): TaskResult<Unit>
     suspend fun getUserGuides(uid: String): TaskResult<List<Guide>>
+    suspend fun getGuide(id : Int): TaskResult<Guide>
     suspend fun generateGuideLink(): TaskResult<String>
     suspend fun getPublicGuide(): TaskResult<Guide>
     suspend fun importGuide(): TaskResult<Unit>

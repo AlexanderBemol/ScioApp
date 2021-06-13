@@ -21,12 +21,12 @@ import com.nordokod.scio.kt.utils.getEnumErrorMessage
 import com.nordokod.scio.kt.utils.toGuideCategory
 import kotlinx.android.synthetic.main.fragment_guides_view.*
 import kotlinx.android.synthetic.main.list_categories.*
-import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 class GuidesView : Fragment() {
     private val mainNavController by lazy { this.activity?.let { Navigation.findNavController(it,R.id.mainNav) } }
     private var selectedCategory = GuideCategory.EXACT_SCIENCES
-    private val guidesViewModel by viewModel<GuidesViewModel>()
+    private val guidesViewModel by sharedViewModel<GuidesViewModel>()
     private var guidesList = listOf<Guide>()
     private var isDisplaying = false
     private val countDownTimer = object : CountDownTimer(Generic.BEFORE_SHORT_LOADING_TIME, Generic.BEFORE_SHORT_LOADING_TIME) {

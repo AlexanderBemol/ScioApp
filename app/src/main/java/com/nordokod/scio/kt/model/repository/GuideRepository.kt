@@ -15,6 +15,7 @@ import com.nordokod.scio.kt.utils.TaskResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
+import java.util.*
 
 class GuideRepository(
         private val remoteGuide: IRemoteGuide,
@@ -50,18 +51,22 @@ class GuideRepository(
     }
 
     override suspend fun updateGuide(guide: Guide): TaskResult<Unit> {
+        guide.updateDate = Date()
         return if (NetworkManager.isOnline()) {
             try {
-                withTimeout(Generic.TIMEOUT_VALUE) {
-                    when (remoteGuide.updateGuide(guide)) {
-                        is TaskResult.Success -> {
-                            guide.syncState = SyncState.SYNCHRONIZED.code
-                            updateGuideOffline(guide)
-                        }
-                        is TaskResult.Error -> {
-                            if(guide.syncState != SyncState.ONLY_IN_LOCAL.code)
-                                guide.syncState = SyncState.UPDATED_IN_LOCAL.code
-                            updateGuideOffline(guide)
+                withContext(Dispatchers.IO){
+                    withTimeout(Generic.TIMEOUT_VALUE) {
+                        when (remoteGuide.updateGuide(guide)) {
+                            is TaskResult.Success -> {
+                                guide.syncState = SyncState.SYNCHRONIZED.code
+                                guide.lastSync = Date()
+                                updateGuideOffline(guide)
+                            }
+                            is TaskResult.Error -> {
+                                if(guide.syncState != SyncState.ONLY_IN_LOCAL.code)
+                                    guide.syncState = SyncState.UPDATED_IN_LOCAL.code
+                                updateGuideOffline(guide)
+                            }
                         }
                     }
                 }
@@ -113,6 +118,17 @@ class GuideRepository(
                     TaskResult.Error(GuideException(GuideException.Code.NO_GUIDES))
             }
         } catch (e: Exception) {
+            TaskResult.Error(e)
+        }
+    }
+
+    override suspend fun getGuide(id: Int): TaskResult<Guide> {
+        return try {
+            withContext(Dispatchers.IO){
+                val guide = localGuide.getGuide(id)
+                TaskResult.Success(guide)
+            }
+        } catch (e : Exception){
             TaskResult.Error(e)
         }
     }
@@ -209,13 +225,13 @@ class GuideRepository(
     }
 
     private suspend fun updateGuideOffline(guide: Guide): TaskResult<Unit> {
-        return try {
-            withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO){
+            try {
                 localGuide.updateGuide(guide)
                 TaskResult.Success(Unit)
+            } catch (e: Exception) {
+                TaskResult.Error(e)
             }
-        } catch (e: Exception) {
-            TaskResult.Error(e)
         }
     }
 
