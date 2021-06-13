@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nordokod.scio.R
 import com.nordokod.scio.kt.constants.enums.GuideCategory
 import kotlinx.android.synthetic.main.dialog_guide_menu_view.*
 
-class GuideMenuView : DialogFragment() {
+class GuideMenuView : BottomSheetDialogFragment() {
     private val args: GuideMenuViewArgs by navArgs()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -19,7 +20,7 @@ class GuideMenuView : DialogFragment() {
     }
     override fun onStart() {
         super.onStart()
-        val dialog = this.dialog
+        /*val dialog = this.dialog
         if(dialog != null){
             val params = WindowManager.LayoutParams()
             params.copyFrom(dialog.window?.attributes)
@@ -27,10 +28,11 @@ class GuideMenuView : DialogFragment() {
             params.height = WindowManager.LayoutParams.WRAP_CONTENT
             dialog.window?.attributes = params
 
-            GM_IV_Icon.setImageResource(args.guideIcon)
-            GM_TV_Topic.text = args.guideTopic
 
-        }
+
+        }*/
+        GM_IV_Icon.setImageResource(args.guideIcon)
+        GM_TV_Topic.text = args.guideTopic
 
     }
 }

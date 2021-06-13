@@ -189,7 +189,7 @@
     <string name="txt_edit_guide_option_menu_guide">Editar</string>
     <string name="txt_delete_guide_option_menu_guide">Eliminar</string>
     <string name="txt_study_guide_option_menu_guide">Estudiar</string>
-    <string name="txt_questions_guide_option_menu_guide">Preguntas</string>
+    <string name="txt_open_guide_option_menu_guide">Abrir</string>
     <string name="txt_question_options_menu_title_guide">Preguntas:</string>
     <string name="txt_guide_options_menu_title_guide">Guía:</string>
 
