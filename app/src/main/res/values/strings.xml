@@ -337,6 +337,9 @@
     <string name="txt_loading">Cargando</string>
     <string name="txt_BTN_Close">Cerrar</string>
     <string name="txt_title_correct_answer">Respuesta correcta</string>
+
     <string name="hour_display">%s:%s</string>
+
+    <string name="dialog_delete">¿Estás seguro de eliminar este elemento de forma permanente?</string>
 
 </resources>

@@ -62,5 +62,18 @@
         android:id="@+id/action_global_guideMenuView"
         app:destination="@id/guideMenuView"
         app:enterAnim="@anim/nav_default_enter_anim" />
-
+    <dialog
+        android:id="@+id/deleteGuideView"
+        android:name="com.nordokod.scio.kt.ui.delete.DeleteGuideView"
+        android:label="dialog_delete_guide"
+        tools:layout="@layout/dialog_delete_guide" >
+        <argument
+            android:name="guideId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_deleteGuideView"
+        app:destination="@id/deleteGuideView"
+        app:enterAnim="@anim/nav_default_enter_anim" />
 </navigation>

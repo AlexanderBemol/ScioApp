@@ -47,14 +47,17 @@ class GuidesView : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        AnalyticsHelper.recordScreenView(SendoScreen.GUIDES_VIEW, this::class.simpleName.toString())
         initListeners()
         FGuides_RV_Guides.layoutManager = LinearLayoutManager(context)
-
         requireView().findViewById<AppCompatImageView>(selectedCategory.toListItemID())
                 .setColorFilter(MaterialColors.getColor(this.requireView(), R.attr.iconSelectedColor))
         countDownTimer.start()
         guidesViewModel.getGuides()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        AnalyticsHelper.recordScreenView(SendoScreen.GUIDES_VIEW, this::class.simpleName.toString())
     }
 
     private fun initListeners() {

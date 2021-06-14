@@ -36,7 +36,6 @@ class NewGuideView : BottomSheetDialogFragment() {
     private val newGuideViewModel by viewModel<NewGuideViewModel>()
     private val args : NewGuideViewArgs by navArgs()
     private val navController : NavController by lazy { findNavController()}
-    private val loadedGuide : Guide? = null
     private val guidesViewModel by sharedViewModel<GuidesViewModel>()
 
     private var isDisplaying = false

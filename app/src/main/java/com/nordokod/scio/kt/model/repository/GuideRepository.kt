@@ -71,11 +71,13 @@ class GuideRepository(
                     }
                 }
             } catch (e: Exception) {
-                guide.syncState = SyncState.UPDATED_IN_LOCAL.code
+                if(guide.syncState != SyncState.ONLY_IN_LOCAL.code)
+                    guide.syncState = SyncState.UPDATED_IN_LOCAL.code
                 updateGuideOffline(guide)
             }
         } else {
-            guide.syncState = SyncState.UPDATED_IN_LOCAL.code
+            if(guide.syncState != SyncState.ONLY_IN_LOCAL.code)
+                guide.syncState = SyncState.UPDATED_IN_LOCAL.code
             updateGuideOffline(guide)
         }
     }
@@ -83,27 +85,33 @@ class GuideRepository(
     override suspend fun deleteGuide(guide: Guide): TaskResult<Unit> {
         return if (NetworkManager.isOnline()) {
             try {
-                withTimeout(Generic.TIMEOUT_VALUE) {
-                    when (remoteGuide.deleteGuide(guide.remoteId)) {
-                        is TaskResult.Success -> {
-                            deleteGuideOffline(guide)
-                        }
-                        is TaskResult.Error -> {
-                            guide.syncState = SyncState.DELETED_IN_LOCAL.code
-                            if(guide.remoteId == "")
+                withContext(Dispatchers.IO){
+                    withTimeout(Generic.TIMEOUT_VALUE) {
+                        when (remoteGuide.deleteGuide(guide.remoteId)) {
+                            is TaskResult.Success -> {
                                 deleteGuideOffline(guide)
-                            else
-                                updateSyncState(guide)
+                            }
+                            is TaskResult.Error -> {
+                                guide.syncState = SyncState.DELETED_IN_LOCAL.code
+                                if(guide.remoteId == "")
+                                    deleteGuideOffline(guide)
+                                else
+                                    updateSyncState(guide)
+                            }
                         }
                     }
                 }
             } catch (e: Exception) {
-                guide.syncState = SyncState.DELETED_IN_LOCAL.code
-                updateSyncState(guide)
+                if(guide.remoteId != ""){
+                    guide.syncState = SyncState.DELETED_IN_LOCAL.code
+                    updateSyncState(guide)
+                } else deleteGuideOffline(guide)
             }
         } else {
-            guide.syncState = SyncState.DELETED_IN_LOCAL.code
-            updateSyncState(guide)
+            if(guide.remoteId != ""){
+                guide.syncState = SyncState.DELETED_IN_LOCAL.code
+                updateSyncState(guide)
+            } else deleteGuideOffline(guide)
         }
     }
 
@@ -236,24 +244,25 @@ class GuideRepository(
     }
 
     private suspend fun updateSyncState(guide: Guide): TaskResult<Unit>{
-        return try {
-            withContext(Dispatchers.IO){
-                localGuide.updateSyncState(guide.id,guide.syncState)
-                TaskResult.Success(Unit)
+        return withContext(Dispatchers.IO){
+                try {
+                    localGuide.updateSyncState(guide.id,guide.syncState)
+                    TaskResult.Success(Unit)
+                } catch (e: Exception) {
+                    TaskResult.Error(e)
+                }
             }
-        } catch (e: Exception) {
-            TaskResult.Error(e)
-        }
+
     }
 
     private suspend fun deleteGuideOffline(guide: Guide): TaskResult<Unit> {
-        return try {
-            withContext(Dispatchers.IO){
+        return withContext(Dispatchers.IO){
+            try {
                 localGuide.deleteGuide(guide)
                 TaskResult.Success(Unit)
+            } catch (e: Exception) {
+                    TaskResult.Error(e)
             }
-        } catch (e: Exception) {
-            TaskResult.Error(e)
         }
     }
 
