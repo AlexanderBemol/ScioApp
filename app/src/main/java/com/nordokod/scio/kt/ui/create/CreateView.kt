@@ -16,13 +16,12 @@ class CreateView : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        navController!!.navigate(R.id.action_global_newGuideView)
         return inflater.inflate(R.layout.fragment_create_view, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
+    override fun onResume() {
+        super.onResume()
         AnalyticsHelper.recordScreenView(SendoScreen.CREATE_GUIDE_VIEW,this::class.simpleName.toString())
-        navController!!.navigate(R.id.action_global_newGuideView)
     }
-
 }

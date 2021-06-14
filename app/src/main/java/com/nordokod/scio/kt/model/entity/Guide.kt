@@ -4,6 +4,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.nordokod.scio.kt.constants.enums.GuideCategory
 import com.nordokod.scio.kt.constants.enums.SyncState
+import com.nordokod.scio.kt.utils.DateSerializer
+import kotlinx.serialization.*
 import java.util.*
 
 @Entity

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="@dimen/space_2"
+    android:paddingHorizontal="@dimen/activity_padding"
+    android:background="?attr/backgroundColor"
+    tools:context=".kt.ui.delete.DeleteGuideView"
+    >
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/DLT_IV_Icon"
+        android:layout_width="@dimen/icon_category_size"
+        android:layout_height="@dimen/icon_category_size"
+        android:tint="?attr/cancelColor"
+        android:src="@drawable/ic_delete"
+        android:layout_marginTop="@dimen/activity_padding"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/DLT_TV_Title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxWidth="300dp"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/activity_padding"
+        android:text="@string/txt_BTN_Delete"
+        app:textAllCaps="true"
+
+        android:textSize="@dimen/text_size_subtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/DLT_IV_Icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/DLT_dividerTitle"
+        />
+    <View
+        android:id="@+id/DLT_dividerTitle"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/space_2"
+        android:background="?attr/primaryLightColor"
+
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/DLT_IV_Icon" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/DLT_TV_Description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_delete"
+        android:textAlignment="textStart"
+        android:textSize="@dimen/text_size_subtitle"
+
+        android:layout_marginTop="@dimen/space_1"
+        app:layout_constraintTop_toBottomOf="@id/DLT_dividerTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/DLT_BTN_Cancel"
+        style="@style/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_BTN_Cancel"
+        android:layout_marginTop="@dimen/space_2"
+        android:layout_marginEnd="@dimen/space_2"
+
+        app:layout_constraintTop_toBottomOf="@id/DLT_TV_Description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/DLT_BTN_Delete"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/DLT_BTN_Delete"
+        style="@style/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_BTN_Delete"
+
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

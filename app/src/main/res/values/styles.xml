@@ -205,8 +205,9 @@
     </style>
 
     <style name="menuGuideTextView" parent="titleGuideTextView">
-        <item name="android:textAlignment">center</item>
-        <item name="android:padding">@dimen/space_1</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:padding">@dimen/space_2</item>
+        <item name="android:textSize">@dimen/text_size_normal</item>
     </style>
 
     <style name="optionTextView" parent="normalTextView">
@@ -312,6 +313,11 @@
     <style name="signupButton" parent="button">
         <item name="android:textColor"      >@color/secondaryTextColor</item>
         <item name="android:backgroundTint" >@color/onSecondaryColor</item>
+        <item name="android:background"     >@xml/background_stroke_round</item>
+    </style>
+    <style name="neutralButton" parent="button">
+        <item name="android:textColor"      >?attr/primaryLightColor</item>
+        <item name="android:backgroundTint" >?attr/primaryLightColor</item>
         <item name="android:background"     >@xml/background_stroke_round</item>
     </style>
 

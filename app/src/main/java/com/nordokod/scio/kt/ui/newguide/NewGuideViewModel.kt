@@ -13,8 +13,8 @@ import com.nordokod.scio.kt.model.repository.IGuideRepository
 import com.nordokod.scio.kt.utils.TaskResult
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeout
-import java.lang.Exception
 import java.util.*
+import kotlin.Exception
 
 class NewGuideViewModel(
         private val guideRepository: IGuideRepository,
@@ -22,6 +22,7 @@ class NewGuideViewModel(
 ) : ViewModel() {
     val error = MutableLiveData<Exception>()
     val successMessage = MutableLiveData<SuccessMessage>()
+    val guide = MutableLiveData<Guide>()
 
     fun createGuide(category : GuideCategory?, topic : String, testDate : Date){
         if(category != null && topic.isNotEmpty()){
@@ -53,6 +54,48 @@ class NewGuideViewModel(
             }
         } else {
             error.value = InputDataException(InputDataException.Code.EMPTY_FIELD)
+        }
+    }
+
+    fun updateGuide(guide : Guide){
+        if(guide.category != 0 && guide.topic.isNotEmpty()){
+            if(guide.testDate.after(Date())){
+                viewModelScope.launch {
+                    try {
+                        val userResult = authRepository.getBasicUserInfo()
+                        if(userResult is TaskResult.Success){
+                            guide.updateUser = userResult.data.uid
+                            withTimeout(Generic.TIMEOUT_VALUE){
+                                when(val result = guideRepository.updateGuide(guide)){
+                                    is TaskResult.Success -> successMessage.value = SuccessMessage.UPDATE_GUIDE
+                                    is TaskResult.Error -> error.value = result.e
+                                }
+                            }
+                        }
+                    } catch (e : Exception) {
+                        error.value = e
+                    }
+                }
+            } else {
+                error.value = InputDataException(InputDataException.Code.DATETIME_BEFORE)
+            }
+        } else {
+            error.value = InputDataException(InputDataException.Code.EMPTY_FIELD)
+        }
+    }
+
+    fun getGuide(guideId : Int){
+        viewModelScope.launch {
+            try {
+                withTimeout(Generic.TIMEOUT_VALUE){
+                    when(val result = guideRepository.getGuide(guideId)){
+                        is TaskResult.Success -> guide.value = result.data
+                        is TaskResult.Error -> error.value = result.e
+                    }
+                }
+            } catch (e : Exception){
+                error.value = e
+            }
         }
     }
 

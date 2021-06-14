@@ -24,7 +24,12 @@
         android:id="@+id/newGuideView"
         android:name="com.nordokod.scio.kt.ui.newguide.NewGuideView"
         android:label="fragment_new_guide_view"
-        tools:layout="@layout/fragment_new_guide_view" />
+        tools:layout="@layout/fragment_new_guide_view" >
+        <argument
+            android:name="guideId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </dialog>
         <action
             android:id="@+id/action_global_newGuideView"
             app:destination="@id/newGuideView" />
@@ -38,5 +43,37 @@
     <action
         android:id="@+id/action_global_loadingView"
         app:destination="@id/loadingView" />
-
+    <dialog
+        android:id="@+id/guideMenuView"
+        android:name="com.nordokod.scio.kt.ui.guidemenu.GuideMenuView"
+        android:label="GuideMenuView">
+        <argument
+            android:name="guideId"
+            android:defaultValue="1"
+            app:argType="integer" />
+        <argument
+            android:name="guideTopic"
+            app:argType="string" />
+        <argument
+            android:name="guideIcon"
+            app:argType="integer" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_guideMenuView"
+        app:destination="@id/guideMenuView"
+        app:enterAnim="@anim/nav_default_enter_anim" />
+    <dialog
+        android:id="@+id/deleteGuideView"
+        android:name="com.nordokod.scio.kt.ui.delete.DeleteGuideView"
+        android:label="dialog_delete_guide"
+        tools:layout="@layout/dialog_delete_guide" >
+        <argument
+            android:name="guideId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </dialog>
+    <action
+        android:id="@+id/action_global_deleteGuideView"
+        app:destination="@id/deleteGuideView"
+        app:enterAnim="@anim/nav_default_enter_anim" />
 </navigation>
