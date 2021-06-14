@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nordokod.scio.R
+import com.nordokod.scio.kt.constants.UnknownException
 import com.nordokod.scio.kt.ui.delete.DeleteGuideViewDirections
 import com.nordokod.scio.kt.ui.newguide.NewGuideViewDirections
 import kotlinx.android.synthetic.main.dialog_guide_menu_view.*
@@ -32,6 +33,10 @@ class GuideMenuView : BottomSheetDialogFragment() {
         item_delete.setOnClickListener {
             navController.navigateUp()
             navController.navigate(DeleteGuideViewDirections.actionGlobalDeleteGuideView(args.guideId))
+        }
+
+        item_open.setOnClickListener {
+            //throw UnknownException()
         }
 
     }
