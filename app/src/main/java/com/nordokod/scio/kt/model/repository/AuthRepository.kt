@@ -1,5 +1,6 @@
 package com.nordokod.scio.kt.model.repository
 
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.nordokod.scio.kt.constants.Generic
 import com.nordokod.scio.kt.constants.PhoneNetworkException
 import com.nordokod.scio.kt.model.entity.User
@@ -24,7 +25,10 @@ class AuthRepository(
                 withContext(Dispatchers.IO){
                     withTimeout(Generic.TIMEOUT_VALUE){
                         val result = remoteAuth.signInWithMail(email, password)
-                        if(result is TaskResult.Success) insertUserIfNotExist(result.data)
+                        if(result is TaskResult.Success) {
+                            insertUserIfNotExist(result.data)
+                            FirebaseCrashlytics.getInstance().setUserId(result.data.uid)
+                        }
                         result
                     }
                 }
@@ -40,7 +44,10 @@ class AuthRepository(
                 withContext(Dispatchers.IO){
                     withTimeout(Generic.TIMEOUT_VALUE){
                         val result = remoteAuth.signInWithGoogle(token)
-                        if(result is TaskResult.Success) insertUserIfNotExist(result.data)
+                        if(result is TaskResult.Success) {
+                            insertUserIfNotExist(result.data)
+                            FirebaseCrashlytics.getInstance().setUserId(result.data.uid)
+                        }
                         result
                     }
                 }
@@ -56,7 +63,10 @@ class AuthRepository(
                 withContext(Dispatchers.IO){
                     withTimeout(Generic.TIMEOUT_VALUE){
                         val result = remoteAuth.signInWithFacebook(token)
-                        if(result is TaskResult.Success) insertUserIfNotExist(result.data)
+                        if(result is TaskResult.Success) {
+                            insertUserIfNotExist(result.data)
+                            FirebaseCrashlytics.getInstance().setUserId(result.data.uid)
+                        }
                         result
                     }
                 }
@@ -72,7 +82,10 @@ class AuthRepository(
                 withContext(Dispatchers.IO){
                     withTimeout(Generic.TIMEOUT_VALUE){
                         val result = remoteAuth.signUpWithMail(email, password)
-                        if(result is TaskResult.Success) insertUserIfNotExist(result.data)
+                        if(result is TaskResult.Success) {
+                            insertUserIfNotExist(result.data)
+                            FirebaseCrashlytics.getInstance().setUserId(result.data.uid)
+                        }
                         result
                     }
                 }
