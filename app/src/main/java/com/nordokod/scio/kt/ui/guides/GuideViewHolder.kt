@@ -42,7 +42,7 @@ class GuideViewHolder(
         categoryIcon?.setImageResource(guideCategory.toIconID())
         topic?.text  = guide.topic
         category?.setText(guideCategory.toStringResource())
-        context.resources.getString(R.string.txt_days_left,guide.testDate.daysLeft())
+        days?.text = context.resources.getString(R.string.txt_days_left,guide.testDate.daysLeft())
         isActive?.isChecked = false
 
         guideCard?.setOnClickListener {
