@@ -85,6 +85,8 @@
     <string name="txt_title_TV_Options">Opciones:</string>
     <string name="txt_hint_TV_Options">Escribe y activa las respuestas que son correctas.</string>
 
+    <string name="txt_fragment_questions_title">Preguntas</string>
+
     <!-- ======================================================================================= -->
     <!-- Strings relacionados con las guías -->
     <!-- ======================================================================================= -->

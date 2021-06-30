@@ -57,7 +57,7 @@ class GuidesView : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        AnalyticsHelper.recordScreenView(SendoScreen.GUIDES_VIEW, this::class.simpleName.toString())
+        AnalyticsHelper.recordScreenView(SendoScreen.GUIDES_SCREEN, this::class.simpleName.toString())
     }
 
     private fun initListeners() {

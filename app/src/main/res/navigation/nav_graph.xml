@@ -97,7 +97,11 @@
         android:id="@+id/mainView"
         android:name="com.nordokod.scio.kt.ui.main.MainView"
         android:label="fragment_main_view"
-        tools:layout="@layout/fragment_main_view" />
+        tools:layout="@layout/fragment_main_view" >
+        <action
+            android:id="@+id/action_mainView_to_questionsView"
+            app:destination="@id/questionsView" />
+    </fragment>
     <action android:id="@+id/action_global_loginView"
         app:destination="@id/loginView"
         app:popUpToInclusive="true"
@@ -123,4 +127,14 @@
         android:name="com.nordokod.scio.kt.ui.lockedapps.LockedAppsView"
         android:label="fragment_locked_apps_view"
         tools:layout="@layout/fragment_locked_apps_view" />
+    <fragment
+        android:id="@+id/questionsView"
+        android:name="com.nordokod.scio.kt.ui.questions.QuestionsView"
+        android:label="fragment_questions_view"
+        tools:layout="@layout/fragment_questions_view" >
+        <argument
+            android:name="idGuide"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

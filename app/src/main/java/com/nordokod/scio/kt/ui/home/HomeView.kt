@@ -19,6 +19,6 @@ class HomeView : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        AnalyticsHelper.recordScreenView(SendoScreen.HOME_VIEW,this::class.simpleName.toString())
+        AnalyticsHelper.recordScreenView(SendoScreen.HOME_SCREEN,this::class.simpleName.toString())
     }
 }

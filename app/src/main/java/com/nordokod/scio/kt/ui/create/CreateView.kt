@@ -22,6 +22,6 @@ class CreateView : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        AnalyticsHelper.recordScreenView(SendoScreen.CREATE_GUIDE_VIEW,this::class.simpleName.toString())
+        AnalyticsHelper.recordScreenView(SendoScreen.CREATE_GUIDE_SCREEN,this::class.simpleName.toString())
     }
 }
